@@ -12,3 +12,8 @@
 
 
 ## 기술 스택?!
+
+
+## 설계
+- [화면 설계](https://www.figma.com/file/J40YAWTJ53MEPVfTVUwhOv/Nabaaang?node-id=91%3A4287)
+- [백로그](https://docs.google.com/spreadsheets/d/1uFGERBhTpZQlNpV2B7A0AJLRUGH_dka6tNJjLEwKdpU/edit#gid=1202196100)
