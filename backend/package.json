@@ -19,7 +19,16 @@
         "swagger-ui-express": "^4.1.6"
     },
     "devDependencies": {
-        "nodemon": "^2.0.13"
+        "@babel/eslint-parser": "^7.16.0",
+        "@typescript-eslint/eslint-plugin": "^5.2.0",
+        "@typescript-eslint/parser": "^5.2.0",
+        "eslint": "^7.2.0",
+        "eslint-config-airbnb": "^18.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "nodemon": "^2.0.13",
+        "prettier": "2.4.1"
     },
     "type": "module"
 }
