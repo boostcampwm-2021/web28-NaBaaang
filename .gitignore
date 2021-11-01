@@ -29,10 +29,6 @@ benchmarks/graphs
 
 dist/
 
-public/*
-
-frontend/public
-
 backend/config
 
 frontend/config
