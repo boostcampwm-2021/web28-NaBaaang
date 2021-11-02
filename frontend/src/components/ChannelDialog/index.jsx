@@ -34,9 +34,11 @@ export default function ChannelDialog() {
                 Open form dialog
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <DialogTitle sx={{ textAlign: 'center' }}>Nabaaang</DialogTitle>
+                <DialogTitle style={{ textAlign: 'center' }}>
+                    Nabaaang
+                </DialogTitle>
                 <DialogContent
-                    sx={{
+                    style={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
