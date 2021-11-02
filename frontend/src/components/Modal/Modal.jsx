@@ -21,6 +21,8 @@ const boxStyle = {
 
 const headerStyle = {
     marginBottom: 'auto',
+    color: '#7236D6',
+    fontWeight: 'bold',
 };
 
 const slotStyle = {
@@ -33,6 +35,9 @@ const slotStyle = {
 
 const buttonBoxStyle = {
     marginTop: 'auto',
+    '& button:first-child': {
+        marginRight: 2,
+    },
 };
 
 export default function StyeldModal({ title = true, isButton = false, slot }) {
@@ -55,10 +60,10 @@ export default function StyeldModal({ title = true, isButton = false, slot }) {
 
                 {isButton && (
                     <Box sx={buttonBoxStyle}>
-                        <Button variant="contained" onClick={handeModalClose}>
+                        <Button variant="outlined" color="error" onClick={handeModalClose}>
                             Cancle
                         </Button>
-                        <Button variant="contained">OK</Button>
+                        <Button variant="outlined">OK</Button>
                     </Box>
                 )}
             </Box>
