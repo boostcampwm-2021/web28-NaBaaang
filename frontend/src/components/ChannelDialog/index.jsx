@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,16 +7,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import ChannelDialogHook from './ChannelDialogHook.jsx';
+
 export default function ChannelDialog() {
-    const [open, setOpen] = useState(false);
+    const { open, handleClickOpen, handleClose } = ChannelDialogHook();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     return (
         <div>
