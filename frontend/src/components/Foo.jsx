@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 const StyledFoo = styled.div`
     ${({ theme }) =>
         css`
-            background-color: ${theme.color.gray1};
+            background-color: ${theme.color.primary};
         `}
 `;
 
