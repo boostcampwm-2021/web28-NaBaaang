@@ -1,5 +1,5 @@
 import React from 'react';
-import Foo from '@components/Foo';
+import Foo from '@/components/Foo';
 
 function App() {
     return (
