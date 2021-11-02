@@ -14,6 +14,19 @@ import ChannelDialogHook from './ChannelDialogHook.jsx';
 export default function ChannelDialog() {
     const { open, handleClickOpen, handleClose } = ChannelDialogHook();
 
+    const textFieldTheme = createTheme({
+        components: {
+            MuiTextField: {
+                defaultProps: {
+                    type: 'text',
+                    variant: 'filled',
+                    margin: 'normal',
+                    required: 'true',
+                    style: { width: '60%' },
+                },
+            },
+        },
+    });
 
     return (
         <div>
@@ -29,34 +42,11 @@ export default function ChannelDialog() {
                         alignItems: 'center',
                     }}
                 >
-                    <TextField
-                        autoFocus
-                        id="title"
-                        label="제목"
-                        type="text"
-                        variant="filled"
-                        margin="normal"
-                        required
-                        style={{ width: '60%' }}
-                    />
-                    <TextField
-                        id="category"
-                        label="카테고리"
-                        type="text"
-                        variant="filled"
-                        margin="normal"
-                        required
-                        style={{ width: '60%' }}
-                    />
-                    <TextField
-                        id="description"
-                        label="설명"
-                        type="text"
-                        variant="filled"
-                        margin="normal"
-                        required
-                        style={{ width: '60%' }}
-                    />
+                    <ThemeProvider theme={textFieldTheme}>
+                        <TextField autoFocus id="title" label="제목" />
+                        <TextField id="category" label="카테고리" />
+                        <TextField id="description" label="설명" />
+                    </ThemeProvider>
                 </DialogContent>
                 <DialogActions
                     style={{ display: 'flex', justifyContent: 'center' }}
