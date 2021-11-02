@@ -4,11 +4,12 @@ import LiveSlider from './LiveSlider';
 
 const LiveListContainer = styled.div`
     position: relative;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
     margin-left: 5rem;
+    margin-bottom: 1.5rem;
 `;
 
 const LiveListHeader = styled.span`
