@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import LiveCollection from './LiveCollection/LiveCollection';
+
 const StyledFoo = styled.div`
     ${({ theme }) =>
         css`
@@ -9,5 +11,10 @@ const StyledFoo = styled.div`
 `;
 
 export default function foo({ title }) {
-    return <StyledFoo>{title}</StyledFoo>;
+    return (
+        <>
+            <StyledFoo>{title}</StyledFoo>
+            <LiveCollection />
+        </>
+    );
 }

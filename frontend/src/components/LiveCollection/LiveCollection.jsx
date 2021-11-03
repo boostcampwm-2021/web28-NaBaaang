@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-const LiveLists = ({ shows }) => {
+import LiveList from './LiveList';
+
+function LiveCollection({ shows }) {
     const [liveLists, setLiveLists] = useState([]);
 
     // const fetchLiveLists = async () => {
@@ -14,7 +16,13 @@ const LiveLists = ({ shows }) => {
         setLiveLists(shows);
     }, []);
 
-    return <p>안녕 {JSON.stringify(liveLists)}</p>;
-};
+    return (
+        <>
+            {liveLists.map(liveList => (
+                <LiveList liveList={liveList} />
+            ))}
+        </>
+    );
+}
 
-export default LiveLists;
+export default LiveCollection;
