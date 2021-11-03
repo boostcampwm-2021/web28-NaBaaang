@@ -14,4 +14,6 @@ const StyledCard = styled.div`
     ${({ width, height }) => sizeMixin(width, height)}
     ${borderBoxMixin('1px', '10px')}
     background-color: ${({ theme }) => theme.color.white};
+    padding: 20px;
+    box-sizing: border-box;
 `;
