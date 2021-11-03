@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Card from '@/components/Card';
 import { flexMixin } from '@/styles/mixins.js';
 
-export default function Modal({ open, onClose }) {
+export default function Modal({ open, onClose, onSuccess, children }) {
     if (!open) return null;
 
     return (
@@ -11,9 +11,10 @@ export default function Modal({ open, onClose }) {
             <ModalLayer onClick={onClose} />
             <Card width="350px" height="350px">
                 <ModalHeader>NaBaang</ModalHeader>
+                {children && <ModalContent>{children}</ModalContent>}
                 <ModalButtonWrap>
                     <ModalButton onClick={onClose}>취소</ModalButton>
-                    <ModalButton>성공</ModalButton>
+                    <ModalButton onClick={onSuccess}>성공</ModalButton>
                 </ModalButtonWrap>
             </Card>
         </ModalWrap>
@@ -47,6 +48,11 @@ const ModalLayer = styled.div`
     left: 0;
     background-color: ${({ theme }) => theme.color.black};
     z-index: -1;
+`;
+
+const ModalContent = styled.div`
+    text-align: center;
+    margin: auto 0;
 `;
 
 const ModalButtonWrap = styled.div`
