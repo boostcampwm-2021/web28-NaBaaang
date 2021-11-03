@@ -69,7 +69,7 @@ const Overlay = styled.div`
 
 const ModalContent = styled.div`
     text-align: center;
-    margin: auto 0;
+    margin-bottom: auto;
 `;
 
 const CloseButton = styled.button`
