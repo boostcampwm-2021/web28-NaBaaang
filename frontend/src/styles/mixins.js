@@ -5,6 +5,11 @@ const sizeMixin = (width = '100px', height = '100px') => css`
     height: ${height};
 `;
 
+const colorMixin = (color, backgroundColor) => css`
+    color: ${color};
+    background-color: ${backgroundColor};
+`;
+
 const flexMixin = (flexDirection, justifyContent, aligenItems) => css`
     display: flex;
     flex-direction: ${flexDirection};
@@ -17,4 +22,4 @@ const borderBoxMixin = (stroke, radius, color = 'black') => css`
     border: ${stroke} solid ${color};
 `;
 
-export { flexMixin, borderBoxMixin, sizeMixin };
+export { flexMixin, borderBoxMixin, sizeMixin, colorMixin };
