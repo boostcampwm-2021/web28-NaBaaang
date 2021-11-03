@@ -18,7 +18,7 @@ function LiveThumbnail({ thumbnail, viewer }) {
 const ThumbnailBlock = styled.div`
     position: relative;
     width: 100%;
-    height: 10em;
+    height: 150px;
     overflow: hidden;
     border-radius: 16px;
     margin-bottom: 16px;
