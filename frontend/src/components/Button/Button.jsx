@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { colorMixin } from '@/styles/mixins';
 
-export default function Button({ text, color, size = 'small' }) {
+export default function Button({ onClick, text, color, size = 'small' }) {
     return (
-        <StyledButton color={color} size={size}>
+        <StyledButton onClick={onClick} color={color} size={size}>
             {text}
         </StyledButton>
     );
