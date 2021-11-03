@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default function SideBarStreamerItem({ streamer }) {
     return (
-        <AvatarListItem key={streamer.key}>
+        <AvatarListItem key={streamer.id}>
             <AvatarBox>
                 <Avatar alt="empty" src={streamer.imageSrc} />
             </AvatarBox>

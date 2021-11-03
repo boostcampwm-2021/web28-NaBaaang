@@ -11,11 +11,11 @@ export default function SideBarStreamerList() {
     useEffect(() => {
         // 현재는 임시 데이터를 사용, 후에 api 호출해서 갱신해주면 됨.
         const newStreamerList = [
-            { imageSrc: tempImage, key: 1 },
-            { imageSrc: tempImage, key: 2 },
-            { imageSrc: tempImage, key: 3 },
-            { imageSrc: tempImage, key: 4 },
-            { imageSrc: tempImage, key: 5 },
+            { id: 1, imageSrc: tempImage },
+            { id: 2, imageSrc: tempImage },
+            { id: 3, imageSrc: tempImage },
+            { id: 4, imageSrc: tempImage },
+            { id: 5, imageSrc: tempImage },
         ];
         setStreamerList([...newStreamerList]);
     }, []);
