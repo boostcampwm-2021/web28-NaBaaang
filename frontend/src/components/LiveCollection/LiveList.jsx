@@ -1,28 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import LiveSlider from './LiveSlider';
+
 function LiveList({ liveList }) {
     return (
-        <LiveListContainer>
+        <LiveListWrapper>
             <LiveListHeader>{liveList[0].category}</LiveListHeader>
-            {/* <LiveSlider liveList={liveList} /> */}
-        </LiveListContainer>
+            <LiveSlider liveList={liveList} />
+        </LiveListWrapper>
     );
 }
 
-const LiveListContainer = styled.div`
+const LiveListWrapper = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
-    margin-left: 5rem;
     margin-bottom: 1.5rem;
 `;
 
 const LiveListHeader = styled.span`
+    font-family: 'notoSansBold';
     color: ${({ theme }) => theme.color.black};
-    font-size: 1.75em;
+    font-size: 2em;
     font-weight: bold;
 `;
 

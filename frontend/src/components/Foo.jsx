@@ -1,20 +1,7 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 
 import LiveCollection from './LiveCollection/LiveCollection';
 
-const StyledFoo = styled.div`
-    ${({ theme }) =>
-        css`
-            background-color: ${theme.color.gray1};
-        `}
-`;
-
-export default function foo({ title }) {
-    return (
-        <>
-            <StyledFoo>{title}</StyledFoo>
-            <LiveCollection />
-        </>
-    );
+export default function foo() {
+    return <LiveCollection />;
 }
