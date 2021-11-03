@@ -1,17 +1,17 @@
 import React from 'react';
-import LiveLists from '.';
+import MockLiveCollection from './MockLiveCollection';
 
 export default {
-    component: LiveLists,
-    title: 'LiveLists',
+    component: MockLiveCollection,
+    title: 'MockLiveCollection',
     decorators: [story => <div style={{ padding: '3rem' }}>{story()}</div>],
 };
 
-const Template = args => <LiveLists {...args} />;
+const Template = args => <MockLiveCollection {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-    shows: [
+    lives: [
         [
             {
                 thumbnail_url:
