@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import Modal from '@/components/Modal';
@@ -15,22 +15,42 @@ export default function ChannelCreateModal() {
             <ModalBody>
                 <InputRow>
                     <InputLabel>제목</InputLabel>
-                    <Input ref={titleRef} />
+                    <InputBox>
+                        <Input ref={titleRef} />
+                    </InputBox>
                 </InputRow>
                 <InputRow>
                     <InputLabel>카테고리</InputLabel>
-                    <Input ref={categoryRef} />
+                    <InputBox>
+                        <Input ref={categoryRef} />
+                    </InputBox>
                 </InputRow>
                 <InputRow>
                     <InputLabel>설명</InputLabel>
-                    <Input ref={descriptionRef} />
+                    <InputBox>
+                        <Input ref={descriptionRef} />
+                    </InputBox>
                 </InputRow>
             </ModalBody>
         );
     };
 
+    const createChannel = () => {
+        // const title = titleRef.current.value;
+        // const category = categoryRef.current.value;
+        // const description = descriptionRef.current.value;
+        // POST /api/channels/new 호출
+        // 만들어진 채널로 route
+    };
+
     return (
-        <Modal open showButton>
+        <Modal
+            open
+            showButton
+            onSuccessText="방송 생성"
+            onSuccess={createChannel}
+            onCancleText="취소"
+        >
             {modalChildren()}
         </Modal>
     );
@@ -41,8 +61,32 @@ const ModalBody = styled.section`
     ${sizeMixin('100%', '100%')}
 `;
 
-const InputRow = styled.div``;
+const InputRow = styled.div`
+    ${flexMixin('row', 'space-between', 'center')}
+    margin: 20px 0;
+`;
 
-const InputLabel = styled.label``;
+const InputLabel = styled.label`
+    width: 100px;
+`;
 
-const Input = styled.input``;
+const InputBox = styled.div`
+    ${({ theme }) =>
+        css`
+            background-color: ${theme.color.gray2};
+        `}
+    border-radius: 40px;
+    padding: 5px;
+`;
+
+const Input = styled.input`
+    ${({ theme }) =>
+        css`
+            background-color: ${theme.color.gray2};
+        `}
+    border: none;
+    caret-color: white;
+    :focus {
+        outline: none;
+    }
+`;
