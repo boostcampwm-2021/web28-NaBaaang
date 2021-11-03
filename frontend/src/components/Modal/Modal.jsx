@@ -5,6 +5,7 @@ import { flexMixin } from '@/styles/mixins.js';
 
 export default function Modal({
     open,
+    showButton,
     onClose,
     onSuccess,
     onCancleText,
@@ -22,12 +23,17 @@ export default function Modal({
             <Card width="350px" height="350px">
                 <ModalHeader>NaBaang</ModalHeader>
                 {children && <ModalContent>{children}</ModalContent>}
-                <ModalButtonWrap>
-                    <CloseButton onClick={onClose}>{cancleText}</CloseButton>
-                    <SuccessButton onClick={onSuccess}>
-                        {successText}
-                    </SuccessButton>
-                </ModalButtonWrap>
+
+                {showButton && (
+                    <ModalButtonWrap>
+                        <CloseButton onClick={onClose}>
+                            {cancleText}
+                        </CloseButton>
+                        <SuccessButton onClick={onSuccess}>
+                            {successText}
+                        </SuccessButton>
+                    </ModalButtonWrap>
+                )}
             </Card>
         </ModalWrap>
     );

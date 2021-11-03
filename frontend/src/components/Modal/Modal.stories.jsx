@@ -19,6 +19,7 @@ const InputModal = () => {
             open
             onClose={handleOnClose}
             onSuccess={handleOnSuccess}
+            showButton
             onCancleText="취소"
             onSuccessText="방송 생성"
         >
@@ -31,8 +32,12 @@ storiesOf('Modal', module)
     .add('closed', () => <Modal />)
     .add('open', () => <Modal open />)
     .add('buttonText', () => (
-        <Modal open onCancleText="Foo" onSuccessText="Bar" />
+        <Modal open showButton onCancleText="Foo" onSuccessText="Bar" />
     ))
-    .add('onClose', () => <Modal open onClose={action('onClose!!')} />)
-    .add('onSuccess', () => <Modal open onSuccess={action('onSuccess!!')} />)
+    .add('onClose', () => (
+        <Modal open showButton onClose={action('onClose!!')} />
+    ))
+    .add('onSuccess', () => (
+        <Modal open showButton onSuccess={action('onSuccess!!')} />
+    ))
     .add('inputModal', () => <InputModal />);
