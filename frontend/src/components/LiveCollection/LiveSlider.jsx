@@ -19,6 +19,7 @@ const SliderScrollBlock = styled.div`
     position: relative;
     width: 100%;
     overflow: hidden;
+    margin-top: 1.5em;
 `;
 
 const SliderListWrapper = styled.div`
