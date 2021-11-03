@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default function SideBarStreamerItem({ streamer }) {
     return (
-        <AvatarListItem key={streamer.id}>
+        <AvatarListItem key={streamer.id} data-streamer-id={streamer.id}>
             <AvatarBox>
                 <Avatar alt="empty" src={streamer.imageSrc} />
             </AvatarBox>
@@ -13,6 +13,7 @@ export default function SideBarStreamerItem({ streamer }) {
 
 const AvatarListItem = styled.li`
     margin: 10px 0;
+    cursor: pointer;
 `;
 
 const AvatarBox = styled.div`
