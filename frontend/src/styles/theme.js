@@ -5,7 +5,7 @@ const color = {
     gray2: '#C4C4C4',
     offwhite: '#EEEEEE',
     white: '#FFFFFF',
-    red: '#f44336',
+    red: '#FF0000',
 };
 
 const theme = {
