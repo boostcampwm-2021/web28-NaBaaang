@@ -1,5 +1,15 @@
 import { css } from 'styled-components';
 
+const sizeMixin = (width = '100px', height = '100px') => css`
+    width: ${width};
+    height: ${height};
+`;
+
+const colorMixin = (color, backgroundColor) => css`
+    color: ${color};
+    background-color: ${backgroundColor};
+`;
+
 const flexMixin = (flexDirection, justifyContent, aligenItems) => css`
     display: flex;
     flex-direction: ${flexDirection};
@@ -23,4 +33,5 @@ const fontMixin = (
     font-family: '${fontFamily}';
     color: ${color};
 `;
-export { flexMixin, borderBoxMixin, fontMixin };
+
+export { flexMixin, borderBoxMixin, sizeMixin, colorMixin, fontMixin };
