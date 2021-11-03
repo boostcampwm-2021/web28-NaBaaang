@@ -3,18 +3,30 @@ import styled from 'styled-components';
 import Card from '@/components/Card';
 import { flexMixin } from '@/styles/mixins.js';
 
-export default function Modal({ open, onClose, onSuccess, children }) {
+export default function Modal({
+    open,
+    onClose,
+    onSuccess,
+    onCancleText,
+    onSuccessText,
+    children,
+}) {
     if (!open) return null;
+
+    const cancleText = !onCancleText ? 'Cancle' : onCancleText;
+    const successText = !onSuccessText ? 'OK' : onSuccessText;
 
     return (
         <ModalWrap>
-            <ModalLayer onClick={onClose} />
+            <Overlay onClick={onClose} />
             <Card width="350px" height="350px">
                 <ModalHeader>NaBaang</ModalHeader>
                 {children && <ModalContent>{children}</ModalContent>}
                 <ModalButtonWrap>
-                    <ModalButton onClick={onClose}>취소</ModalButton>
-                    <ModalButton onClick={onSuccess}>성공</ModalButton>
+                    <CloseButton onClick={onClose}>{cancleText}</CloseButton>
+                    <SuccessButton onClick={onSuccess}>
+                        {successText}
+                    </SuccessButton>
                 </ModalButtonWrap>
             </Card>
         </ModalWrap>
@@ -34,13 +46,12 @@ const ModalWrap = styled.div`
 `;
 
 const ModalHeader = styled.h3`
-    font-family: 'notoSansBold';
     color: ${({ theme }) => theme.color.primary};
     margin-bottom: auto;
     text-align: center;
 `;
 
-const ModalLayer = styled.div`
+const Overlay = styled.div`
     width: 100%;
     height: 100%;
     position: absolute;
@@ -55,15 +66,29 @@ const ModalContent = styled.div`
     margin: auto 0;
 `;
 
+const CloseButton = styled.button`
+    background-color: ${({ theme }) => theme.color.red};
+`;
+
+const SuccessButton = styled.button`
+    background-color: ${({ theme }) => theme.color.primary};
+`;
+
 const ModalButtonWrap = styled.div`
     width: 100%;
     margin-top: auto;
     ${flexMixin('row', 'space-between', 'center')}
-`;
 
-const ModalButton = styled.button`
-    outline: none;
-    width: 100px;
-    height: 30px;
-    margin: 0 auto;
+    button {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        width: 100px;
+        height: 35px;
+        margin: 0 auto;
+        color: ${({ theme }) => theme.color.white};
+        cursor: pointer;
+        font-family: 'notoSansBold';
+        font-size: 16px;
+    }
 `;

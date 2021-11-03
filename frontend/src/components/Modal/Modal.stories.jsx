@@ -15,7 +15,13 @@ const InputModal = () => {
     };
 
     return (
-        <Modal open onClose={handleOnClose} onSuccess={handleOnSuccess}>
+        <Modal
+            open
+            onClose={handleOnClose}
+            onSuccess={handleOnSuccess}
+            onCancleText="취소"
+            onSuccessText="방송 생성"
+        >
             <input ref={inputRef} />
         </Modal>
     );
@@ -23,7 +29,10 @@ const InputModal = () => {
 
 storiesOf('Modal', module)
     .add('closed', () => <Modal />)
-    .add('opend', () => <Modal open />)
+    .add('open', () => <Modal open />)
+    .add('buttonText', () => (
+        <Modal open onCancleText="Foo" onSuccessText="Bar" />
+    ))
     .add('onClose', () => <Modal open onClose={action('onClose!!')} />)
     .add('onSuccess', () => <Modal open onSuccess={action('onSuccess!!')} />)
     .add('inputModal', () => <InputModal />);
