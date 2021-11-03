@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '@/components/Card';
+import Button from '@/components/Button';
 import { flexMixin } from '@/styles/mixins.js';
 
 export default function Modal({
@@ -26,12 +27,19 @@ export default function Modal({
 
                 {showButton && (
                     <ModalButtonWrap>
-                        <CloseButton onClick={onClose}>
-                            {cancleText}
-                        </CloseButton>
-                        <SuccessButton onClick={onSuccess}>
-                            {successText}
-                        </SuccessButton>
+                        <Button
+                            color="error"
+                            onClick={onClose}
+                            text={cancleText}
+                            size="medium"
+                        />
+
+                        <Button
+                            color="success"
+                            onClick={onSuccess}
+                            text={successText}
+                            size="medium"
+                        />
                     </ModalButtonWrap>
                 )}
             </Card>
@@ -72,29 +80,12 @@ const ModalContent = styled.div`
     margin-bottom: auto;
 `;
 
-const CloseButton = styled.button`
-    background-color: ${({ theme }) => theme.color.red};
-`;
-
-const SuccessButton = styled.button`
-    background-color: ${({ theme }) => theme.color.primary};
-`;
-
 const ModalButtonWrap = styled.div`
     width: 100%;
     margin-top: auto;
     ${flexMixin('row', 'space-between', 'center')}
 
     button {
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        width: 100px;
-        height: 35px;
         margin: 0 auto;
-        color: ${({ theme }) => theme.color.white};
-        cursor: pointer;
-        font-family: 'notoSansBold';
-        font-size: 16px;
     }
 `;
