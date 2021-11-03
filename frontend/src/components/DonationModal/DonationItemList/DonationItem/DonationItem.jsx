@@ -13,7 +13,7 @@ export default function DonationItem({ imgSrc, value }) {
 
 const ItemWrap = styled.div`
     ${flexMixin('column', 'center', 'center')};
-    transition all ease-in-out 0.1s;
+    transition: all ease-in-out 0.1s;
     &:hover {
         transform: scale(1.1);
     }
