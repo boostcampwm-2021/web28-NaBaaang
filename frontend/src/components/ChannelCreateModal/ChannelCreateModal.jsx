@@ -1,47 +1,30 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import Modal from '@/components/Modal';
+import TextField from '@/components/TextField';
+
+import useChannelCreateHook from './ChannelCreateHook';
 
 export default function ChannelCreateModal() {
-    const titleRef = useRef();
-    const categoryRef = useRef();
-    const descriptionRef = useRef();
+    const { titleRef, categoryRef, descriptionRef, createChannel } =
+        useChannelCreateHook();
 
-    const modalChildren = () => {
-        return (
-            <ModalBody>
-                <InputRow>
-                    <InputLabel>제목</InputLabel>
-                    <InputBox>
-                        <Input ref={titleRef} />
-                    </InputBox>
-                </InputRow>
-                <InputRow>
-                    <InputLabel>카테고리</InputLabel>
-                    <InputBox>
-                        <Input ref={categoryRef} />
-                    </InputBox>
-                </InputRow>
-                <InputRow>
-                    <InputLabel>설명</InputLabel>
-                    <InputBox>
-                        <Input ref={descriptionRef} />
-                    </InputBox>
-                </InputRow>
-            </ModalBody>
-        );
-    };
-
-    const createChannel = () => {
-        // const title = titleRef.current.value;
-        // const category = categoryRef.current.value;
-        // const description = descriptionRef.current.value;
-        // POST /api/channels/new 호출
-        // 만들어진 채널로 route
-    };
+    const modalContents = (
+        <ModalBody>
+            <InputRow>
+                <TextField labelText="제목" inputRef={titleRef} />
+            </InputRow>
+            <InputRow>
+                <TextField labelText="카테고리" inputRef={categoryRef} />
+            </InputRow>
+            <InputRow>
+                <TextField labelText="설명" inputRef={descriptionRef} />
+            </InputRow>
+        </ModalBody>
+    );
 
     return (
         <Modal
@@ -51,7 +34,7 @@ export default function ChannelCreateModal() {
             onSuccess={createChannel}
             onCancleText="취소"
         >
-            {modalChildren()}
+            {modalContents}
         </Modal>
     );
 }
@@ -63,30 +46,5 @@ const ModalBody = styled.section`
 
 const InputRow = styled.div`
     ${flexMixin('row', 'space-between', 'center')}
-    margin: 20px 0;
-`;
-
-const InputLabel = styled.label`
-    width: 100px;
-`;
-
-const InputBox = styled.div`
-    ${({ theme }) =>
-        css`
-            background-color: ${theme.color.gray2};
-        `}
-    border-radius: 40px;
-    padding: 5px;
-`;
-
-const Input = styled.input`
-    ${({ theme }) =>
-        css`
-            background-color: ${theme.color.gray2};
-        `}
-    border: none;
-    caret-color: white;
-    :focus {
-        outline: none;
-    }
+    margin: 16px 0;
 `;
