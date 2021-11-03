@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { sizeMixin, borderBoxMixin } from '@/styles/mixins';
 
-export default function Card({ width, height }) {
-    return <StyledCard width={width} height={height} />;
+export default function Card({ width, height, children }) {
+    return (
+        <StyledCard width={width} height={height}>
+            {children}
+        </StyledCard>
+    );
 }
 
 const StyledCard = styled.div`
