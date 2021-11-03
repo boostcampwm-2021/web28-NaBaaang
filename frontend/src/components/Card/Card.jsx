@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { sizeMixin, borderBoxMixin } from '@/styles/mixins';
+import { sizeMixin, borderBoxMixin, flexMixin } from '@/styles/mixins';
 
 export default function Card({ width, height, children }) {
     return (
@@ -11,6 +11,7 @@ export default function Card({ width, height, children }) {
 }
 
 const StyledCard = styled.div`
+    ${flexMixin('column', 'flex-start', 'center')}
     ${({ width, height }) => sizeMixin(width, height)}
     ${borderBoxMixin('1px', '10px')}
     background-color: ${({ theme }) => theme.color.white};
