@@ -23,7 +23,6 @@ const DetailsLayout = styled.div`
 const StreamerIcon = styled.div`
     order: 1;
     flex: 0 0 50px;
-    justify-content: center;
     margin-right: 10px;
 
     img {
@@ -33,10 +32,10 @@ const StreamerIcon = styled.div`
 `;
 
 const LiveContent = styled.div`
-    display: flex;
-    flex-direction: column;
     order: 2;
+    display: flex;
     flex: 1 1 100%;
+    flex-direction: column;
     justify-content: center;
 `;
 

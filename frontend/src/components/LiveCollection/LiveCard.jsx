@@ -19,6 +19,7 @@ function LiveCard({ content }) {
 const CardLayout = styled.article`
     font-family: 'notoSansMedium';
     display: flex;
+    flex: 0 0 18.5em;
     flex-direction: column;
     justify-content: center;
     height: 100%;

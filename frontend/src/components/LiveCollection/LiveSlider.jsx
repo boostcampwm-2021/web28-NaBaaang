@@ -28,6 +28,7 @@ const SliderListWrapper = styled.div`
     min-height: 13em;
     overflow-x: visible;
     flex-wrap: nowrap;
+    transform: translate3d(0em, 0px, 0px);
 `;
 
 export default LiveSlider;
