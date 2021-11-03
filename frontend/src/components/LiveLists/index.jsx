@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-const LiveLists = () => {
+const LiveLists = ({ shows }) => {
     const [liveLists, setLiveLists] = useState([]);
 
-    const fetchLiveLists = async () => {
-        const response = await fetch('http://localhost:3000/dummy.json');
-        const data = await response.json();
-        setLiveLists(data);
-    };
+    // const fetchLiveLists = async () => {
+    //     const response = await fetch('http://localhost:3000/dummy.json');
+    //     const data = await response.json();
+    //     setLiveLists(data);
+    // };
 
     useEffect(() => {
-        console.log('fetching data....');
-        fetchLiveLists();
+        // fetchLiveLists();
+        setLiveLists(shows);
     }, []);
 
-    return <p>{JSON.stringify(liveLists)}</p>;
+    return <p>안녕 {JSON.stringify(liveLists)}</p>;
 };
 
 export default LiveLists;
