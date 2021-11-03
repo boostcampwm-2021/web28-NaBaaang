@@ -12,4 +12,15 @@ const borderBoxMixin = (stroke, radius, color = 'black') => css`
     border: ${stroke} solid ${color};
 `;
 
-export { flexMixin, borderBoxMixin };
+const fontMixin = (
+    size,
+    lineh,
+    fontFamily = 'notoSansLight',
+    color = 'black',
+) => css`
+    font-size: ${size};
+    line-heigth: ${lineh};
+    font-family: '${fontFamily}';
+    color: ${color};
+`;
+export { flexMixin, borderBoxMixin, fontMixin };
