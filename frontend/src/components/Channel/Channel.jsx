@@ -47,7 +47,6 @@ const StyledColumnRight = styled.div`
 
 const StyledRow = styled.div`
     ${flexMixin('row')}
-    padding: 1em;
     width: 90%;
     height: 100%;
 `;
