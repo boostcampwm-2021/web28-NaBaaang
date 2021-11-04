@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
 import tempImage from '@/assets/images/kukucorn.jpg';
-import ChannelCard from '@/components/ChannelCard/ChannelCard';
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
+import ChannelCard from './ChannelCard/ChannelCard';
 
 export default function Channel() {
     const channelInfo = {
