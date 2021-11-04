@@ -17,8 +17,8 @@ const AvatarListItem = styled.li`
 `;
 
 const AvatarBox = styled.div`
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     border-radius: 70%;
     overflow: hidden;
 `;
