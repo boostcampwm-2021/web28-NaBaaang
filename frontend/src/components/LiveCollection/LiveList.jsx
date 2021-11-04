@@ -15,8 +15,8 @@ function LiveList({ category, liveList }) {
 
 const LiveListWrapper = styled.div`
     position: relative;
-    ${flexMixin('column', 'center', 'flex-start')}
     margin-bottom: 1.5rem;
+    ${flexMixin('column', 'center', 'flex-start')}
 `;
 
 const LiveListHeader = styled.span`
