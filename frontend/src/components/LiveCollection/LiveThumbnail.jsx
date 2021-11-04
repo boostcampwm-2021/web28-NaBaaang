@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 function LiveThumbnail({ thumbnail, viewer }) {
     return (
@@ -17,28 +18,24 @@ function LiveThumbnail({ thumbnail, viewer }) {
 
 const ThumbnailBlock = styled.div`
     position: relative;
-    width: 100%;
-    height: 150px;
     overflow: hidden;
     border-radius: 16px;
     margin-bottom: 16px;
+    ${sizeMixin('100%', '150px')}
 
     img {
         position: absolute;
-        width: 100%;
-        height: 10em;
         object-fit: cover;
+        ${sizeMixin('100%', '10em')}
     }
 `;
 
 const Badge = css`
     position: absolute;
     left: 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 0.25em;
     padding: 0 0.25em;
+    ${flexMixin('inline-flex', 'center', 'center')}
 `;
 
 const LiveBadge = styled.div`

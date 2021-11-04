@@ -40,7 +40,7 @@ const LiveContent = styled.div`
 
 const LiveTitle = styled.span`
     padding-bottom: 0.5em;
-    ${fontMixin('16px', '1em', 'notoSansBold')}
+    ${fontMixin('16px', '1em', 'notoSansMedium')}
 `;
 
 const LiveStreamer = styled.span`

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { sizeMixin, colorMixin, borderBoxMixin } from '@/styles/mixins';
 
 import LiveCard from './LiveCard';
 
@@ -48,34 +49,32 @@ const SliderScrollBlock = styled.div`
 const SliderListWrapper = styled.div`
     display: flex;
     flex-wrap: nowrap;
+    overflow-x: visible;
     width: 100%;
     min-height: 13em;
-    overflow-x: visible;
 `;
 
 const HoverButton = css`
     position: absolute;
     top: 0;
-    align-items: center;
     z-index: 3;
-    width: 40px;
-    height: 150px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 0.25em 0px 0px 0.25em;
-    border: none;
+    align-items: center;
     cursor: pointer;
+    ${sizeMixin('40px', '150px')}
+    ${borderBoxMixin('1px', '0.25em 0px 0px 0.25em')}
+    ${colorMixin('white', 'rgba(0, 0, 0, 0.5)')}
 `;
 
 const RightButton = styled.button`
     ${HoverButton}
     justify-content: flex-end;
-    right: 0px;
+    right: 0;
 `;
 
 const LeftButton = styled.button`
     ${HoverButton}
     justify-content: flex-start;
-    left: 0px;
+    left: 0;
 `;
 
 export default LiveSlider;
