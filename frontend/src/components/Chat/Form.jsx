@@ -7,9 +7,19 @@ export default function Form({ handleSubmit }) {
 
     const sendMessage = e => {
         e.preventDefault();
-        handleSubmit(messageInput.current.value);
-    };
+        const txt = messageInput.current.value;
+        if (txt === '') return;
 
+        const message = {
+            id: 10,
+            type: 'NORMAL',
+            nickname: 'undefined',
+            content: txt,
+        };
+        
+        handleSubmit(message);
+        messageInput.current.value = '';
+    };
     return (
         <StyledForm onSubmit={sendMessage}>
             <StyledDiv>

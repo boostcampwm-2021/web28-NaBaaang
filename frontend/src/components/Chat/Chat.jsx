@@ -19,7 +19,7 @@ export default function Chat() {
      * @param {*} message
      */
     const handleSubmit = message => {
-        console.log(message);
+        setMessageList([...messageList, message]);
     };
 
     return (
