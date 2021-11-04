@@ -7,5 +7,5 @@ export default function Portal({ children, elementId }) {
         [elementId],
     );
 
-    return createPortal(children, rootElement);
+    return !rootElement ? null : createPortal(children, rootElement);
 }

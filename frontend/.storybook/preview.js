@@ -10,7 +10,6 @@ export const decorators = [
             <GlobalStyle />
             <BrowserRouter>
                 <Story />
-                <div id="modal-root"></div>
             </BrowserRouter>
         </ThemeProvider>
     ),
