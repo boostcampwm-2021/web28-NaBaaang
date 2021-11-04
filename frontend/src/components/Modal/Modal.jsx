@@ -59,7 +59,6 @@ const ModalWrap = styled.div`
     border: 1px solid black;
     padding: 20px;
     box-sizing: border-box;
-    opacity: 0.8;
     ${flexMixin('row', 'center', 'center')}
     z-index: 1024;
 `;
@@ -76,7 +75,7 @@ const Overlay = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: ${({ theme }) => theme.color.black};
+    background-color: rgb(0, 0, 0, 0.8);
     z-index: -1;
 `;
 
