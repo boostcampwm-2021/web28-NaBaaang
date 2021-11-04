@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import SideBarComponent from '@/components/SideBar';
+import LiveCollection from '@/components/LiveCollection';
 
 import { flexMixin } from '@/styles/mixins';
 
@@ -14,7 +15,9 @@ function MainPage() {
                 <SideBar>
                     <SideBarComponent />
                 </SideBar>
-                <MainSection>MainSection</MainSection>
+                <MainSection>
+                    <LiveCollection />
+                </MainSection>
             </Body>
         </MainLayout>
     );
@@ -40,7 +43,6 @@ const SideBar = styled.aside`
 
 const MainSection = styled.section`
     width: 90%;
-    ${({ theme }) => `background-color: ${theme.color.gray2};`}
 `;
 
 export default MainPage;
