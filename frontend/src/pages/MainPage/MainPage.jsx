@@ -48,11 +48,11 @@ const Body = styled.section`
 
 const SideBar = styled.aside`
     ${flexMixin('column', '', 'center')}
-    width: 10%;
+    ${({ theme }) => `background-color: ${theme.color.gray2};`}
 `;
 
 const MainSection = styled.section`
-    width: 90%;
+    width: 95%;
 `;
 
 export default MainPage;
