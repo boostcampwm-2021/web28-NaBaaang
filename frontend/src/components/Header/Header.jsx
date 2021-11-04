@@ -28,7 +28,6 @@ export default function Header({ isSigin }) {
             ) : (
                 <IconWrap>
                     <Logo src={UserIcon} />
-                    {/* <img src={UserIcon} alt/>="" /> */}
                 </IconWrap>
             )}
         </HeaderWrap>
