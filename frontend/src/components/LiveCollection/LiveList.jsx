@@ -22,5 +22,4 @@ const LiveListWrapper = styled.div`
 const LiveListHeader = styled.span`
     ${fontMixin('2em', '1em', 'notoSansBold')}
 `;
-
 export default LiveList;

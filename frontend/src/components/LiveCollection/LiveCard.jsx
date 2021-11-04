@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import LiveThumbnail from './LiveThumbnail';
 import LiveDetails from './LiveDetails';
@@ -17,14 +18,10 @@ function LiveCard({ content }) {
 }
 
 const CardLayout = styled.article`
-    font-family: 'notoSansMedium';
-    display: flex;
     flex: 0 0 18.5em;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    width: 18.5em;
     margin-right: 1em;
+    ${flexMixin('column', 'center')}
+    ${sizeMixin('18.5em', '100%')}
 `;
 
 export default LiveCard;
