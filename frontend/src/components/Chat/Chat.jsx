@@ -31,8 +31,8 @@ export default function Chat() {
 }
 
 const StyledChat = styled.div`
-    width: 400px;
-    height: 800px;
+    width: 30em;
+    height: 100%;
     padding: 20px;
     ${({ theme }) => borderBoxMixin('1px', '0', theme.color.black)};
 `;
