@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import HeaderComponent from '@/components/Header';
 import SideBarComponent from '@/components/SideBar';
 import LiveCollection from '@/components/LiveCollection';
 
@@ -10,7 +11,9 @@ import { flexMixin } from '@/styles/mixins';
 function MainPage() {
     return (
         <MainLayout>
-            <Header>Header</Header>
+            <Header>
+                <HeaderComponent />
+            </Header>
             <Body>
                 <SideBar>
                     <SideBarComponent />
@@ -27,10 +30,7 @@ const MainLayout = styled.main`
     ${flexMixin('column')}
 `;
 
-const Header = styled.header`
-    height: 100px;
-    ${({ theme }) => `background-color: ${theme.color.primary};`}
-`;
+const Header = styled.header``;
 
 const Body = styled.section`
     ${flexMixin('row')}
