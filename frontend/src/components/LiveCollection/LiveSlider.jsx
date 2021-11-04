@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { sizeMixin, colorMixin, borderBoxMixin } from '@/styles/mixins';
 import { ReactComponent as LeftArrow } from '@/assets/images/left-arrow.svg';
@@ -7,15 +7,27 @@ import { ReactComponent as RightArrow } from '@/assets/images/right-arrow.svg';
 import LiveCard from './LiveCard';
 
 function LiveSlider({ liveList }) {
-    const LiveCards = liveList.map(liveItem => <LiveCard content={liveItem} />);
+    const [clickIdx, setClickIdx] = useState(0);
+    const chunk1 = liveList.slice(0, 5);
+    const chunk2 = liveList.slice(5, liveList.length);
 
+    const handleArrowClick = () => {
+        setClickIdx(prev => prev + 1);
+    };
+
+    const makeLiveCardChunk = chunk => {
+        return chunk.map(liveItem => <LiveCard content={liveItem} />);
+    };
+    
     return (
         <SliderScrollBlock>
-            <LeftButton>
+            <LeftButton onClick={handleArrowClick}>
                 <LeftArrow />
             </LeftButton>
-            <SliderListWrapper>{LiveCards}</SliderListWrapper>
-            <RightButton>
+            <SliderListWrapper>
+                {clickIdx % 2 === 0 ? makeLiveCardChunk(chunk1) : makeLiveCardChunk(chunk2)}
+            </SliderListWrapper>
+            <RightButton onClick={handleArrowClick}>
                 <RightArrow />
             </RightButton>
         </SliderScrollBlock>
