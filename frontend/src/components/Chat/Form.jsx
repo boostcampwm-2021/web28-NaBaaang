@@ -1,10 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
+import DonationModal from '../DonationModal/DonationModal';
 
 export default function Form({ handleSubmit }) {
     const messageInput = useRef();
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const handleShowModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleHideModal = () => {
+        setModalOpen(false);
+    };
     const sendMessage = e => {
         e.preventDefault();
         const txt = messageInput.current.value;
@@ -21,15 +30,20 @@ export default function Form({ handleSubmit }) {
         messageInput.current.value = '';
     };
     return (
-        <StyledForm onSubmit={sendMessage}>
-            <StyledDiv>
-                <StyledInput ref={messageInput} />
-            </StyledDiv>
-            <StyledDiv>
-                <StyledButton>도네이션</StyledButton>
-                <StyledButton>채팅</StyledButton>
-            </StyledDiv>
-        </StyledForm>
+        <>
+            {modalOpen && <DonationModal open onClose={handleHideModal} />}
+            <StyledForm onSubmit={sendMessage}>
+                <StyledDiv>
+                    <StyledInput ref={messageInput} />
+                </StyledDiv>
+                <StyledDiv>
+                    <StyledButton type="button" onClick={handleShowModal}>
+                        도네이션
+                    </StyledButton>
+                    <StyledButton>채팅</StyledButton>
+                </StyledDiv>
+            </StyledForm>
+        </>
     );
 }
 
