@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
 import DonationModal from '../DonationModal/DonationModal';
 
-export default function Form({ handleSubmit }) {
+export default function Form({ messageList, setMessageList, handleSubmit }) {
     const messageInput = useRef();
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -14,6 +14,18 @@ export default function Form({ handleSubmit }) {
     const handleHideModal = () => {
         setModalOpen(false);
     };
+
+    const handleClickDonation = value => {
+        const message = {
+            id: 10,
+            type: 'DONATION',
+            nickname: 'undefined',
+            content: value,
+        };
+        setMessageList([...messageList, message]);
+        setModalOpen(false);
+    };
+
     const sendMessage = e => {
         e.preventDefault();
         const txt = messageInput.current.value;
@@ -25,13 +37,19 @@ export default function Form({ handleSubmit }) {
             nickname: 'undefined',
             content: txt,
         };
-        
+
         handleSubmit(message);
         messageInput.current.value = '';
     };
     return (
         <>
-            {modalOpen && <DonationModal open onClose={handleHideModal} />}
+            {modalOpen && (
+                <DonationModal
+                    open
+                    onClose={handleHideModal}
+                    onSuccess={handleClickDonation}
+                />
+            )}
             <StyledForm onSubmit={sendMessage}>
                 <StyledDiv>
                     <StyledInput ref={messageInput} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { fontMixin } from '@/styles/mixins';
-import { BIT_TYPE, MESSAGE_TYPE } from '@/constants/messageType';
+import { MESSAGE_TYPE } from '@/constants/messageType';
 
 export default function Message({ type, nickname, content }) {
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
@@ -10,11 +10,10 @@ export default function Message({ type, nickname, content }) {
         </StyledMessage>
     ) : (
         <StyledDonation>
-            {BIT_TYPE[content].image}
-            <StyledDonationValue>{BIT_TYPE[content].value}</StyledDonationValue>
+            <StyledDonationValue>{content}</StyledDonationValue>
             <StyledMessage>
                 {nickname}님이 <br />
-                비트 {BIT_TYPE[content].value}개 선물하였습니다!!
+                비트 {content}개 선물하였습니다!!
             </StyledMessage>
         </StyledDonation>
     );

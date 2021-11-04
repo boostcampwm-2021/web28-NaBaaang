@@ -2,9 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
-export default function DonationItem({ ImageComponent, value }) {
+export default function DonationItem({
+    ImageComponent,
+    value,
+    handleTotalDonation,
+}) {
+    const handleItemClick = () => {
+        handleTotalDonation(value);
+    };
+
     return (
-        <ItemWrap>
+        <ItemWrap onClick={handleItemClick}>
             {ImageComponent}
             <ItemTitle>{value}</ItemTitle>
         </ItemWrap>

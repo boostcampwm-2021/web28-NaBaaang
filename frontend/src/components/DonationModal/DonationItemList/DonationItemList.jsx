@@ -4,7 +4,7 @@ import { flexMixin } from '@/styles/mixins';
 import { BIT_TYPE } from '@/constants/messageType';
 import DonationItem from './DonationItem';
 
-export default function DonationItemList() {
+export default function DonationItemList({ handleTotalDonation }) {
     return (
         <ListWrap>
             {Object.values(BIT_TYPE).map(({ image, value }) => (
@@ -12,6 +12,7 @@ export default function DonationItemList() {
                     key={value}
                     value={value}
                     ImageComponent={image}
+                    handleTotalDonation={handleTotalDonation}
                 />
             ))}
         </ListWrap>
