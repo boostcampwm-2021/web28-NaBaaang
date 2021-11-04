@@ -1,10 +1,16 @@
 import React from 'react';
-import Foo from '@components/Foo';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import MainPage from './pages/MainPage';
 
 function App() {
     return (
         <div className="App">
-            <Foo title="배고파요..." />
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/" component={MainPage} />
+                </Switch>
+            </BrowserRouter>
         </div>
     );
 }
