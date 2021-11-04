@@ -11,6 +11,7 @@ export default function Message({ type, nickname, content }) {
     ) : (
         <StyledDonation>
             {BIT_TYPE[content].image}
+            <StyledDonationValue>{BIT_TYPE[content].value}</StyledDonationValue>
             <StyledMessage>
                 {nickname}님이 <br />
                 비트 {BIT_TYPE[content].value}개 선물하였습니다!!
@@ -28,6 +29,11 @@ const StyledMessage = styled.p`
 const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
+    ${fontMixin('1em', '1em', 'notoSansMedium')}
+    text-align:center;
+`;
+
+const StyledDonationValue = styled.div`
     ${fontMixin('1em', '1em', 'notoSansMedium')}
     text-align:center;
 `;

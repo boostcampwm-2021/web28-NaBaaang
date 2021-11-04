@@ -1,14 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import DonationItem from './DonationItem';
 import { flexMixin } from '@/styles/mixins';
-import { DONATION_ITEM_LIST } from '@/constants/donation';
+import { BIT_TYPE } from '@/constants/messageType';
+import DonationItem from './DonationItem';
 
 export default function DonationItemList() {
     return (
         <ListWrap>
-            {DONATION_ITEM_LIST.map(({ src, value }) => (
-                <DonationItem key={value} imgSrc={src} value={value} />
+            {Object.values(BIT_TYPE).map(({ image, value }) => (
+                <DonationItem
+                    key={value}
+                    value={value}
+                    ImageComponent={image}
+                />
             ))}
         </ListWrap>
     );
