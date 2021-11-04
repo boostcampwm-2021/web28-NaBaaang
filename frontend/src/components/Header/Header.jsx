@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
+import { Link } from 'react-router-dom';
+
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import UserIcon from '@/assets/images/user-icon.svg';
 import { flexMixin } from '@/styles/mixins';
@@ -21,7 +24,9 @@ export default function Header({ isSigin }) {
         <HeaderWrap>
             {modalOpen && <LoginModal open onClose={handleHideModal} />}
 
-            <Logo src={HeaderLogo} alt="header-logo" />
+            <Link to="/">
+                <Logo src={HeaderLogo} alt="header-logo" />
+            </Link>
 
             {!isSigin ? (
                 <Button text="로그인" size="medium" onClick={handleShowModal} />
@@ -37,7 +42,7 @@ export default function Header({ isSigin }) {
 const HeaderWrap = styled.header`
     width: 100%;
     height: 100px;
-    ${flexMixin('row', 'center', 'center')}
+    ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     padding: 0 1em;
@@ -46,10 +51,7 @@ const HeaderWrap = styled.header`
 
 const Logo = styled.img`
     height: 60px;
-    margin-right: auto;
     cursor: pointer;
 `;
 
-const IconWrap = styled.div`
-    margin-left: auto;
-`;
+const IconWrap = styled.div``;

@@ -2,9 +2,12 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import { Route, Switch } from 'react-router-dom';
+
 import HeaderComponent from '@/components/Header';
 import SideBarComponent from '@/components/SideBar';
 import LiveCollection from '@/components/LiveCollection';
+import Channel from '@/components/Channel/Channel';
 
 import { flexMixin } from '@/styles/mixins';
 
@@ -19,7 +22,14 @@ function MainPage() {
                     <SideBarComponent />
                 </SideBar>
                 <MainSection>
-                    <LiveCollection />
+                    <Switch>
+                        <Route path="/" exact>
+                            <LiveCollection />
+                        </Route>
+                        <Route path="/channel">
+                            <Channel />
+                        </Route>
+                    </Switch>
                 </MainSection>
             </Body>
         </MainLayout>
