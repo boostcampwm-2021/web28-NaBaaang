@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Portal from '@/Portal';
 import Card from '@/components/Card';
 import Button from '@/components/Button';
 import { flexMixin } from '@/styles/mixins.js';
@@ -19,38 +20,42 @@ export default function Modal({
     const successText = !onSuccessText ? 'OK' : onSuccessText;
 
     return (
-        <ModalWrap>
-            <Overlay onClick={onClose} />
-            <Card width="350px" height="350px">
-                <ModalHeader>NaBaang</ModalHeader>
-                {children && <ModalContent>{children}</ModalContent>}
+        <Portal elementId="modal-root">
+            <ModalWrap>
+                <Overlay onClick={onClose} />
+                <Card width="350px" height="350px">
+                    <ModalHeader>NaBaang</ModalHeader>
+                    {children && <ModalContent>{children}</ModalContent>}
 
-                {showButton && (
-                    <ModalButtonWrap>
-                        <Button
-                            color="error"
-                            onClick={onClose}
-                            text={cancleText}
-                            size="medium"
-                        />
+                    {showButton && (
+                        <ModalButtonWrap>
+                            <Button
+                                color="error"
+                                onClick={onClose}
+                                text={cancleText}
+                                size="medium"
+                            />
 
-                        <Button
-                            color="success"
-                            onClick={onSuccess}
-                            text={successText}
-                            size="medium"
-                        />
-                    </ModalButtonWrap>
-                )}
-            </Card>
-        </ModalWrap>
+                            <Button
+                                color="success"
+                                onClick={onSuccess}
+                                text={successText}
+                                size="medium"
+                            />
+                        </ModalButtonWrap>
+                    )}
+                </Card>
+            </ModalWrap>
+        </Portal>
     );
 }
 
 const ModalWrap = styled.div`
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
+    left: 0;
+    top: 0;
     border: 1px solid black;
     padding: 20px;
     box-sizing: border-box;

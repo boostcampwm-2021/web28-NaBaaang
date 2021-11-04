@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import tempImage from '@/assets/images/kukucorn.jpg';
 
+import { flexMixin } from '@/styles/mixins';
+
 import SideBarStreamerItem from './SideBarStreamerItem';
 
 export default function SideBarStreamerList() {
@@ -49,4 +51,6 @@ export default function SideBarStreamerList() {
 
 const AvatarList = styled.ul`
     list-style-type: none;
+    width: 90px;
+    ${flexMixin('column', '', 'center')}
 `;

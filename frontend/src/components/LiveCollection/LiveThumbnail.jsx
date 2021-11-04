@@ -1,18 +1,21 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
+import { Link } from 'react-router-dom';
 
 function LiveThumbnail({ thumbnail, viewer }) {
     return (
-        <ThumbnailBlock>
-            <img src={thumbnail} alt="" />
-            <LiveBadge>
-                <BadgeText>LIVE</BadgeText>
-            </LiveBadge>
-            <ViewerBadge>
-                <BadgeText>{viewer} watching</BadgeText>
-            </ViewerBadge>
-        </ThumbnailBlock>
+        <Link to="/channel">
+            <ThumbnailBlock>
+                <img src={thumbnail} alt="" />
+                <LiveBadge>
+                    <BadgeText>LIVE</BadgeText>
+                </LiveBadge>
+                <ViewerBadge>
+                    <BadgeText>{viewer} watching</BadgeText>
+                </ViewerBadge>
+            </ThumbnailBlock>
+        </Link>
     );
 }
 
