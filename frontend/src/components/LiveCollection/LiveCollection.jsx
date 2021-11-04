@@ -3,12 +3,25 @@ import styled from 'styled-components';
 
 import LiveList from './LiveList';
 
+const CATEGORY = {
+    전체: 0,
+    Game: 1,
+    Zilla: 2,
+};
+
 function LiveCollection() {
     const [liveLists, setLiveLists] = useState([]);
 
-    const LiveLists = liveLists.map(liveList => (
-        <LiveList liveList={liveList} />
-    ));
+    const LiveLists = liveLists.map(liveList => {
+        const { category } = liveList[0];
+        return (
+            <LiveList
+                key={CATEGORY[category]}
+                liveList={liveList}
+                category={category}
+            />
+        );
+    });
 
     const fetchLiveLists = async () => {
         const response = await fetch('http://localhost:6006/dummy.json');

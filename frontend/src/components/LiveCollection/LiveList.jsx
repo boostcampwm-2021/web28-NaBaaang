@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 import LiveSlider from './LiveSlider';
 
-function LiveList({ liveList }) {
+function LiveList({ category, liveList }) {
     return (
         <LiveListWrapper>
-            <LiveListHeader>{liveList[0].category}</LiveListHeader>
+            <LiveListHeader>{category}</LiveListHeader>
             <LiveSlider liveList={liveList} />
         </LiveListWrapper>
     );

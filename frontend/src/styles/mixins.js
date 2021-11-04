@@ -29,7 +29,7 @@ const fontMixin = (
     color = 'black',
 ) => css`
     font-size: ${size};
-    line-heigth: ${lineh};
+    line-height: ${lineh};
     font-family: '${fontFamily}';
     color: ${color};
 `;
