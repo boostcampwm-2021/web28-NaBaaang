@@ -18,7 +18,7 @@ export default function MessageList({ messageList }) {
 }
 const StyledMessageList = styled.div`
     width: 100%;
-    height: 80%;
+    height: 600px;
     list-style: none;
     overflow-y: auto;
     ::-webkit-scrollbar {
