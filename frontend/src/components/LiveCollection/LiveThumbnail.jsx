@@ -1,7 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { flexMixin, sizeMixin } from '@/styles/mixins';
 import { Link } from 'react-router-dom';
+
+import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 function LiveThumbnail({ thumbnail, viewer }) {
     return (

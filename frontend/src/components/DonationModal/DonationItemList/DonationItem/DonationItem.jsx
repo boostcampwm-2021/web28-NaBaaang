@@ -2,10 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
-export default function DonationItem({ imgSrc, value }) {
+export default function DonationItem({
+    ImageComponent,
+    value,
+    handleTotalDonation,
+}) {
+    const handleItemClick = () => {
+        handleTotalDonation(value);
+    };
+
     return (
-        <ItemWrap>
-            <ItemImage src={imgSrc} />
+        <ItemWrap onClick={handleItemClick}>
+            {ImageComponent}
             <ItemTitle>{value}</ItemTitle>
         </ItemWrap>
     );
@@ -13,14 +21,13 @@ export default function DonationItem({ imgSrc, value }) {
 
 const ItemWrap = styled.div`
     ${flexMixin('column', 'center', 'center')};
-    transition: all ease-in-out 0.1s;
+    cursor: pointer;
     &:hover {
         transform: scale(1.1);
     }
-`;
-
-const ItemImage = styled.img`
-    ${sizeMixin('48px', '48px')}
+    svg {
+        ${sizeMixin('50px', '50px')}
+    }
 `;
 
 const ItemTitle = styled.h3`

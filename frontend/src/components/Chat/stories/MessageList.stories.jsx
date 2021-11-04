@@ -10,7 +10,6 @@ const messageList = [
     { id: 4, type: 'DONATION', nickname: 'jihoho', content: 'BIT_50' },
     { id: 5, type: 'DONATION', nickname: 'jihoho', content: 'BIT_100' },
     { id: 6, type: 'DONATION', nickname: 'jihoho', content: 'BIT_300' },
-    { id: 7, type: 'DONATION', nickname: 'jihoho', content: 'BIT_500' },
 ];
 
 storiesOf('Chat/MessageList', module).add('default', () => (

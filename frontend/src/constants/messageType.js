@@ -3,7 +3,6 @@ import { ReactComponent as IconBit1 } from '@/assets/images/icon-bit-1.svg';
 import { ReactComponent as IconBit50 } from '@/assets/images/icon-bit-50.svg';
 import { ReactComponent as IconBit100 } from '@/assets/images/icon-bit-100.svg';
 import { ReactComponent as IconBit300 } from '@/assets/images/icon-bit-300.svg';
-import { ReactComponent as IconBit500 } from '@/assets/images/icon-bit-500.svg';
 
 const MESSAGE_TYPE = {
     NORMAL: 0,
@@ -26,10 +25,6 @@ const BIT_TYPE = {
     BIT_300: {
         image: <IconBit300 />,
         value: 300,
-    },
-    BIT_500: {
-        image: <IconBit500 />,
-        value: 500,
     },
 };
 

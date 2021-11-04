@@ -25,7 +25,11 @@ export default function Chat() {
     return (
         <StyledChat>
             <MessageList messageList={messageList} />
-            <Form handleSubmit={handleSubmit} />
+            <Form
+                messageList={messageList}
+                setMessageList={setMessageList}
+                handleSubmit={handleSubmit}
+            />
         </StyledChat>
     );
 }

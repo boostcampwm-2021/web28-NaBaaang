@@ -53,6 +53,7 @@ const SideBar = styled.aside`
 
 const MainSection = styled.section`
     width: 95%;
+    margin: 2em;
 `;
 
 export default MainPage;
