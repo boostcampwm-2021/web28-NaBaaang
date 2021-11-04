@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexMixin, fontMixin } from '@/styles/mixins';
 
 function LiveDetails({ details }) {
     return (
@@ -23,7 +24,7 @@ const DetailsLayout = styled.div`
 const StreamerIcon = styled.div`
     order: 1;
     flex: 0 0 50px;
-    margin-right: 10px;
+    margin-right: 1em;
 
     img {
         object-fit: cover;
@@ -33,21 +34,17 @@ const StreamerIcon = styled.div`
 
 const LiveContent = styled.div`
     order: 2;
-    display: flex;
     flex: 1 1 100%;
-    flex-direction: column;
-    justify-content: center;
+    ${flexMixin('column', 'center', 'flex-start')}
 `;
 
 const LiveTitle = styled.span`
-    font-weight: bold;
-    font-size: 16px;
-    padding-bottom: 5px;
+    padding-bottom: 0.5em;
+    ${fontMixin('16px', '1em', 'notoSansMedium')}
 `;
 
 const LiveStreamer = styled.span`
-    font-weight: normal;
-    font-size: 14px;
+    ${fontMixin('14px', '1em', 'notoSansLight')}
 `;
 
 export default LiveDetails;

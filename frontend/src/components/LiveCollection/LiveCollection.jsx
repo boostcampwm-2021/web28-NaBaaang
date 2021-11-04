@@ -3,11 +3,28 @@ import styled from 'styled-components';
 
 import LiveList from './LiveList';
 
+const CATEGORY = {
+    전체: 0,
+    Game: 1,
+    Zilla: 2,
+};
+
 function LiveCollection() {
     const [liveLists, setLiveLists] = useState([]);
 
+    const LiveLists = liveLists.map(liveList => {
+        const { category } = liveList[0];
+        return (
+            <LiveList
+                key={CATEGORY[category]}
+                liveList={liveList}
+                category={category}
+            />
+        );
+    });
+
     const fetchLiveLists = async () => {
-        const response = await fetch('http://localhost:3000/dummy.json');
+        const response = await fetch('http://localhost:6006/dummy.json');
         const data = await response.json();
         setLiveLists(data);
     };
@@ -16,18 +33,11 @@ function LiveCollection() {
         fetchLiveLists();
     }, []);
 
-    return (
-        <CollectionLayout>
-            {liveLists.map(liveList => (
-                <LiveList liveList={liveList} />
-            ))}
-        </CollectionLayout>
-    );
+    return <CollectionLayout>{LiveLists}</CollectionLayout>;
 }
 
 const CollectionLayout = styled.div`
     height: 100%;
-    margin: 3rem;
     margin-right: 0;
 `;
 
