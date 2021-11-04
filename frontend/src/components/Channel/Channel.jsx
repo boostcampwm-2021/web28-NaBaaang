@@ -34,16 +34,18 @@ export default function Channel() {
 }
 
 const StyledColumnLeft = styled.div`
+    width: 70%;
     ${flexMixin('column')}
-    width: 80em;
-    margin: 0 1em;
 `;
 const StyledColumnRight = styled.div`
+    width: 30%;
     ${flexMixin('column')}
     margin: 0 1em;
 `;
 
 const StyledRow = styled.div`
-    ${flexMixin('row', 'center')}
+    ${flexMixin('row')}
     padding: 1em;
+    width: 90%;
+    height: 100%;
 `;
