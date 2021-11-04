@@ -2,6 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import SideBarComponent from '@/components/SideBar';
+
 import { flexMixin } from '@/styles/mixins';
 
 function MainPage() {
@@ -9,7 +11,9 @@ function MainPage() {
         <MainLayout>
             <Header>Header</Header>
             <Body>
-                <SideBar>SideBar</SideBar>
+                <SideBar>
+                    <SideBarComponent />
+                </SideBar>
                 <MainSection>MainSection</MainSection>
             </Body>
         </MainLayout>
@@ -30,8 +34,8 @@ const Body = styled.section`
 `;
 
 const SideBar = styled.aside`
+    ${flexMixin('column', '', 'center')}
     width: 10%;
-    ${({ theme }) => `background-color: ${theme.color.gray1};`}
 `;
 
 const MainSection = styled.section`
