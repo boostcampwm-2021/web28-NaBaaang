@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import HeaderLogo from '@/assets/images/header-logo.svg';
+import UserIcon from '@/assets/images/user-icon.svg';
 import { flexMixin } from '@/styles/mixins';
+import Button from '@/components/Button';
+import LoginModal from '@/components/LoginModal';
 
-export default function Header() {
+export default function Header({ isSigin }) {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleShowModal = () => {
+        setModalOpen(true);
+    };
+
+    const handleHideModal = () => {
+        setModalOpen(false);
+    };
+
     return (
         <HeaderWrap>
+            {modalOpen && <LoginModal open onClose={handleHideModal} />}
+
             <Logo src={HeaderLogo} alt="header-logo" />
+
+            {!isSigin ? (
+                <Button text="로그인" size="medium" onClick={handleShowModal} />
+            ) : (
+                <IconWrap>
+                    <Logo src={UserIcon} />
+                    {/* <img src={UserIcon} alt/>="" /> */}
+                </IconWrap>
+            )}
         </HeaderWrap>
     );
 }
@@ -25,4 +49,8 @@ const Logo = styled.img`
     height: 60px;
     margin-right: auto;
     cursor: pointer;
+`;
+
+const IconWrap = styled.div`
+    margin-left: auto;
 `;
