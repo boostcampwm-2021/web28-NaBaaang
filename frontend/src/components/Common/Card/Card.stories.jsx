@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Card from '@/components/Card';
+import Card from './Card';
 
 storiesOf('Card', module)
     .add('without props', () => <Card />)
