@@ -8,7 +8,7 @@ export default function Box(props) {
 }
 
 const StyledBox = styled.div`
-    ${({ width, height }) => sizeMixin(width, height)};
+    ${({ width , height }) => sizeMixin(width, height)};
     ${({ flex }) =>
         css`
             flex: ${flex} ${flex};
@@ -18,10 +18,5 @@ const StyledBox = styled.div`
     `}
     ${({ flexDirection, justifyContent = 'center', alignItems = 'center' }) =>
         flexMixin(flexDirection, justifyContent, alignItems)}
-    ${({ isBolder = true }) =>
-        isBolder &&
-        css`
-            border: 1px solid black;
-            border-radius: 10px;
-        `}
+  
 `;

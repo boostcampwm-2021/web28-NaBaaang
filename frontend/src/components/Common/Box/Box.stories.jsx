@@ -26,9 +26,7 @@ const BoxWrap = () => {
 
 storiesOf('Box', module)
     .add('default', () => <Box width="100px" height="100px" />)
-    .add('border false', () => (
-        <Box width="100px" height="100px" isBolder={false} />
-    ))
+
     .add('children', () => (
         <Box width="100px" height="100px">
             HelloWorld
