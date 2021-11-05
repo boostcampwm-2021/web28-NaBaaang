@@ -1,14 +1,25 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { flexMixin, sizeMixin } from '@/styles/mixins';
+import { flexMixin } from '@/styles/mixins';
 
 export default function Box(props) {
     const { children } = props;
     return <StyledBox {...props}>{children}</StyledBox>;
 }
 
+const generateCss = (k, v) =>
+    v &&
+    css`
+        ${k}: ${v};
+    `;
+
 const StyledBox = styled.div`
-    ${({ width, height }) => sizeMixin(width, height)};
+    overflow: auto;
+
+    ${({ width }) => generateCss('width', width)}
+    ${({ height }) => generateCss('height', height)}
+
+
     ${({ border }) =>
         border &&
         css`
