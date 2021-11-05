@@ -4,7 +4,7 @@ import { flexMixin } from '@/styles/mixins';
 import tempImage from '@/assets/images/kukucorn.jpg';
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
-import ChannelCard from './ChannelCard/ChannelCard';
+import ChannelDetail from './ChannelDetail';
 
 export default function Channel() {
     const channelInfo = {
@@ -25,7 +25,7 @@ export default function Channel() {
             <StyledRow>
                 <StyledColumnLeft>
                     <Video videoSrc={channelInfo.videoSrc} />
-                    <ChannelCard />
+                    <ChannelDetail channelInfo={channelInfo} />
                 </StyledColumnLeft>
                 <StyledColumnRight>
                     <Chat />
