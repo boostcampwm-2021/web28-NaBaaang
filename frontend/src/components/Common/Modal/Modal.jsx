@@ -23,7 +23,7 @@ export default function Modal({
         <Portal elementId="modal-root">
             <ModalWrap>
                 <Overlay onClick={onClose} />
-                <Card width="350px" height="350px">
+                <Card direction="column" width="350px" height="350px">
                     <ModalHeader>NaBaang</ModalHeader>
                     {children && <ModalContent>{children}</ModalContent>}
 
