@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
-import Modal from '@/components/Modal';
+import Modal from '@/components/Common/Modal';
 import TextField from '@/components/TextField';
 
 import useChannelCreateHook from './ChannelCreateHook';

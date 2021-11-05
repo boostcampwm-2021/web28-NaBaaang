@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Button from '@/components/Button';
+import Button from '@/components/Common/Button';
 
 storiesOf('Button', module)
     .add('default', () => <Button text="Click" />)

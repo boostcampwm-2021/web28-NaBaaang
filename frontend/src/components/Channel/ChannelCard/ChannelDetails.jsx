@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { borderBoxMixin, flexMixin, fontMixin } from '@/styles/mixins';
-import Button from '@/components/Button';
+import Button from '@/components/Common/Button';
 import Avatar from './Avatar';
 
 function ChannelDetails({ channel }) {

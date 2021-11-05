@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Modal from '@/components/Modal';
+import Modal from '@/components/Common/Modal';
 
 const InputModal = () => {
     const inputRef = useRef(null);

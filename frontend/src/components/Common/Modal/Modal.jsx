@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Portal from '@/Portal';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
+import Card from '@/components/Common/Card';
+import Button from '@/components/Common/Button';
 import { flexMixin } from '@/styles/mixins.js';
 
 export default function Modal({
