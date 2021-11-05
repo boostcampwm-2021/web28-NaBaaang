@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { borderBoxMixin } from '@/styles/mixins';
+import { borderBoxMixin, sizeMixin } from '@/styles/mixins';
 
 export default function Video({ videoSrc }) {
     return (
@@ -11,5 +11,7 @@ export default function Video({ videoSrc }) {
 }
 
 const StyledVideo = styled.video`
+    ${sizeMixin('100%', '100%')};
+    object-fit: cover;
     ${({ theme }) => borderBoxMixin('1px', '30px', theme.color.black)};
 `;
