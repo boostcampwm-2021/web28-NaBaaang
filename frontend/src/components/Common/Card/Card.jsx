@@ -2,16 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import { sizeMixin, borderBoxMixin, flexMixin } from '@/styles/mixins';
 
-export default function Card({ width, height, children }) {
+export default function Card({
+    width,
+    height,
+    children,
+    jutify = 'center',
+    alignItems = 'center',
+}) {
     return (
-        <StyledCard width={width} height={height}>
+        <StyledCard
+            width={width}
+            height={height}
+            jutify={jutify}
+            alignItems={alignItems}
+        >
             {children}
         </StyledCard>
     );
 }
 
 const StyledCard = styled.div`
-    ${flexMixin('column', 'flex-start', 'center')}
+    ${({ jutify, alignItems }) => flexMixin('column', jutify, alignItems)}
     ${({ width, height }) => sizeMixin(width, height)}
     ${borderBoxMixin('1px', '10px')}
     background-color: ${({ theme }) => theme.color.white};
