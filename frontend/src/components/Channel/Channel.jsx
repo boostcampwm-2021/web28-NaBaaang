@@ -4,6 +4,7 @@ import { flexMixin } from '@/styles/mixins';
 import tempImage from '@/assets/images/kukucorn.jpg';
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
+import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
 
 export default function Channel() {
@@ -21,32 +22,25 @@ export default function Channel() {
             'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_1MB.mp4',
     };
     return (
-        <>
-            <StyledRow>
-                <StyledColumnLeft>
+        <Wapper>
+            <Box flexDirection="column" height="100%" flex={3}>
+                <Box width="100%" flex={5}>
                     <Video videoSrc={channelInfo.videoSrc} />
+                </Box>
+                <Box width="100%" flex={1}>
                     <ChannelDetail channelInfo={channelInfo} />
-                </StyledColumnLeft>
-                <StyledColumnRight>
-                    <Chat />
-                </StyledColumnRight>
-            </StyledRow>
-        </>
+                </Box>
+            </Box>
+
+            <Box height="100%" flex={1}>
+                <Chat />
+            </Box>
+        </Wapper>
     );
 }
 
-const StyledColumnLeft = styled.div`
-    width: 70%;
-    ${flexMixin('column')}
-`;
-const StyledColumnRight = styled.div`
-    width: 30%;
-    ${flexMixin('column')}
-    margin: 0 1em;
-`;
-
-const StyledRow = styled.div`
-    ${flexMixin('row')}
-    width: 90%;
+const Wapper = styled.div`
+    width: 100%;
     height: 100%;
+    ${flexMixin('row', 'flex-start')}
 `;

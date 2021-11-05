@@ -14,8 +14,6 @@ const generateCss = (k, v) =>
     `;
 
 const StyledBox = styled.div`
-    overflow: auto;
-
     ${({ width }) => generateCss('width', width)}
     ${({ height }) => generateCss('height', height)}
 

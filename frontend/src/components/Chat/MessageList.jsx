@@ -1,11 +1,13 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin } from '@/styles/mixins';
+import Box from '@/components/Common/Box';
 import Message from './Message';
 
 export default function MessageList({ messageList }) {
-    function createMessages() {
-        return messageList.map(message => (
+    const convertedMessageList =
+        messageList &&
+        messageList.map(message => (
             <Message
                 key={message.id}
                 type={message.type}
@@ -13,12 +15,17 @@ export default function MessageList({ messageList }) {
                 content={message.content}
             />
         ));
-    }
-    return <StyledMessageList>{createMessages()}</StyledMessageList>;
+
+    return (
+        <StyledBox border={1} flexDirection="column" width="100%" height="100%">
+            {convertedMessageList}
+        </StyledBox>
+    );
 }
-const StyledMessageList = styled.div`
-    width: 100%;
-    height: 600px;
+
+const StyledBox = styled(Box)`
+    height: 500px;
+    max-height: 500px;
     list-style: none;
     overflow-y: auto;
     ::-webkit-scrollbar {

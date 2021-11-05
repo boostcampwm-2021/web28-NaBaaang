@@ -12,6 +12,6 @@ const messageList = [
     { id: 6, type: 'DONATION', nickname: 'jihoho', content: 'BIT_300' },
 ];
 
-storiesOf('Chat/MessageList', module).add('default', () => (
-    <MessageList messageList={messageList} />
-));
+storiesOf('Chat/MessageList', module)
+    .add('without props', () => <MessageList />)
+    .add('with props', () => <MessageList messageList={messageList} />);

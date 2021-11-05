@@ -66,7 +66,8 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
 }
 
 const StyledForm = styled.form`
-    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
 `;
 const StyledDiv = styled.div`
     display: flex;
