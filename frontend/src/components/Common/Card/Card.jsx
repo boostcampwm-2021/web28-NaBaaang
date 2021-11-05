@@ -6,13 +6,15 @@ export default function Card({
     width,
     height,
     children,
-    jutify = 'center',
-    alignItems = 'center',
+    direction,
+    jutify,
+    alignItems,
 }) {
     return (
         <StyledCard
             width={width}
             height={height}
+            direction={direction}
             jutify={jutify}
             alignItems={alignItems}
         >
@@ -22,7 +24,8 @@ export default function Card({
 }
 
 const StyledCard = styled.div`
-    ${({ jutify, alignItems }) => flexMixin('column', jutify, alignItems)}
+    ${({ direction, jutify, alignItems }) =>
+        flexMixin(direction, jutify, alignItems)}
     ${({ width, height }) => sizeMixin(width, height)}
     ${borderBoxMixin('1px', '10px')}
     background-color: ${({ theme }) => theme.color.white};
