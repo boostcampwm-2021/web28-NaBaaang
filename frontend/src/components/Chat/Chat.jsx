@@ -38,5 +38,6 @@ const StyledChat = styled.div`
     width: 100%;
     height: 100%;
     padding: 20px;
+    box-sizing: border-box;
     ${({ theme }) => borderBoxMixin('1px', '0', theme.color.black)};
 `;
