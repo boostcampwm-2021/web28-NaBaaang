@@ -18,8 +18,8 @@ function ChannelDetails({ channelInfo }) {
                 <Avatar imageSrc={channelInfo.streamer.imageSrc} />
             </StyledRow>
 
-            <StyledRow>
-                <StyledColumn marginLeft="20px">
+            <StyledRow marginLeft="20px">
+                <StyledColumn>
                     <StyledName>{channelInfo.streamer.nickname}</StyledName>
                     <StyledTitle>{channelInfo.title}</StyledTitle>
                     <StyledHashTag>#{channelInfo.category}</StyledHashTag>
