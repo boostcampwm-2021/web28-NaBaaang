@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import Modal from '@/components/Common/Modal';
-import TextField from '@/components/TextField';
+import TextField from '@/components/Common/TextField';
 
 import useChannelCreateHook from './ChannelCreateHook';
 
