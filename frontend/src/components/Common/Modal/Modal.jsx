@@ -86,6 +86,7 @@ const Overlay = styled.div`
 const ContentBox = styled(Box)`
     text-align: center;
     margin-bottom: auto;
+    ${flexMixin('column', 'center', 'center')}
 `;
 
 const ButtonBox = styled(Box)`
