@@ -32,7 +32,7 @@ export default function Modal({
                     {children && <ContentBox flex={3}>{children}</ContentBox>}
 
                     {showButton && (
-                        <ButtonBox flex={1.5}>
+                        <ButtonBox flex={1}>
                             <Button
                                 color="error"
                                 onClick={onClose}
