@@ -1,12 +1,21 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-export default function TextField({ labelText, inputRef }) {
+export default function TextField({
+    labelText,
+    name,
+    inputRef,
+    handleChange,
+}) {
     return (
         <>
             <InputLabel>{labelText}</InputLabel>
             <InputBox>
-                <Input ref={inputRef} />
+                <Input
+                    ref={inputRef}
+                    name={name}
+                    onChange={handleChange}
+                />
             </InputBox>
         </>
     );
