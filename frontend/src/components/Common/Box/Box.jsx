@@ -14,6 +14,7 @@ const generateCss = (k, v) =>
     `;
 
 const StyledBox = styled.div`
+    position: relative;
     ${({ width }) => generateCss('width', width)}
     ${({ height }) => generateCss('height', height)}
 

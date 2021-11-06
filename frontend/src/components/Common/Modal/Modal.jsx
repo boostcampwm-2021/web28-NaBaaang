@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { flexMixin } from '@/styles/mixins.js';
+
 import Portal from '@/Portal';
 import Card from '@/components/Common/Card';
 import Button from '@/components/Common/Button';
-import { flexMixin } from '@/styles/mixins.js';
+import Box from '@/components/Common/Box';
 
 export default function Modal({
     open,
@@ -24,11 +26,13 @@ export default function Modal({
             <ModalWrap>
                 <Overlay onClick={onClose} />
                 <Card direction="column" width="350px" height="350px">
-                    <ModalHeader>NaBaang</ModalHeader>
-                    {children && <ModalContent>{children}</ModalContent>}
+                    <Box flex={0.5}>
+                        <ModalHeader>NaBaang</ModalHeader>
+                    </Box>
+                    {children && <ContentBox flex={3}>{children}</ContentBox>}
 
                     {showButton && (
-                        <ModalButtonWrap>
+                        <ButtonBox flex={1.5}>
                             <Button
                                 color="error"
                                 onClick={onClose}
@@ -42,7 +46,7 @@ export default function Modal({
                                 text={successText}
                                 size="medium"
                             />
-                        </ModalButtonWrap>
+                        </ButtonBox>
                     )}
                 </Card>
             </ModalWrap>
@@ -79,15 +83,15 @@ const Overlay = styled.div`
     z-index: -1;
 `;
 
-const ModalContent = styled.div`
+const ContentBox = styled(Box)`
     text-align: center;
     margin-bottom: auto;
 `;
 
-const ModalButtonWrap = styled.div`
+const ButtonBox = styled(Box)`
     width: 100%;
     margin-top: auto;
-    ${flexMixin('row', 'space-between', 'center')}
+    ${flexMixin('row', 'space-between', 'flex-end')}
 
     button {
         margin: 0 auto;
