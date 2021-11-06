@@ -13,7 +13,7 @@ export default function ChannelCreateModal() {
         console.log(data);
     };
 
-    const { handleChange, handleSubmit } = useForm({
+    const { errors, handleChange, handleSubmit } = useForm({
         initState: {
             title: '',
             category: '',
@@ -31,6 +31,7 @@ export default function ChannelCreateModal() {
                     name="title"
                     handleChange={handleChange}
                 />
+                {errors.title && <ErrorText>{errors.title}</ErrorText>}
             </InputRow>
             <InputRow>
                 <TextField
@@ -38,6 +39,8 @@ export default function ChannelCreateModal() {
                     name="category"
                     handleChange={handleChange}
                 />
+                {errors.category && <ErrorText>{errors.category}</ErrorText>}
+
             </InputRow>
             <InputRow>
                 <TextField
@@ -45,6 +48,7 @@ export default function ChannelCreateModal() {
                     name="description"
                     handleChange={handleChange}
                 />
+                {errors.description && <ErrorText>{errors.description}</ErrorText>}
             </InputRow>
         </Form>
     );
@@ -70,4 +74,11 @@ const Form = styled.form`
 const InputRow = styled.div`
     ${flexMixin('row', 'space-between', 'center')}
     margin: 16px 0;
+    position: relative;
+`;
+
+const ErrorText = styled.div`
+    position: absolute;
+    top: 35px;
+    color: ${({ theme }) => theme.color.red};
 `;
