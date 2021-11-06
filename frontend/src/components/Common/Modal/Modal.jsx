@@ -14,10 +14,10 @@ export default function Modal({
     onSuccessText,
     children,
 }) {
-    if (!open) return null;
-
     const cancleText = !onCancleText ? 'Cancle' : onCancleText;
     const successText = !onSuccessText ? 'OK' : onSuccessText;
+
+    if (!open) return null;
 
     return (
         <Portal elementId="modal-root">
