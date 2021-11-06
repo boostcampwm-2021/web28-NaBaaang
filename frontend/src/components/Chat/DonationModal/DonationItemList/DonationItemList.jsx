@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
 import { BIT_TYPE } from '@/constants/messageType';
-import DonationItem from './DonationItem';
+import DonationItem from '../DonationItem';
 
 export default function DonationItemList({ handleTotalDonation }) {
     return (

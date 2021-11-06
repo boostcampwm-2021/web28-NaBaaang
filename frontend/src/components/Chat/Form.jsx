@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
-import DonationModal from '../DonationModal/DonationModal';
+import DonationModal from './DonationModal';
 
 export default function Form({ messageList, setMessageList, handleSubmit }) {
     const messageInput = useRef();
