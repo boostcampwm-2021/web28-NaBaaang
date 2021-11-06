@@ -6,6 +6,7 @@ import ChannelCreateValidation from '@/validation/ChannelModal';
 
 import Modal from '@/components/Common/Modal';
 import TextField from '@/components/Common/TextField';
+import Box from '@/components/Common/Box';
 import useForm from '@/hooks/useForm';
 
 export default function ChannelCreateModal() {
@@ -25,31 +26,32 @@ export default function ChannelCreateModal() {
 
     const modalContents = (
         <Form onSubmit={handleSubmit}>
-            <InputRow>
+            <Box width="100%" flex={1}>
                 <TextField
                     labelText="제목"
                     name="title"
                     handleChange={handleChange}
                 />
                 {errors.title && <ErrorText>{errors.title}</ErrorText>}
-            </InputRow>
-            <InputRow>
+            </Box>
+            <Box width="100%" flex={1}>
                 <TextField
                     labelText="카테고리"
                     name="category"
                     handleChange={handleChange}
                 />
                 {errors.category && <ErrorText>{errors.category}</ErrorText>}
-
-            </InputRow>
-            <InputRow>
+            </Box>
+            <Box width="100%" flex={1}>
                 <TextField
                     labelText="설명"
                     name="description"
                     handleChange={handleChange}
                 />
-                {errors.description && <ErrorText>{errors.description}</ErrorText>}
-            </InputRow>
+                {errors.description && (
+                    <ErrorText>{errors.description}</ErrorText>
+                )}
+            </Box>
         </Form>
     );
 
@@ -71,14 +73,8 @@ const Form = styled.form`
     ${sizeMixin('100%', '100%')}
 `;
 
-const InputRow = styled.div`
-    ${flexMixin('row', 'space-between', 'center')}
-    margin: 16px 0;
-    position: relative;
-`;
-
 const ErrorText = styled.div`
     position: absolute;
-    top: 35px;
+    top: 80%;
     color: ${({ theme }) => theme.color.red};
 `;
