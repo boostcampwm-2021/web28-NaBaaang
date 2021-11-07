@@ -32,7 +32,7 @@ export default function Modal({
                     {children && <ContentBox flex={3}>{children}</ContentBox>}
 
                     {showButton && (
-                        <ButtonBox flex={1}>
+                        <ButtonBox flex={1} alignItems="flex-end">
                             <Button
                                 color="error"
                                 onClick={onClose}
@@ -92,8 +92,6 @@ const ContentBox = styled(Box)`
 const ButtonBox = styled(Box)`
     width: 100%;
     margin-top: auto;
-    ${flexMixin('row', 'space-between', 'flex-end')}
-
     button {
         margin: 0 auto;
     }
