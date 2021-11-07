@@ -26,7 +26,7 @@ const StyledBox = styled.div`
         `}
     ${({ flex }) =>
         css`
-            flex: ${flex} ${flex} auto;
+            flex: ${flex} ${flex} 0;
         `}
     ${({ alignSelf }) => css`
         align-self: ${alignSelf};
