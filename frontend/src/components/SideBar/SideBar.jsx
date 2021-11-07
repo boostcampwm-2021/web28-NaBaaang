@@ -20,7 +20,7 @@ const StyledBox = styled(Box)`
             background-color: ${theme.color.gray3};
         `}
     position : fixed;
-    top: ${({ theme }) => theme.size.headeHeight};
+    top: ${({ theme }) => theme.size.headerHeight};
     left: 0;
     padding-top: 10px;
 `;
