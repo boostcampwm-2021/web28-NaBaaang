@@ -41,10 +41,14 @@ export default function Header({ isSigin }) {
 
 const HeaderWrap = styled.header`
     width: 100%;
-    height: 100px;
+    height: ${({ theme }) => theme.size.headeHeight};
+    z-index: ${({ theme }) => theme.zIndex.header};
+    position: fixed;
+    top: 0;
+    left: 0;
     ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
     padding: 0 1em;
     box-sizing: border-box;
 `;

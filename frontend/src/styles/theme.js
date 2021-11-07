@@ -10,8 +10,20 @@ const color = {
     red: '#FF0000',
 };
 
+const size = {
+    headerHeight: '70px',
+    sidebarWidth: '70px',
+};
+
+const zIndex = {
+    header: 200,
+    sideBar: 100,
+};
+
 const theme = {
     color,
+    size,
+    zIndex,
 };
 
 export default theme;

@@ -25,6 +25,7 @@ const StyledBox = styled.div`
             border: ${border}px solid black;
         `}
     ${({ flex }) =>
+        flex && 
         css`
             flex: ${flex} ${flex} 0;
         `}

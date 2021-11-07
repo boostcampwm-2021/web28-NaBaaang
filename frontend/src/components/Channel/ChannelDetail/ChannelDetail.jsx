@@ -33,7 +33,7 @@ function ChannelDetails({ channelInfo }) {
 
 const StyledBox = styled(Box)`
     padding: 0.5rem 1rem;
-    background-color: ${({theme}) => theme.color.gray};
+    background-color: ${({theme}) => theme.color.gray3};
 `;
 
 const StyledRow = styled.div`

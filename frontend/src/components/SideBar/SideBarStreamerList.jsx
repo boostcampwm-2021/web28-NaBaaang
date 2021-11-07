@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-
+import Box from '@/components/Common/Box';
 import tempImage from '@/assets/images/kukucorn.jpg';
-
-import { flexMixin } from '@/styles/mixins';
 
 import SideBarStreamerItem from './SideBarStreamerItem';
 
@@ -24,33 +21,27 @@ export default function SideBarStreamerList() {
     }, []);
 
     const avatarClickHandler = ({ target }) => {
-        const li = target.closest('li');
+        const { dataset } = target;
+        const { streamerId } = dataset;
 
-        if (!li) return;
-        if (!listRef.current.contains(li)) return;
-
-        const { streamerId } = li.dataset;
-
-        console.log(streamerId);
+        console.log(target, dataset, streamerId);
 
         // streamerId로 라우팅, streamer가 방송 중이 아니라면 에러 처리 해줘야함.
     };
 
-    const avatarListItems = () => {
-        return streamerList.map(streamer => {
-            return SideBarStreamerItem({ streamer });
-        });
-    };
+    const avatarListItems = streamerList.map(({ id, imageSrc }) => (
+        <SideBarStreamerItem key={id} id={id} imageSrc={imageSrc} />
+    ));
 
     return (
-        <AvatarList ref={listRef} onClick={avatarClickHandler}>
-            {avatarListItems()}
-        </AvatarList>
+        <Box
+            flexDirection="column"
+            justifyConent="flex-start"
+            alignItems="center"
+            ref={listRef}
+            onClick={avatarClickHandler}
+        >
+            {avatarListItems}
+        </Box>
     );
 }
-
-const AvatarList = styled.ul`
-    list-style-type: none;
-    width: 90px;
-    ${flexMixin('column', '', 'center')}
-`;
