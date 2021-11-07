@@ -41,11 +41,8 @@ export default function Header({ isSigin }) {
 
 const HeaderWrap = styled.header`
     width: 100%;
-    height: ${({ theme }) => theme.size.headeHeight};
+    height: 100%;
     z-index: ${({ theme }) => theme.zIndex.header};
-    position: fixed;
-    top: 0;
-    left: 0;
     ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
