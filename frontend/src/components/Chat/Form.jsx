@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
-import DonationModal from '../DonationModal/DonationModal';
+import DonationModal from './DonationModal';
 
 export default function Form({ messageList, setMessageList, handleSubmit }) {
     const messageInput = useRef();
@@ -66,7 +66,8 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
 }
 
 const StyledForm = styled.form`
-    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
 `;
 const StyledDiv = styled.div`
     display: flex;

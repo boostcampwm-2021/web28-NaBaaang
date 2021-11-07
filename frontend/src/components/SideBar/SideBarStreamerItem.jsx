@@ -1,29 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function SideBarStreamerItem({ streamer }) {
+import Box from '@/components/Common/Box';
+import Avatar from '@/components/Common/Avatar';
+
+export default function SideBarStreamerItem({ id, imageSrc }) {
     return (
-        <AvatarListItem key={streamer.id} data-streamer-id={streamer.id}>
-            <AvatarBox>
-                <Avatar alt="empty" src={streamer.imageSrc} />
-            </AvatarBox>
-        </AvatarListItem>
+        <AvatarBox key={id} data-streamer-id={id}>
+            <Avatar
+                alt="empty"
+                src={imageSrc}
+                size="small"
+            />
+        </AvatarBox>
     );
 }
 
-const AvatarListItem = styled.li`
-    margin: 10px 0;
+const AvatarBox = styled(Box)`
     cursor: pointer;
-`;
-
-const AvatarBox = styled.div`
-    width: 70px;
-    height: 70px;
-    border-radius: 70%;
-    overflow: hidden;
-`;
-
-const Avatar = styled.img`
-    width: 100%;
-    height: 100%;
+    margin-bottom: 10px;
 `;
