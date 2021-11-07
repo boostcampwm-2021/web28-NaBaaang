@@ -13,4 +13,7 @@ export default function Video({ videoSrc }) {
 const StyledVideo = styled.video`
     ${sizeMixin('100%', '100%')};
     object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 `;
