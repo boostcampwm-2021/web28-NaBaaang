@@ -2,18 +2,12 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin, flexMixin, fontMixin } from '@/styles/mixins';
 import Button from '@/components/Common/Button';
-import Card from '@/components/Common/Card';
+import Box from '@/components/Common/Box';
 import Avatar from '@/components/Common/Avatar';
 
 function ChannelDetails({ channelInfo }) {
     return (
-        <Card
-            width="100%"
-            height="100%"
-            direction="row"
-            justify="fles-start"
-            alignItems="center"
-        >
+        <StyledBox flex={1}>
             <StyledRow>
                 <Avatar src={channelInfo.streamer.imageSrc} size="large" />
             </StyledRow>
@@ -33,14 +27,19 @@ function ChannelDetails({ channelInfo }) {
                     <StyledViews>시청자 수 12000</StyledViews>
                 </StyledColumn>
             </StyledRow>
-        </Card>
+        </StyledBox>
     );
 }
+
+const StyledBox = styled(Box)`
+    padding: 0.5rem 1rem;
+    background-color: ${({theme}) => theme.color.gray};
+`;
 
 const StyledRow = styled.div`
     ${({ alignSelf, marginLeft }) =>
         css`
-            alignSelf: ${alignSelf};
+            alignself: ${alignSelf};
             margin-left: ${marginLeft};
         `}
 `;
@@ -48,7 +47,7 @@ const StyledColumn = styled.div`
     ${flexMixin('column', 'flex-start', 'flex-start')}
 `;
 const StyledNickName = styled.h3`
-    ${fontMixin('2em', '', 'notoSansBold')}
+    ${fontMixin('1.5em', '', 'notoSansBold')}
 `;
 
 const StyledTitle = styled.div`
@@ -60,11 +59,12 @@ const StyledViews = styled.div`
 `;
 
 const StyledHashTag = styled.span`
+    padding: 0.5rem;
+    margin-top: 1rem;
     ${({ theme }) => borderBoxMixin('1px', '20px', theme.color.primary)};
     ${({ theme }) =>
-        fontMixin('1em', '1em', 'notoSansBold', theme.color.white)};
+        fontMixin('0.5em', '1em', 'notoSansBold', theme.color.white)};
     background-color: ${({ theme }) => theme.color.primary};
     text-align: center;
-    width: 6em;
 `;
 export default ChannelDetails;

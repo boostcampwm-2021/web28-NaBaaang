@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { borderBoxMixin } from '@/styles/mixins';
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
@@ -17,25 +16,36 @@ export default function MessageList({ messageList }) {
         ));
 
     return (
-        <StyledBox border={1} flexDirection="column" width="100%" height="100%">
-            {convertedMessageList}
+        <StyledBox flex={1} height="100%">
+            <MessageListBox
+                flexDirection="column"
+                alignItems="flex-start"
+                flex={1}
+            >
+                {convertedMessageList}
+            </MessageListBox>
         </StyledBox>
     );
 }
 
 const StyledBox = styled(Box)`
-    height: 500px;
-    max-height: 500px;
+    overflow: hidden;
     list-style: none;
     overflow-y: auto;
     ::-webkit-scrollbar {
         width: 8px;
     }
-    ${({ theme }) => borderBoxMixin('1px', '10px', theme.color.black)}
+
     ${({ theme }) => css`
         ::-webkit-scrollbar-thumb {
             background-color: ${theme.color.primary};
             border-radius: 10px;
         }
     `}
+`;
+
+const MessageListBox = styled(Box)`
+    position: absolute;
+    top: 0;
+    left: 0;
 `;
