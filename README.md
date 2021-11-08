@@ -13,6 +13,7 @@
 
 ## 기술 스택?!
 
+![image](https://user-images.githubusercontent.com/50704533/140669680-bd7d398f-c809-47f0-90cd-a5c955bfd5fb.png)
 
 ## 설계
 - [화면 설계](https://www.figma.com/file/J40YAWTJ53MEPVfTVUwhOv/Nabaaang?node-id=91%3A4287)
