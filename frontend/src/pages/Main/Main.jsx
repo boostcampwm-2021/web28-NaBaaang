@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import SideBar from '@/components/SideBar';
 import LiveCollection from '@/components/LiveCollection';
 import Channel from '@/components/Channel/Channel';
+import SocketTest from '@/components/Socket/SocketTest';
 
 function MainPage() {
     return (
@@ -18,6 +19,7 @@ function MainPage() {
                 <Switch>
                     <Route path="/" exact component={LiveCollection} />
                     <Route path="/channel" component={Channel} />
+                    <Route path="/socket" component={SocketTest} />
                 </Switch>
             </BodyBox>
         </Box>
@@ -28,7 +30,7 @@ const BodyBox = styled(Box)`
     width: 100%;
     height: 100%;
     padding-top: ${({ theme }) => theme.size.headerHeight};
-    padding-left: ${({ theme }) => theme.size.sidebarWidth}
+    padding-left: ${({ theme }) => theme.size.sidebarWidth};
 `;
 
 export default MainPage;
