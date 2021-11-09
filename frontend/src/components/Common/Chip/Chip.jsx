@@ -49,6 +49,7 @@ const StyledChip = styled(Box)`
     ${({ color }) => ChipColorType[color]}
     border-radius: 15px;
     cursor: pointer;
+    margin: 0.5rem;
 `;
 
 const Icon = styled.img`
