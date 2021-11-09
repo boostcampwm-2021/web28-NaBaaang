@@ -16,7 +16,7 @@ const generateCss = (cssLine, v) =>
 const BoxColotType = {
     black: css`
         color: ${({ theme }) => theme.color.white};
-        background-color: ${({ theme }) => theme.color.black};
+        background-color: ${({ theme }) => theme.color.black2};
     `,
 };
 
@@ -27,6 +27,7 @@ const StyledBox = styled.div`
     ${({ border }) => generateCss(`border: ${border}px solid black;`, border)}
     ${({ flex }) => generateCss(`flex: ${flex} ${flex} 0;`, flex)}
     ${({ alignSelf }) => generateCss(`align-self: ${alignSelf};`, alignSelf)}
+    ${({ padding }) => generateCss(`padding: ${padding}rem;`, padding)}
     ${({ theme, backgroundColor }) =>
         generateCss(
             `background-color: ${theme.color[backgroundColor]};`,

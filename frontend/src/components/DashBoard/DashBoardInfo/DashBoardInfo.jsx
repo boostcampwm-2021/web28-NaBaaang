@@ -6,10 +6,9 @@ import Card from '@/components/Common/Card';
 import Typography from '@/components/Common/Typography';
 import Chip from '@/components/Common/Chip';
 
-export default function DashBoardInfo({ title, description, category }) {
-    const categoryList = category.map(text => (
-        <Chip text={`#${text}`} color="success" />
-    ));
+export default function DashBoardInfo({ info }) {
+    const { title, description, category } = info;
+    const streamKey = info.stream_key;
 
     return (
         <Box
@@ -17,6 +16,7 @@ export default function DashBoardInfo({ title, description, category }) {
             type="black"
             flexDirection="column"
             alignItems="space-between"
+            flex={1}
         >
             <Box flex={1}>
                 <Typography variant="h5" color="white">
@@ -31,7 +31,13 @@ export default function DashBoardInfo({ title, description, category }) {
                 </StyledCard>
             </Box>
             <Box flex={1} alignSelf="flex-end">
-                {categoryList}
+                <Chip text={`#${category}`} color="success" />
+            </Box>
+
+            <Box flex={2}>
+                <Typography variant="h5" color="white" align="center">
+                    {streamKey}
+                </Typography>
             </Box>
         </Box>
     );
