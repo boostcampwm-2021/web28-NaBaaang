@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-
 import styled, { css } from 'styled-components';
+
+import { API_URL } from '@/constants/url';
 
 import Box from '@/components/Common/Box';
 import Video from '@/components/Video';
@@ -11,15 +12,15 @@ export default function ChannelManager({ channelId }) {
     const [channelInfo, setChannelInfo] = useState({});
 
     useEffect(async () => {
-        const url = `백엔드 서버 주소/channel/${channelId}`;
-        let data = await fetch(url);
+        const serverUrl = `${API_URL}/api/channels/${channelId}`;
+        let data = await fetch(serverUrl);
         data = await data.json();
 
         const newChannelInfo = {
             title: data.title,
             description: data.description,
             category: data.category,
-            key: data.streamKey,
+            key: data.stream_key,
         };
 
         setChannelInfo({ ...channelInfo, ...newChannelInfo });
@@ -33,7 +34,7 @@ export default function ChannelManager({ channelId }) {
                 justifyContent="space-around"
                 flex="1"
             >
-                <Box>
+                <Box flexDirection="column">
                     <div>채널 정보</div>
                     <ChannelTitle>{channelInfo.title}</ChannelTitle>
                     <ChannelDescription>
