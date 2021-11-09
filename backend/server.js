@@ -7,7 +7,9 @@ import indexRouter from './routes/index.js';
 import swaggerRouter from './routes/api/swagger/index.js';
 import channelRouter from './routes/api/channel/index.js';
 import db from './models/index.js';
+import 'module-alias/register.js';
 
+db.init();
 const __dirname = path.resolve();
 
 const app = express();
