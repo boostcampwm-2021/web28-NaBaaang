@@ -8,9 +8,6 @@ import Video from '@/components/Video';
 
 export default function ChannelManager({ match }) {
     const [channelInfo, setChannelInfo] = useState({});
-
-    const url = '미디어 서버 주소'; // .env에 있는 주소
-
     // channelID
     const { params } = match;
     const { channelId } = params;
@@ -50,7 +47,7 @@ export default function ChannelManager({ match }) {
                 </Box>
                 <Box flexDirection="column">
                     미디어 서버 정보
-                    <div>URL: {url}</div>
+                    <div>URL: </div>
                     <div>스트림 키 : {channelInfo.key}</div>
                 </Box>
             </Box>
@@ -58,7 +55,7 @@ export default function ChannelManager({ match }) {
                 <Box flex="1">방송 메타 정보</Box>
                 <Box width="100%" height="100%" flex="2">
                     {channelInfo.key ? (
-                        <Video secretKey={channelInfo.key} />
+                        <Video streamKey={channelInfo.key} />
                     ) : (
                         <Box width="100%" height="100%">
                             방송 준비중
