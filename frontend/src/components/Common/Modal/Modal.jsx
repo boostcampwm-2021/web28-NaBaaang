@@ -23,9 +23,9 @@ export default function Modal({
 
     return (
         <Portal elementId="modal-root">
-            <ModalWrap>
-                <Overlay onClick={onClose} />
-                <Card direction="column" width="350px" height="350px">
+            <ModalBox width="100%" height="100%">
+                <OverlayBox onClick={onClose} width="100%" height="100%" />
+                <Card flexDirection="column" width="350px" height="350px">
                     <Box flex={0.5}>
                         <ModalHeader>NaBaang</ModalHeader>
                     </Box>
@@ -49,21 +49,16 @@ export default function Modal({
                         </ButtonBox>
                     )}
                 </Card>
-            </ModalWrap>
+            </ModalBox>
         </Portal>
     );
 }
 
-const ModalWrap = styled.div`
-    width: 100%;
-    height: 100%;
+const ModalBox = styled(Box)`
     position: fixed;
     left: 0;
     top: 0;
     border: 1px solid black;
-    padding: 20px;
-    box-sizing: border-box;
-    ${flexMixin('row', 'center', 'center')}
     z-index: 1024;
 `;
 
@@ -73,9 +68,7 @@ const ModalHeader = styled.h3`
     text-align: center;
 `;
 
-const Overlay = styled.div`
-    width: 100%;
-    height: 100%;
+const OverlayBox = styled(Box)`
     position: absolute;
     top: 0;
     left: 0;
