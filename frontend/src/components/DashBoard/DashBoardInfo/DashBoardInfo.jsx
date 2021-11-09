@@ -19,7 +19,9 @@ export default function DashBoardInfo({ title, description, category }) {
             alignItems="space-between"
         >
             <Box flex={1}>
-                <Typography variant="h5">{title}</Typography>
+                <Typography variant="h5" color="white">
+                    {title}
+                </Typography>
             </Box>
             <Box flex={4}>
                 <StyledCard width="70%" height="70%">
