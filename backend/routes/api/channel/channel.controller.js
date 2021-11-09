@@ -1,5 +1,5 @@
 import channelService from './channel.service.js';
-import STATUS from '../../../util/statusCode.js';
+import STATUS from '../../../lib/util/statusCode.js';
 
 const createChannel = async (req, res) => {
     try {
