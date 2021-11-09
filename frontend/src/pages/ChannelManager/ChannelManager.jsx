@@ -1,34 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { fetchGetChannel } from '@/apis/channel';
+import fetchAction from '@/constants/fetchAction';
+import useFetch from '@/hooks/useFetch';
 
 import Box from '@/components/Common/Box';
 import Video from '@/components/Video';
 
 export default function ChannelManager({ match }) {
-    const [channelInfo, setChannelInfo] = useState({});
-    // channelID
     const { params } = match;
     const { channelId } = params;
+    const { url, option } = fetchAction({
+        type: 'FETCH_GET_CHANNEL',
+        payload: channelId,
+    });
 
-    console.log(channelId);
+    const { data, loading, error } = useFetch(url, option);
 
-    useEffect(async () => {
-        // const serverUrl = `${API_URL}/api/channels/${channelId}`;
-        // let data = await fetch(serverUrl);
-        const data = await fetchGetChannel(channelId);
+    if (error) return <div>Error..</div>;
+    if (loading) return <div>loading..</div>;
+    if (!data) return <div>null data...</div>;
 
-        const newChannelInfo = {
-            title: data.title,
-            description: data.description,
-            category: data.category,
-            key: data.stream_key,
-        };
-
-        setChannelInfo({ ...channelInfo, ...newChannelInfo });
-    }, []);
-
+    const { title, description, category } = data;
+    const streamKey = data.stream_key;
     return (
         <Box height="100%" flexDirection="row">
             <Box
@@ -39,23 +33,21 @@ export default function ChannelManager({ match }) {
             >
                 <Box flexDirection="column">
                     <div>채널 정보</div>
-                    <ChannelTitle>{channelInfo.title}</ChannelTitle>
-                    <ChannelDescription>
-                        {channelInfo.description}
-                    </ChannelDescription>
-                    <Box>{channelInfo.category}</Box>
+                    <ChannelTitle>{title}</ChannelTitle>
+                    <ChannelDescription>{description}</ChannelDescription>
+                    <Box>{category}</Box>
                 </Box>
                 <Box flexDirection="column">
                     미디어 서버 정보
                     <div>URL: </div>
-                    <div>스트림 키 : {channelInfo.key}</div>
+                    <div>스트림 키 : {streamKey}</div>
                 </Box>
             </Box>
             <Box height="100%" flexDirection="column" flex="2">
                 <Box flex="1">방송 메타 정보</Box>
                 <Box width="100%" height="100%" flex="2">
-                    {channelInfo.key ? (
-                        <Video streamKey={channelInfo.key} />
+                    {streamKey ? (
+                        <Video streamKey={streamKey} />
                     ) : (
                         <Box width="100%" height="100%">
                             방송 준비중

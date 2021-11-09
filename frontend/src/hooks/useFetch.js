@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 export default function useFetch(url, option) {
-    const [data, setData] = useState();
-    const [error, setError] = useState();
+    const [data, setData] = useState(null);
+    const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const fetchData = async () => {
@@ -13,7 +13,7 @@ export default function useFetch(url, option) {
             setData(json);
             setLoading(false);
         } catch (err) {
-            setError(error);
+            setError(true);
         }
     };
 
