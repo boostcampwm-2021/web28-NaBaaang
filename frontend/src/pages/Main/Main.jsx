@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import SideBar from '@/components/SideBar';
 import LiveCollection from '@/components/LiveCollection';
 import Channel from '@/components/Channel/Channel';
+import SocketTest from '@/components/Socket/SocketTest';
 
 function MainPage() {
     return (
@@ -27,6 +28,7 @@ function MainPage() {
                             <Switch>
                                 <Route path="/" exact component={LiveCollection} />
                                 <Route path="/channel" component={Channel} />
+                                <Route path="/socket" component={SocketTest} />
                             </Switch>
                         </AbsoluteBox>
                         
