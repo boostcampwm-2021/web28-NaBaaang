@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 export default function Typography({
     variant = 'h6',
-    color = 'black',
+    color,
     align = 'left',
     children = '',
 }) {
