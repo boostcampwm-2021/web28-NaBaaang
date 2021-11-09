@@ -7,31 +7,37 @@ export default function Box(props) {
     return <StyledBox {...props}>{children}</StyledBox>;
 }
 
-const generateCss = (k, v) =>
+const generateCss = (cssLine, v) =>
     v &&
     css`
-        ${k}: ${v};
+        ${cssLine}
     `;
+
+const BoxColotType = {
+    black: css`
+        color: ${({ theme }) => theme.color.white};
+        background-color: ${({ theme }) => theme.color.black};
+    `,
+};
 
 const StyledBox = styled.div`
     position: relative;
-    ${({ width }) => generateCss('width', width)}
-    ${({ height }) => generateCss('height', height)}
+    ${({ width }) => generateCss(`width : ${width};`, width)}
+    ${({ height }) => generateCss(`height: ${height};`, height)}
+    ${({ border }) => generateCss(`border: ${border}px solid black;`, border)}
+    ${({ flex }) => generateCss(`flex: ${flex} ${flex} 0;`, flex)}
+    ${({ alignSelf }) => generateCss(`align-self: ${alignSelf};`, alignSelf)}
+    ${({ theme, backgroundColor }) =>
+        generateCss(
+            `background-color: ${theme.color[backgroundColor]};`,
+            backgroundColor,
+        )}
 
+    ${({ type }) => BoxColotType[type]};
 
-    ${({ border }) =>
-        border &&
-        css`
-            border: ${border}px solid black;
-        `}
-    ${({ flex }) =>
-        flex && 
-        css`
-            flex: ${flex} ${flex} 0;
-        `}
-    ${({ alignSelf }) => css`
-        align-self: ${alignSelf};
-    `}
+    ${({ theme, fontColor }) =>
+        generateCss(`background-color: ${theme.color[fontColor]};`, fontColor)}
+
     ${({ flexDirection, justifyContent = 'center', alignItems = 'center' }) =>
         flexMixin(flexDirection, justifyContent, alignItems)}
 `;
