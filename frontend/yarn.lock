@@ -7690,6 +7690,11 @@ history@^4.9.0:
     tiny-warning "^1.0.0"
     value-equal "^1.0.1"
 
+hls.js@1.0.13-0.canary.8041:
+  version "1.0.13-0.canary.8041"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.0.13-0.canary.8041.tgz#929b4810c866f1f02df9f9df6195e1122794af4b"
+  integrity sha512-Nunht8WTEfNxpxSUUbG4X7/Z36fSLjgXyXNE71zanjZXq8AjTTRNmYCUyFW2J+fPG31EU4aiJu2nH0KKncJFqA==
+
 hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"

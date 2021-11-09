@@ -12,15 +12,13 @@ export default function SideBar() {
 }
 
 const StyledBox = styled(Box)`
-    width: ${({ theme }) => theme.size.sidebarWidth};
+    /* min-width:  ${({ theme }) => theme.size.sidebarWidth}; */
+    width: 100%;
     height: 100%;
     z-index: ${({ theme }) => theme.zIndex.sideBar};
     ${({ theme }) =>
         css`
             background-color: ${theme.color.gray3};
         `}
-    position : fixed;
-    top: ${({ theme }) => theme.size.headerHeight};
-    left: 0;
     padding-top: 10px;
 `;

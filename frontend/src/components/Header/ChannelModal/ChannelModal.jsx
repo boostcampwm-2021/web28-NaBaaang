@@ -4,14 +4,16 @@ import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 import ChannelCreateValidation from '@/validation/ChannelModal';
 
+import { fetchCreateChannel } from '@/apis/channel';
 import Modal from '@/components/Common/Modal';
 import TextField from '@/components/Common/TextField';
 import Box from '@/components/Common/Box';
 import useForm from '@/hooks/useForm';
 
-export default function ChannelCreateModal() {
-    const handleOnSubmit = data => {
-        console.log(data);
+export default function ChannelCreateModal({ onClose, open }) {
+    const handleOnSubmit = async formData => {
+        const channelID = await fetchCreateChannel(formData);
+        console.log(channelID);
     };
 
     const { errors, handleChange, handleSubmit } = useForm({
@@ -57,11 +59,12 @@ export default function ChannelCreateModal() {
 
     return (
         <Modal
-            open
+            open={open}
             showButton
             onSuccessText="방송 생성"
             onSuccess={handleSubmit}
             onCancleText="취소"
+            onClose={onClose}
         >
             {modalContents}
         </Modal>

@@ -24,9 +24,7 @@ function LiveCollection() {
     });
 
     const fetchLiveLists = async () => {
-        const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/dummy.json`,
-        );
+        const response = await fetch(`http://localhost:3000/dummy.json`);
         const data = await response.json();
         setLiveLists(data);
     };
