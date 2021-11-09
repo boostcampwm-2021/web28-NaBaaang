@@ -34,8 +34,9 @@ const VariantType = {
     `,
 };
 
-function generateDynamicallyStyledTag({ variant = 'h6', align }) {
+function generateDynamicallyStyledTag({ variant = 'h6', align, color }) {
     return styled(VariantType[variant])`
         text-align: ${align};
+        color: ${color};
     `;
 }
