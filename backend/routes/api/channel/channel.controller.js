@@ -6,7 +6,7 @@ const createChannel = async (req, res) => {
         const data = await channelService.create(req.body);
         res.status(STATUS.CREATED).json(data);
     } catch (error) {
-        console.error(error);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
 };
 
@@ -16,7 +16,7 @@ const getChannel = async (req, res) => {
         const data = await channelService.getChannelById(id);
         res.status(STATUS.OK).json(data);
     } catch (error) {
-        console.error(error);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
 };
 
