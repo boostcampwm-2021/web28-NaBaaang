@@ -9,7 +9,7 @@ import TextField from '@/components/Common/TextField';
 import Box from '@/components/Common/Box';
 import useForm from '@/hooks/useForm';
 
-export default function ChannelCreateModal() {
+export default function ChannelCreateModal({ onClose, open }) {
     const handleOnSubmit = data => {
         console.log(data);
     };
@@ -57,11 +57,12 @@ export default function ChannelCreateModal() {
 
     return (
         <Modal
-            open
+            open={open}
             showButton
             onSuccessText="방송 생성"
             onSuccess={handleSubmit}
             onCancleText="취소"
+            onClose={onClose}
         >
             {modalContents}
         </Modal>
