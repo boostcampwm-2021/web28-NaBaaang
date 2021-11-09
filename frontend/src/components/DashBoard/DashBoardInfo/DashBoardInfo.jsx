@@ -34,10 +34,23 @@ export default function DashBoardInfo({ info }) {
                 <Chip text={`#${category}`} color="success" />
             </Box>
 
-            <Box flex={2}>
-                <Typography variant="h5" color="white" align="center">
-                    {streamKey}
-                </Typography>
+            <Box
+                flex={2}
+                flexDirection="column"
+                justifyContent="flex-start"
+                alignItems="stretch"
+            >
+                <Box flex={1} backgroundColor="gray1">
+                    <Typography variant="h3" color="white" align="center">
+                        미디어 서버 정보
+                    </Typography>
+                </Box>
+
+                <Box flex={2}>
+                    <Typography variant="h6" color="white" align="center">
+                        스트림키 : {streamKey}
+                    </Typography>
+                </Box>
             </Box>
         </Box>
     );

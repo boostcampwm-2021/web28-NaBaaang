@@ -6,8 +6,9 @@ export default function Typography({
     color,
     align = 'left',
     children = '',
+    backgroundColor,
 }) {
-    const styleProps = { variant, color, align };
+    const styleProps = { variant, color, align, backgroundColor };
     switch (variant) {
         case 'h1':
             return <H1Tag {...styleProps}>{children}</H1Tag>;
@@ -61,6 +62,7 @@ const generatorTag = variant => styled(variant)`
     ${({ variant }) => FontSizeType[variant]};
     color: ${({ color }) => color};
     text-align: ${({ align }) => align};
+    background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 const H1Tag = generatorTag('h1');
