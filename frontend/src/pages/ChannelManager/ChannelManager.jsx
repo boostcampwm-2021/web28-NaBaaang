@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { API_URL } from '@/constants/url';
+import { fetchGetChannel } from '@/apis/channel';
 
 import Box from '@/components/Common/Box';
 import Video from '@/components/Video';
 
-export default function ChannelManager({ channelId }) {
-    const url = '미디어 서버 주소'; // .env에 있는 주소
-
+export default function ChannelManager({ match }) {
     const [channelInfo, setChannelInfo] = useState({});
 
+    const url = '미디어 서버 주소'; // .env에 있는 주소
+
+    // channelID
+    const { params } = match;
+    const { channelId } = params;
+
+    console.log(channelId);
+
     useEffect(async () => {
-        const serverUrl = `${API_URL}/api/channels/${channelId}`;
-        let data = await fetch(serverUrl);
-        data = await data.json();
+        // const serverUrl = `${API_URL}/api/channels/${channelId}`;
+        // let data = await fetch(serverUrl);
+        const data = await fetchGetChannel(channelId);
 
         const newChannelInfo = {
             title: data.title,

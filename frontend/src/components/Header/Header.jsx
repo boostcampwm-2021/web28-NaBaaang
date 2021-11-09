@@ -12,7 +12,7 @@ import Box from '@/components/Common/Box';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
-export default function Header({ isSigin }) {
+export default function Header({ isSigin = true }) {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
 
