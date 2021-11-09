@@ -13,6 +13,7 @@ import useForm from '@/hooks/useForm';
 export default function ChannelCreateModal({ onClose, open }) {
     const handleOnSubmit = async formData => {
         const channelID = await fetchCreateChannel(formData);
+        console.log(channelID);
     };
 
     const { errors, handleChange, handleSubmit } = useForm({
