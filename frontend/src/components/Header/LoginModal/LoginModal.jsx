@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Modal from '@/components/Common/Modal';
 import Button from '@/components/Common/Button';
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, open }) {
     return (
-        <Modal open onClose={onClose}>
+        <Modal open={open} onClose={onClose}>
             <Title>로그인</Title>
             <Button text="Sign in with Github" size="medium" />
         </Modal>
