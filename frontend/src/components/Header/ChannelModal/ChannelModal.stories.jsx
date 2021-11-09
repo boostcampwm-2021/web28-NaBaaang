@@ -3,6 +3,4 @@ import { storiesOf } from '@storybook/react';
 
 import ChannelModal from './ChannelModal';
 
-storiesOf('ChannelModal', module).add('basic', () => (
-    <ChannelModal />
-));
+storiesOf('ChannelModal', module).add('open', () => <ChannelModal open />);

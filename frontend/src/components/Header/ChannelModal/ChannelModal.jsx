@@ -4,14 +4,17 @@ import styled from 'styled-components';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 import ChannelCreateValidation from '@/validation/ChannelModal';
 
+import { fetchCreateChannel } from '@/apis/channel';
 import Modal from '@/components/Common/Modal';
 import TextField from '@/components/Common/TextField';
 import Box from '@/components/Common/Box';
 import useForm from '@/hooks/useForm';
 
 export default function ChannelCreateModal({ onClose, open }) {
-    const handleOnSubmit = data => {
-        console.log(data);
+    const handleOnSubmit = async formData => {
+        // (1) data를 기반으로 DB에 채널 생성 (유효성 검사는 서버단에서)
+        const channelID = await fetchCreateChannel(formData);
+        console.log(channelID);
     };
 
     const { errors, handleChange, handleSubmit } = useForm({
