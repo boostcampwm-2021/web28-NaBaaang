@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 
 import ChannelCreateValidation from '@/validation/ChannelModal';
 import { fetchCreateChannel } from '@/apis/channel';
@@ -8,10 +9,12 @@ import Modal from '@/components/Common/Modal';
 import ChannelModalForm from '../ChannelModalForm/ChannelModalForm';
 
 export default function ChannelCreateModal({ onClose, open }) {
+    const history = useHistory();
+
     const handleOnSubmit = async formData => {
         try {
             const channelID = await fetchCreateChannel(formData);
-            console.log(channelID);
+            history.push(`/u/1/stream-manager/${channelID})`);
         } catch (err) {
             throw new Error(err);
         }
