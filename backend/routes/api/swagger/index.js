@@ -5,18 +5,22 @@ import swaggerJsdoc from 'swagger-jsdoc';
 const router = express.Router();
 const options = {
     definition: {
-        openapi: "3.0.0",
+        openapi: '3.0.0',
         info: {
-            title: "Hello World",
-            version: "1.0.0",
+            title: 'Hello World',
+            version: '1.0.0',
         },
     },
-    apis: [path.resolve("routes", "index.js")], // files containing annotations as above
+    apis: [
+        path.resolve('routes', 'index.js'),
+        path.resolve('routes/api/message', 'index.js'),
+        path.resolve('routes/api/message/swagger', 'components.js'),
+    ], // files containing annotations as above
 };
 
 const openapiSpecification = swaggerJsdoc(options);
 
-router.use("/api-docs", swaggerUi.serve);
-router.get("/api-docs", swaggerUi.setup(openapiSpecification));
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(openapiSpecification));
 
 export default router;
