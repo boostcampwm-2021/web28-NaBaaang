@@ -8,6 +8,8 @@ const SocketTest = () => {
     useEffect(() => {
         console.log('socket test');
         chatSocket.on('connect', () => {
+            chatSocket.emit('join', { roomId: 'some random key' });
+            chatSocket.on('after-join', msg => console.log(msg));
             chatSocket.emit('greeting-from-client', 'Hello Server');
             chatSocket.on('greeting-from-server', msg => console.log(msg));
         });
