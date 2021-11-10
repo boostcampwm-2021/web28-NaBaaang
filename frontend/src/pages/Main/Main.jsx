@@ -27,7 +27,10 @@ function MainPage() {
                     <AbsoluteBox width="100%" height="100%">
                         <Switch>
                             <Route path="/" exact component={LiveCollection} />
-                            <Route path="/channel" component={Channel} />
+                            <Route
+                                path="/channel/:channelId"
+                                component={Channel}
+                            />
                             <Route path="/socket" component={SocketTest} />
                         </Switch>
                     </AbsoluteBox>
