@@ -15,4 +15,32 @@ async function fetchCreateChannel(formData) {
     }
 }
 
-export { fetchCreateChannel };
+async function fetchOpenChannel(id) {
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_OPEN_CHANNEL',
+            payload: id,
+        });
+        const res = await fetch(url, option);
+        const json = await res.json();
+        return json;
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
+async function fetchCloseChannel(id) {
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_CLOSE_CHANNEL',
+            payload: id,
+        });
+        const res = await fetch(url, option);
+        const json = await res.json();
+        return json;
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
+export { fetchCreateChannel, fetchOpenChannel, fetchCloseChannel };

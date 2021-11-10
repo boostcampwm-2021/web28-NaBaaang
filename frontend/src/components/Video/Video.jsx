@@ -22,7 +22,7 @@ export default function Video({ streamKey }) {
             });
 
             hls.on(HLS.Events.ERROR, () => {
-                hls.loadSource(m3u8URL);
+                // hls.loadSource(m3u8URL);
             });
 
             hls.on(HLS.Events.MANIFEST_PARSED, () => {
