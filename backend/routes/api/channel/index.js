@@ -19,7 +19,9 @@ import channelController from './channel.controller.js';
  *
  */
 router.get('/:id', channelController.getChannel);
-router.get('/', channelController.getChannels);
+router.get('/', channelController.getLiveChannels);
+router.patch('/:id/open', channelController.openChannel);
+router.patch('/:id/close', channelController.closeChannel);
 router.post('/', channelController.createChannel);
 
 export default router;

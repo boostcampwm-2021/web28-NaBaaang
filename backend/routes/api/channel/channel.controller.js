@@ -20,22 +20,40 @@ const getChannel = async (req, res) => {
     }
 };
 
-const getChannels = async (req, res) => {
+const getLiveChannels = async (req, res) => {
     try {
         const { id } = req.params;
-        const data = await channelService.getChannels(id);
-        let groupedData = {};
-        data.map(e => {
-            if (Object.keys(groupedData).includes(e.category)) {
-                groupedData[e.category].push(e);
-            } else {
-                groupedData[e.category] = [e];
-            }
-        });
-        res.status(STATUS.OK).json(groupedData);
+        const data = await channelService.getLiveChannels(id);
+        res.status(STATUS.OK).json(data);
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
 };
 
-export default { createChannel, getChannel, getChannels };
+const openChannel = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await channelService.updateLive(id, true);
+        res.status(STATUS.OK).json({ message: 'success' });
+    } catch (error) {
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+    }
+};
+
+const closeChannel = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await channelService.updateLive(id, false);
+        res.status(STATUS.OK).json({ message: 'success' });
+    } catch (error) {
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+    }
+};
+
+export default {
+    createChannel,
+    getChannel,
+    getLiveChannels,
+    openChannel,
+    closeChannel,
+};

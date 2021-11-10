@@ -31,6 +31,11 @@ export default function (sequelize, DataTypes) {
                 type: DataTypes.STRING(100),
                 allowNull: true, // false 변경 필요
             },
+            isLive: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
+            },
         },
         {
             sequelize,
