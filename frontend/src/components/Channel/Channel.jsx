@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
+import { ChatSocket } from '@/socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
@@ -14,6 +15,10 @@ export default function Channel({ match }) {
     const { data, error, loading } = useFetch(
         `http://localhost:4000/api/channels/${channelId}`,
     );
+
+    useEffect(() => {
+        ChatSocket.emit('join', { roomId: channelId });
+    }, []);
 
     if (loading) return <div>loading...</div>;
     if (error) return <div>Fetch Error...</div>;

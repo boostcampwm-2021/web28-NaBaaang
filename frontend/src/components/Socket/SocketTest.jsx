@@ -1,18 +1,12 @@
 import React, { useEffect } from 'react';
-import io from 'socket.io-client';
 
-const BASE_URL = 'http://localhost:5000/';
+import { ChatSocket } from '@/socket';
 
 const SocketTest = () => {
-    const chatSocket = io(BASE_URL);
     useEffect(() => {
         console.log('socket test');
-        chatSocket.on('connect', () => {
-            chatSocket.emit('join', { roomId: 'some random key' });
-            chatSocket.on('after-join', msg => console.log(msg));
-            chatSocket.emit('greeting-from-client', 'Hello Server');
-            chatSocket.on('greeting-from-server', msg => console.log(msg));
-        });
+        ChatSocket.emit('join', { roomId: 'some random key' });
+        ChatSocket.emit('chat', { message: 'Hello Server' });
     }, []);
     return <></>;
 };

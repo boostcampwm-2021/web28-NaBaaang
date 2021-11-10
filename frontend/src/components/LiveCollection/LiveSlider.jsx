@@ -16,7 +16,6 @@ function LiveSlider({ liveList }) {
     };
 
     const makeLiveCardChunk = chunk => {
-        // 여기에 key값 주세요... 에러납니다
         return chunk.map(liveItem => (
             <LiveCard key={liveItem.id} content={liveItem} />
         ));

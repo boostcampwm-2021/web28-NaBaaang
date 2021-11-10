@@ -1,24 +1,41 @@
 import React, { useState, useEffect } from 'react';
+
+import { ChatSocket } from '@/socket';
+
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
+let messageBuffer = [];
+
+// function throttle(callback, limit) {
+//     let waiting = false;
+//     return (...args) => {
+//         if (!waiting) {
+//             callback.apply(this, args);
+//             waiting = true;
+//             setTimeout(() => {
+//                 waiting = false;
+//             }, limit);
+//         }
+//     };
+// }
+
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
 
-    /**
-     * todo: socket 통신으로 messageList set
-     */
     useEffect(() => {
-        setMessageList([]);
+        ChatSocket.on('chat', message => {
+            messageBuffer.push(message);
+            if (messageBuffer.length >= 3) {
+                setMessageList(prev => [...prev, ...messageBuffer]);
+                messageBuffer = [];
+            }
+        });
     }, []);
 
-    /**
-     * todo: message socket 전송
-     * @param {*} message
-     */
     const handleSubmit = message => {
-        setMessageList([...messageList, message]);
+        ChatSocket.emit('chat', { message });
     };
 
     return (

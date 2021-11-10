@@ -11,7 +11,7 @@ export default function DashBoard({ info }) {
     return (
         <Box type="black" height="100%" alignItems="stretch">
             <Box
-                flex={1.5}
+                flex={1}
                 padding={1}
                 flexDirection="column"
                 alignItems="stretch"
