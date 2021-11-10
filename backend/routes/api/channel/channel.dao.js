@@ -1,7 +1,8 @@
+// import db from '../../../models/index.js';
 import db from '../../../models/index.js';
 const Channel = db.channel;
 
-const insertChannel = async ({ channelInfo, transaction }) => {
+const insertChannel = async (channelInfo, transaction) => {
     let option = {};
     if (transaction) option.transaction = transaction;
     try {
@@ -13,7 +14,7 @@ const insertChannel = async ({ channelInfo, transaction }) => {
     }
 };
 
-const findByChannelId = async ({ channelId, transaction }) => {
+const findByChannelId = async (channelId, transaction) => {
     let option = {};
     if (transaction) option.transaction = transaction;
     try {
