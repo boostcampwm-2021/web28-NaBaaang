@@ -1,19 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import LiveThumbnail from './LiveThumbnail';
 import LiveDetails from './LiveDetails';
 
 function LiveCard({ content }) {
+    const { id } = content;
     return (
-        <CardLayout>
-            <LiveThumbnail
-                thumbnail={content.thumbnail_url}
-                viewer={content.viewer_cnt}
-            />
-            <LiveDetails details={content} />
-        </CardLayout>
+        <Link to={`/channel/${id}`}>
+            <CardLayout>
+                <LiveThumbnail
+                    thumbnail="https://static-cdn.jtvnw.net/previews-ttv/live_user_qldhkwy-440x248.jpg"
+                    viewer={1000}
+                />
+                <LiveDetails details={content} />
+            </CardLayout>
+        </Link>
     );
 }
 
