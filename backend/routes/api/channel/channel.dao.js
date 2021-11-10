@@ -32,4 +32,16 @@ const findByChannelId = async (channelId, transaction) => {
         console.error(error);
     }
 };
-export default { insertChannel, findByChannelId };
+
+const findAll = async transaction => {
+    let option = {};
+    if (transaction) option.transaction = transaction;
+    try {
+        const channels = await Channel.findAll({}, option);
+
+        return channels;
+    } catch (error) {
+        console.error(error);
+    }
+};
+export default { insertChannel, findByChannelId, findAll };
