@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 
 import Hls from 'hls.js/dist/hls';
 
-import { MEDIA_URL } from '@/constants/url';
-
 import styled from 'styled-components';
 import { sizeMixin } from '@/styles/mixins';
+
+import { MEDIA_URL } from '@/constants/url';
 
 export default function Video({ streamKey }) {
     const videoRef = useRef();
