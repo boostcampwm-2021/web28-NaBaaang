@@ -1,34 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import { sizeMixin, borderBoxMixin, flexMixin } from '@/styles/mixins';
+import Box from '@/components/Common/Box';
 
 export default function Card({
     width,
     height,
     children,
-    direction,
-    jutify,
+    flexDirection,
+    jutifyContent,
     alignItems,
 }) {
     return (
-        <StyledCard
+        <StyeldBox
             width={width}
             height={height}
-            direction={direction}
-            jutify={jutify}
+            flexDirection={flexDirection}
+            jutifyContent={jutifyContent}
             alignItems={alignItems}
         >
             {children}
-        </StyledCard>
+        </StyeldBox>
     );
 }
 
-const StyledCard = styled.div`
-    ${({ direction, jutify, alignItems }) =>
-        flexMixin(direction, jutify, alignItems)}
-    ${({ width, height }) => sizeMixin(width, height)}
-    ${borderBoxMixin('1px', '10px')}
+const StyeldBox = styled(Box)`
+    border-radius: 10px;
     background-color: ${({ theme }) => theme.color.white};
     padding: 20px;
-    box-sizing: border-box;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 `;
