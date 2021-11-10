@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
+import { ChatSocket } from '@/socket';
+
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
@@ -6,19 +9,14 @@ import MessageList from './MessageList';
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
 
-    /**
-     * todo: socket 통신으로 messageList set
-     */
     useEffect(() => {
-        setMessageList([]);
-    }, []);
+        ChatSocket.on('chat', message => {
+            setMessageList([...messageList, message]);
+        });
+    });
 
-    /**
-     * todo: message socket 전송
-     * @param {*} message
-     */
     const handleSubmit = message => {
-        setMessageList([...messageList, message]);
+        ChatSocket.emit('chat', { message });
     };
 
     return (

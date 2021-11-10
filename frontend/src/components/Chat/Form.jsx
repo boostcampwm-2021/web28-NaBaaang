@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
 import DonationModal from './DonationModal';
 
-export default function Form({ messageList, setMessageList, handleSubmit }) {
+export default function Form({ handleSubmit }) {
     const messageInput = useRef();
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +22,8 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
             nickname: 'undefined',
             content: value,
         };
-        setMessageList([...messageList, message]);
+        // setMessageList([...messageList, message]);
+        handleSubmit(message);
         setModalOpen(false);
     };
 

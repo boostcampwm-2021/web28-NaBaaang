@@ -2,7 +2,7 @@ const chatHandler = (io, socket) => {
   const joinRoomById = ({ roomId }) => {
     socket.roomId = roomId;
     socket.join(roomId);
-    io.to(roomId).emit("join", `anonymous entered #${roomId} room`);
+    io.to(roomId).emit("join", `anonymous entered #${roomId} channel`);
   };
 
   const sendChatMessage = ({ message }) => {
