@@ -43,7 +43,7 @@ const getLiveChannels = async () => {
             }
         });
         await transaction.commit();
-        return result;
+        return groupedData;
     } catch (error) {
         await transaction.rollback();
         console.error(error);
