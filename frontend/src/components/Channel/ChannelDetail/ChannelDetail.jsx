@@ -9,14 +9,15 @@ function ChannelDetails({ channelInfo }) {
     return (
         <StyledBox flex={1}>
             <StyledRow>
-                <Avatar src={channelInfo.streamer.imageSrc} size="large" />
+                <Avatar
+                    src="https://static-cdn.jtvnw.net/jtv_user_pictures/89e29e2e-f165-40e6-bc0c-d42205935216-profile_image-50x50.png"
+                    size="large"
+                />
             </StyledRow>
 
             <StyledRow marginLeft="20px">
                 <StyledColumn>
-                    <StyledNickName>
-                        {channelInfo.streamer.nickname}
-                    </StyledNickName>
+                    <StyledNickName>{channelInfo.streamer_id}</StyledNickName>
                     <StyledTitle>{channelInfo.title}</StyledTitle>
                     <StyledHashTag>#{channelInfo.category}</StyledHashTag>
                 </StyledColumn>
@@ -33,7 +34,7 @@ function ChannelDetails({ channelInfo }) {
 
 const StyledBox = styled(Box)`
     padding: 0.5rem 1rem;
-    background-color: ${({theme}) => theme.color.gray3};
+    background-color: ${({ theme }) => theme.color.gray3};
 `;
 
 const StyledRow = styled.div`

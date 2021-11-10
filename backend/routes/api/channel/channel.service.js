@@ -30,4 +30,16 @@ const getChannelById = async channelId => {
     }
 };
 
-export default { create, getChannelById };
+const getChannels = async () => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        const result = await channelDAO.findAll(transaction);
+
+        await transaction.commit();
+        return result;
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
+    }
+};
+export default { create, getChannelById, getChannels };

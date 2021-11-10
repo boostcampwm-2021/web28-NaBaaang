@@ -5,6 +5,8 @@ import Hls from 'hls.js/dist/hls';
 import styled from 'styled-components';
 import { sizeMixin } from '@/styles/mixins';
 
+import { MEDIA_URL } from '@/constants/url';
+
 export default function Video({ streamKey }) {
     const videoRef = useRef();
 
@@ -17,9 +19,7 @@ export default function Video({ streamKey }) {
 
             // MEDIA_ATTACHED event is fired by hls object once MediaSource is ready
             hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-                const serverLocation = 'http://27.96.130.182';
-                const fileName = `${streamKey}.m3u8`;
-                const url = `${serverLocation}/${fileName}`;
+                const url = `${MEDIA_URL}/${streamKey}.m3u8`;
 
                 hls.loadSource(url);
 

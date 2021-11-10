@@ -12,11 +12,11 @@ function App() {
             <BrowserRouter>
                 <div id="modal-root" />
                 <Switch>
-                    <Route path="/" component={Main} exact />
                     <Route
-                        path="/u/:userId/stream-manager/:channelId"
+                        path="/stream-manager/:channelId"
                         component={ChannelManager}
                     />
+                    <Route path="/" component={Main} />
                 </Switch>
             </BrowserRouter>
         </StyledApp>

@@ -19,6 +19,7 @@ import channelController from './channel.controller.js';
  *
  */
 router.get('/:id', channelController.getChannel);
+router.get('/', channelController.getChannels);
 router.post('/', channelController.createChannel);
 
 export default router;

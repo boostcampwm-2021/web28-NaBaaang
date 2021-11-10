@@ -14,7 +14,7 @@ export default function ChannelCreateModal({ onClose, open }) {
     const handleOnSubmit = async formData => {
         try {
             const channelID = await fetchCreateChannel(formData);
-            history.push(`/u/1/stream-manager/${channelID})`);
+            history.push(`/stream-manager/${channelID}`);
         } catch (err) {
             throw new Error(err);
         }
