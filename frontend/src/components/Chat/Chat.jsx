@@ -6,12 +6,31 @@ import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
+let messageBuffer = [];
+
+// function throttle(callback, limit) {
+//     let waiting = false;
+//     return (...args) => {
+//         if (!waiting) {
+//             callback.apply(this, args);
+//             waiting = true;
+//             setTimeout(() => {
+//                 waiting = false;
+//             }, limit);
+//         }
+//     };
+// }
+
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
 
     useEffect(() => {
         ChatSocket.on('chat', message => {
-            setMessageList(prev => [...prev, message]);
+            messageBuffer.push(message);
+            if (messageBuffer.length >= 3) {
+                setMessageList(prev => [...prev, ...messageBuffer]);
+                messageBuffer = [];
+            }
         });
     }, []);
 
