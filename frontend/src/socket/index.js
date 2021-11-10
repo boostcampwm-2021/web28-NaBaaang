@@ -9,7 +9,6 @@ const createChatSocket = () => {
 
     chatSocket.on('connect', () => {
         chatSocket.on('join', msg => console.log(msg));
-        // chatSocket.on('chat', msg => console.log(msg));
     });
 
     chatSocket.on('disconnect', () => {

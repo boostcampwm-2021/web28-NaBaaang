@@ -11,9 +11,9 @@ export default function Chat() {
 
     useEffect(() => {
         ChatSocket.on('chat', message => {
-            setMessageList([...messageList, message]);
+            setMessageList(prev => [...prev, message]);
         });
-    });
+    }, []);
 
     const handleSubmit = message => {
         ChatSocket.emit('chat', { message });
