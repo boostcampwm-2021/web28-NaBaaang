@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { ChatSocket } from '@/socket';
 
@@ -6,31 +6,61 @@ import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-let messageBuffer = [];
-
-// function throttle(callback, limit) {
-//     let waiting = false;
-//     return (...args) => {
-//         if (!waiting) {
-//             callback.apply(this, args);
-//             waiting = true;
-//             setTimeout(() => {
-//                 waiting = false;
-//             }, limit);
-//         }
-//     };
-// }
+const CHAT_DELAY_TIME = 1000;
+const BUFFER_SIZE_LIMIT = 3;
+const MESSAGE_LIMIT = 1000;
 
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
+    const messageBuffer = useRef([]);
+
+    const isMessageBufferOverflow = () => {
+        return (
+            messageBuffer.current.length + messageList.length > MESSAGE_LIMIT
+        );
+    };
+    const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
+
+    const updateFromBuffer = () => {
+        if (!isMessageBufferOverflow()) {
+            setMessageList(prev => [...prev, ...messageBuffer.current]);
+        } else {
+            setMessageList(prev =>
+                [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT),
+            );
+        }
+        messageBuffer.current = [];
+    };
+
+    const throttle = (callback, limit) => {
+        let waiting = false;
+        let id;
+        return message => {
+            messageBuffer.current.push(message);
+            if (!waiting) {
+                waiting = true;
+                id = setTimeout(() => {
+                    callback.apply(this);
+                    waiting = false;
+                }, limit);
+            }
+            if (isBufferFull()) {
+                clearTimeout(id);
+                waiting = false;
+                callback.apply(this);
+            }
+        };
+    };
 
     useEffect(() => {
+        const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
         ChatSocket.on('chat', message => {
-            messageBuffer.push(message);
-            if (messageBuffer.length >= 3) {
-                setMessageList(prev => [...prev, ...messageBuffer]);
-                messageBuffer = [];
-            }
+            saveMessageInBuffer(message);
+            // messageBuffer.push(message);
+            // if (messageBuffer.length >= 3) {
+            //     setMessageList(prev => [...prev, ...messageBuffer]);
+            //     messageBuffer.current = [];
+            // }
         });
     }, []);
 
