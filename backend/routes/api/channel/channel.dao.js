@@ -33,15 +33,35 @@ const findByChannelId = async (channelId, transaction) => {
     }
 };
 
-const findAll = async transaction => {
+const findAllLiveChannel = async transaction => {
     let option = {};
     if (transaction) option.transaction = transaction;
     try {
-        const channels = await Channel.findAll({}, option);
+        const channels = await Channel.findAll(
+            { where: { isLive: true } },
+            option,
+        );
 
         return channels;
     } catch (error) {
         console.error(error);
     }
 };
-export default { insertChannel, findByChannelId, findAll };
+
+const update = async ({ id, updateTarget }, transaction) => {
+    let option = {};
+    console.log({ id, updateTarget });
+    if (transaction) option.transaction = transaction;
+    try {
+        const channels = await Channel.update(
+            updateTarget,
+            { where: { id } },
+            option,
+        );
+
+        return channels;
+    } catch (error) {
+        console.error(error);
+    }
+};
+export default { insertChannel, findByChannelId, findAllLiveChannel, update };

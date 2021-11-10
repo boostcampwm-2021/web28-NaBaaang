@@ -30,10 +30,33 @@ const getChannelById = async channelId => {
     }
 };
 
-const getChannels = async () => {
+const getLiveChannels = async () => {
     const transaction = await db.sequelize.transaction();
     try {
-        const result = await channelDAO.findAll(transaction);
+        const result = await channelDAO.findAllLiveChannel(transaction);
+        let groupedData = {};
+        result.map(e => {
+            if (Object.keys(groupedData).includes(e.category)) {
+                groupedData[e.category].push(e);
+            } else {
+                groupedData[e.category] = [e];
+            }
+        });
+        await transaction.commit();
+        return result;
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
+    }
+};
+
+const updateLive = async (id, isLive) => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        const result = await channelDAO.update(
+            { id, updateTarget: { isLive } },
+            transaction,
+        );
 
         await transaction.commit();
         return result;
@@ -42,4 +65,5 @@ const getChannels = async () => {
         console.error(error);
     }
 };
-export default { create, getChannelById, getChannels };
+
+export default { create, getChannelById, getLiveChannels, updateLive };
