@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
 export default function MessageList({ messageList }) {
+    const messageBoxRef = useRef();
+
+    const scrollToBottom = () => {
+        if (messageBoxRef.current) {
+            messageBoxRef.current.scrollTop =
+                messageBoxRef.current.scrollHeight;
+        }
+    };
+
     const convertedMessageList =
         messageList &&
         messageList.map(message => (
@@ -15,8 +24,12 @@ export default function MessageList({ messageList }) {
             />
         ));
 
+    useEffect(() => {
+        scrollToBottom();
+    }, [messageList]);
+
     return (
-        <StyledBox flex={1} height="100%">
+        <StyledBox flex={1} height="100%" ref={messageBoxRef}>
             <MessageListBox
                 flexDirection="column"
                 alignItems="flex-start"

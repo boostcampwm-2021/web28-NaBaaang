@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
 
-export default function Box(props) {
+export default forwardRef((props, ref) => {
     const { children } = props;
-    return <StyledBox {...props}>{children}</StyledBox>;
-}
+    return (
+        <StyledBox ref={ref} {...props}>
+            {children}
+        </StyledBox>
+    );
+});
 
 const generateCss = (cssLine, v) =>
     v &&
