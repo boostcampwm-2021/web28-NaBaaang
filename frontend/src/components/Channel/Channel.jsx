@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
-import { ChatSocket } from '@/socket';
+import ChatSocket from '@/socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
@@ -18,6 +18,9 @@ export default function Channel({ match }) {
 
     useEffect(() => {
         ChatSocket.emit('join', { roomId: channelId });
+        ChatSocket.on('alert-disconnect', message => {
+            alert(message);
+        });
     }, []);
 
     if (loading) return <div>loading...</div>;

@@ -6,14 +6,13 @@ const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: { origin: "*" },
 });
-const chatNameSpace = io.of("/chat");
 const port = 5000;
 
 const onConnection = socket => {
-  chatHandler(chatNameSpace, socket);
+  chatHandler(io, socket);
 };
 
-chatNameSpace.on("connection", onConnection);
+io.on("connection", onConnection);
 
 httpServer.listen(port, () =>
   console.log(`Socket.io started on PORT: ${port}`)

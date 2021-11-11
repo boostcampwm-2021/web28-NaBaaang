@@ -1,34 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { ChatSocket } from '@/socket';
+import ChatSocket from '@/socket';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
 const CHAT_DELAY_TIME = 1000;
-const BUFFER_SIZE_LIMIT = 3;
-const MESSAGE_LIMIT = 1000;
+const BUFFER_SIZE_LIMIT = 50;
+const MESSAGE_LIMIT = 20;
 
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
     const messageBuffer = useRef([]);
 
-    const isMessageBufferOverflow = () => {
+    const isMessageBufferOverflow = prevMessageList => {
         return (
-            messageBuffer.current.length + messageList.length > MESSAGE_LIMIT
+            messageBuffer.current.length + prevMessageList.length >
+            MESSAGE_LIMIT
         );
     };
+
+    const getNewMessageList = prev =>
+        isMessageBufferOverflow(prev)
+            ? [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT)
+            : [...prev, ...messageBuffer.current];
+
     const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
 
     const updateFromBuffer = () => {
-        if (!isMessageBufferOverflow()) {
-            setMessageList(prev => [...prev, ...messageBuffer.current]);
-        } else {
-            setMessageList(prev =>
-                [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT),
-            );
-        }
+        setMessageList(getNewMessageList);
         messageBuffer.current = [];
     };
 
@@ -56,11 +57,6 @@ export default function Chat() {
         const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
         ChatSocket.on('chat', message => {
             saveMessageInBuffer(message);
-            // messageBuffer.push(message);
-            // if (messageBuffer.length >= 3) {
-            //     setMessageList(prev => [...prev, ...messageBuffer]);
-            //     messageBuffer.current = [];
-            // }
         });
     }, []);
 
@@ -75,7 +71,7 @@ export default function Chat() {
             flex={1}
             height="100%"
         >
-            <Box width="100%" flex={3}>
+            <Box width="100%" flex={3} backgroundColor="white">
                 <MessageList messageList={messageList} />
             </Box>
             <Box width="100%" flex={1}>
