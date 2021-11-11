@@ -47,6 +47,12 @@ export default function fetchAction({
                             'Content-Type': 'application/json;charset=UTF-8',
                         },
                     },
+        case 'FETCH_READY_MEDIA':
+            return {
+                url: `${MEDIA_URL}/${payload}.m3u8`,
+                option: {
+                    method: 'HEAD',
+                },
             };
         default:
             return '';

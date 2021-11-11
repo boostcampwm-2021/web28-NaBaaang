@@ -1,38 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import HLS from 'hls.js/dist/hls';
 
 import { sizeMixin } from '@/styles/mixins';
-import { MEDIA_URL } from '@/constants/url';
+import fetchAction from '@/constants/fetchAction';
 
 import Box from '@/components/Common/Box';
+import VideoOverlay from '@/components/VideoOverlay';
+import usePolling from './usePolling';
 
 export default function Video({ streamKey }) {
     const videoRef = useRef();
-    const m3u8URL = `${MEDIA_URL}/${streamKey}.m3u8`;
-
-    const hls = new HLS();
-
-    useEffect(() => {
-        if (HLS.isSupported()) {
-            hls.attachMedia(videoRef.current);
-
-            hls.on(HLS.Events.MEDIA_ATTACHED, () => {
-                hls.loadSource(m3u8URL);
-            });
-
-            hls.on(HLS.Events.ERROR, () => {
-                // hls.loadSource(m3u8URL);
-            });
-
-            hls.on(HLS.Events.MANIFEST_PARSED, () => {
-                videoRef.current.play();
-            });
-        }
-    }, []);
+    const { url, option } = fetchAction({
+        type: 'FETCH_READY_MEDIA',
+        payload: streamKey,
+    });
+    const { loading } = usePolling(url, option, videoRef, 3000);
 
     return HLS.isSupported() ? (
         <Box width="100%" height="100%">
+            {loading && <VideoOverlay open={loading} />}
             <StyledVideo controls autoplay muted ref={videoRef} />
         </Box>
     ) : (
