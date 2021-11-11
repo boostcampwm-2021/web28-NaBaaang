@@ -18,6 +18,9 @@ export default function Channel({ match }) {
 
     useEffect(() => {
         ChatSocket.emit('join', { roomId: channelId });
+        ChatSocket.on('alert-disconnect', message => {
+            alert(message);
+        });
     }, []);
 
     if (loading) return <div>loading...</div>;

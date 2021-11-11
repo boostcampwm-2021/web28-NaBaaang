@@ -55,13 +55,11 @@ export default function Chat() {
     useEffect(() => {
         const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
         ChatSocket.on('chat', message => {
-            console.log('CHAT_RECIEVE_MESSAGE', message);
             saveMessageInBuffer(message);
         });
     }, []);
 
     const handleSubmit = message => {
-        console.log('HANDLE_SUBMIT', message);
         ChatSocket.emit('chat', { message });
     };
 

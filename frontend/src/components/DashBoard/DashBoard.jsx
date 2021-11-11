@@ -28,6 +28,9 @@ export default function DashBoard({ info }) {
         try {
             await fetchCloseChannel(id);
             setIsLive(false);
+            ChatSocket.emit('alert-disconnect', {
+                message: '방송을 종료합니다',
+            });
         } catch (err) {
             throw new Error(err);
         }
