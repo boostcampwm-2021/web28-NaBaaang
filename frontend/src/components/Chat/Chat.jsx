@@ -6,29 +6,30 @@ import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-const CHAT_DELAY_TIME = 50;
+const CHAT_DELAY_TIME = 1000;
 const BUFFER_SIZE_LIMIT = 50;
-const MESSAGE_LIMIT = 1000;
+const MESSAGE_LIMIT = 20;
 
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
     const messageBuffer = useRef([]);
 
-    const isMessageBufferOverflow = () => {
+    const isMessageBufferOverflow = prevMessageList => {
         return (
-            messageBuffer.current.length + messageList.length > MESSAGE_LIMIT
+            messageBuffer.current.length + prevMessageList.length >
+            MESSAGE_LIMIT
         );
     };
+
+    const getNewMessageList = prev =>
+        isMessageBufferOverflow(prev)
+            ? [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT)
+            : [...prev, ...messageBuffer.current];
+
     const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
 
     const updateFromBuffer = () => {
-        if (!isMessageBufferOverflow()) {
-            setMessageList(prev => [...prev, ...messageBuffer.current]);
-        } else {
-            setMessageList(prev =>
-                [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT),
-            );
-        }
+        setMessageList(getNewMessageList);
         messageBuffer.current = [];
     };
 
