@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { ChatSocket } from '@/socket';
+import ChatSocket from '@/socket';
 
 const SocketTest = () => {
     useEffect(() => {

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import ChatSocket from '@/socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
 import DashBoardVideo from './DashBoardVideo';
 import DashBoardTab from './DashBoardTab';
+import Chat from '../Chat';
 
 export default function DashBoard({ info }) {
     const streamKey = info.stream_key;
-    const {id} = info;
+    const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
 
     const handleStartLive = async () => {
@@ -23,13 +25,17 @@ export default function DashBoard({ info }) {
     };
 
     const handleEndLive = async () => {
-        try{
+        try {
             await fetchCloseChannel(id);
             setIsLive(false);
-        } catch(err){
+        } catch (err) {
             throw new Error(err);
         }
     };
+
+    useEffect(() => {
+        ChatSocket.emit('join', { roomId: id });
+    }, []);
 
     return (
         <Box type="black" height="100%" alignItems="stretch">
@@ -56,7 +62,15 @@ export default function DashBoard({ info }) {
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>
-            <Box flex={1}>1</Box>
+            <Box
+                flex={1}
+                flexDirection="column"
+                padding={1}
+                alignItems="stretch"
+            >
+                <DashBoardTab text="채칭 칸" />
+                <Chat />
+            </Box>
         </Box>
     );
 }

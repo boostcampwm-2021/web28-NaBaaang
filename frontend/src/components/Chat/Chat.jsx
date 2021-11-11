@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { ChatSocket } from '@/socket';
+import ChatSocket from '@/socket';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-const CHAT_DELAY_TIME = 1000;
-const BUFFER_SIZE_LIMIT = 3;
+const CHAT_DELAY_TIME = 50;
+const BUFFER_SIZE_LIMIT = 50;
 const MESSAGE_LIMIT = 1000;
 
 export default function Chat() {
@@ -55,16 +55,13 @@ export default function Chat() {
     useEffect(() => {
         const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
         ChatSocket.on('chat', message => {
+            console.log('CHAT_RECIEVE_MESSAGE', message);
             saveMessageInBuffer(message);
-            // messageBuffer.push(message);
-            // if (messageBuffer.length >= 3) {
-            //     setMessageList(prev => [...prev, ...messageBuffer]);
-            //     messageBuffer.current = [];
-            // }
         });
     }, []);
 
     const handleSubmit = message => {
+        console.log('HANDLE_SUBMIT', message);
         ChatSocket.emit('chat', { message });
     };
 
@@ -75,7 +72,7 @@ export default function Chat() {
             flex={1}
             height="100%"
         >
-            <Box width="100%" flex={3}>
+            <Box width="100%" flex={3} backgroundColor="white">
                 <MessageList messageList={messageList} />
             </Box>
             <Box width="100%" flex={1}>
