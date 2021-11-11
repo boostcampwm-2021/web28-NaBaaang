@@ -1,42 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { borderBoxMixin } from '@/styles/mixins';
+import React, { useState, useEffect, useRef } from 'react';
+
+import ChatSocket from '@/socket';
+
+import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
+const CHAT_DELAY_TIME = 1000;
+const BUFFER_SIZE_LIMIT = 50;
+const MESSAGE_LIMIT = 20;
+
 export default function Chat() {
     const [messageList, setMessageList] = useState([]);
+    const messageBuffer = useRef([]);
 
-    /**
-     * todo: socket 통신으로 messageList set
-     */
+    const isMessageBufferOverflow = prevMessageList => {
+        return (
+            messageBuffer.current.length + prevMessageList.length >
+            MESSAGE_LIMIT
+        );
+    };
+
+    const getNewMessageList = prev =>
+        isMessageBufferOverflow(prev)
+            ? [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT)
+            : [...prev, ...messageBuffer.current];
+
+    const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
+
+    const updateFromBuffer = () => {
+        setMessageList(getNewMessageList);
+        messageBuffer.current = [];
+    };
+
+    const throttle = (callback, limit) => {
+        let waiting = false;
+        let id;
+        return message => {
+            messageBuffer.current.push(message);
+            if (!waiting) {
+                waiting = true;
+                id = setTimeout(() => {
+                    callback.apply(this);
+                    waiting = false;
+                }, limit);
+            }
+            if (isBufferFull()) {
+                clearTimeout(id);
+                waiting = false;
+                callback.apply(this);
+            }
+        };
+    };
+
     useEffect(() => {
-        setMessageList([]);
+        const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
+        ChatSocket.on('chat', message => {
+            saveMessageInBuffer(message);
+        });
     }, []);
 
-    /**
-     * todo: message socket 전송
-     * @param {*} message
-     */
     const handleSubmit = message => {
-        setMessageList([...messageList, message]);
+        ChatSocket.emit('chat', { message });
     };
 
     return (
-        <StyledChat>
-            <MessageList messageList={messageList} />
-            <Form
-                messageList={messageList}
-                setMessageList={setMessageList}
-                handleSubmit={handleSubmit}
-            />
-        </StyledChat>
+        <Box
+            flexDirection="column"
+            justifyContent="flex-start"
+            flex={1}
+            height="100%"
+        >
+            <Box width="100%" flex={3} backgroundColor="white">
+                <MessageList messageList={messageList} />
+            </Box>
+            <Box width="100%" flex={1}>
+                <Form
+                    messageList={messageList}
+                    setMessageList={setMessageList}
+                    handleSubmit={handleSubmit}
+                />
+            </Box>
+        </Box>
     );
 }
-
-const StyledChat = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    ${({ theme }) => borderBoxMixin('1px', '0', theme.color.black)};
-`;

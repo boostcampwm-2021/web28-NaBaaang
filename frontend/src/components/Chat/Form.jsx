@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { borderBoxMixin, fontMixin } from '@/styles/mixins';
-import DonationModal from '../DonationModal/DonationModal';
+import { v1 } from 'uuid';
 
-export default function Form({ messageList, setMessageList, handleSubmit }) {
+import { borderBoxMixin, fontMixin } from '@/styles/mixins';
+
+import DonationModal from './DonationModal';
+
+export default function Form({ handleSubmit }) {
     const messageInput = useRef();
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -17,12 +20,12 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
 
     const handleClickDonation = value => {
         const message = {
-            id: 10,
+            id: v1(),
             type: 'DONATION',
             nickname: 'undefined',
             content: value,
         };
-        setMessageList([...messageList, message]);
+        handleSubmit(message);
         setModalOpen(false);
     };
 
@@ -32,12 +35,11 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
         if (txt === '') return;
 
         const message = {
-            id: 10,
+            id: v1(),
             type: 'NORMAL',
             nickname: 'undefined',
             content: txt,
         };
-
         handleSubmit(message);
         messageInput.current.value = '';
     };
@@ -66,7 +68,8 @@ export default function Form({ messageList, setMessageList, handleSubmit }) {
 }
 
 const StyledForm = styled.form`
-    margin-top: 1rem;
+    width: 100%;
+    height: 100%;
 `;
 const StyledDiv = styled.div`
     display: flex;

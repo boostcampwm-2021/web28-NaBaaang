@@ -1,8 +1,5 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import Channel from './Channel';
 
-export default {
-    title: 'Channel',
-    component: Channel,
-};
-
-export const Default = Channel.bind();
+storiesOf('Channel', module).add('default', () => <Channel />);

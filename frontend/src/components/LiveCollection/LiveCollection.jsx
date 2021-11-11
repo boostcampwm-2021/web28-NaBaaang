@@ -1,44 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+
+import useFetch from '@/hooks/useFetch';
 
 import LiveList from './LiveList';
 
-const CATEGORY = {
-    전체: 0,
-    Game: 1,
-    Zilla: 2,
-};
-
 function LiveCollection() {
-    const [liveLists, setLiveLists] = useState([]);
+    const { data, error, loading } = useFetch('http://localhost:4000/api/channels');
 
-    const LiveLists = liveLists.map(liveList => {
-        const { category } = liveList[0];
+    if (loading) return <div>loading...</div>;
+    if (error) return <div>Fetch Error...</div>;
+    if (!data) return <div>empty data...</div>;
+
+    const LiveLists = Object.entries(data).map(([category, liveList]) => {
         return (
-            <LiveList
-                key={CATEGORY[category]}
-                liveList={liveList}
-                category={category}
-            />
+            <LiveList key={category} liveList={liveList} category={category} />
         );
     });
-
-    const fetchLiveLists = async () => {
-        const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/dummy.json`,
-        );
-        const data = await response.json();
-        setLiveLists(data);
-    };
-
-    useEffect(() => {
-        fetchLiveLists();
-    }, []);
 
     return <CollectionLayout>{LiveLists}</CollectionLayout>;
 }
 
 const CollectionLayout = styled.div`
+    width: 100%;
     height: 100%;
     margin-right: 0;
 `;

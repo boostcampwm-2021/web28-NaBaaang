@@ -16,16 +16,20 @@ function LiveSlider({ liveList }) {
     };
 
     const makeLiveCardChunk = chunk => {
-        return chunk.map(liveItem => <LiveCard content={liveItem} />);
+        return chunk.map(liveItem => (
+            <LiveCard key={liveItem.id} content={liveItem} />
+        ));
     };
-    
+
     return (
         <SliderScrollBlock>
             <LeftButton onClick={handleArrowClick}>
                 <LeftArrow />
             </LeftButton>
             <SliderListWrapper>
-                {clickIdx % 2 === 0 ? makeLiveCardChunk(chunk1) : makeLiveCardChunk(chunk2)}
+                {clickIdx % 2 === 0
+                    ? makeLiveCardChunk(chunk1)
+                    : makeLiveCardChunk(chunk2)}
             </SliderListWrapper>
             <RightButton onClick={handleArrowClick}>
                 <RightArrow />

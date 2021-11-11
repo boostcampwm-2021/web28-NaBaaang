@@ -1,18 +1,31 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import MainPage from './pages/MainPage';
+import styled from 'styled-components';
+
+import Main from './pages/Main';
+import ChannelManager from './pages/ChannelManager';
 
 function App() {
     return (
-        <div className="App">
+        <StyledApp>
             <BrowserRouter>
+                <div id="modal-root" />
                 <Switch>
-                    <Route path="/" component={MainPage} />
+                    <Route
+                        path="/stream-manager/:channelId"
+                        component={ChannelManager}
+                    />
+                    <Route path="/" component={Main} />
                 </Switch>
             </BrowserRouter>
-        </div>
+        </StyledApp>
     );
 }
+
+const StyledApp = styled.div`
+    width: 100%;
+    height: 100%;
+`;
 
 export default App;

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { borderBoxMixin } from '@/styles/mixins';
+import Box from '@/components/Common/Box';
 import Message from './Message';
 
 export default function MessageList({ messageList }) {
-    function createMessages() {
-        return messageList.map(message => (
+    const messageBoxRef = useRef();
+
+    const scrollToBottom = () => {
+        if (messageBoxRef.current) {
+            messageBoxRef.current.scrollTop =
+                messageBoxRef.current.scrollHeight;
+        }
+    };
+
+    const convertedMessageList =
+        messageList &&
+        messageList.map(message => (
             <Message
                 key={message.id}
                 type={message.type}
@@ -13,22 +23,42 @@ export default function MessageList({ messageList }) {
                 content={message.content}
             />
         ));
-    }
-    return <StyledMessageList>{createMessages()}</StyledMessageList>;
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messageList]);
+
+    return (
+        <StyledBox flex={1} height="100%" ref={messageBoxRef}>
+            <MessageListBox
+                flexDirection="column"
+                alignItems="flex-start"
+                flex={1}
+            >
+                {convertedMessageList}
+            </MessageListBox>
+        </StyledBox>
+    );
 }
-const StyledMessageList = styled.div`
-    width: 100%;
-    height: 600px;
+
+const StyledBox = styled(Box)`
+    overflow: hidden;
     list-style: none;
     overflow-y: auto;
     ::-webkit-scrollbar {
         width: 8px;
     }
-    ${({ theme }) => borderBoxMixin('1px', '10px', theme.color.black)}
+
     ${({ theme }) => css`
         ::-webkit-scrollbar-thumb {
             background-color: ${theme.color.primary};
             border-radius: 10px;
         }
     `}
+`;
+
+const MessageListBox = styled(Box)`
+    position: absolute;
+    top: 0;
+    left: 0;
 `;
