@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import ChatSocket from '@/socket';
+import { ChatSocket } from '@/socket';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';

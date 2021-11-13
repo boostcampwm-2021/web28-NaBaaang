@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import ChatSocket from '@/socket';
+import socket, { ChatSocket } from '@/socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
@@ -37,7 +37,7 @@ export default function DashBoard({ info }) {
     };
 
     useEffect(() => {
-        ChatSocket.emit('join', { roomId: id });
+        socket.joinChannel(id);
     }, []);
 
     return (

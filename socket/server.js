@@ -8,11 +8,13 @@ const io = new Server(httpServer, {
 });
 const port = 5000;
 
-const onConnection = socket => {
-  chatHandler(io, socket);
+const ChatSocket = io.of("/chat");
+
+const onChatConnection = socket => {
+  chatHandler(ChatSocket, socket);
 };
 
-io.on("connection", onConnection);
+ChatSocket.on("connection", onChatConnection);
 
 httpServer.listen(port, () =>
   console.log(`Socket.io started on PORT: ${port}`)
