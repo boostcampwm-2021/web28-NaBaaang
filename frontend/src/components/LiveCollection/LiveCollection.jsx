@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useFetch from '@/hooks/useFetch';
 
 import LiveList from './LiveList';
+import PageStatus from '../Common/PageStatus';
 
 function LiveCollection() {
     const { data, error, loading } = useFetch({
@@ -11,9 +12,8 @@ function LiveCollection() {
         payload: '',
     });
 
-    if (loading) return <div>loading...</div>;
-    if (error) return <div>Fetch Error...</div>;
-    if (!data) return <div>empty data...</div>;
+    if (loading || error || !data)
+        return <PageStatus loading={loading} error={error} data={data} />;
 
     const LiveLists = Object.entries(data).map(([category, liveList]) => {
         return (

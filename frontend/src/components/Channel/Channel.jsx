@@ -8,6 +8,7 @@ import Video from '@/components/Video';
 import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
+import PageStatus from '../Common/PageStatus';
 
 export default function Channel({ match }) {
     const { params } = match;
@@ -24,9 +25,8 @@ export default function Channel({ match }) {
         });
     }, []);
 
-    if (loading) return <div>loading...</div>;
-    if (error) return <div>Fetch Error...</div>;
-    if (!data) return <div>empty data...</div>;
+    if (loading || error || !data)
+        return <PageStatus loading={loading} error={error} data={data} />;
 
     return (
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
