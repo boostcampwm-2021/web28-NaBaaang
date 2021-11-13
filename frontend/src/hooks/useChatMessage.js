@@ -19,14 +19,13 @@ export default function useChatMessage() {
         );
     };
 
-    const handleSliceMessageList = prevMessageList => {
+    const handleGetMessageSliceIndex = prevMessageList => {
         return isMessageFull(prevMessageList) ? -MESSAGE_LIMIT : 0;
     };
 
     const handleMessageSetState = prevMessageList => {
-        return [...prevMessageList, ...messageBuffer.current].slice(
-            handleSliceMessageList(prevMessageList),
-        );
+        const sliceIndex = handleGetMessageSliceIndex(prevMessageList);
+        return [...prevMessageList, ...messageBuffer.current].slice(sliceIndex);
     };
 
     const handleUpdateMessageList = () => {
