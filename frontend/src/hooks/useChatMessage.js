@@ -53,15 +53,13 @@ export default function useChatMessage() {
         };
     };
 
-    const saveMessageInBuffer = onThrottle(
+    const handleSocketMessage = onThrottle(
         handleUpdateMessageList,
         THROTTLE_LIMIT,
     );
 
     useEffect(() => {
-        ChatSocket.on('chat', message => {
-            saveMessageInBuffer(message);
-        });
+        ChatSocket.on('chat', handleSocketMessage);
     }, []);
 
     return { messageList };
