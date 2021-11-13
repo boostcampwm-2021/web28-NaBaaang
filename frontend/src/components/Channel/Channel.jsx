@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
@@ -9,6 +9,7 @@ import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
+import AlertModal from './AlertModal';
 
 export default function Channel({ match }) {
     const { params } = match;
@@ -17,11 +18,13 @@ export default function Channel({ match }) {
         type: 'FETCH_GET_CHANNEL',
         payload: channelId,
     });
+    const [openAlertModal, setAlertModal] = useState(true);
 
     useEffect(() => {
         socket.joinChannel({ channelId, auth: 'viewer' });
         Socket.on('alert-disconnect', message => {
             alert(message);
+            setAlertModal(true);
         });
     }, []);
 
@@ -30,6 +33,7 @@ export default function Channel({ match }) {
 
     return (
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
+            {openAlertModal && <AlertModal />}
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={3}>
                     <Video streamKey={data.stream_key} />

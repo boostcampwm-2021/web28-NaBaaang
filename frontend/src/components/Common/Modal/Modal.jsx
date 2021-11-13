@@ -10,6 +10,7 @@ import Box from '@/components/Common/Box';
 export default function Modal({
     open,
     showButton,
+    alert,
     onClose,
     onSuccess,
     onCancleText,
@@ -31,7 +32,16 @@ export default function Modal({
                     </Box>
                     {children && <ContentBox flex={3}>{children}</ContentBox>}
 
-                    {showButton && (
+                    {showButton && alert ? (
+                        <ButtonBox flex={1} alignItems="center">
+                            <Button
+                                color="success"
+                                onClick={onSuccess}
+                                text={successText}
+                                size="medium"
+                            />
+                        </ButtonBox>
+                    ) : (
                         <ButtonBox flex={1} alignItems="flex-end">
                             <Button
                                 color="error"

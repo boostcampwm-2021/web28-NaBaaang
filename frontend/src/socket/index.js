@@ -16,9 +16,6 @@ const leaveChannel = () => {
 };
 
 Socket.on('join', msg => console.log(msg));
-
-Socket.on('disconnect', () => {
-    Socket.removeAllListeners();
-});
+Socket.on('leave', msg => console.log(msg));
 
 export default { Socket, joinChannel, leaveChannel };
