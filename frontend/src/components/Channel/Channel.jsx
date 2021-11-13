@@ -12,9 +12,10 @@ import ChannelDetail from './ChannelDetail';
 export default function Channel({ match }) {
     const { params } = match;
     const { channelId } = params;
-    const { data, error, loading } = useFetch(
-        `http://localhost:4000/api/channels/${channelId}`,
-    );
+    const { data, error, loading } = useFetch({
+        type: 'FETCH_GET_CHANNEL',
+        payload: channelId,
+    });
 
     useEffect(() => {
         ChatSocket.emit('join', { roomId: channelId });

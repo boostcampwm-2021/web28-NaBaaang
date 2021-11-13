@@ -25,6 +25,10 @@ const actionTypeInfo = payload => {
             url: `${API_URL}/api/channels/${payload}`,
             ...fetchTemplate('GET'),
         },
+        FETCH_GET_LIVE_CHANNELS: {
+            url: `${API_URL}/api/channels`,
+            ...fetchTemplate('GET'),
+        },
         FETCH_OPEN_CHANNEL: {
             url: `${API_URL}/api/channels/${payload}/open`,
             ...fetchTemplate('PATCH'),

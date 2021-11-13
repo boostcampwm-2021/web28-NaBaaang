@@ -6,7 +6,10 @@ import useFetch from '@/hooks/useFetch';
 import LiveList from './LiveList';
 
 function LiveCollection() {
-    const { data, error, loading } = useFetch('http://localhost:4000/api/channels');
+    const { data, error, loading } = useFetch({
+        type: 'FETCH_GET_LIVE_CHANNELS',
+        payload: '',
+    });
 
     if (loading) return <div>loading...</div>;
     if (error) return <div>Fetch Error...</div>;
