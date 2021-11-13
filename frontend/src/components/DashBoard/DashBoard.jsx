@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import socket, { ChatSocket } from '@/socket';
+import socket, { Socket } from '@/socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
@@ -28,7 +28,7 @@ export default function DashBoard({ info }) {
         try {
             await fetchCloseChannel(id);
             setIsLive(false);
-            ChatSocket.emit('alert-disconnect', {
+            Socket.emit('alert-disconnect', {
                 message: '방송을 종료합니다',
             });
         } catch (err) {
@@ -37,7 +37,7 @@ export default function DashBoard({ info }) {
     };
 
     useEffect(() => {
-        socket.joinChannel(id);
+        socket.joinChannel({ channelId: id, auth: 'streamer' });
     }, []);
 
     return (

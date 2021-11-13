@@ -4,17 +4,21 @@ require('dotenv').config();
 
 const BASE_URL = process.env.REACT_APP_SOCKET_HOST;
 
-export const ChatSocket = io(`${BASE_URL}/chat`);
-ChatSocket.connect();
+export const Socket = io(`${BASE_URL}`);
+Socket.connect();
 
-const joinChannel = channelId => {
-    ChatSocket.emit('join', { channelId });
+const joinChannel = ({ channelId, auth }) => {
+    Socket.emit('join', { channelId, auth });
 };
 
-ChatSocket.on('join', msg => console.log(msg));
+const leaveChannel = () => {
+    Socket.emit('leave');
+};
 
-ChatSocket.on('disconnect', () => {
-    ChatSocket.removeAllListeners();
+Socket.on('join', msg => console.log(msg));
+
+Socket.on('disconnect', () => {
+    Socket.removeAllListeners();
 });
 
-export default { ChatSocket, joinChannel };
+export default { Socket, joinChannel, leaveChannel };

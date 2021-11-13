@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { ChatSocket } from '@/socket';
+import { Socket } from '@/socket';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
@@ -55,13 +55,13 @@ export default function Chat() {
 
     useEffect(() => {
         const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
-        ChatSocket.on('chat', message => {
+        Socket.on('chat', message => {
             saveMessageInBuffer(message);
         });
     }, []);
 
     const handleSubmit = message => {
-        ChatSocket.emit('chat', { message });
+        Socket.emit('chat', { message });
     };
 
     return (
