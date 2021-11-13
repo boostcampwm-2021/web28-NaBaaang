@@ -6,7 +6,7 @@ import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-const CHAT_DELAY_TIME = 1000;
+const CHAT_DELAY_TIME = 50;
 const BUFFER_SIZE_LIMIT = 50;
 const MESSAGE_LIMIT = 20;
 
