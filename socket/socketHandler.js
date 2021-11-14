@@ -12,20 +12,22 @@ const socketHandler = (io, socket) => {
   const leaveChannel = () => {
     const channelId = socket.channelId;
     socket.leave(channelId);
+    console.log(`${socket.id}(${socket.auth}) leaved #${channelId}`);
     io.to(channelId).emit(
       "leave",
       `${socket.id}(${socket.auth}) leaved #${channelId}`
     );
   };
 
-  const sendChatMessage = ({ message }) => {
+  const sendChatMessage = message => {
     io.to(socket.channelId).emit("chat", message);
   };
 
-  const noticeChannelEnded = ({ message }) => {
+  const noticeChannelEnded = message => {
     if (socket.auth !== "streamer") {
       throw new Error("방송 종료 권한이 없습니다");
     }
+    console.log(message);
     io.to(socket.channelId).emit("noticeChannelEnded", message);
     leaveChannel();
   };
