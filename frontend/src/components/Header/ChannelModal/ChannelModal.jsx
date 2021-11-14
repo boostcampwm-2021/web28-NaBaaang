@@ -36,7 +36,7 @@ export default function ChannelCreateModal({ onClose, open }) {
             showButton
             onSuccessText="방송 생성"
             onSuccess={handleSubmit}
-            onCancleText="취소"
+            onCancelText="취소"
             onClose={onClose}
         >
             <ChannelModalForm

@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexMixin } from '@/styles/mixins.js';
+
+import { flexMixin, fontMixin } from '@/styles/mixins.js';
 
 import Portal from '@/Portal';
 import Card from '@/components/Common/Card';
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
+import Typography from '../Typography/Typography';
 
 export default function Modal({
     open,
@@ -13,11 +15,11 @@ export default function Modal({
     alert,
     onClose,
     onSuccess,
-    onCancleText,
+    onCancelText,
     onSuccessText,
     children,
 }) {
-    const cancleText = !onCancleText ? 'Cancle' : onCancleText;
+    const cancleText = !onCancelText ? 'Cancle' : onCancelText;
     const successText = !onSuccessText ? 'OK' : onSuccessText;
 
     if (!open) return null;
@@ -28,7 +30,13 @@ export default function Modal({
                 <OverlayBox onClick={onClose} width="100%" height="100%" />
                 <Card flexDirection="column" width="350px" height="350px">
                     <Box flex={0.5}>
-                        <ModalHeader>NaBaang</ModalHeader>
+                        <Typography
+                            variant="h3"
+                            align="center"
+                            color={({ theme }) => theme.color.primary}
+                        >
+                            Nabaaang
+                        </Typography>
                     </Box>
                     {children && <ContentBox flex={3}>{children}</ContentBox>}
 
@@ -38,23 +46,23 @@ export default function Modal({
                                 color="success"
                                 onClick={onSuccess}
                                 text={successText}
-                                size="medium"
+                                size="small"
                             />
                         </ButtonBox>
                     ) : (
-                        <ButtonBox flex={1} alignItems="flex-end">
+                        <ButtonBox flex={1} alignItems="center">
                             <Button
                                 color="error"
                                 onClick={onClose}
                                 text={cancleText}
-                                size="medium"
+                                size="small"
                             />
 
                             <Button
                                 color="success"
                                 onClick={onSuccess}
                                 text={successText}
-                                size="medium"
+                                size="small"
                             />
                         </ButtonBox>
                     )}
@@ -72,12 +80,6 @@ const ModalBox = styled(Box)`
     z-index: 1024;
 `;
 
-const ModalHeader = styled.h3`
-    color: ${({ theme }) => theme.color.primary};
-    margin-bottom: auto;
-    text-align: center;
-`;
-
 const OverlayBox = styled(Box)`
     position: absolute;
     top: 0;
@@ -87,6 +89,7 @@ const OverlayBox = styled(Box)`
 `;
 
 const ContentBox = styled(Box)`
+    ${fontMixin('1rem', '1em', 'notoSansMedium')}
     text-align: center;
     margin-bottom: auto;
     ${flexMixin('column', 'center', 'center')}

@@ -47,7 +47,7 @@ export default function DashBoardInfo({ info }) {
                 </Box>
 
                 <Box flex={2}>
-                    <Typography variant="h6" color="white" align="center">
+                    <Typography variant="p" color="white" align="center">
                         스트림키 : {streamKey}
                     </Typography>
                 </Box>

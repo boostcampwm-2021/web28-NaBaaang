@@ -71,7 +71,7 @@ export default function DashBoard({ info }) {
                 padding={1}
                 alignItems="stretch"
             >
-                <DashBoardTab text="채팅 칸" />
+                <DashBoardTab text="채팅칸" />
                 <Chat />
             </Box>
         </Box>
