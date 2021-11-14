@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import ChatSocket from '@/socket';
+import socket from '@/Socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
@@ -13,6 +14,8 @@ import Divider from '../Common/Divider/Divider';
 
 export default function DashBoard({ info }) {
     const streamKey = info.stream_key;
+    const history = useHistory();
+
     const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
 
@@ -28,17 +31,15 @@ export default function DashBoard({ info }) {
     const handleEndLive = async () => {
         try {
             await fetchCloseChannel(id);
-            setIsLive(false);
-            ChatSocket.emit('alert-disconnect', {
-                message: '방송을 종료합니다',
-            });
+            socket.endChannel();
+            history.push('/');
         } catch (err) {
             throw new Error(err);
         }
     };
 
     useEffect(() => {
-        ChatSocket.emit('join', { roomId: id });
+        socket.joinChannel({ channelId: id, auth: 'streamer' });
     }, []);
 
     return (
@@ -59,6 +60,7 @@ export default function DashBoard({ info }) {
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>
+
 
             <Divider direction="column" />
 

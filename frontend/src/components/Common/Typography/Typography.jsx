@@ -1,8 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { fontMixin } from '@/styles/mixins';
+
 export default function Typography({
-    variant = 'h6',
+    variant = 'p',
     color,
     align = 'left',
     children = '',
@@ -20,8 +22,6 @@ export default function Typography({
             return <H4Tag {...styleProps}>{children}</H4Tag>;
         case 'h5':
             return <H5Tag {...styleProps}>{children}</H5Tag>;
-        case 'h6':
-            return <H6Tag {...styleProps}>{children}</H6Tag>;
         case 'span':
             return <SpanTag {...styleProps}>{children}</SpanTag>;
         case 'p':
@@ -33,28 +33,25 @@ export default function Typography({
 
 const FontSizeType = {
     h1: css`
-        font-size: 2rem;
+        ${fontMixin('2rem', '1em', 'notoSansMedium')};
     `,
     h2: css`
-        font-size: 1.8rem;
+        ${fontMixin('1.8rem', '1em', 'notoSansMedium')};
     `,
     h3: css`
-        font-size: 1.6rem;
+        ${fontMixin('1.6rem', '1em', 'notoSansMedium')};
     `,
     h4: css`
-        font-size: 1.4rem;
+        ${fontMixin('1.4rem', '1em', 'notoSansMedium')};
     `,
     h5: css`
-        font-size: 1.2rem;
-    `,
-    h6: css`
-        font-size: 1rem;
+        ${fontMixin('1.2rem', '1em', 'notoSansMedium')};
     `,
     p: css`
-        font-size: 1rem;
+        ${fontMixin('1rem', '1em', 'notoSansMedium')};
     `,
     span: css`
-        font-size: 1rem;
+        ${fontMixin('1rem', '1em', 'notoSansMedium')};
     `,
 };
 
@@ -70,6 +67,5 @@ const H2Tag = generatorTag('h2');
 const H3Tag = generatorTag('h3');
 const H4Tag = generatorTag('h4');
 const H5Tag = generatorTag('h5');
-const H6Tag = generatorTag('h6');
-const SpanTag = generatorTag('span');
 const PTag = generatorTag('p');
+const SpanTag = generatorTag('span');

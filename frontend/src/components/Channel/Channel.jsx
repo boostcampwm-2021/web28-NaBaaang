@@ -1,34 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
-import ChatSocket from '@/socket';
+import socket from '@/Socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
+import PageStatus from '../Common/PageStatus';
+import AlertModal from './AlertModal';
 
 export default function Channel({ match }) {
     const { params } = match;
     const { channelId } = params;
-    const { data, error, loading } = useFetch(
-        `http://localhost:4000/api/channels/${channelId}`,
-    );
+    const { data, error, loading } = useFetch({
+        type: 'FETCH_GET_CHANNEL',
+        payload: channelId,
+    });
+    const [openAlertModal, setAlertModal] = useState(false);
 
     useEffect(() => {
-        ChatSocket.emit('join', { roomId: channelId });
-        ChatSocket.on('alert-disconnect', message => {
-            alert(message);
-        });
+        socket.joinChannel({ channelId, auth: 'viewer' });
+        socket.channelEnded({ setAlertModal });
     }, []);
 
-    if (loading) return <div>loading...</div>;
-    if (error) return <div>Fetch Error...</div>;
-    if (!data) return <div>empty data...</div>;
+    if (loading || error || !data)
+        return <PageStatus loading={loading} error={error} data={data} />;
 
     return (
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
+            {openAlertModal && <AlertModal />}
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={3}>
                     <Video streamKey={data.stream_key} />

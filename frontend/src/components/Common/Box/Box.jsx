@@ -17,7 +17,7 @@ const generateCss = (cssLine, v) =>
         ${cssLine}
     `;
 
-const BoxColotType = {
+const BoxColorType = {
     black: css`
         color: ${({ theme }) => theme.color.white};
         background-color: ${({ theme }) => theme.color.black2};
@@ -38,7 +38,7 @@ const StyledBox = styled.div`
             backgroundColor,
         )}
 
-    ${({ type }) => BoxColotType[type]};
+    ${({ type }) => BoxColorType[type]};
 
     ${({ theme, fontColor }) =>
         generateCss(`background-color: ${theme.color[fontColor]};`, fontColor)}
