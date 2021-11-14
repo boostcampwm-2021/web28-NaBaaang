@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import Card from '@/components/Common/Card';
 import Typography from '@/components/Common/Typography';
 
-export default function DashBoardCard({ title }) {
+export default function DashBoardCard({ title, onClick }) {
     return (
-        <StyledCard backgroundColor="black">
+        <StyledCard backgroundColor="black" onClick={onClick}>
             <Typography variant="h5" color="white">
                 {title}
             </Typography>

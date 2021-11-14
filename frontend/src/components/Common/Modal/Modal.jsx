@@ -15,6 +15,8 @@ export default function Modal({
     onCancleText,
     onSuccessText,
     children,
+    width = '350px',
+    height = '350px',
 }) {
     const cancleText = !onCancleText ? 'Cancle' : onCancleText;
     const successText = !onSuccessText ? 'OK' : onSuccessText;
@@ -25,7 +27,7 @@ export default function Modal({
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
                 <OverlayBox onClick={onClose} width="100%" height="100%" />
-                <Card flexDirection="column" width="350px" height="350px">
+                <Card flexDirection="column" width={width} height={height}>
                     <Box flex={0.5}>
                         <ModalHeader>NaBaang</ModalHeader>
                     </Box>

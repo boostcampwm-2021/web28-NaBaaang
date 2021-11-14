@@ -11,9 +11,11 @@ export default function Card({
     alignItems,
     backgroundColor = 'white',
     className,
+    onClick,
 }) {
     return (
         <StyeldBox
+            onClick={onClick}
             className={className}
             width={width}
             height={height}
