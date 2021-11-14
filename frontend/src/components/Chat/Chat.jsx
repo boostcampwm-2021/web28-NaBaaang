@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import socket from '@/socket';
+import socket from '@/Socket';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';

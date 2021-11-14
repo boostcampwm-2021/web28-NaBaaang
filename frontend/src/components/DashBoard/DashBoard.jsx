@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import socket from '@/socket';
+import socket from '@/Socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
