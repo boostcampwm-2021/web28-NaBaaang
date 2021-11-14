@@ -30,9 +30,9 @@ const sendMessage = message => {
     Socket.emit('chat', message);
 };
 
-const saveMessageToBuffer = ({ saveMessageToBuffer }) => {
-    Socket.on('chat', message => saveMessageToBuffer(message));
-};
+// const saveMessageToBuffer = handler => {
+//     Socket.on('chat', handler);
+// };
 
 Socket.on('join', msg => console.log(msg));
 Socket.on('leave', msg => console.log(msg));
@@ -44,5 +44,4 @@ export default {
     endChannel,
     channelEnded,
     sendMessage,
-    saveMessageToBuffer,
 };
