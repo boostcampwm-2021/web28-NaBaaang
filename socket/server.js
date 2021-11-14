@@ -1,6 +1,6 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
-import chatHandler from "./socketHandler.js";
+import socketHandler from "./socketHandler.js";
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
@@ -9,16 +9,13 @@ const io = new Server(httpServer, {
 const port = 5000;
 
 io.on("connection", socket => {
-  const socketHandler = chatHandler(io, socket);
+  const handler = socketHandler(io, socket);
 
-  socket.on("join", socketHandler.joinChannel);
-  socket.on("leave", socketHandler.leaveChannel);
-  socket.on("chat", socketHandler.sendChatMessage);
-  socket.on("noticeChannelEnded", socketHandler.noticeChannelEnded);
-  socket.on("disconnect", () => {
-    console.log(socket.rooms);
-    console.log(`${socket.channelId} socket disconnected`);
-  });
+  socket.on("join", handler.joinChannel);
+  socket.on("leave", handler.leaveChannel);
+  socket.on("chat", handler.sendChatMessage);
+  socket.on("noticeChannelEnded", handler.noticeChannelEnded);
+  socket.on("disconnect", () => {});
 });
 
 httpServer.listen(port, () =>

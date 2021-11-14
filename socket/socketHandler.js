@@ -1,4 +1,4 @@
-const chatHandler = (io, socket) => {
+const socketHandler = (io, socket) => {
   const joinChannel = ({ channelId, auth }) => {
     socket.channelId = channelId.toString();
     socket.auth = auth.toString();
@@ -32,4 +32,4 @@ const chatHandler = (io, socket) => {
   return { joinChannel, leaveChannel, sendChatMessage, noticeChannelEnded };
 };
 
-export default chatHandler;
+export default socketHandler;
