@@ -14,8 +14,9 @@ io.on("connection", socket => {
   socket.on("join", socketHandler.joinChannel);
   socket.on("leave", socketHandler.leaveChannel);
   socket.on("chat", socketHandler.sendChatMessage);
-  socket.on("alert-disconnect", socketHandler.alertDisconnection);
+  socket.on("noticeChannelEnded", socketHandler.noticeChannelEnded);
   socket.on("disconnect", () => {
+    console.log(socket.rooms);
     console.log(`${socket.channelId} socket disconnected`);
   });
 });

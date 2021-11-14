@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
-import socket, { Socket } from '@/socket';
+import socket from '@/socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
@@ -18,14 +18,11 @@ export default function Channel({ match }) {
         type: 'FETCH_GET_CHANNEL',
         payload: channelId,
     });
-    const [openAlertModal, setAlertModal] = useState(true);
+    const [openAlertModal, setAlertModal] = useState(false);
 
     useEffect(() => {
         socket.joinChannel({ channelId, auth: 'viewer' });
-        Socket.on('alert-disconnect', message => {
-            alert(message);
-            setAlertModal(true);
-        });
+        socket.channelEnded({ setAlertModal });
     }, []);
 
     if (loading || error || !data)

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import socket, { Socket } from '@/socket';
+import socket from '@/socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
@@ -12,6 +13,8 @@ import Chat from '../Chat';
 
 export default function DashBoard({ info }) {
     const streamKey = info.stream_key;
+    const history = useHistory();
+
     const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
 
@@ -27,10 +30,8 @@ export default function DashBoard({ info }) {
     const handleEndLive = async () => {
         try {
             await fetchCloseChannel(id);
-            setIsLive(false);
-            Socket.emit('alert-disconnect', {
-                message: '방송을 종료합니다',
-            });
+            socket.endChannel();
+            history.push('/');
         } catch (err) {
             throw new Error(err);
         }

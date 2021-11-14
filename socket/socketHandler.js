@@ -5,25 +5,31 @@ const chatHandler = (io, socket) => {
     socket.join(socket.channelId);
     io.to(socket.channelId).emit(
       "join",
-      `${socket.id} entered #${channelId} channel (${auth})`
+      `${socket.id} entered #${socket.channelId} channel (${socket.auth})`
     );
   };
 
   const leaveChannel = () => {
     const channelId = socket.channelId;
     socket.leave(channelId);
-    io.to(channelId).emit("leave", `${socket.id} leaved #${channelId}`);
+    io.to(channelId).emit(
+      "leave",
+      `${socket.id}(${socket.auth}) leaved #${channelId}`
+    );
   };
 
   const sendChatMessage = ({ message }) => {
     io.to(socket.channelId).emit("chat", message);
   };
 
-  const alertDisconnection = ({ message }) => {
-    console.log(message);
-    io.to(socket.channelId).emit("alert-disconnect", message);
+  const noticeChannelEnded = ({ message }) => {
+    if (socket.auth !== "streamer") {
+      throw new Error("방송 종료 권한이 없습니다");
+    }
+    io.to(socket.channelId).emit("noticeChannelEnded", message);
+    leaveChannel();
   };
-  return { joinChannel, leaveChannel, sendChatMessage, alertDisconnection };
+  return { joinChannel, leaveChannel, sendChatMessage, noticeChannelEnded };
 };
 
 export default chatHandler;
