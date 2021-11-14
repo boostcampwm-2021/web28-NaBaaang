@@ -7,7 +7,7 @@ import fetchAction from '@/constants/fetchAction';
 
 import Box from '@/components/Common/Box';
 import VideoOverlay from '@/components/VideoOverlay';
-import usePolling from './usePolling';
+import usePolling from '@/hooks/usePolling';
 
 export default function Video({ streamKey }) {
     const videoRef = useRef();
