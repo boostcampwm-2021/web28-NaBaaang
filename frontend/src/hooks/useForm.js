@@ -1,22 +1,24 @@
 // Refer : https://velog.io/@junghyeonsu/React-useForm
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function useForm({ initState, onSubmit, validate }) {
     const [formData, setFormData] = useState(initState);
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = ({ target }) => {
+    const handleChange = useCallback(({ target }) => {
         const { name, value } = target;
-        setFormData({ ...formData, [name]: value });
-    };
+        setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+    }, []);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        setIsLoading(true);
-        setErrors(validate(formData));
-    };
+    const handleSubmit = useCallback(
+        e => {
+            e.preventDefault();
+            setIsLoading(true);
+            setErrors(validate(formData));
+        },
+        [formData],
+    );
 
     useEffect(async () => {
         if (isLoading) {

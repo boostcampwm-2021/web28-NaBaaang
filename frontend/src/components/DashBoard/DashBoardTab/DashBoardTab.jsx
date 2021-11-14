@@ -14,6 +14,7 @@ export default function DashBoardTab({ text }) {
 }
 
 const TabBox = styled(Box)`
-    background-color: #5c5c5c;
-    height: 40px;
+    background-color: ${({ theme }) => theme.color.black3};
+    flex-basis: 40px;
+    margin-bottom: 1rem;
 `;

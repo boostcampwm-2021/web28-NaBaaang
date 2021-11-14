@@ -1,62 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import socket from '@/Socket';
+import useChatMessage from '@/hooks/useChatMessage';
+
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-const CHAT_DELAY_TIME = 50;
-const BUFFER_SIZE_LIMIT = 50;
-const MESSAGE_LIMIT = 20;
 
 export default function Chat() {
-    const [messageList, setMessageList] = useState([]);
-    const messageBuffer = useRef([]);
-
-    const isMessageBufferOverflow = prevMessageList => {
-        return (
-            messageBuffer.current.length + prevMessageList.length >
-            MESSAGE_LIMIT
-        );
-    };
-
-    const getNewMessageList = prev =>
-        isMessageBufferOverflow(prev)
-            ? [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT)
-            : [...prev, ...messageBuffer.current];
-
-    const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
-
-    const updateFromBuffer = () => {
-        setMessageList(getNewMessageList);
-        messageBuffer.current = [];
-    };
-
-    const throttle = (callback, limit) => {
-        let waiting = false;
-        let id;
-        return message => {
-            messageBuffer.current.push(message);
-            if (!waiting) {
-                waiting = true;
-                id = setTimeout(() => {
-                    callback.apply(this);
-                    waiting = false;
-                }, limit);
-            }
-            if (isBufferFull()) {
-                clearTimeout(id);
-                waiting = false;
-                callback.apply(this);
-            }
-        };
-    };
-
-    useEffect(() => {
-        const saveMessageToBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
-        socket.saveMessageToBuffer({ saveMessageToBuffer });
-    }, []);
+    const { messageList } = useChatMessage();
 
     const handleSubmit = message => {
         socket.sendMessage(message);
@@ -73,11 +27,7 @@ export default function Chat() {
                 <MessageList messageList={messageList} />
             </Box>
             <Box width="100%" flex={1}>
-                <Form
-                    messageList={messageList}
-                    setMessageList={setMessageList}
-                    handleSubmit={handleSubmit}
-                />
+                <Form handleSubmit={handleSubmit} />
             </Box>
         </Box>
     );

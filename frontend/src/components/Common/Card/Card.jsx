@@ -9,14 +9,20 @@ export default function Card({
     flexDirection,
     jutifyContent,
     alignItems,
+    backgroundColor = 'white',
+    className,
+    onClick,
 }) {
     return (
         <StyeldBox
+            onClick={onClick}
+            className={className}
             width={width}
             height={height}
             flexDirection={flexDirection}
             jutifyContent={jutifyContent}
             alignItems={alignItems}
+            backgroundColor={backgroundColor}
         >
             {children}
         </StyeldBox>
@@ -24,8 +30,7 @@ export default function Card({
 }
 
 const StyeldBox = styled(Box)`
-    border-radius: 10px;
-    background-color: ${({ theme }) => theme.color.white};
+    border-radius: 5px;
     padding: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 `;
