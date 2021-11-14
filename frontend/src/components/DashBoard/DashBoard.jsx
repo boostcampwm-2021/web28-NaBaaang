@@ -50,7 +50,7 @@ export default function DashBoard({ info }) {
 
             <Divider direction="column" />
 
-            <StyledBox flex={3}>
+            <StyledBox flex={4}>
                 <DashBoardTab text="방송 송출 칸" />
                 <DashBoardVideo
                     streamKey={streamKey}
@@ -62,7 +62,7 @@ export default function DashBoard({ info }) {
 
             <Divider direction="column" />
 
-            <StyledBox flex={1}>
+            <StyledBox flex={1.5}>
                 <DashBoardTab text="채팅 칸" />
                 <Chat />
             </StyledBox>
