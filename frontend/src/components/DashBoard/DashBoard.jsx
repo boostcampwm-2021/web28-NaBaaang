@@ -9,6 +9,7 @@ import DashBoardInfo from './DashBoardInfo';
 import DashBoardVideo from './DashBoardVideo';
 import DashBoardTab from './DashBoardTab';
 import Chat from '../Chat';
+import Divider from '../Common/Divider/Divider';
 
 export default function DashBoard({ info }) {
     const streamKey = info.stream_key;
@@ -41,22 +42,15 @@ export default function DashBoard({ info }) {
     }, []);
 
     return (
-        <Box type="black" height="100%" alignItems="stretch">
-            <Box
-                flex={1}
-                padding={1}
-                flexDirection="column"
-                alignItems="stretch"
-            >
+        <Box backgroundColor="black2" height="100%" alignItems="stretch">
+            <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
                 <DashBoardInfo info={info} />
-            </Box>
-            <StyledBox
-                flex={3}
-                padding={1}
-                flexDirection="column"
-                alignItems="stretch"
-            >
+            </StyledBox>
+
+            <Divider direction="column" />
+
+            <StyledBox flex={4}>
                 <DashBoardTab text="방송 송출 칸" />
                 <DashBoardVideo
                     streamKey={streamKey}
@@ -65,21 +59,20 @@ export default function DashBoard({ info }) {
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>
-            <Box
-                flex={1}
-                flexDirection="column"
-                padding={1}
-                alignItems="stretch"
-            >
+
+            <Divider direction="column" />
+
+            <StyledBox flex={1.5}>
                 <DashBoardTab text="채팅 칸" />
                 <Chat />
-            </Box>
+            </StyledBox>
         </Box>
     );
 }
 
 const StyledBox = styled(Box)`
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
     box-sizing: content-box;
-    border-left: 0.5px solid ${({ theme }) => theme.color.gray1};
-    border-right: 0.5px solid ${({ theme }) => theme.color.gray1};
 `;

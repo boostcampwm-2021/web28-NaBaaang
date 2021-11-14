@@ -1,61 +1,41 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
 import Box from '@/components/Common/Box';
-import Card from '@/components/Common/Card';
-import Typography from '@/components/Common/Typography';
-import Chip from '@/components/Common/Chip';
+import DashBoardCard from '../DashBoardCard';
+import MediaInfoModal from '../MediaInfoModal';
 
 export default function DashBoardInfo({ info }) {
-    const { title, description, category } = info;
     const streamKey = info.stream_key;
+    const [medialModalOpen, setMedialModalOpen] = useState(false);
 
+    const handleMedialModalOpen = () => {
+        setMedialModalOpen(true);
+    };
+
+    const handleMedialModalClose = () => {
+        setMedialModalOpen(false);
+    };
     return (
         <Box
             height="100%"
             type="black"
             flexDirection="column"
-            alignItems="space-between"
+            justifyContent="flex-start"
+            alignItems="stretch"
             flex={1}
         >
-            <Box flex={1}>
-                <Typography variant="h5" color="white">
-                    {title}
-                </Typography>
-            </Box>
-            <Box flex={4}>
-                <StyledCard width="70%" height="70%">
-                    <Typography variant="h5" color="black" align="center">
-                        {description}
-                    </Typography>
-                </StyledCard>
-            </Box>
-            <Box flex={1} alignSelf="flex-end">
-                <Chip text={`#${category}`} color="success" />
-            </Box>
+            <MediaInfoModal
+                open={medialModalOpen}
+                streamKey={streamKey}
+                onClose={handleMedialModalClose}
+            />
 
-            <Box
-                flex={2}
-                flexDirection="column"
-                justifyContent="flex-start"
-                alignItems="stretch"
-            >
-                <Box flex={1} backgroundColor="gray1">
-                    <Typography variant="h3" color="white" align="center">
-                        미디어 서버 정보
-                    </Typography>
-                </Box>
-
-                <Box flex={2}>
-                    <Typography variant="h6" color="white" align="center">
-                        스트림키 : {streamKey}
-                    </Typography>
-                </Box>
-            </Box>
+            <DashBoardCard title="방송 정보 편집" info={info} />
+            <DashBoardCard
+                onClick={handleMedialModalOpen}
+                title="송출 정보 확인"
+            />
+            <DashBoardCard title="OBS 가이드" />
         </Box>
     );
 }
-
-const StyledCard = styled(Card)`
-    color: black !important;
-`;
