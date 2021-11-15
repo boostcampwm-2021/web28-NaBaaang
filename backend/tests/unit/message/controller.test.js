@@ -6,6 +6,7 @@ describe('Message Controller Test', () => {
     const res = {
         status: jest.fn(() => res),
         json: jest.fn(),
+        send: jest.fn(),
     };
     const next = jest.fn();
 
@@ -18,7 +19,7 @@ describe('Message Controller Test', () => {
                 id: 1,
             },
             body: {
-                senderId: 1,
+                sender_id: 1,
                 content: 'hi',
             },
         };
