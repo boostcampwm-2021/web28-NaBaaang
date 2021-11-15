@@ -22,10 +22,6 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            chat_channel_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
             sender_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
@@ -49,7 +45,7 @@ export default function (sequelize, DataTypes) {
                 {
                     name: 'fk_message_chat1_idx',
                     using: 'BTREE',
-                    fields: [{ name: 'chat_id' }, { name: 'chat_channel_id' }],
+                    fields: [{ name: 'chat_id' }],
                 },
                 {
                     name: 'fk_message_user1_idx',
