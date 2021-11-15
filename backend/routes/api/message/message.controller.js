@@ -1,4 +1,4 @@
-import { create } from './message.service.js';
+import messageService from './message.service.js';
 
 import { existUndefinedInParameters } from '../../../lib/util/util.js';
 import STATUS from '../../../lib/util/statusCode.js';
@@ -12,7 +12,11 @@ const createMessage = async (req, res, next) => {
     }
 
     try {
-        const messageId = await create({ content, channelId, senderId });
+        const messageId = await messageService.create({
+            content,
+            channelId,
+            senderId,
+        });
 
         res.status(STATUS.CREATED).json(messageId);
     } catch (error) {
@@ -20,4 +24,4 @@ const createMessage = async (req, res, next) => {
     }
 };
 
-export { createMessage };
+export default { createMessage };
