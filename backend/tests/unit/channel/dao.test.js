@@ -13,6 +13,7 @@ describe('Channel DAO Test', () => {
             description: '설명 블라블라~~~~',
             streamer_id: null,
             stream_key: '7481d507-f19d-40cd-8014-aa8f9791a41d',
+            isLive: false,
         };
 
         // when
