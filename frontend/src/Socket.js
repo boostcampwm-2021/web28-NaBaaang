@@ -1,7 +1,5 @@
 import io from 'socket.io-client';
 
-require('dotenv').config();
-
 const BASE_URL = process.env.REACT_APP_SOCKET_HOST;
 
 export const Socket = io(`${BASE_URL}`);
