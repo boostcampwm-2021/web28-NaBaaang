@@ -16,4 +16,4 @@ const insertMessage = async ({ channelId, senderId, content }) => {
     }
 };
 
-export { insertMessage };
+export default { insertMessage };

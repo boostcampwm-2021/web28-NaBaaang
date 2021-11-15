@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { createMessage } from './message.controller.js';
+import messageController from './message.controller.js';
 /**
  *  @swagger
  *  /channel/:id/message:
@@ -31,6 +31,6 @@ import { createMessage } from './message.controller.js';
  *                  $ref: '#/components/responses/get/200/pet'
  *
  */
-router.post('/channel/:id/message', createMessage);
+router.post('/channel/:id/message', messageController.createMessage);
 
 export default router;
