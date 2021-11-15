@@ -4,11 +4,13 @@ const message = db.message;
 
 const insertMessage = async ({ channelId, senderId, content }) => {
     try {
-        await message.create({
+        const messageModel = await message.create({
             content,
             chat_id: channelId,
             sender_id: senderId,
         });
+
+        return messageModel.id;
     } catch (error) {
         console.error(error);
     }
