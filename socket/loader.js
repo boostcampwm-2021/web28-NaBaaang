@@ -1,13 +1,14 @@
 import socketHandler from "./socketHandler.js";
+import channel from "./controllers/channel.js";
 
-const initSocketConnection = (io, port) => {
+const socketLoader = (httpServer, io, port) => {
   io.on("connection", socket => {
-    const handler = socketHandler(io, socket);
-
-    socket.on("join", handler.joinChannel);
-    socket.on("leave", handler.leaveChannel);
-    socket.on("chat", handler.sendChatMessage);
-    socket.on("noticeChannelEnded", handler.noticeChannelEnded);
+    channel(io, socket);
+    // const handler = socketHandler(io, socket);
+    // socket.on("join", handler.joinChannel);
+    // socket.on("leave", handler.leaveChannel);
+    // socket.on("chat", handler.sendChatMessage);
+    // socket.on("noticeChannelEnded", handler.noticeChannelEnded);
     socket.on("disconnect", () => {});
   });
 
@@ -16,4 +17,4 @@ const initSocketConnection = (io, port) => {
   );
 };
 
-export default initSocketConnection;
+export default socketLoader;
