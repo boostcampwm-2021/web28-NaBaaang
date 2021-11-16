@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import socket from '@/socket';
+import useBuffer from './useBuffer';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
@@ -8,15 +9,17 @@ const MESSAGE_LIMIT = 20;
 
 export default function useChatMessage() {
     const [messageList, setMessageList] = useState([]);
-    const messageBuffer = useRef([]);
-
-    const isBufferFull = () => messageBuffer.current.length > BUFFER_LIMIT;
+    const {
+        isBufferFull,
+        flushBuffer,
+        getBufferList,
+        getBufferLength,
+        pushBuffer,
+    } = useBuffer(BUFFER_LIMIT);
 
     const isMessageFull = prevMessageList => {
-        return (
-            messageBuffer.current.length + prevMessageList.length >
-            MESSAGE_LIMIT
-        );
+        const bufferLength = getBufferLength();
+        return bufferLength + prevMessageList.length > MESSAGE_LIMIT;
     };
 
     const handleGetMessageSliceIndex = prevMessageList => {
@@ -25,19 +28,20 @@ export default function useChatMessage() {
 
     const handleMessageSetState = prevMessageList => {
         const sliceIndex = handleGetMessageSliceIndex(prevMessageList);
-        return [...prevMessageList, ...messageBuffer.current].slice(sliceIndex);
+        const bufferList = getBufferList();
+        return [...prevMessageList, ...bufferList].slice(sliceIndex);
     };
 
     const handleUpdateMessageList = () => {
         setMessageList(handleMessageSetState);
-        messageBuffer.current = [];
+        flushBuffer();
     };
 
     const onThrottle = (callback, limit) => {
         let waiting = false;
         let id;
         return message => {
-            messageBuffer.current.push(message);
+            pushBuffer(message);
             if (!waiting) {
                 waiting = true;
                 id = setTimeout(() => {
