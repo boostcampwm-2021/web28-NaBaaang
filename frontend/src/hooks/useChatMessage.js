@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { go } from '@/util/fp';
+
 import socket from '@/socket';
 import useBuffer from './useBuffer';
 import useArray from './useArray';
@@ -10,28 +12,14 @@ const MESSAGE_LIMIT = 20;
 
 export default function useChatMessage() {
     const { arr: messageList, set: setMessageList } = useArray([]);
-    const {
-        isBufferFull,
-        flushBuffer,
-        getBufferList,
-        getBufferLength,
-        pushBuffer,
-    } = useBuffer(BUFFER_LIMIT);
+    const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
+        useBuffer(BUFFER_LIMIT);
 
-    const isMessageFull = prevMsg => {
-        const bufferLength = getBufferLength();
-        const messageLength = prevMsg.length;
-        return bufferLength + messageLength > MESSAGE_LIMIT;
-    };
-
-    const getMessageSliceIndex = prevMsg => {
-        return isMessageFull(prevMsg) ? -MESSAGE_LIMIT : 0;
-    };
+    const concatBufferToMessage = msg => msg.concat(getBufferList());
+    const sliceMessage = msg => msg.slice(-MESSAGE_LIMIT);
 
     const handleMessageSetState = prevMsg => {
-        const sliceIndex = getMessageSliceIndex(prevMsg);
-        const bufferList = getBufferList();
-        return [...prevMsg, ...bufferList].slice(sliceIndex);
+        return go(prevMsg, concatBufferToMessage, sliceMessage);
     };
 
     const updateMessage = () => {
