@@ -25,9 +25,8 @@
         "eject": "craco eject",
         "storybook": "start-storybook -p 6006 -s public",
         "build-storybook": "build-storybook -s public",
-        "load": "artillery run ./src/tests/socketio-chat-test.yaml",
-        "report": "artillery run -o socketio-chat-report ./src/tests/socketio-chat-test.yaml",
-        "show": "artillery report socketio-chat-report"
+        "report": "./node_modules/artillery/bin/artillery run -o ./src/tests/socketio-chat-report ./src/tests/socketio-chat-test.yaml",
+        "show": "./node_modules/artillery/bin/artillery report ./src/tests/socketio-chat-report"
     },
     "eslintConfig": {
         "extends": [
