@@ -3,6 +3,7 @@ const EVENT_TYPE = {
     LEAVE_CHANNEL: 'leave',
     TERMINATE_CHANNEL: 'noticeChannelEnded',
     SEND_MESSAGE: 'chat',
+    RECEIVE_MESSAGE: 'chat',
 };
 
 export { EVENT_TYPE };
