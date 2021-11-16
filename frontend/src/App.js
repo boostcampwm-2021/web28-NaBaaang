@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Main from './pages/Main';
 import ChannelManager from './pages/ChannelManager';
+import Callback from './components/Callback/Callback';
 import UserStore from './store/userStore';
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
                         <Route
                             path="/stream-manager/:channelId"
                             component={ChannelManager}
+                        />
+                        <Route
+                            path="/auth/google/callback"
+                            component={Callback}
                         />
                         <Route path="/" component={Main} />
                     </Switch>
