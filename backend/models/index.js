@@ -12,6 +12,7 @@ let sequelize = new Sequelize({
     port: config.port,
     database: config.database,
     dialect: config.dialect,
+    supportBigNumbers: true,
 });
 
 const connectionTest = async () => {

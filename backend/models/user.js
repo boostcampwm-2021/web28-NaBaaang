@@ -3,18 +3,21 @@ export default function (sequelize, DataTypes) {
         'user',
         {
             id: {
-                autoIncrement: true,
-                type: DataTypes.INTEGER,
+                // autoIncrement: true,
+                type: DataTypes.STRING(100),
                 allowNull: false,
                 primaryKey: true,
             },
             nickname: {
                 type: DataTypes.STRING(100),
-                allowNull: false,
+                allowNull: true,
             },
             image_url: {
                 type: DataTypes.STRING(200),
                 allowNull: false,
+            },
+            refresh_token: {
+                type: DataTypes.STRING(200),
             },
         },
         {
