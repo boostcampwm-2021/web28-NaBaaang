@@ -1,43 +1,37 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect } from 'react';
+
+import { go } from '@/util/fp';
 
 import socket from '@/socket';
+import useBuffer from './useBuffer';
+import useArray from './useArray';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
 const MESSAGE_LIMIT = 20;
 
 export default function useChatMessage() {
-    const [messageList, setMessageList] = useState([]);
-    const messageBuffer = useRef([]);
+    const { arr: messageList, set: setMessageList } = useArray([]);
+    const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
+        useBuffer(BUFFER_LIMIT);
 
-    const isBufferFull = () => messageBuffer.current.length > BUFFER_LIMIT;
+    const concatBufferToMessage = msg => msg.concat(getBufferList());
+    const sliceMessage = msg => msg.slice(-MESSAGE_LIMIT);
 
-    const isMessageFull = prevMessageList => {
-        return (
-            messageBuffer.current.length + prevMessageList.length >
-            MESSAGE_LIMIT
-        );
+    const handleMessageSetState = prevMsg => {
+        return go(prevMsg, concatBufferToMessage, sliceMessage);
     };
 
-    const handleGetMessageSliceIndex = prevMessageList => {
-        return isMessageFull(prevMessageList) ? -MESSAGE_LIMIT : 0;
-    };
-
-    const handleMessageSetState = prevMessageList => {
-        const sliceIndex = handleGetMessageSliceIndex(prevMessageList);
-        return [...prevMessageList, ...messageBuffer.current].slice(sliceIndex);
-    };
-
-    const handleUpdateMessageList = () => {
+    const updateMessage = () => {
         setMessageList(handleMessageSetState);
-        messageBuffer.current = [];
+        flushBuffer();
     };
 
     const onThrottle = (callback, limit) => {
         let waiting = false;
         let id;
         return message => {
-            messageBuffer.current.push(message);
+            pushBuffer(message);
             if (!waiting) {
                 waiting = true;
                 id = setTimeout(() => {
@@ -53,10 +47,7 @@ export default function useChatMessage() {
         };
     };
 
-    const handleSocketMessage = onThrottle(
-        handleUpdateMessageList,
-        THROTTLE_LIMIT,
-    );
+    const handleSocketMessage = onThrottle(updateMessage, THROTTLE_LIMIT);
 
     useEffect(() => {
         socket.chat.handleReceivedMessage(handleSocketMessage);
