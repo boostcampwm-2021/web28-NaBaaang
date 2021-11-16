@@ -6,6 +6,7 @@
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^12.8.3",
+        "artillery": "^2.0.0-5",
         "babel-eslint": "^10.1.0",
         "hls.js": "1.0.13-0.canary.8041",
         "react": "^17.0.2",
@@ -23,7 +24,9 @@
         "test": "craco test",
         "eject": "craco eject",
         "storybook": "start-storybook -p 6006 -s public",
-        "build-storybook": "build-storybook -s public"
+        "build-storybook": "build-storybook -s public",
+        "report": "./node_modules/artillery/bin/artillery run -o ./src/tests/socketio-chat-report ./src/tests/socketio-chat-test.yaml",
+        "show": "./node_modules/artillery/bin/artillery report ./src/tests/socketio-chat-report"
     },
     "eslintConfig": {
         "extends": [

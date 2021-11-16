@@ -5,7 +5,7 @@ const chat = socket => {
         socket.emit(EVENT_TYPE.SEND_MESSAGE, message);
     };
 
-    const handleReceivedMessage = handler => {
+    const onMessage = handler => {
         socket.on(EVENT_TYPE.RECEIVE_MESSAGE, handler);
     };
 
@@ -13,7 +13,7 @@ const chat = socket => {
         socket.off(EVENT_TYPE.SEND_MESSAGE);
     };
 
-    return { sendMessage, handleReceivedMessage, clearChatEvents };
+    return { sendMessage, onMessage, clearChatEvents };
 };
 
 export default chat;

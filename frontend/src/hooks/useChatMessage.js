@@ -50,7 +50,7 @@ export default function useChatMessage() {
     const handleSocketMessage = onThrottle(updateMessage, THROTTLE_LIMIT);
 
     useEffect(() => {
-        socket.chat.handleReceivedMessage(handleSocketMessage);
+        socket.chat.onMessage(handleSocketMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
