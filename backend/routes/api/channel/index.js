@@ -1,6 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import channelController from './channel.controller.js';
+import authController from '../auth/auth.controller.js';
 /**
  * @swagger
  *
@@ -22,6 +23,6 @@ router.get('/:id', channelController.getChannel);
 router.get('/', channelController.getLiveChannels);
 router.patch('/:id/open', channelController.openChannel);
 router.patch('/:id/close', channelController.closeChannel);
-router.post('/', channelController.createChannel);
+router.post('/', authController.auth, channelController.createChannel);
 
 export default router;
