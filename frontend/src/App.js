@@ -5,20 +5,23 @@ import styled from 'styled-components';
 
 import Main from './pages/Main';
 import ChannelManager from './pages/ChannelManager';
+import UserStore from './store/userStore';
 
 function App() {
     return (
         <StyledApp>
-            <BrowserRouter>
-                <div id="modal-root" />
-                <Switch>
-                    <Route
-                        path="/stream-manager/:channelId"
-                        component={ChannelManager}
-                    />
-                    <Route path="/" component={Main} />
-                </Switch>
-            </BrowserRouter>
+            <UserStore>
+                <BrowserRouter>
+                    <div id="modal-root" />
+                    <Switch>
+                        <Route
+                            path="/stream-manager/:channelId"
+                            component={ChannelManager}
+                        />
+                        <Route path="/" component={Main} />
+                    </Switch>
+                </BrowserRouter>
+            </UserStore>
         </StyledApp>
     );
 }
