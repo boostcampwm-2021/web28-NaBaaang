@@ -12,6 +12,9 @@ export default function Chat() {
 
     const handleSubmit = message => {
         socket.chat.sendMessage(message);
+        return () => {
+            socket.chat.clearChatEvents();
+        };
     };
 
     return (
