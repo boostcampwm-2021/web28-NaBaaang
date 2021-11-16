@@ -59,7 +59,7 @@ export default function useChatMessage() {
     );
 
     useEffect(() => {
-        socket.chat.handleReceivedMessage(handleSocketMessage);
+        socket.chat.onMessage(handleSocketMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
