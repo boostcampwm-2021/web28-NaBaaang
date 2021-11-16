@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
@@ -9,12 +9,14 @@ import { flexMixin } from '@/styles/mixins';
 
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
+import { UserContext } from '@/store/userStore';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
-export default function Header({ isSigin = true }) {
+export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
+    const { user } = useContext(UserContext);
 
     const handleOpenModal = handler => {
         handler(true);
@@ -39,7 +41,7 @@ export default function Header({ isSigin = true }) {
                 <Logo src={HeaderLogo} alt="header-logo" />
             </Link>
 
-            {!isSigin ? (
+            {!user.isSignin ? (
                 <Button
                     text="로그인"
                     size="medium"
