@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-import socket from '@/socket/socket';
+import socket from '@/socket';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;

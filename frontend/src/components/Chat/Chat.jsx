@@ -1,6 +1,6 @@
 import React from 'react';
 
-import socket from '@/socket/socket';
+import socket from '@/socket';
 import useChatMessage from '@/hooks/useChatMessage';
 
 import Box from '@/components/Common/Box';

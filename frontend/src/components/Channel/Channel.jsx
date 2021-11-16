@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
-import socket from '@/socket/socket';
+import socket from '@/socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
