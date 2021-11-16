@@ -1,19 +1,20 @@
 import React from 'react';
 
-import socket from '@/Socket';
+import socket from '@/socket';
 import useChatMessage from '@/hooks/useChatMessage';
-
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-
 export default function Chat() {
     const { messageList } = useChatMessage();
 
     const handleSubmit = message => {
-        socket.sendMessage(message);
+        socket.chat.sendMessage(message);
+        return () => {
+            socket.chat.clearChatEvents();
+        };
     };
 
     return (

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
-import socket from '@/Socket';
+import socket from '@/socket';
 
 import Box from '@/components/Common/Box';
 import DashBoardInfo from './DashBoardInfo';
@@ -31,7 +31,7 @@ export default function DashBoard({ info }) {
     const handleEndLive = async () => {
         try {
             await fetchCloseChannel(id);
-            socket.endChannel();
+            socket.channel.endChannel();
             history.push('/');
         } catch (err) {
             throw new Error(err);
@@ -39,7 +39,10 @@ export default function DashBoard({ info }) {
     };
 
     useEffect(() => {
-        socket.joinChannel({ channelId: id, auth: 'streamer' });
+        socket.channel.joinChannel({ channelId: id, auth: 'streamer' });
+        return () => {
+            socket.channel.clearChannelEvents();
+        };
     }, []);
 
     return (
@@ -60,7 +63,6 @@ export default function DashBoard({ info }) {
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>
-
 
             <Divider direction="column" />
 

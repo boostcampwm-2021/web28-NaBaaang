@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { Socket } from '@/Socket';
+import socket from '@/socket';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
@@ -59,7 +59,10 @@ export default function useChatMessage() {
     );
 
     useEffect(() => {
-        Socket.on('chat', handleSocketMessage);
+        socket.chat.handleReceivedMessage(handleSocketMessage);
+        return () => {
+            socket.chat.clearChatEvents();
+        };
     }, []);
 
     return { messageList };
