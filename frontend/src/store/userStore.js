@@ -1,21 +1,10 @@
-/* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useReducer } from 'react';
-import { userReducer } from './reducer.js';
+import React from 'react';
+import useAuth from '@/hooks/useAuth';
 
 export const UserContext = React.createContext();
 
-const UserStore = props => {
-    const [user, dispatch] = useReducer(userReducer, { isSignin: true });
+export default function UserStore({ children }) {
+    const auth = useAuth();
 
-    useEffect(() => {
-        dispatch({ type: 'LOGOUT' });
-    }, []);
-
-    return (
-        <UserContext.Provider value={{ user, dispatch }}>
-            {props.children}
-        </UserContext.Provider>
-    );
-};
-
-export default UserStore;
+    return <UserContext.Provider value={auth}>{children}</UserContext.Provider>;
+}

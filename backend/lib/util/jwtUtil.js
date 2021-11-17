@@ -19,6 +19,7 @@ const verify = token => {
             ok: true,
             id: decoded.id,
             nickname: decoded.nickname,
+            imageUrl: decoded.image_url,
         };
     } catch (err) {
         return {

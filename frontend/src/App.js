@@ -1,11 +1,13 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import LiveCollection from '@/components/LiveCollection';
+import Channel from '@/components/Channel/Channel';
+import GoogleAuthCallback from '@/auth/GoogleAuthCallback';
 import Main from './pages/Main';
 import ChannelManager from './pages/ChannelManager';
-import Callback from './components/Callback/Callback';
 import UserStore from './store/userStore';
 
 function App() {
@@ -14,17 +16,23 @@ function App() {
             <UserStore>
                 <BrowserRouter>
                     <div id="modal-root" />
-                    <Switch>
+                    <Routes>
+                        <Route path="/" element={<Main />}>
+                            <Route path="" element={<LiveCollection />} />
+                            <Route
+                                path="channel/:channelId"
+                                element={<Channel />}
+                            />
+                        </Route>
                         <Route
                             path="/stream-manager/:channelId"
-                            component={ChannelManager}
+                            element={<ChannelManager />}
                         />
                         <Route
                             path="/auth/google/callback"
-                            component={Callback}
+                            element={<GoogleAuthCallback />}
                         />
-                        <Route path="/" component={Main} />
-                    </Switch>
+                    </Routes>
                 </BrowserRouter>
             </UserStore>
         </StyledApp>

@@ -28,8 +28,8 @@ const login = async (req, res) => {
 
 const auth = async (req, res, next) => {
     if (authService.isAuthenticate(req.headers)) {
-        const token = req.headers.authorization.split('Bearer ')[1];
-        const decoded = jwtUtil.decode(token);
+        const accessToken = req.headers.authorization.split('Bearer ')[1];
+        const decoded = jwtUtil.decode(accessToken);
         req.body.streamer_id = decoded.id;
         next();
         return;
@@ -41,7 +41,18 @@ const auth = async (req, res, next) => {
     }
 };
 
+const getAuthValidation = async (req, res) => {
+    try {
+        const { accessToken } = req;
+        const user = jwtUtil.verify(accessToken);
+        res.status(STATUS.OK).json({ accessToken, user });
+    } catch (error) {
+        res.status(STATUS.UNAUTHORIZED).json(error.message);
+    }
+};
+
 export default {
     login,
     auth,
+    getAuthValidation,
 };

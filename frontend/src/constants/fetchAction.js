@@ -1,5 +1,5 @@
 import { API_URL, MEDIA_URL } from '@/constants/url';
-import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT_URI } from './oauth';
+import { GOOGLE_AUTH_REDIRECT_URL } from '@/constants/url';
 
 const fetchTemplate = (method, payload = '', header = '') => {
     const headers = {
@@ -25,8 +25,8 @@ const actionTypeInfo = payload => {
         FETCH_CREATE_CHANNEL: {
             url: `${API_URL}/api/channels`,
             ...fetchTemplate('POST', payload, {
-                Authorization: `Bearer ${window.localStorage.token}`,
-                refresh: `${window.localStorage.refresh}`,
+                Authorization: `Bearer ${window.localStorage.accessToken}`,
+                refresh: `${window.localStorage.refreshToken}`,
             }),
         },
         FETCH_GET_CHANNEL: {
@@ -51,16 +51,8 @@ const actionTypeInfo = payload => {
                 method: 'HEAD',
             },
         },
-
         FETCH_GET_GOOGLE_CODE: {
-            url:
-                `https://accounts.google.com/o/oauth2/v2/auth?` +
-                `scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&s_type=offline&` +
-                `response_type=code&` +
-                `state=state_parameter_passthrough_value&` +
-                `http://localhost:3000/auth/google/callback&` +
-                `redirect_uri=${GOOGLE_REDIRECT_URI}&` +
-                `client_id=${GOOGLE_CLIENT_ID}`,
+            url: GOOGLE_AUTH_REDIRECT_URL,
             option: {
                 method: 'GET',
             },
@@ -68,6 +60,13 @@ const actionTypeInfo = payload => {
         FETCH_SIGN_IN_GOOGLE: {
             url: `${API_URL}/api/auth/login`,
             ...fetchTemplate('POST', payload),
+        },
+        FETCH_AUTH_TOKEN_VALIDATION: {
+            url: `${API_URL}/api/auth/token/validation`,
+            ...fetchTemplate('GET', payload, {
+                Authorization: `Bearer ${window.localStorage.accessToken}`,
+                refresh: `${window.localStorage.refreshToken}`,
+            }),
         },
     };
 };
