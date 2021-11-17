@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
@@ -14,7 +14,7 @@ import Divider from '../Common/Divider/Divider';
 
 export default function DashBoard({ info }) {
     const streamKey = info.stream_key;
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
@@ -32,7 +32,7 @@ export default function DashBoard({ info }) {
         try {
             await fetchCloseChannel(id);
             socket.channel.endChannel();
-            history.push('/');
+            navigate('/');
         } catch (err) {
             throw new Error(err);
         }

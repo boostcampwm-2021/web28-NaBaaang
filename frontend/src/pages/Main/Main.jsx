@@ -1,13 +1,11 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Outlet  } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import Box from '@/components/Common/Box';
 import Header from '@/components/Header';
 import SideBar from '@/components/SideBar';
-import LiveCollection from '@/components/LiveCollection';
-import Channel from '@/components/Channel/Channel';
 
 function MainPage() {
     return (
@@ -24,13 +22,7 @@ function MainPage() {
                 </Box>
                 <BodyBox flex={20} height="100%">
                     <AbsoluteBox width="100%" height="100%">
-                        <Switch>
-                            <Route path="/" exact component={LiveCollection} />
-                            <Route
-                                path="/channel/:channelId"
-                                component={Channel}
-                            />
-                        </Switch>
+                        <Outlet />
                     </AbsoluteBox>
                 </BodyBox>
             </Box>
