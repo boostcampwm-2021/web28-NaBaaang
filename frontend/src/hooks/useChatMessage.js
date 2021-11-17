@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 
 import { go } from '@/util/fp';
-
 import socket from '@/socket';
+
 import useBuffer from './useBuffer';
 import useArray from './useArray';
+import useThrottle from './useThrottle';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
@@ -27,27 +28,13 @@ export default function useChatMessage() {
         flushBuffer();
     };
 
-    const onThrottle = (callback, limit) => {
-        let waiting = false;
-        let id;
-        return message => {
-            pushBuffer(message);
-            if (!waiting) {
-                waiting = true;
-                id = setTimeout(() => {
-                    waiting = false;
-                    callback.apply(this);
-                }, limit);
-            }
-            if (isBufferFull()) {
-                clearTimeout(id);
-                waiting = false;
-                callback.apply(this);
-            }
-        };
-    };
+    const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
-    const handleSocketMessage = onThrottle(updateMessage, THROTTLE_LIMIT);
+
+    const handleSocketMessage = msg => {
+        pushBuffer(msg);
+        onThrottle();
+    };
 
     useEffect(() => {
         socket.chat.onMessage(handleSocketMessage);
