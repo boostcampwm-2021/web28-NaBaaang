@@ -25,8 +25,8 @@ const actionTypeInfo = payload => {
         FETCH_CREATE_CHANNEL: {
             url: `${API_URL}/api/channels`,
             ...fetchTemplate('POST', payload, {
-                Authorization: `Bearer ${window.localStorage.token}`,
-                refresh: `${window.localStorage.refresh}`,
+                Authorization: `Bearer ${window.localStorage.accessToken}`,
+                refresh: `${window.localStorage.refreshToken}`,
             }),
         },
         FETCH_GET_CHANNEL: {

@@ -26,24 +26,24 @@ const login = async (req, res) => {
     }
 };
 
-const auth = async (req, res, next) => {
+const auth = (req, res, next) => {
     // access token or refresh token 없을 경우
-    if (!req.headers.authorization || !req.headers.refresh) {
+    const accessToken = req.headers.authorization.split('Bearer ')[1];
+    const refreshToken = req.headers.refresh;
+
+    if (!accessToken || !refreshToken) {
         res.status(STATUS.UNAUTHORIZED).send({
             message: 'No authorized!',
         });
         return;
     }
 
-    const token = req.headers.authorization.split('Bearer ')[1];
-    const refreshToken = req.headers.refresh;
-
-    const tokenResult = jwtUtil.verify(token);
-    const decoded = jwtUtil.decode(token);
+    const tokenResult = jwtUtil.verify(accessToken);
+    const decoded = jwtUtil.decode(accessToken);
     const newAccessToken = jwtUtil.sign(decoded);
 
     // 디코딩 결과 없을 경우
-    if (!decoded) {
+    if (decoded === null) {
         res.status(STATUS.UNAUTHORIZED).send({
             message: 'No authorized!',
         });

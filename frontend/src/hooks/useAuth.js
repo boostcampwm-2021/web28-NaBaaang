@@ -4,8 +4,16 @@ import { fetchAuthTokenValidation } from '@/apis/auth';
 export default function useAuth() {
     const [userInfo, setUserInfo] = useState({ isSignIn: false });
 
+    const isTokenExist = () => {
+        const { accessToken, refreshToken } = window.localStorage;
+        return accessToken && refreshToken;
+    };
+
     const isAuthTokenValidate = async () => {
         try {
+            if (!isTokenExist()) {
+                throw new Error('Error Auth Token is not exist');
+            }
             const { accessToken, user } = await fetchAuthTokenValidation();
             window.localStorage.setItem('accessToken', accessToken);
             setUserInfo({ isSignIn: true, user });
