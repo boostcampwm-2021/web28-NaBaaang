@@ -21,11 +21,18 @@ const findByChannelId = async (channelId, transaction) => {
     try {
         const savedChannel = await Channel.findOne(
             {
-                include: {
-                    model: db.chat,
-                    as: 'chat',
-                    attributes: ['id'],
-                },
+                include: [
+                    {
+                        model: db.chat,
+                        as: 'chat',
+                        attributes: ['id'],
+                    },
+                    {
+                        model: db.user,
+                        as: 'streamer',
+                        attributes: ['nickname', 'imageUrl'],
+                    },
+                ],
                 where: {
                     id: channelId,
                 },
@@ -44,7 +51,15 @@ const findAllLiveChannel = async transaction => {
     if (transaction) option.transaction = transaction;
     try {
         const channels = await Channel.findAll(
-            { where: { isLive: true } },
+            {
+                include: {
+                    model: db.user,
+                    as: 'streamer',
+                    attributes: ['nickname', 'imageUrl'],
+                },
+                where: { isLive: true },
+            },
+
             option,
         );
 
@@ -72,6 +87,7 @@ const update = async ({ id, updateTarget }, transaction) => {
 
 const insertWatch = async (watchInfo, transaction) => {
     let option = {};
+    if (transaction) option.transaction = transaction;
     try {
         const watch = await Watch.create(watchInfo, option);
 
