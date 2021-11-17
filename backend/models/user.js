@@ -3,10 +3,14 @@ export default function (sequelize, DataTypes) {
         'user',
         {
             id: {
-                // autoIncrement: true,
-                type: DataTypes.STRING(100),
+                autoIncrement: true,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
+            },
+            profile_id: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
             },
             nickname: {
                 type: DataTypes.STRING(100),

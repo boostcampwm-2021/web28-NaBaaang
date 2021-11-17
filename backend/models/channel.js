@@ -20,7 +20,7 @@ export default function (sequelize, DataTypes) {
                 allowNull: true,
             },
             streamer_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: true, // false 변경 필요
                 references: {
                     model: 'user',

@@ -8,10 +8,6 @@ export default function (sequelize, DataTypes) {
                 allowNull: false,
                 primaryKey: true,
             },
-            description: {
-                type: DataTypes.STRING(100),
-                allowNull: true,
-            },
             channel_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

@@ -5,7 +5,7 @@ export default function (sequelize, DataTypes) {
         'follow',
         {
             streamer_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'user',
@@ -13,7 +13,7 @@ export default function (sequelize, DataTypes) {
                 },
             },
             follwer_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'user',

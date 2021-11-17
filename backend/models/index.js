@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import sequelizeConfig from '../config/config.js';
+import { insertDummy } from '../db/initDummy.js';
 import initModels from './init-models.js';
 
 const env = process.env.NODE_ENV || 'development';
@@ -25,15 +26,20 @@ const connectionTest = async () => {
 };
 
 const db = initModels(sequelize);
+
+await connectionTest();
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 const init = async () => {
-    await connectionTest();
-    db.sequelize = sequelize;
-    db.Sequelize = Sequelize;
-    await sequelize.drop();
-    await sequelize.sync();
+    if (process.env.NODE_ENV === 'production') {
+        await sequelize.drop();
+        await sequelize.sync();
+    } else {
+        await sequelize.drop();
+        await sequelize.sync();
+        insertDummy(db);
+    }
 };
 
 db.init = init;

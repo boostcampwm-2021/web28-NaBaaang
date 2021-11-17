@@ -20,6 +20,11 @@ const findByChannelId = async (channelId, transaction) => {
     try {
         const savedChannel = await Channel.findOne(
             {
+                include: {
+                    model: db.chat,
+                    as: 'chat',
+                    attributes: ['id'],
+                },
                 where: {
                     id: channelId,
                 },

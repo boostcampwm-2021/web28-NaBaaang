@@ -1,16 +1,20 @@
 import channelDAO from './channel.dao.js';
 import db from '../../../models/index.js';
 import { v4 } from 'uuid';
+import chatDao from '../chat/chat.dao.js';
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
     try {
         const stream_key = v4();
         channelInfo.stream_key = stream_key;
-        const result = await channelDAO.insertChannel(channelInfo, transaction);
-
+        const channelId = await channelDAO.insertChannel(
+            channelInfo,
+            transaction,
+        );
+        const chatId = await chatDao.insertChat(channelId, transaction);
         await transaction.commit();
-        return result;
+        return channelId;
     } catch (error) {
         await transaction.rollback();
         console.error(error);
