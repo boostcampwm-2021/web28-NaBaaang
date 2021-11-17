@@ -32,3 +32,5 @@ dist/
 backend/config
 
 frontend/config
+
+artillery/reports
