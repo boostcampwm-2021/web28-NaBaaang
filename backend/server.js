@@ -6,7 +6,7 @@ import cors from 'cors';
 import indexRouter from './routes/index.js';
 import swaggerRouter from './routes/api/swagger/index.js';
 import channelRouter from './routes/api/channel/index.js';
-import messageRouter from './routes/api/message/index.js';
+import chatRouter from './routes/api/chat/index.js';
 import authRouter from './routes/api/auth/index.js';
 import db from './models/index.js';
 
@@ -25,6 +25,6 @@ app.use('/', indexRouter);
 app.use('/swagger', swaggerRouter);
 app.use('/api/channels', channelRouter);
 app.use('/api/auth', authRouter);
-app.use('/api', messageRouter);
+app.use('/api/chats', chatRouter);
 
 export default app;
