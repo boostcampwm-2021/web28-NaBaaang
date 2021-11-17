@@ -3,8 +3,8 @@ import STATUS from '../../../lib/util/statusCode.js';
 
 const createChannel = async (req, res) => {
     try {
-        const data = await channelService.create(req.body);
-        res.status(STATUS.CREATED).json(data);
+        const channelId = await channelService.create(req.body);
+        res.status(STATUS.CREATED).json(channelId);
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
