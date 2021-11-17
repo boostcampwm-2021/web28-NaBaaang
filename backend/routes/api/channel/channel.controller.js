@@ -60,11 +60,11 @@ const closeChannel = async (req, res) => {
 const watchChannel = async (req, res) => {
     try {
         if (!authService.isAuthenticate(req.headers)) {
+            const { id } = req.params;
             const data = await channelService.getChannelById(id);
             res.status(STATUS.OK).json(data);
             return;
         }
-        const { id } = req.params;
         const data = await channelService.watchChannel(req);
         res.status(STATUS.ACCEPT).json(data);
     } catch (error) {
