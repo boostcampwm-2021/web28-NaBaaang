@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
@@ -11,8 +12,8 @@ import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
 import AlertModal from './AlertModal';
 
-export default function Channel({ match }) {
-    const { params } = match;
+export default function Channel() {
+    const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
         type: 'FETCH_GET_CHANNEL',

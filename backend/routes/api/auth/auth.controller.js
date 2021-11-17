@@ -34,20 +34,21 @@ const auth = async (req, res, next) => {
         next();
         return;
     } else {
-        res.status(STATUS.UNAUTHORIZED).send({
-            message: 'No authorized!',
-        });
+        res.status(STATUS.UNAUTHORIZED).send({ error: 'TOKEN IS INVALID' });
         return;
     }
 };
 
 const getAuthValidation = async (req, res) => {
     try {
-        const { accessToken } = req;
+        const accessToken = req.headers.authorization.split('Bearer ')[1];
         const user = jwtUtil.verify(accessToken);
+        if (!user.ok) {
+            throw new Error(user.message);
+        }
         res.status(STATUS.OK).json({ accessToken, user });
     } catch (error) {
-        res.status(STATUS.UNAUTHORIZED).json(error.message);
+        res.status(STATUS.UNAUTHORIZED).json({ error });
     }
 };
 

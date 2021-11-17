@@ -70,9 +70,7 @@ const isAuthenticate = headers => {
 
     if (tokenResult.ok) {
         const newAccessToken = jwtUtil.sign(decoded);
-        const newRefreshToken = jwtUtil.refresh();
         headers.authorization = `Bearer ${newAccessToken}`;
-        headers.refresh = newRefreshToken;
         return true;
     }
 
