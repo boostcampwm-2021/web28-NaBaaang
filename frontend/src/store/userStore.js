@@ -1,20 +1,12 @@
-/* eslint-disable react/destructuring-assignment */
-import React, { useState } from 'react';
+import React from 'react';
+import useAuthHook from '@/hooks/useAuthHook';
 
 export const UserContext = React.createContext();
 
-const UserStore = props => {
-    const [auth, setAuth] = useState({isSignIn:false});
-
-    const authLogin = payload => {
-        setAuth({ ...payload, isSignIn: true });
-    };
+export default function UserStore({ children }) {
+    const auth = useAuthHook();
 
     return (
-        <UserContext.Provider value={{auth,authLogin }}>
-            {props.children}
-        </UserContext.Provider>
+        <UserContext.Provider value={auth}>{children}</UserContext.Provider>
     );
-};
-
-export default UserStore;
+}

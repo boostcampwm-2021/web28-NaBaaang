@@ -16,7 +16,7 @@ import ChannelModal from './ChannelModal';
 export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
-    const { auth } = useContext(UserContext);
+    const auth = useContext(UserContext);
 
     const handleOpenModal = handler => {
         handler(true);
