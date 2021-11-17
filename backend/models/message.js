@@ -14,7 +14,7 @@ export default function (sequelize, DataTypes) {
                 type: DataTypes.STRING(500),
                 allowNull: true,
             },
-            chat_id: {
+            chatId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -22,7 +22,7 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            sender_id: {
+            senderId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -35,6 +35,7 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'message',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'PRIMARY',

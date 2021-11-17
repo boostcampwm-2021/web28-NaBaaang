@@ -79,7 +79,7 @@ const watchChannel = async req => {
 
         const channel = await channelDAO.findByChannelId(id, transaction);
         await channelDAO.insertWatch(
-            { channel_id: channel.id, view_id: user.id },
+            { channelId: channel.id, viewerId: user.id },
             transaction,
         );
         return channel;
