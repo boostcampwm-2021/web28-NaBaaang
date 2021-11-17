@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
 
 import Box from '@/components/Common/Box';
@@ -18,6 +19,8 @@ export default function DashBoard({ info }) {
 
     const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
+
+    useSocket(info);
 
     const handleStartLive = async () => {
         try {
@@ -37,13 +40,6 @@ export default function DashBoard({ info }) {
             throw new Error(err);
         }
     };
-
-    useEffect(() => {
-        socket.channel.joinChannel({ channelId: id, auth: 'streamer' });
-        return () => {
-            socket.channel.clearChannelEvents();
-        };
-    }, []);
 
     return (
         <Box backgroundColor="black2" height="100%" alignItems="stretch">
