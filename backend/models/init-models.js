@@ -17,7 +17,7 @@ function initModels(sequelize) {
     const watch = _watch(sequelize, DataTypes);
 
     chat.belongsTo(channel, { as: 'channel', foreignKey: 'channel_id' });
-    channel.hasMany(chat, { as: 'chats', foreignKey: 'channel_id' });
+    channel.hasOne(chat, { as: 'chat', foreignKey: 'channel_id' });
     watch.belongsTo(channel, { as: 'channel', foreignKey: 'channel_id' });
     channel.hasMany(watch, { as: 'watches', foreignKey: 'channel_id' });
     message.belongsTo(chat, { as: 'chat', foreignKey: 'chat_id' });
