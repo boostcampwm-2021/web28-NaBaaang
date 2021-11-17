@@ -16,7 +16,8 @@ import ChannelModal from './ChannelModal';
 export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
-    const { user } = useContext(UserContext);
+    const {userInfo} = useContext(UserContext);
+
 
     const handleOpenModal = handler => {
         handler(true);
@@ -41,7 +42,7 @@ export default function Header() {
                 <Logo src={HeaderLogo} alt="header-logo" />
             </Link>
 
-            {!user.isSignin ? (
+            {!userInfo.isSignIn ? (
                 <Button
                     text="로그인"
                     size="medium"

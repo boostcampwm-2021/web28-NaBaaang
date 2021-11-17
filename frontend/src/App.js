@@ -5,9 +5,9 @@ import styled from 'styled-components';
 
 import LiveCollection from '@/components/LiveCollection';
 import Channel from '@/components/Channel/Channel';
+import GoogleAuthCallback from '@/auth/GoogleAuthCallback';
 import Main from './pages/Main';
 import ChannelManager from './pages/ChannelManager';
-import GoogleAuthCallback from './components/AuthCallback/GoogleAuthCallback';
 import UserStore from './store/userStore';
 
 function App() {
