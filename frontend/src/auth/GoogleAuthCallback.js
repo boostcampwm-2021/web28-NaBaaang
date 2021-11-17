@@ -21,7 +21,7 @@ export default function GoogleAuthCallback() {
                 payload: { ...res, isSignIn: true },
             });
         } catch (err) {
-            authSignIn({ type: 'error', payload: { isSignIn: false } });
+            authSignIn({ type: 'error' });
         } finally {
             navigate('/');
         }

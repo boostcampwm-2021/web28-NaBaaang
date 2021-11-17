@@ -19,8 +19,7 @@ export default function useAuthHook() {
             setTokenToLocalStorage({ accessToken, refreshToken });
             setUserInfo({ user, isSignIn });
         } else {
-            const { isSignIn } = payload;
-            setUserInfo({ isSignIn });
+            setUserInfo({ isSignIn: false });
         }
     };
 
