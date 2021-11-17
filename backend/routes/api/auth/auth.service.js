@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import oauthConfig from '../../../config/oauth.js';
+import jwtUtil from '../../../lib/util/jwtUtil.js';
 const env = process.env.NODE_ENV || 'development';
 const config = oauthConfig[env];
 
@@ -46,6 +47,7 @@ const fetchGoogleInfoByAccessToken = async accessToken => {
         throw new Error(error);
     }
 };
+
 const exchangeCodeForToken = async code => {
     try {
         const { data } = await fetchGoogleAccessToken(code);
@@ -55,4 +57,38 @@ const exchangeCodeForToken = async code => {
     }
 };
 
-export default { exchangeCodeForToken, fetchGoogleInfoByAccessToken };
+const isAuthenticate = headers => {
+    if (!headers.authorization || !headers.refresh) {
+        return false;
+    }
+    const accessToken = headers.authorization.split('Bearer ')[1];
+    const refreshToken = headers.refresh;
+    const tokenResult = jwtUtil.verify(accessToken);
+    const decoded = jwtUtil.decode(accessToken);
+
+    if (decoded === null) return false;
+
+    if (tokenResult.ok) {
+        const newAccessToken = jwtUtil.sign(decoded);
+        const newRefreshToken = jwtUtil.refresh();
+        headers.authorization = `Bearer ${newAccessToken}`;
+        headers.refresh = newRefreshToken;
+        return true;
+    }
+
+    const refreshResult = jwtUtil.refreshVerify(refreshToken, decoded.id);
+
+    if (!refreshResult.ok) {
+        return false;
+    }
+
+    const newAccessToken = jwtUtil.sign(decoded);
+    headers.authorization = `Bearer ${newAccessToken}`;
+    return true;
+};
+
+export default {
+    exchangeCodeForToken,
+    fetchGoogleInfoByAccessToken,
+    isAuthenticate,
+};

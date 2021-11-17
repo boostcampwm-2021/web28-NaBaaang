@@ -27,48 +27,18 @@ const login = async (req, res) => {
 };
 
 const auth = async (req, res, next) => {
-    // access token or refresh token 없을 경우
-    if (!req.headers.authorization || !req.headers.refresh) {
-        res.status(STATUS.UNAUTHORIZED).send({
-            message: 'No authorized!',
-        });
-        return;
-    }
-
-    const token = req.headers.authorization.split('Bearer ')[1];
-    const refreshToken = req.headers.refresh;
-
-    const tokenResult = jwtUtil.verify(token);
-
-    const decoded = jwtUtil.decode(token);
-
-    // access token 유효한 경우
-    if (tokenResult.ok) {
+    if (authService.isAuthenticate(req.headers)) {
+        const token = req.headers.authorization.split('Bearer ')[1];
+        const decoded = jwtUtil.decode(token);
         req.body.streamer_id = decoded.id;
         next();
         return;
-    }
-    // 디코딩 결과 없을 경우
-    if (decoded === null) {
+    } else {
         res.status(STATUS.UNAUTHORIZED).send({
             message: 'No authorized!',
         });
         return;
     }
-    const refreshResult = jwtUtil.refreshVerify(refreshToken, decoded.id);
-    // refresh token 유효하지 않은 경우
-    if (!refreshResult.ok) {
-        res.status(STATUS.UNAUTHORIZED).send({
-            message: 'No authorized!',
-        });
-        return;
-    }
-
-    //refresh token 유효한 경우
-    const newAccessToken = sign(decoded);
-    req.body.streamer_id = user.id;
-    req.accessToken = newAccessToken;
-    next();
 };
 
 export default {
