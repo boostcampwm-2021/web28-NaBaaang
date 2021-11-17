@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
 import socket from '@/socket';
 import useChatMessage from '@/hooks/useChatMessage';
@@ -9,9 +10,11 @@ import MessageList from './MessageList';
 
 export default function Chat() {
     const { messageList } = useChatMessage();
+    const params = useParams();
+    const { channelId } = params;
 
     const handleSubmit = message => {
-        socket.chat.sendMessage(message);
+        socket.chat.sendMessage(channelId, message);
         return () => {
             socket.chat.clearChatEvents();
         };

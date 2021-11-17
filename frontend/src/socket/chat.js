@@ -1,8 +1,8 @@
 import { EVENT_TYPE } from '@/constants/socketEventType';
 
 const chat = socket => {
-    const sendMessage = message => {
-        socket.emit(EVENT_TYPE.SEND_MESSAGE, message);
+    const sendMessage = (channelId, message) => {
+        socket.emit(EVENT_TYPE.SEND_MESSAGE, channelId, message);
     };
 
     const onMessage = handler => {
