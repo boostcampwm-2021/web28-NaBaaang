@@ -1,6 +1,7 @@
 // import db from '../../../models/index.js';
 import db from '../../../models/index.js';
 const Channel = db.channel;
+const Watch = db.watch;
 
 const insertChannel = async (channelInfo, transaction) => {
     let option = {};
@@ -55,7 +56,6 @@ const findAllLiveChannel = async transaction => {
 
 const update = async ({ id, updateTarget }, transaction) => {
     let option = {};
-    console.log({ id, updateTarget });
     if (transaction) option.transaction = transaction;
     try {
         const channels = await Channel.update(
@@ -69,4 +69,21 @@ const update = async ({ id, updateTarget }, transaction) => {
         console.error(error);
     }
 };
-export default { insertChannel, findByChannelId, findAllLiveChannel, update };
+
+const insertWatch = async (watchInfo, transaction) => {
+    let option = {};
+    try {
+        const watch = await Watch.create(watchInfo, option);
+
+        return watch;
+    } catch (error) {
+        console.error(error);
+    }
+};
+export default {
+    insertChannel,
+    findByChannelId,
+    findAllLiveChannel,
+    update,
+    insertWatch,
+};

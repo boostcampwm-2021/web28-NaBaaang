@@ -16,7 +16,7 @@ export default function Channel() {
     const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
-        type: 'FETCH_GET_CHANNEL',
+        type: 'FETCH_WATCH_CHANNEL',
         payload: channelId,
     });
     const [openAlertModal, setAlertModal] = useState(false);
