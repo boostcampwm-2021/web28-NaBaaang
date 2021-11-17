@@ -5,10 +5,10 @@ const User = db.user;
 const getOrCreate = async ({ id, name, picture }) => {
     let options = {
         where: {
-            id,
+            profile_id: id,
         },
         defaults: {
-            id,
+            profile_id: id,
             nickname: name,
             image_url: picture,
         },

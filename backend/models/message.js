@@ -23,7 +23,7 @@ export default function (sequelize, DataTypes) {
                 },
             },
             sender_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'user',

@@ -3,7 +3,7 @@ export default function (sequelize, DataTypes) {
         'watch',
         {
             viewer_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'user',
