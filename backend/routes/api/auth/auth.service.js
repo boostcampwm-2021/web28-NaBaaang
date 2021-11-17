@@ -15,7 +15,6 @@ const fetchGoogleAccessToken = async code => {
             grant_type: 'authorization_code',
             redirect_uri: config.redirectUri,
         };
-        console.log(data);
         const result = await axios({
             url,
             method: 'post',
@@ -43,7 +42,6 @@ const fetchGoogleInfoByAccessToken = async accessToken => {
         });
         return data;
     } catch (error) {
-        console.log(error);
         throw new Error(error);
     }
 };
