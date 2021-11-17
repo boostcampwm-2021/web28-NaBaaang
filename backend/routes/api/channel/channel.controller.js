@@ -4,9 +4,9 @@ import authService from '../auth/auth.service.js';
 
 const createChannel = async (req, res) => {
     try {
-        const { userId: streamer_id, title, category, description } = req.body;
+        const { userId: streamerId, title, category, description } = req.body;
         const channelId = await channelService.create({
-            streamer_id,
+            streamerId,
             title,
             category,
             description,
@@ -31,6 +31,7 @@ const getLiveChannels = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await channelService.getLiveChannels(id);
+        console.log(data);
         res.status(STATUS.OK).json(data);
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
