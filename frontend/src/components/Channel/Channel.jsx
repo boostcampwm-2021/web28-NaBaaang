@@ -22,12 +22,18 @@ export default function Channel() {
     const [openAlertModal, setAlertModal] = useState(false);
 
     useEffect(() => {
-        socket.channel.joinChannel({ channelId, auth: 'viewer' });
+        if (!data) return null;
+
+        socket.channel.joinChannel({
+            channelId,
+            chatId: data.chat.id,
+            auth: 'viewer',
+        });
         socket.channel.channelEnded({ setAlertModal });
         return () => {
             socket.channel.clearChannelEvents();
         };
-    }, []);
+    }, [data]);
 
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;

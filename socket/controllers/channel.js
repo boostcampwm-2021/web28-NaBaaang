@@ -3,8 +3,9 @@ const LEAVE_CHANNEL = "leave";
 const TERMINATE_CHANNEL = "noticeChannelEnded";
 
 const channel = (io, socket) => {
-  const joinChannel = ({ channelId, auth }) => {
+  const joinChannel = ({ channelId, chatId, auth }) => {
     socket.channelId = channelId.toString();
+    socket.chatId = chatId.toString();
     socket.auth = auth.toString();
     socket.join(socket.channelId);
     io.to(socket.channelId).emit(
@@ -21,7 +22,7 @@ const channel = (io, socket) => {
       `${socket.id}(${socket.auth}) leaved #${channelId}`
     );
   };
-  const terminateChannel = message => {
+  const terminateChannel = (message) => {
     if (socket.auth !== "streamer") {
       throw new Error("방송 종료 권한이 없습니다");
     }
