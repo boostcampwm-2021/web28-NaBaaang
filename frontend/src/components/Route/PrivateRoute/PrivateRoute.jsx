@@ -5,11 +5,13 @@ import { UserContext } from '@/store/userStore';
 export default function PrivateRoute({ children }) {
     const {
         userInfo: { isSignIn },
+        authLoading,
     } = useContext(UserContext);
 
-    if (!isSignIn) {
-        return <Navigate to="/" />;
-    }
+    console.log(authLoading, isSignIn);
+
+    if (authLoading) return <div>Loading.....</div>;
+    if (!isSignIn) return <Navigate to="/" />;
 
     return children;
 }
