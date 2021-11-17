@@ -1,0 +1,19 @@
+config:
+    target: "http://localhost:4000" # host
+    phases:
+        - duration: 10 # 해당 초만큼 실행
+          arrivalRate: 50 # 가상 사용자 수
+    defaults:
+        headers: # header 세팅
+            Content-Type: "application/json"
+scenarios:
+    - flow:
+          - post: # method 설정
+                url: "/api/channel/1/message" # api url
+                body: '{
+                    "sender_id": 1,
+                    "content": "hi"
+                }'
+                match: # 해당 값이 맞는지 체크
+                    json: "$.code" # json 데이터 중에 code를 선택
+                    value: 200 # 200이면 success 아니면 fail
