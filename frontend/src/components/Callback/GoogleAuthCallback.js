@@ -6,7 +6,7 @@ import { fetchSiginInGoogle } from '../../apis/auth';
 import { UserContext } from '../../store/userStore';
 
 export default function GoogleAuthCallback() {
-    const { authLogin } = useContext(UserContext);
+    const { dispatch } = useContext(UserContext);
     const { search } = useLocation();
     const { code } = qs.parse(search, {
         ignoreQueryPrefix: true,
@@ -18,8 +18,8 @@ export default function GoogleAuthCallback() {
             const { accessToken, refreshToken } = await fetchSiginInGoogle(
                 code,
             );
-            const payload = {accessToken, refreshToken}
-            authLogin(payload);
+            const payload = { accessToken, refreshToken };
+            dispatch({ type: 'LOGIN', payload });
             navigate('/');
         } catch (err) {
             throw new Error(err);

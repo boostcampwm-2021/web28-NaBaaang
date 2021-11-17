@@ -1,18 +1,17 @@
 /* eslint-disable react/destructuring-assignment */
-import React, { useEffect, useReducer } from 'react';
-import { userReducer } from './reducer.js';
+import React, { useState } from 'react';
 
 export const UserContext = React.createContext();
 
 const UserStore = props => {
-    const [user, dispatch] = useReducer(userReducer, { isSignin: true });
+    const [auth, setAuth] = useState({isSignIn:false});
 
-    useEffect(() => {
-        dispatch({ type: 'LOGOUT' });
-    }, []);
+    const authLogin = payload => {
+        setAuth({ ...payload, isSignIn: true });
+    };
 
     return (
-        <UserContext.Provider value={{ user, dispatch }}>
+        <UserContext.Provider value={{auth,authLogin }}>
             {props.children}
         </UserContext.Provider>
     );
