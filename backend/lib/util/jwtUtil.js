@@ -9,7 +9,7 @@ const sign = user => {
         imageUrl: user.image_url,
     };
 
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '5s' });
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 };
 
 const verify = token => {
