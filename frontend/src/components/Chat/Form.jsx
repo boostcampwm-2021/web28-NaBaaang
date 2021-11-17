@@ -26,7 +26,7 @@ export default function Form({ handleSubmit }) {
             id: v1(),
             type: 'DONATION',
             userId: user.id,
-            nickname: 'undefined',
+            nickname: user.nickname,
             content: value,
         };
         handleSubmit(message);
@@ -42,7 +42,7 @@ export default function Form({ handleSubmit }) {
             id: v1(),
             type: 'NORMAL',
             userId: user.id,
-            nickname: 'undefined',
+            nickname: user.nickname,
             content: txt,
         };
         handleSubmit(message);
