@@ -8,6 +8,7 @@ const insertDummy = async db => {
     await insertChannelDummy(
         db,
         'test title',
+        'test',
         'description...',
         1,
         '1asdqw1',
@@ -26,6 +27,7 @@ const insertUserDummy = async (db, profileId, nickname, imageUrl) => {
 const insertChannelDummy = async (
     db,
     title,
+    category,
     description,
     streamer_id,
     stream_key,
@@ -33,6 +35,7 @@ const insertChannelDummy = async (
 ) => {
     const { id: channelId } = await db.channel.create({
         title,
+        category,
         description,
         streamer_id,
         stream_key,
