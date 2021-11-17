@@ -51,7 +51,6 @@ const actionTypeInfo = payload => {
                 method: 'HEAD',
             },
         },
-
         FETCH_GET_GOOGLE_CODE: {
             url: GOOGLE_AUTH_REDIRECT_URL,
             option: {
@@ -61,6 +60,13 @@ const actionTypeInfo = payload => {
         FETCH_SIGN_IN_GOOGLE: {
             url: `${API_URL}/api/auth/login`,
             ...fetchTemplate('POST', payload),
+        },
+        FETCH_AUTH_TOKEN_VALIDATION: {
+            url: `${API_URL}/api/auth/token/validation`,
+            ...fetchTemplate('GET', payload, {
+                Authorization: `Bearer ${window.localStorage.accessToken}`,
+                refresh: `${window.localStorage.refreshToken}`,
+            }),
         },
     };
 };

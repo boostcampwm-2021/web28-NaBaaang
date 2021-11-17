@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { fetchAuthTokenValidation } from '@/apis/auth';
 
-export default function useAuthHook() {
+export default function useAuth() {
     const [userInfo, setUserInfo] = useState({ isSignIn: false });
+
+    const isAuthTokenValidate = async () => {
+        try {
+            const { accessToken, user } = await fetchAuthTokenValidation();
+            window.localStorage.setItem('accessToken', accessToken);
+            setUserInfo({ isSignIn: true, user });
+        } catch (err) {
+            setUserInfo({ isSignIn: false });
+        }
+    };
 
     const setTokenToLocalStorage = ({ accessToken, refreshToken }) => {
         window.localStorage.setItem('accessToken', accessToken);
@@ -17,7 +28,7 @@ export default function useAuthHook() {
         if (type === 'success') {
             const { user, accessToken, refreshToken, isSignIn } = payload;
             setTokenToLocalStorage({ accessToken, refreshToken });
-            setUserInfo({ user, isSignIn });
+            setUserInfo({ isSignIn, user });
         } else {
             setUserInfo({ isSignIn: false });
         }
@@ -26,5 +37,10 @@ export default function useAuthHook() {
     const authSignOut = () => {
         removeTokenFromLocalStorage();
     };
+
+    useEffect(() => {
+        isAuthTokenValidate();
+    }, []);
+
     return { userInfo, authSignIn, authSignOut };
 }
