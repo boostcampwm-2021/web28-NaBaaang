@@ -9,19 +9,6 @@ export default function useAuth() {
         return accessToken && refreshToken;
     };
 
-    const isAuthTokenValidate = async () => {
-        try {
-            if (!isTokenExist()) {
-                throw new Error('Error Auth Token is not exist');
-            }
-            const { accessToken, user } = await fetchAuthTokenValidation();
-            window.localStorage.setItem('accessToken', accessToken);
-            setUserInfo({ isSignIn: true, user });
-        } catch (err) {
-            setUserInfo({ isSignIn: false });
-        }
-    };
-
     const setTokenToLocalStorage = ({ accessToken, refreshToken }) => {
         window.localStorage.setItem('accessToken', accessToken);
         window.localStorage.setItem('refreshToken', refreshToken);
@@ -30,6 +17,24 @@ export default function useAuth() {
     const removeTokenFromLocalStorage = () => {
         window.localStorage.removeItem('accessToken');
         window.localStorage.removeItem('refreshToken');
+    };
+
+    const isAuthTokenValidate = async () => {
+        try {
+            if (!isTokenExist()) {
+                throw new Error('Error Auth Token is not exist');
+            }
+            const { accessToken, user, error } =
+                await fetchAuthTokenValidation();
+            if (error) {
+                throw new Error('TOKEN IS EXPIRE');
+            }
+            window.localStorage.setItem('accessToken', accessToken);
+            setUserInfo({ isSignIn: true, user });
+        } catch (err) {
+            removeTokenFromLocalStorage();
+            setUserInfo({ isSignIn: false });
+        }
     };
 
     const authSignIn = ({ type, payload }) => {
