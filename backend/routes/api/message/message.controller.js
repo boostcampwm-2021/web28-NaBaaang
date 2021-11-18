@@ -9,6 +9,7 @@ const createMessage = async (req, res, next) => {
 
     if (existUndefinedInParameters(channelId, senderId, content)) {
         res.status(STATUS.BAD_REQUEST).send();
+        return;
     }
 
     try {

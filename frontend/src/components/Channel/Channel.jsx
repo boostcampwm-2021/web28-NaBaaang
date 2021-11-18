@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
+import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
 
 import Video from '@/components/Video';
@@ -21,12 +22,10 @@ export default function Channel() {
     });
     const [openAlertModal, setAlertModal] = useState(false);
 
+    useSocket(data);
+
     useEffect(() => {
-        socket.channel.joinChannel({ channelId, auth: 'viewer' });
         socket.channel.channelEnded({ setAlertModal });
-        return () => {
-            socket.channel.clearChannelEvents();
-        };
     }, []);
 
     if (loading || error || !data)

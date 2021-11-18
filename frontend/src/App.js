@@ -8,7 +8,7 @@ import Channel from '@/components/Channel/Channel';
 import GoogleAuthCallback from '@/auth/GoogleAuthCallback';
 import Main from './pages/Main';
 import ChannelManager from './pages/ChannelManager';
-import UserStore from './store/userStore';
+import { UserStore } from './store/userStore';
 
 function App() {
     return (
