@@ -43,4 +43,21 @@ async function fetchCloseChannel(id) {
     }
 }
 
-export { fetchCreateChannel, fetchOpenChannel, fetchCloseChannel };
+async function fetchAuthChannel(id) {
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_CHANNEL_AUTHENTICATE',
+            payload: id,
+        });
+        return await getFetchData(url, option);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
+export {
+    fetchCreateChannel,
+    fetchOpenChannel,
+    fetchCloseChannel,
+    fetchAuthChannel,
+};

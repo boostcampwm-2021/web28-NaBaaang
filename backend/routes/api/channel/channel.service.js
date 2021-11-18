@@ -3,6 +3,7 @@ import db from '../../../models/index.js';
 import { v4 } from 'uuid';
 import chatDao from '../chat/chat.dao.js';
 import requestHandler from '../../../lib/util/requestHandler.js';
+import ROLE from './constant/role.js';
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
@@ -22,11 +23,14 @@ const create = async channelInfo => {
     }
 };
 
-const getChannelById = async channelId => {
+const getChannelById = async ({ id, role }) => {
     const transaction = await db.sequelize.transaction();
     try {
-        const result = await channelDAO.findByChannelId(channelId, transaction);
+        let result = await channelDAO.findByChannelId(id, transaction);
 
+        if (role !== ROLE.OWNER) {
+            delete result.streamKey;
+        }
         await transaction.commit();
         return result;
     } catch (error) {
@@ -89,10 +93,29 @@ const watchChannel = async req => {
         console.error(error);
     }
 };
+
+const isChannelOwner = async req => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        const { channelId: expectedId } = req.params;
+        const user = requestHandler.getUserFromHeader(req.headers);
+
+        const channel = await channelDAO.findByUserId(user.id, transaction);
+        console.log(channel);
+        console.log(expectedId);
+        await transaction.commit();
+        return channel && expectedId === channel.id;
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
+    }
+};
+
 export default {
     create,
     getChannelById,
     getLiveChannels,
     updateLive,
     watchChannel,
+    isChannelOwner,
 };

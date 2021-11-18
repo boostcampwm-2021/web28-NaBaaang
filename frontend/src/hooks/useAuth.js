@@ -1,29 +1,22 @@
 import { useState, useEffect } from 'react';
 import { fetchAuthTokenValidation } from '@/apis/auth';
+import {
+    isTokenExist,
+    setItemToLocalStorage,
+    removeItemFromLocalStorage,
+} from '@/util';
+
+import { AUTH_TOKEN_LIST } from '@/constants/auth';
 
 export default function useAuth() {
     const [userInfo, setUserInfo] = useState({ isSignIn: false });
     const [authLoading, setAuthLoading] = useState(true);
 
-    const isTokenExist = () => {
-        const { accessToken, refreshToken } = window.localStorage;
-        return accessToken && refreshToken;
-    };
-
-    const setTokenToLocalStorage = ({ accessToken, refreshToken }) => {
-        window.localStorage.setItem('accessToken', accessToken);
-        window.localStorage.setItem('refreshToken', refreshToken);
-    };
-
-    const removeTokenFromLocalStorage = () => {
-        window.localStorage.removeItem('accessToken');
-        window.localStorage.removeItem('refreshToken');
-    };
-
     const isAuthTokenValidate = async () => {
         try {
-            if (!isTokenExist()) {
+            if (!isTokenExist(AUTH_TOKEN_LIST)) {
                 setAuthLoading(false);
+                removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 return;
             }
             const { accessToken, user, error } =
@@ -31,7 +24,7 @@ export default function useAuth() {
 
             if (error) {
                 setAuthLoading(false);
-                removeTokenFromLocalStorage();
+                removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 const { isSignIn } = userInfo;
                 if (isSignIn) setUserInfo({ isSignIn: false });
                 return;
@@ -47,7 +40,7 @@ export default function useAuth() {
     const authSignIn = ({ type, payload }) => {
         if (type === 'success') {
             const { user, accessToken, refreshToken, isSignIn } = payload;
-            setTokenToLocalStorage({ accessToken, refreshToken });
+            setItemToLocalStorage({ accessToken, refreshToken });
             setUserInfo({ isSignIn, user });
         } else {
             setUserInfo({ isSignIn: false });
@@ -55,7 +48,7 @@ export default function useAuth() {
     };
 
     const authSignOut = () => {
-        removeTokenFromLocalStorage();
+        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
         setUserInfo({ isSignIn: false });
     };
 
