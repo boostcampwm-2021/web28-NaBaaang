@@ -8,11 +8,7 @@ export default function (sequelize, DataTypes) {
                 allowNull: false,
                 primaryKey: true,
             },
-            description: {
-                type: DataTypes.STRING(100),
-                allowNull: true,
-            },
-            channel_id: {
+            channelId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -25,6 +21,8 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'chat',
             timestamps: false,
+            underscored: true,
+
             indexes: [
                 {
                     name: 'PRIMARY',

@@ -20,7 +20,7 @@ const InputModal = () => {
             onClose={handleOnClose}
             onSuccess={handleOnSuccess}
             showButton
-            onCancleText="취소"
+            onCancelText="취소"
             onSuccessText="방송 생성"
         >
             <input ref={inputRef} />
@@ -32,7 +32,7 @@ storiesOf('Modal', module)
     .add('closed', () => <Modal />)
     .add('open', () => <Modal open />)
     .add('buttonText', () => (
-        <Modal open showButton onCancleText="Foo" onSuccessText="Bar" />
+        <Modal open showButton onCancelText="Foo" onSuccessText="Bar" />
     ))
     .add('onClose', () => (
         <Modal open showButton onClose={action('onClose!!')} />

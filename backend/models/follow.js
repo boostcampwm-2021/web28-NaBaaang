@@ -4,7 +4,7 @@ export default function (sequelize, DataTypes) {
     return sequelize.define(
         'follow',
         {
-            streamer_id: {
+            streamerId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -12,7 +12,7 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            follwer_id: {
+            follwerId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -25,6 +25,7 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'follow',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'fk_follow_user1_idx',

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
@@ -9,12 +9,15 @@ import { flexMixin } from '@/styles/mixins';
 
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
+import { UserContext } from '@/store/userStore';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
-export default function Header({ isSigin = true }) {
+export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
+    const { userInfo, authSignOut } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const handleOpenModal = handler => {
         handler(true);
@@ -22,6 +25,11 @@ export default function Header({ isSigin = true }) {
 
     const handleHideModal = handler => {
         handler(false);
+    };
+
+    const logoutHandler = () => {
+        authSignOut();
+        navigate(window.location.pathname);
     };
 
     return (
@@ -39,7 +47,7 @@ export default function Header({ isSigin = true }) {
                 <Logo src={HeaderLogo} alt="header-logo" />
             </Link>
 
-            {!isSigin ? (
+            {!userInfo.isSignIn ? (
                 <Button
                     text="로그인"
                     size="medium"
@@ -52,6 +60,11 @@ export default function Header({ isSigin = true }) {
                         onClick={() => handleOpenModal(setChannelModal)}
                     />
                     <Logo src={ProfileIcon} />
+                    <Button
+                        text="로그아웃"
+                        size="medium"
+                        onClick={logoutHandler}
+                    />
                 </Box>
             )}
         </HeaderWrap>

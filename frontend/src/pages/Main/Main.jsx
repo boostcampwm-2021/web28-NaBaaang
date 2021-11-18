@@ -1,14 +1,11 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import Box from '@/components/Common/Box';
 import Header from '@/components/Header';
 import SideBar from '@/components/SideBar';
-import LiveCollection from '@/components/LiveCollection';
-import Channel from '@/components/Channel/Channel';
-import SocketTest from '@/components/Socket/SocketTest';
 
 function MainPage() {
     return (
@@ -23,16 +20,9 @@ function MainPage() {
                 <Box flex={1} height="100%">
                     <SideBar />
                 </Box>
-                <BodyBox flex={20} height="100%">
+                <BodyBox flex={20} height="100%" padding={1.5}>
                     <AbsoluteBox width="100%" height="100%">
-                        <Switch>
-                            <Route path="/" exact component={LiveCollection} />
-                            <Route
-                                path="/channel/:channelId"
-                                component={Channel}
-                            />
-                            <Route path="/socket" component={SocketTest} />
-                        </Switch>
+                        <Outlet />
                     </AbsoluteBox>
                 </BodyBox>
             </Box>
@@ -54,6 +44,7 @@ const AbsoluteBox = styled(Box)`
     position: absolute;
     left: 0;
     top: 0;
+    padding: inherit;
 `;
 
 export default MainPage;

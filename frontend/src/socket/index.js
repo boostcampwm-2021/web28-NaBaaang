@@ -1,17 +1,18 @@
 import io from 'socket.io-client';
-
-require('dotenv').config();
+import channel from './channel';
+import chat from './chat';
 
 const BASE_URL = process.env.REACT_APP_SOCKET_HOST;
 
-const ChatSocket = io(`${BASE_URL}`);
+const Socket = () => {
+    const socket = io(`${BASE_URL}`);
+    socket.connect();
+    return {
+        channel: channel(socket),
+        chat: chat(socket),
+    };
+};
 
-ChatSocket.on('connect', () => {
-    ChatSocket.on('join', msg => console.log(msg));
-});
+export default Socket();
 
-ChatSocket.on('disconnect', () => {
-    ChatSocket.removeAllListeners();
-});
 
-export default ChatSocket;

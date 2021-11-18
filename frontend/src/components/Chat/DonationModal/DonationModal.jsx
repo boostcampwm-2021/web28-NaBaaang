@@ -24,7 +24,7 @@ export default function DonationModal({ onClose, onSuccess }) {
             open
             showButton
             onSuccessText="전송"
-            onCancleText="취소"
+            onCancelText="취소"
             onClose={onClose}
             onSuccess={handleClickSubmit}
         >

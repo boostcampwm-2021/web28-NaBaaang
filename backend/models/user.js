@@ -8,19 +8,27 @@ export default function (sequelize, DataTypes) {
                 allowNull: false,
                 primaryKey: true,
             },
-            nickname: {
+            profileId: {
                 type: DataTypes.STRING(100),
                 allowNull: false,
             },
-            image_url: {
+            nickname: {
+                type: DataTypes.STRING(100),
+                allowNull: true,
+            },
+            imageUrl: {
                 type: DataTypes.STRING(200),
                 allowNull: false,
+            },
+            refresh_token: {
+                type: DataTypes.STRING(200),
             },
         },
         {
             sequelize: sequelize,
             tableName: 'user',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'PRIMARY',

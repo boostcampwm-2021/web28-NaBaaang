@@ -1,67 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
-import ChatSocket from '@/socket';
+import socket from '@/socket';
+import useChatMessage from '@/hooks/useChatMessage';
 
 import Box from '@/components/Common/Box';
 import Form from './Form';
 import MessageList from './MessageList';
 
-const CHAT_DELAY_TIME = 1000;
-const BUFFER_SIZE_LIMIT = 50;
-const MESSAGE_LIMIT = 20;
-
-export default function Chat() {
-    const [messageList, setMessageList] = useState([]);
-    const messageBuffer = useRef([]);
-
-    const isMessageBufferOverflow = prevMessageList => {
-        return (
-            messageBuffer.current.length + prevMessageList.length >
-            MESSAGE_LIMIT
-        );
-    };
-
-    const getNewMessageList = prev =>
-        isMessageBufferOverflow(prev)
-            ? [...prev, ...messageBuffer.current].slice(-MESSAGE_LIMIT)
-            : [...prev, ...messageBuffer.current];
-
-    const isBufferFull = () => messageBuffer.current.length > BUFFER_SIZE_LIMIT;
-
-    const updateFromBuffer = () => {
-        setMessageList(getNewMessageList);
-        messageBuffer.current = [];
-    };
-
-    const throttle = (callback, limit) => {
-        let waiting = false;
-        let id;
-        return message => {
-            messageBuffer.current.push(message);
-            if (!waiting) {
-                waiting = true;
-                id = setTimeout(() => {
-                    callback.apply(this);
-                    waiting = false;
-                }, limit);
-            }
-            if (isBufferFull()) {
-                clearTimeout(id);
-                waiting = false;
-                callback.apply(this);
-            }
-        };
-    };
-
-    useEffect(() => {
-        const saveMessageInBuffer = throttle(updateFromBuffer, CHAT_DELAY_TIME);
-        ChatSocket.on('chat', message => {
-            saveMessageInBuffer(message);
-        });
-    }, []);
+export default function Chat({ role }) {
+    const { messageList } = useChatMessage();
 
     const handleSubmit = message => {
-        ChatSocket.emit('chat', { message });
+        if (role !== 'ALL') {
+            alert('채팅을 하기 위해서는 로그인이 필요합니다');
+            return null;
+        }
+        socket.chat.sendMessage(message);
+        return () => {
+            socket.chat.clearChatEvents();
+        };
     };
 
     return (
@@ -75,11 +32,7 @@ export default function Chat() {
                 <MessageList messageList={messageList} />
             </Box>
             <Box width="100%" flex={1}>
-                <Form
-                    messageList={messageList}
-                    setMessageList={setMessageList}
-                    handleSubmit={handleSubmit}
-                />
+                <Form handleSubmit={handleSubmit} />
             </Box>
         </Box>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import ChannelCreateValidation from '@/validation/ChannelModal';
 import { fetchCreateChannel } from '@/apis/channel';
@@ -9,12 +9,12 @@ import Modal from '@/components/Common/Modal';
 import ChannelModalForm from '../ChannelModalForm/ChannelModalForm';
 
 export default function ChannelCreateModal({ onClose, open }) {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleOnSubmit = async formData => {
         try {
             const channelID = await fetchCreateChannel(formData);
-            history.push(`/stream-manager/${channelID}`);
+            navigate(`/stream-manager/${channelID}`);
         } catch (err) {
             throw new Error(err);
         }
@@ -36,7 +36,7 @@ export default function ChannelCreateModal({ onClose, open }) {
             showButton
             onSuccessText="방송 생성"
             onSuccess={handleSubmit}
-            onCancleText="취소"
+            onCancelText="취소"
             onClose={onClose}
         >
             <ChannelModalForm

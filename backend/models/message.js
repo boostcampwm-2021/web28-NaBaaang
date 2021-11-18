@@ -14,7 +14,7 @@ export default function (sequelize, DataTypes) {
                 type: DataTypes.STRING(500),
                 allowNull: true,
             },
-            chat_id: {
+            chatId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -22,11 +22,7 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            chat_channel_id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-            sender_id: {
+            senderId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -39,6 +35,7 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'message',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'PRIMARY',
@@ -49,7 +46,7 @@ export default function (sequelize, DataTypes) {
                 {
                     name: 'fk_message_chat1_idx',
                     using: 'BTREE',
-                    fields: [{ name: 'chat_id' }, { name: 'chat_channel_id' }],
+                    fields: [{ name: 'chat_id' }],
                 },
                 {
                     name: 'fk_message_user1_idx',

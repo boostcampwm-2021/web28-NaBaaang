@@ -1,32 +1,43 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
+import { UserContext } from '@/store/userStore';
 
 import DonationModal from './DonationModal';
+import LoginAlertModal from './LoginAlertModal';
 
 export default function Form({ handleSubmit }) {
     const messageInput = useRef();
+    const { userInfo } = useContext(UserContext);
+    const { user } = userInfo;
 
     const [modalOpen, setModalOpen] = useState(false);
-    const handleShowModal = () => {
-        setModalOpen(true);
+    const [openLoginAlert, setOpenLoginAlert] = useState(false);
+
+    const handleShowModal = handler => {
+        handler(true);
     };
 
-    const handleHideModal = () => {
-        setModalOpen(false);
+    const handleHideModal = handler => {
+        handler(false);
     };
 
     const handleClickDonation = value => {
         const message = {
             id: v1(),
             type: 'DONATION',
-            nickname: 'undefined',
+            userId: user.id,
+            nickname: user.nickname,
             content: value,
         };
         handleSubmit(message);
         setModalOpen(false);
+    };
+
+    const handleClickAlert = () => {
+        setOpenLoginAlert(false);
     };
 
     const sendMessage = e => {
@@ -34,10 +45,16 @@ export default function Form({ handleSubmit }) {
         const txt = messageInput.current.value;
         if (txt === '') return;
 
+        if (!userInfo.isSignIn) {
+            setOpenLoginAlert(true);
+            return;
+        }
+
         const message = {
             id: v1(),
             type: 'NORMAL',
-            nickname: 'undefined',
+            userId: user.id,
+            nickname: user.nickname,
             content: txt,
         };
         handleSubmit(message);
@@ -48,8 +65,15 @@ export default function Form({ handleSubmit }) {
             {modalOpen && (
                 <DonationModal
                     open
-                    onClose={handleHideModal}
+                    onClose={() => handleHideModal(setModalOpen)}
                     onSuccess={handleClickDonation}
+                />
+            )}
+            {openLoginAlert && (
+                <LoginAlertModal
+                    open
+                    onClose={() => handleHideModal(setOpenLoginAlert)}
+                    onSuccess={handleClickAlert}
                 />
             )}
             <StyledForm onSubmit={sendMessage}>

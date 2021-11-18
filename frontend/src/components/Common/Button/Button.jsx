@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { colorMixin } from '@/styles/mixins';
+
+import { colorMixin, fontMixin } from '@/styles/mixins';
 
 export default function Button({ onClick, text, color, size = 'small' }) {
     return (
@@ -21,15 +22,15 @@ const SUCCESS_COLOR_CSS = css`
 const SIZE_ENUM = {
     small: css`
         padding: 10px 15px;
-        font-size: 16px;
+        ${fontMixin('16px', '1em', 'notoSansMedium')};
     `,
     medium: css`
         padding: 12px 20px;
-        font-size: 20px;
+        ${fontMixin('20px', '1em', 'notoSansMedium')};
     `,
     large: css`
         padding: 14px 25px;
-        font-size: 24px;
+        ${fontMixin('24px', '1em', 'notoSansMedium')};
     `,
 };
 
