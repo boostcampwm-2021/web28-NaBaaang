@@ -23,22 +23,24 @@ export default function useAuth() {
     const isAuthTokenValidate = async () => {
         try {
             if (!isTokenExist()) {
-                throw new Error('Error Auth Token is not exist');
+                setAuthLoading(false);
+                return;
             }
             const { accessToken, user, error } =
                 await fetchAuthTokenValidation();
-            
+
             if (error) {
-                throw new Error('TOKEN IS EXPIRE');
+                setAuthLoading(false);
+                removeTokenFromLocalStorage();
+                const { isSignIn } = userInfo;
+                if (isSignIn) setUserInfo({ isSignIn: false });
+                return;
             }
             window.localStorage.setItem('accessToken', accessToken);
             setUserInfo({ isSignIn: true, user });
             setAuthLoading(false);
         } catch (err) {
-            setAuthLoading(false);
-            removeTokenFromLocalStorage();
-            const { isSignIn } = userInfo;
-            if (isSignIn) setUserInfo({ isSignIn: false });
+            throw new Error(err);
         }
     };
 
