@@ -1,5 +1,4 @@
-import { API_URL, MEDIA_URL } from '@/constants/url';
-import { GOOGLE_AUTH_REDIRECT_URL } from '@/constants/url';
+import { API_URL, MEDIA_URL, GOOGLE_AUTH_REDIRECT_URL } from '@/constants/url';
 
 const fetchTemplate = (method, payload = '', header = '') => {
     const headers = {

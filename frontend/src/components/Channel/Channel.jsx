@@ -13,7 +13,7 @@ import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
 import AlertModal from './AlertModal';
 
-export default function Channel() {
+export default function Channel({ role }) {
     const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
@@ -44,7 +44,7 @@ export default function Channel() {
             </Box>
 
             <ChatMessageBox height="100%" flex={1}>
-                <Chat />
+                <Chat role={role} />
             </ChatMessageBox>
         </Box>
     );

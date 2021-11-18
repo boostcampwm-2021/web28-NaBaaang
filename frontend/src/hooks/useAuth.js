@@ -3,6 +3,7 @@ import { fetchAuthTokenValidation } from '@/apis/auth';
 
 export default function useAuth() {
     const [userInfo, setUserInfo] = useState({ isSignIn: false });
+    const [authLoading, setAuthLoading] = useState(true);
 
     const isTokenExist = () => {
         const { accessToken, refreshToken } = window.localStorage;
@@ -26,14 +27,18 @@ export default function useAuth() {
             }
             const { accessToken, user, error } =
                 await fetchAuthTokenValidation();
+            
             if (error) {
                 throw new Error('TOKEN IS EXPIRE');
             }
             window.localStorage.setItem('accessToken', accessToken);
             setUserInfo({ isSignIn: true, user });
+            setAuthLoading(false);
         } catch (err) {
+            setAuthLoading(false);
             removeTokenFromLocalStorage();
-            setUserInfo({ isSignIn: false });
+            const { isSignIn } = userInfo;
+            if (isSignIn) setUserInfo({ isSignIn: false });
         }
     };
 
@@ -55,5 +60,5 @@ export default function useAuth() {
         isAuthTokenValidate();
     }, []);
 
-    return { userInfo, authSignIn, authSignOut };
+    return { userInfo, authLoading, authSignIn, authSignOut };
 }
