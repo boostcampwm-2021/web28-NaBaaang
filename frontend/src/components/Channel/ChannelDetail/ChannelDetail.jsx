@@ -9,15 +9,14 @@ function ChannelDetails({ channelInfo }) {
     return (
         <StyledBox flex={1}>
             <StyledRow>
-                <Avatar
-                    src="https://static-cdn.jtvnw.net/jtv_user_pictures/89e29e2e-f165-40e6-bc0c-d42205935216-profile_image-50x50.png"
-                    size="large"
-                />
+                <Avatar src={channelInfo.streamer.imageUrl} size="large" />
             </StyledRow>
 
             <StyledRow marginLeft="20px">
                 <StyledColumn>
-                    <StyledNickName>{channelInfo.streamer_id}</StyledNickName>
+                    <StyledNickName>
+                        {channelInfo.streamer.nickname}
+                    </StyledNickName>
                     <StyledTitle>{channelInfo.title}</StyledTitle>
                     <StyledHashTag>#{channelInfo.category}</StyledHashTag>
                 </StyledColumn>

@@ -2,6 +2,7 @@ import STATUS from '../../../lib/util/statusCode.js';
 import userDAO from '../user/user.dao.js';
 import jwtUtil from '../../../lib/util/jwtUtil.js';
 import authService from './auth.service.js';
+import requestHandler from '../../../lib/util/requestHandler.js';
 
 const login = async (req, res) => {
     try {
@@ -26,34 +27,32 @@ const login = async (req, res) => {
     }
 };
 
-const auth = async (req, res, next) => {
+const authenticate = async (req, res, next) => {
     if (authService.isAuthenticate(req.headers)) {
-        const accessToken = req.headers.authorization.split('Bearer ')[1];
-        const decoded = jwtUtil.decode(accessToken);
-        req.body.streamer_id = decoded.id;
+        const user = requestHandler.getUserFromHeader(req.headers);
+        req.body.userId = user.id;
         next();
         return;
     } else {
-        res.status(STATUS.UNAUTHORIZED).send({ error: 'TOKEN IS INVALID' });
+        res.status(STATUS.UNAUTHORIZED).json({ error: 'TOKEN IS INVALID' });
         return;
     }
 };
 
 const getAuthValidation = async (req, res) => {
-    try {
-        const accessToken = req.headers.authorization.split('Bearer ')[1];
-        const user = jwtUtil.verify(accessToken);
-        if (!user.ok) {
-            throw new Error(user.message);
-        }
-        res.status(STATUS.OK).json({ accessToken, user });
-    } catch (error) {
-        res.status(STATUS.UNAUTHORIZED).json({ error });
+    if (authService.isAuthenticate(req.headers)) {
+        const { accessToken } = requestHandler.getTokensFromHeader(req.headers);
+        const decoded = jwtUtil.decode(accessToken);
+        res.status(STATUS.OK).json({ accessToken, decoded });
+        return;
+    } else {
+        res.status(STATUS.UNAUTHORIZED).json({ error: 'TOKEN IS INVALID' });
+        return;
     }
 };
 
 export default {
     login,
-    auth,
+    authenticate,
     getAuthValidation,
 };

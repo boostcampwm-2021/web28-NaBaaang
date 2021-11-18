@@ -1,6 +1,7 @@
 // import db from '../../../models/index.js';
 import db from '../../../models/index.js';
 const Channel = db.channel;
+const Watch = db.watch;
 
 const insertChannel = async (channelInfo, transaction) => {
     let option = {};
@@ -20,11 +21,18 @@ const findByChannelId = async (channelId, transaction) => {
     try {
         const savedChannel = await Channel.findOne(
             {
-                include: {
-                    model: db.chat,
-                    as: 'chat',
-                    attributes: ['id'],
-                },
+                include: [
+                    {
+                        model: db.chat,
+                        as: 'chat',
+                        attributes: ['id'],
+                    },
+                    {
+                        model: db.user,
+                        as: 'streamer',
+                        attributes: ['nickname', 'imageUrl'],
+                    },
+                ],
                 where: {
                     id: channelId,
                 },
@@ -43,7 +51,15 @@ const findAllLiveChannel = async transaction => {
     if (transaction) option.transaction = transaction;
     try {
         const channels = await Channel.findAll(
-            { where: { isLive: true } },
+            {
+                include: {
+                    model: db.user,
+                    as: 'streamer',
+                    attributes: ['nickname', 'imageUrl'],
+                },
+                where: { isLive: true },
+            },
+
             option,
         );
 
@@ -55,7 +71,6 @@ const findAllLiveChannel = async transaction => {
 
 const update = async ({ id, updateTarget }, transaction) => {
     let option = {};
-    console.log({ id, updateTarget });
     if (transaction) option.transaction = transaction;
     try {
         const channels = await Channel.update(
@@ -69,4 +84,22 @@ const update = async ({ id, updateTarget }, transaction) => {
         console.error(error);
     }
 };
-export default { insertChannel, findByChannelId, findAllLiveChannel, update };
+
+const insertWatch = async (watchInfo, transaction) => {
+    let option = {};
+    if (transaction) option.transaction = transaction;
+    try {
+        const watch = await Watch.create(watchInfo, option);
+
+        return watch;
+    } catch (error) {
+        console.error(error);
+    }
+};
+export default {
+    insertChannel,
+    findByChannelId,
+    findAllLiveChannel,
+    update,
+    insertWatch,
+};

@@ -7,7 +7,7 @@ const insertChat = async (channelId, transaction) => {
     try {
         const savedChat = await Chat.create(
             {
-                channel_id: channelId,
+                channelId,
             },
             option,
         );

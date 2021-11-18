@@ -29,6 +29,17 @@ const actionTypeInfo = payload => {
                 refresh: `${window.localStorage.refreshToken}`,
             }),
         },
+        FETCH_WATCH_CHANNEL: {
+            url: `${API_URL}/api/channels/${payload}/watch`,
+            ...fetchTemplate(
+                'POST',
+                {},
+                {
+                    Authorization: `Bearer ${window.localStorage.accessToken}`,
+                    refresh: `${window.localStorage.refreshToken}`,
+                },
+            ),
+        },
         FETCH_GET_CHANNEL: {
             url: `${API_URL}/api/channels/${payload}`,
             ...fetchTemplate('GET'),

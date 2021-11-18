@@ -18,9 +18,9 @@ const insertDummy = async db => {
 
 const insertUserDummy = async (db, profileId, nickname, imageUrl) => {
     await db.user.create({
-        profile_id: profileId,
-        nickname: nickname,
-        image_url: imageUrl,
+        profileId,
+        nickname,
+        imageUrl,
     });
 };
 
@@ -29,20 +29,20 @@ const insertChannelDummy = async (
     title,
     category,
     description,
-    streamer_id,
-    stream_key,
+    streamerId,
+    streamKey,
     isLive,
 ) => {
     const { id: channelId } = await db.channel.create({
         title,
         category,
         description,
-        streamer_id,
-        stream_key,
+        streamerId,
+        streamKey,
         isLive,
     });
     await db.chat.create({
-        channel_id: channelId,
+        channelId,
     });
 };
 

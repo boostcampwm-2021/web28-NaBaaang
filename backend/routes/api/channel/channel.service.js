@@ -2,6 +2,7 @@ import channelDAO from './channel.dao.js';
 import db from '../../../models/index.js';
 import { v4 } from 'uuid';
 import chatDao from '../chat/chat.dao.js';
+import requestHandler from '../../../lib/util/requestHandler.js';
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
@@ -70,4 +71,27 @@ const updateLive = async (id, isLive) => {
     }
 };
 
-export default { create, getChannelById, getLiveChannels, updateLive };
+const watchChannel = async req => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        const { id } = req.params;
+        const user = requestHandler.getUserFromHeader(req.headers);
+
+        const channel = await channelDAO.findByChannelId(id, transaction);
+        await channelDAO.insertWatch(
+            { channelId: channel.id, viewerId: user.id },
+            transaction,
+        );
+        return channel;
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
+    }
+};
+export default {
+    create,
+    getChannelById,
+    getLiveChannels,
+    updateLive,
+    watchChannel,
+};
