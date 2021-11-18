@@ -3,8 +3,9 @@ import { useEffect, useContext } from 'react';
 import socket from '@/socket';
 import { UserContext } from '@/store/userStore';
 
-function isChannelOwner(streamerId, userId) {
-    return streamerId === userId;
+function isChannelOwner(streamerId, user) {
+    if (!user) return false;
+    return streamerId === user.id;
 }
 
 export default function useSocket(channel) {
@@ -16,7 +17,7 @@ export default function useSocket(channel) {
         socket.channel.joinChannel({
             channelId: channel.id,
             chatId: channel.chat.id,
-            auth: isChannelOwner(channel.streamer_id, user.id)
+            auth: isChannelOwner(channel.streamerId, user)
                 ? 'streamer'
                 : 'viewer',
         });
