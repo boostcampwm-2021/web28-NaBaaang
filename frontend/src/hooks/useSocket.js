@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 import socket from '@/socket';
 import { UserContext } from '@/store/userStore';
@@ -9,8 +9,13 @@ function isChannelOwner(streamerId, user) {
 }
 
 export default function useSocket(channel) {
+    const [openAlertModal, setAlertModal] = useState(false);
     const { userInfo } = useContext(UserContext);
     const { user } = userInfo;
+
+    useEffect(() => {
+        socket.channel.channelEnded({ setAlertModal });
+    }, []);
 
     useEffect(() => {
         if (!channel) return null;
@@ -25,4 +30,6 @@ export default function useSocket(channel) {
             socket.channel.clearChannelEvents();
         };
     }, [channel]);
+
+    return { openAlertModal };
 }

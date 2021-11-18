@@ -7,6 +7,7 @@ import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
 
 import Box from '@/components/Common/Box';
+import AlertModal from '@/components/AlertModal';
 import DashBoardInfo from './DashBoardInfo';
 import DashBoardVideo from './DashBoardVideo';
 import DashBoardTab from './DashBoardTab';
@@ -20,7 +21,7 @@ export default function DashBoard({ info }) {
     const { id } = info;
     const [isLive, setIsLive] = useState(info.isLive);
 
-    useSocket(info);
+    const { openAlertModal } = useSocket(info);
 
     const handleStartLive = async () => {
         try {
@@ -43,6 +44,7 @@ export default function DashBoard({ info }) {
 
     return (
         <Box backgroundColor="black2" height="100%" alignItems="stretch">
+            {openAlertModal && <AlertModal />}
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
                 <DashBoardInfo info={info} />
