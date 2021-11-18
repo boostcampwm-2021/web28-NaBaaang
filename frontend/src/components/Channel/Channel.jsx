@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
-import socket from '@/socket';
 
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
+import AlertModal from '@/components/AlertModal';
 import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
-import AlertModal from './AlertModal';
 
 export default function Channel({ role }) {
     const params = useParams();
@@ -20,13 +19,8 @@ export default function Channel({ role }) {
         type: 'FETCH_GET_CHANNEL',
         payload: channelId,
     });
-    const [openAlertModal, setAlertModal] = useState(false);
 
-    useSocket(data);
-
-    useEffect(() => {
-        socket.channel.channelEnded({ setAlertModal });
-    }, []);
+    const { openAlertModal } = useSocket(data);
 
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;
