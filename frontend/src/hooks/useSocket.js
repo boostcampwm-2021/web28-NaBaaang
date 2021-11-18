@@ -15,6 +15,7 @@ export default function useSocket(channel) {
 
     useEffect(() => {
         if (!channel) return null;
+
         socket.channel.joinChannel({
             channelId: channel.id,
             chatId: channel.chat ? channel.chat.id : undefined,
@@ -26,7 +27,7 @@ export default function useSocket(channel) {
         return () => {
             socket.channel.clearChannelEvents();
         };
-    }, []);
+    }, [channel]);
 
     return { openAlertModal };
 }

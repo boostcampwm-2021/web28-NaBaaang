@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
+import { ROLE } from '@/constants/role';
 
 import Box from '@/components/Common/Box';
 import AlertModal from '@/components/AlertModal';
@@ -13,15 +15,30 @@ import DashBoardVideo from './DashBoardVideo';
 import DashBoardTab from './DashBoardTab';
 import Chat from '../Chat';
 import Divider from '../Common/Divider/Divider';
+import PageStatus from '../Common/PageStatus';
 
-export default function DashBoard({ info, role }) {
-    const streamKey = info.stream_key;
+export default function DashBoard() {
+    const params = useParams();
+    const { channelId } = params;
     const navigate = useNavigate();
+    const [isLive, setIsLive] = useState(false);
+    const { data, loading, error } = useFetch({
+        type: 'FETCH_CHANNEL_AUTHENTICATE',
+        payload: channelId,
+    });
+    const { id, streamKey } = data;
 
-    const { id } = info;
-    const [isLive, setIsLive] = useState(info.isLive);
+    const { openAlertModal } = useSocket(data);
+    const role = ROLE.ALL;
 
-    const { openAlertModal } = useSocket(info);
+    if (loading || error || !data)
+        return <PageStatus loading={loading} error={error} data={data} />;
+
+    if (data.role !== 'ROLE_OWNER') return <Navigate to="/" />;
+
+    if (data) {
+        setIsLive(data.isLive);
+    }
 
     const handleStartLive = async () => {
         try {
@@ -47,7 +64,7 @@ export default function DashBoard({ info, role }) {
             {openAlertModal && <AlertModal />}
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
-                <DashBoardInfo info={info} />
+                <DashBoardInfo info={data} />
             </StyledBox>
 
             <Divider direction="column" />
