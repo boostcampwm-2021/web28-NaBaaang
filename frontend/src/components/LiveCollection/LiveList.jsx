@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexMixin, fontMixin } from '@/styles/mixins';
+import { flexMixin } from '@/styles/mixins';
 
+import Typography from '@/components/Common/Typography';
 import LiveSlider from './LiveSlider';
 
 function LiveList({ category, liveList }) {
     return (
         <LiveListWrapper>
-            <LiveListHeader>{category}</LiveListHeader>
+            <Typography variant="h3">{category}</Typography>
             <LiveSlider liveList={liveList} />
         </LiveListWrapper>
     );
@@ -19,7 +20,4 @@ const LiveListWrapper = styled.div`
     ${flexMixin('column', 'center', 'flex-start')}
 `;
 
-const LiveListHeader = styled.span`
-    ${fontMixin('2em', '1em', 'notoSansBold')}
-`;
 export default LiveList;

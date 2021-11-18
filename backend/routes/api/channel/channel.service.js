@@ -14,7 +14,7 @@ const create = async channelInfo => {
             channelInfo,
             transaction,
         );
-        const chatId = await chatDao.insertChat(channelId, transaction);
+        await chatDao.insertChat(channelId, transaction);
         await transaction.commit();
         return channelId;
     } catch (error) {
@@ -22,14 +22,27 @@ const create = async channelInfo => {
         console.error(error);
     }
 };
+const getChannelById = async id => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        let result = await channelDAO.findByChannelId(id, transaction);
 
-const getChannelById = async ({ id, role }) => {
+        delete result.dataValues.streamKey;
+        await transaction.commit();
+        return result;
+    } catch (error) {
+        await transaction.rollback();
+        console.error(error);
+    }
+};
+
+const getAuthenticatedChannelById = async ({ id, role }) => {
     const transaction = await db.sequelize.transaction();
     try {
         let result = await channelDAO.findByChannelId(id, transaction);
 
         if (role !== ROLE.OWNER) {
-            delete result.streamKey;
+            delete result.dataValues.streamKey;
         }
         await transaction.commit();
         return result;
@@ -99,10 +112,7 @@ const isChannelOwner = async req => {
     try {
         const { channelId: expectedId } = req.params;
         const user = requestHandler.getUserFromHeader(req.headers);
-
         const channel = await channelDAO.findByUserId(user.id, transaction);
-        console.log(channel);
-        console.log(expectedId);
         await transaction.commit();
         return channel && expectedId === channel.id;
     } catch (error) {
@@ -114,6 +124,7 @@ const isChannelOwner = async req => {
 export default {
     create,
     getChannelById,
+    getAuthenticatedChannelById,
     getLiveChannels,
     updateLive,
     watchChannel,

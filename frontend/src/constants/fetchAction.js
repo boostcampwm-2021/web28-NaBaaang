@@ -40,7 +40,7 @@ const actionTypeInfo = payload => {
             ),
         },
         FETCH_CHANNEL_AUTHENTICATE: {
-            url: `${API_URL}/api/channels/${payload}/au`,
+            url: `${API_URL}/api/channels/${payload}/authenticate`,
             ...fetchTemplate(
                 'GET',
                 {},
@@ -52,14 +52,7 @@ const actionTypeInfo = payload => {
         },
         FETCH_GET_CHANNEL: {
             url: `${API_URL}/api/channels/${payload}`,
-            ...fetchTemplate(
-                'GET',
-                {},
-                {
-                    Authorization: `Bearer ${window.localStorage.accessToken}`,
-                    refresh: `${window.localStorage.refreshToken}`,
-                },
-            ),
+            ...fetchTemplate('GET'),
         },
         FETCH_GET_LIVE_CHANNELS: {
             url: `${API_URL}/api/channels`,

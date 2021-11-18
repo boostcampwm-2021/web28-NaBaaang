@@ -25,8 +25,8 @@ const setUserRole = async (req, res, next) => {
             next();
             return;
         }
-        const { id, role } = req.params;
-        const channel = await channelService.getChannelById({ id, role });
+        const { id } = req.params;
+        const channel = await channelService.getChannelById(id);
         const user = requestHandler.getUserFromHeader(req.headers);
         if (!channel) {
             res.status(STATUS.NOT_FOUND).json(data);
@@ -50,9 +50,9 @@ const getChannel = async (req, res) => {
     try {
         const { id, role } = req.params;
 
-        let data = await channelService.getChannelById({ id, role });
+        let data = await channelService.getChannelById(id);
 
-        res.status(STATUS.OK).json({ data, role });
+        res.status(STATUS.OK).json(data);
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
@@ -106,21 +106,12 @@ const watchChannel = async (req, res) => {
 
 const getAuthenticatedChannel = async (req, res) => {
     try {
-        if (authService.isAuthenticate(req.headers)) {
-            const { id } = req.params;
-            const channel = await channelService.getChannelById(id);
-            const user = requestHandler.getUserFromHeader(req.headers);
-            if (channel && channel.streamerId === user.Id) {
-                res.status(STATUS.OK).json(channel);
-            } else {
-                res.status(STATUS.UNAUTHORIZED).json({
-                    error: 'Not a Streamer',
-                });
-            }
-        }
-        res.status(STATUS.UNAUTHORIZED).json({
-            error: 'Not a Streamer',
+        const { id, role } = req.params;
+        let data = await channelService.getAuthenticatedChannelById({
+            id,
+            role,
         });
+        res.status(STATUS.OK).json({ ...data.dataValues, role });
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }

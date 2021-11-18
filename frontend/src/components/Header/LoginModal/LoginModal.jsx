@@ -13,7 +13,7 @@ export default function LoginModal({ onClose, open }) {
         <Modal open={open} onClose={onClose}>
             <Title>로그인</Title>
             <Button
-                text="Sign in with Github"
+                text="Sign in with Google"
                 size="medium"
                 onClick={handleOnSubmit}
             />

@@ -14,11 +14,8 @@ export default function useSocket(channel) {
     const { user } = userInfo;
 
     useEffect(() => {
-        socket.channel.channelEnded({ setAlertModal });
-    }, []);
-
-    useEffect(() => {
         if (!channel) return null;
+
         socket.channel.joinChannel({
             channelId: channel.id,
             chatId: channel.chat ? channel.chat.id : undefined,
@@ -26,6 +23,7 @@ export default function useSocket(channel) {
                 ? 'streamer'
                 : 'viewer',
         });
+        socket.channel.channelEnded({ setAlertModal });
         return () => {
             socket.channel.clearChannelEvents();
         };

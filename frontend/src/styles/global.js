@@ -22,6 +22,10 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
+  a{
+    text-decoration: none;
+  }
+
   
 
   ${fontMixin('notoSansLight', notoSansLight)}
