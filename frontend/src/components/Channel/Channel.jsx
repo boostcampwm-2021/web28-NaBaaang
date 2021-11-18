@@ -17,7 +17,7 @@ export default function Channel({ role }) {
     const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
-        type: 'FETCH_WATCH_CHANNEL',
+        type: 'FETCH_GET_CHANNEL',
         payload: channelId,
     });
     const [openAlertModal, setAlertModal] = useState(false);
@@ -36,10 +36,10 @@ export default function Channel({ role }) {
             {openAlertModal && <AlertModal />}
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={3}>
-                    <Video streamKey={data.stream_key} />
+                    <Video streamKey={data.data.stream_key} />
                 </Box>
                 <Box width="100%" flex={1}>
-                    <ChannelDetail channelInfo={data} />
+                    <ChannelDetail channelInfo={data.data} />
                 </Box>
             </Box>
 
