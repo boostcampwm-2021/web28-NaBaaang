@@ -6,6 +6,7 @@ import { borderBoxMixin, fontMixin } from '@/styles/mixins';
 import { UserContext } from '@/store/userStore';
 
 import DonationModal from './DonationModal';
+import LoginAlertModal from './LoginAlertModal';
 
 export default function Form({ handleSubmit }) {
     const messageInput = useRef();
@@ -13,12 +14,14 @@ export default function Form({ handleSubmit }) {
     const { user } = userInfo;
 
     const [modalOpen, setModalOpen] = useState(false);
-    const handleShowModal = () => {
-        setModalOpen(true);
+    const [openLoginAlert, setOpenLoginAlert] = useState(false);
+
+    const handleShowModal = handler => {
+        handler(true);
     };
 
-    const handleHideModal = () => {
-        setModalOpen(false);
+    const handleHideModal = handler => {
+        handler(false);
     };
 
     const handleClickDonation = value => {
@@ -33,10 +36,19 @@ export default function Form({ handleSubmit }) {
         setModalOpen(false);
     };
 
+    const handleClickAlert = () => {
+        setOpenLoginAlert(false);
+    };
+
     const sendMessage = e => {
         e.preventDefault();
         const txt = messageInput.current.value;
         if (txt === '') return;
+
+        if (!userInfo.isSignIn) {
+            setOpenLoginAlert(true);
+            return;
+        }
 
         const message = {
             id: v1(),
@@ -53,8 +65,15 @@ export default function Form({ handleSubmit }) {
             {modalOpen && (
                 <DonationModal
                     open
-                    onClose={handleHideModal}
+                    onClose={() => handleHideModal(setModalOpen)}
                     onSuccess={handleClickDonation}
+                />
+            )}
+            {openLoginAlert && (
+                <LoginAlertModal
+                    open
+                    onClose={() => handleHideModal(setOpenLoginAlert)}
+                    onSuccess={handleClickAlert}
                 />
             )}
             <StyledForm onSubmit={sendMessage}>
