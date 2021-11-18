@@ -23,12 +23,16 @@ const channel = (io, socket) => {
     );
   };
   const terminateChannel = (message) => {
-    if (socket.auth !== "streamer") {
-      throw new Error("방송 종료 권한이 없습니다");
+    try {
+      if (socket.auth !== "streamer") {
+        throw new Error("방송 종료 권한이 없습니다");
+      }
+      console.log(message);
+      io.to(socket.channelId).emit("noticeChannelEnded", message);
+      leaveChannel();
+    } catch (error) {
+      console.error(error);
     }
-    console.log(message);
-    io.to(socket.channelId).emit("noticeChannelEnded", message);
-    leaveChannel();
   };
 
   socket.on(JOIN_CHANNEL, joinChannel);
