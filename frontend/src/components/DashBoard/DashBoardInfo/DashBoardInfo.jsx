@@ -5,7 +5,7 @@ import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
 
 export default function DashBoardInfo({ info }) {
-    const streamKey = info.stream_key;
+    const { streamKey } = info;
     const [medialModalOpen, setMedialModalOpen] = useState(false);
 
     const handleMedialModalOpen = () => {
