@@ -19,7 +19,7 @@ export default function (sequelize, DataTypes) {
                 type: DataTypes.STRING(500),
                 allowNull: true,
             },
-            streamer_id: {
+            streamerId: {
                 type: DataTypes.INTEGER,
                 allowNull: true, // false 변경 필요
                 references: {
@@ -27,7 +27,7 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            stream_key: {
+            streamKey: {
                 type: DataTypes.STRING(100),
                 allowNull: true, // false 변경 필요
             },
@@ -41,6 +41,7 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'channel',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'PRIMARY',

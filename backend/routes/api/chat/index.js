@@ -1,9 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import messageController from './message.controller.js';
+import messageController from '../message/message.controller.js';
 /**
  *  @swagger
- *  /channel/:id/message:
+ *  /chats/:id/message:
  *      post:
  *          description: 특정 채팅에서 메시지 작성
  *          produces:
@@ -14,7 +14,7 @@ import messageController from './message.controller.js';
  *                  name: id
  *                  type: integer
  *                  required: true
- *                  description: channel(chat) id
+ *                  description: chat id
  *            - in: body
  *              schema:
  *                  type: object
@@ -31,6 +31,6 @@ import messageController from './message.controller.js';
  *                  $ref: '#/components/responses/get/200/pet'
  *
  */
-router.post('/channel/:id/message', messageController.createMessage);
+router.post('/:id/message', messageController.createMessage);
 
 export default router;

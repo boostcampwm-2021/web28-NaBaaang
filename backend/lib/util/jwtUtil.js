@@ -16,15 +16,13 @@ const verify = token => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         return {
-            ok: true,
-            id: decoded.id,
-            nickname: decoded.nickname,
-            imageUrl: decoded.image_url,
+            isValid: true,
+            decoded,
         };
     } catch (err) {
         return {
-            ok: false,
-            message: err.message,
+            isValid: false,
+            err: err.message,
         };
     }
 };
@@ -56,4 +54,16 @@ const decode = token => {
     return jwt.decode(token);
 };
 
-export default { sign, verify, refresh, refreshVerify, decode };
+const decodeAccessToken = headers => {
+    const accessToken = headers.authorization.split('Bearer ')[1];
+    return decode(accessToken);
+};
+
+export default {
+    sign,
+    verify,
+    refresh,
+    refreshVerify,
+    decode,
+    decodeAccessToken,
+};

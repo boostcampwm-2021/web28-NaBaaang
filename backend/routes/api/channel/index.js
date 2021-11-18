@@ -23,6 +23,7 @@ router.get('/:id', channelController.getChannel);
 router.get('/', channelController.getLiveChannels);
 router.patch('/:id/open', channelController.openChannel);
 router.patch('/:id/close', channelController.closeChannel);
-router.post('/', authController.auth, channelController.createChannel);
+router.post('/', authController.authenticate, channelController.createChannel);
+router.post('/:id/watch', channelController.watchChannel);
 
 export default router;

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import oauthConfig from '../../../config/oauth.js';
 import jwtUtil from '../../../lib/util/jwtUtil.js';
+import requestHandler from '../../../lib/util/requestHandler.js';
 const env = process.env.NODE_ENV || 'development';
 const config = oauthConfig[env];
 
@@ -15,7 +16,6 @@ const fetchGoogleAccessToken = async code => {
             grant_type: 'authorization_code',
             redirect_uri: config.redirectUri,
         };
-        console.log(data);
         const result = await axios({
             url,
             method: 'post',
@@ -43,7 +43,6 @@ const fetchGoogleInfoByAccessToken = async accessToken => {
         });
         return data;
     } catch (error) {
-        console.log(error);
         throw new Error(error);
     }
 };
@@ -57,31 +56,26 @@ const exchangeCodeForToken = async code => {
     }
 };
 
+const isValidAccessToken = accessToken => {};
 const isAuthenticate = headers => {
-    if (!headers.authorization || !headers.refresh) {
-        return false;
-    }
-    const accessToken = headers.authorization.split('Bearer ')[1];
-    const refreshToken = headers.refresh;
-    const tokenResult = jwtUtil.verify(accessToken);
-    const decoded = jwtUtil.decode(accessToken);
+    if (!headers.authorization || !headers.refresh) return false;
 
-    if (decoded === null) return false;
+    const { accessToken, refreshToken } =
+        requestHandler.getTokensFromHeader(headers);
+    const { isValid: isValidAccessToken, decoded } =
+        jwtUtil.verify(accessToken);
 
-    if (tokenResult.ok) {
-        const newAccessToken = jwtUtil.sign(decoded);
-        headers.authorization = `Bearer ${newAccessToken}`;
+    if (!decoded) return false;
+
+    if (isValidAccessToken) {
+        requestHandler.updateAccessToken(headers, decoded);
         return true;
     }
 
-    const refreshResult = jwtUtil.refreshVerify(refreshToken, decoded.id);
+    const isValidRefreshToken = jwtUtil.refreshVerify(refreshToken, decoded.id);
+    if (!isValidRefreshToken) return false;
 
-    if (!refreshResult.ok) {
-        return false;
-    }
-
-    const newAccessToken = jwtUtil.sign(decoded);
-    headers.authorization = `Bearer ${newAccessToken}`;
+    requestHandler.updateAccessToken(headers, decoded);
     return true;
 };
 

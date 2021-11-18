@@ -2,7 +2,7 @@ export default function (sequelize, DataTypes) {
     return sequelize.define(
         'watch',
         {
-            viewer_id: {
+            viewerId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -10,7 +10,7 @@ export default function (sequelize, DataTypes) {
                     key: 'id',
                 },
             },
-            channel_id: {
+            channelId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
@@ -23,6 +23,7 @@ export default function (sequelize, DataTypes) {
             sequelize,
             tableName: 'watch',
             timestamps: false,
+            underscored: true,
             indexes: [
                 {
                     name: 'fk_watch_user1_idx',

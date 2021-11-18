@@ -1,13 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
+import { UserContext } from '@/store/userStore';
 
 import DonationModal from './DonationModal';
 
 export default function Form({ handleSubmit }) {
     const messageInput = useRef();
+    const { userInfo } = useContext(UserContext);
+    const { user } = userInfo;
 
     const [modalOpen, setModalOpen] = useState(false);
     const handleShowModal = () => {
@@ -22,7 +25,8 @@ export default function Form({ handleSubmit }) {
         const message = {
             id: v1(),
             type: 'DONATION',
-            nickname: 'undefined',
+            userId: user.id,
+            nickname: user.nickname,
             content: value,
         };
         handleSubmit(message);
@@ -37,7 +41,8 @@ export default function Form({ handleSubmit }) {
         const message = {
             id: v1(),
             type: 'NORMAL',
-            nickname: 'undefined',
+            userId: user.id,
+            nickname: user.nickname,
             content: txt,
         };
         handleSubmit(message);
