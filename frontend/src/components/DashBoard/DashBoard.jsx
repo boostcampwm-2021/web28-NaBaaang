@@ -14,7 +14,7 @@ import DashBoardTab from './DashBoardTab';
 import Chat from '../Chat';
 import Divider from '../Common/Divider/Divider';
 
-export default function DashBoard({ info }) {
+export default function DashBoard({ info, role }) {
     const streamKey = info.stream_key;
     const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ export default function DashBoard({ info }) {
 
             <StyledBox flex={1.5}>
                 <DashBoardTab text="채팅 칸" />
-                <Chat />
+                <Chat role={role} />
             </StyledBox>
         </Box>
     );

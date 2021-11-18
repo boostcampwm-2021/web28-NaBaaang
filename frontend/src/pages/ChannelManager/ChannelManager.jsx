@@ -5,6 +5,7 @@ import useFetch from '@/hooks/useFetch';
 
 import DashBoard from '@/components/DashBoard';
 import PageStatus from '@/components/Common/PageStatus';
+import { ROLE } from '@/constants/role';
 
 export default function ChannelManager() {
     const params = useParams();
@@ -18,5 +19,5 @@ export default function ChannelManager() {
         return <PageStatus loading={loading} error={error} data={data} />;
 
     if (data.role !== 'ROLE_OWNER') return <Navigate to="/" />;
-    return <DashBoard info={data} />;
+    return <DashBoard info={data} role={ROLE.ALL} />;
 }

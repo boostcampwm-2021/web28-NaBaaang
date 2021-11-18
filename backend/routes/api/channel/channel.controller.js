@@ -111,7 +111,7 @@ const getAuthenticatedChannel = async (req, res) => {
             id,
             role,
         });
-        res.status(STATUS.OK).json({ data, role });
+        res.status(STATUS.OK).json({ ...data.dataValues, role });
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
     }
