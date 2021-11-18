@@ -10,7 +10,7 @@ export default function ChannelManager() {
     const params = useParams();
     const { channelId } = params;
     const { data, loading, error } = useFetch({
-        type: 'FETCH_GET_CHANNEL',
+        type: 'FETCH_CHANNEL_AUTHENTICATE',
         payload: channelId,
     });
 

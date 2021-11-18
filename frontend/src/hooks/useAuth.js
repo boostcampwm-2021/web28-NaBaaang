@@ -19,7 +19,7 @@ export default function useAuth() {
                 removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 return;
             }
-            const { accessToken, user, error } =
+            const { accessToken, decoded, error } =
                 await fetchAuthTokenValidation();
 
             if (error) {
@@ -30,7 +30,7 @@ export default function useAuth() {
                 return;
             }
             window.localStorage.setItem('accessToken', accessToken);
-            setUserInfo({ isSignIn: true, user });
+            setUserInfo({ isSignIn: true, user: decoded });
             setAuthLoading(false);
         } catch (err) {
             throw new Error(err);

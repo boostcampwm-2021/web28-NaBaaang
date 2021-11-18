@@ -30,10 +30,10 @@ export default function Channel({ role }) {
             {openAlertModal && <AlertModal />}
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={3}>
-                    <Video streamKey={data.data.stream_key} />
+                    <Video streamKey={data.streamKey} />
                 </Box>
                 <Box width="100%" flex={1}>
-                    <ChannelDetail channelInfo={data.data} />
+                    <ChannelDetail channelInfo={data} />
                 </Box>
             </Box>
 
