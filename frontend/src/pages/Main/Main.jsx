@@ -20,7 +20,7 @@ function MainPage() {
                 <Box flex={1} height="100%">
                     <SideBar />
                 </Box>
-                <BodyBox flex={20} height="100%">
+                <BodyBox flex={20} height="100%" padding={1.5}>
                     <AbsoluteBox width="100%" height="100%">
                         <Outlet />
                     </AbsoluteBox>
@@ -44,6 +44,7 @@ const AbsoluteBox = styled(Box)`
     position: absolute;
     left: 0;
     top: 0;
+    padding: inherit;
 `;
 
 export default MainPage;

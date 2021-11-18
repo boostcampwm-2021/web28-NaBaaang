@@ -5,10 +5,10 @@ import { fontMixin } from '@/styles/mixins';
 
 export default function Typography({
     variant = 'p',
-    color,
+    color = 'black',
     align = 'left',
     children = '',
-    backgroundColor,
+    backgroundColor = 'transparent',
 }) {
     const styleProps = { variant, color, align, backgroundColor };
     switch (variant) {
