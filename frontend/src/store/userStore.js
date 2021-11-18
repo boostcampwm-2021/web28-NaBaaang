@@ -3,7 +3,7 @@ import useAuth from '@/hooks/useAuth';
 
 export const UserContext = React.createContext();
 
-export function UserStore({ children }) {
+export default function UserStore({ children }) {
     const auth = useAuth();
 
     return <UserContext.Provider value={auth}>{children}</UserContext.Provider>;
