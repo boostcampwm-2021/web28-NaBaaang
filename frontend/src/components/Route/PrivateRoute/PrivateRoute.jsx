@@ -8,8 +8,6 @@ export default function PrivateRoute({ children }) {
         authLoading,
     } = useContext(UserContext);
 
-    console.log(authLoading, isSignIn);
-
     if (authLoading) return <div>Loading.....</div>;
     if (!isSignIn) return <Navigate to="/" />;
 
