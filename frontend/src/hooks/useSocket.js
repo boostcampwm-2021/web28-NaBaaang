@@ -16,7 +16,7 @@ export default function useSocket(channel) {
         if (!channel) return null;
         socket.channel.joinChannel({
             channelId: channel.id,
-            chatId: channel.chat.id,
+            chatId: channel.chat ? channel.chat.id : undefined,
             auth: isChannelOwner(channel.streamerId, user)
                 ? 'streamer'
                 : 'viewer',

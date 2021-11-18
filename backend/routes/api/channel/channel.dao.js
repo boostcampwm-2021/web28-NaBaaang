@@ -96,10 +96,29 @@ const insertWatch = async (watchInfo, transaction) => {
         console.error(error);
     }
 };
+
+const findByUserId = async (streamerId, transaction) => {
+    let option = {};
+    if (transaction) option.transaction = transaction;
+    try {
+        const channel = await Channel.findAll(
+            {
+                where: { streamerId },
+            },
+
+            option,
+        );
+
+        return channel;
+    } catch (error) {
+        console.error(error);
+    }
+};
 export default {
     insertChannel,
     findByChannelId,
     findAllLiveChannel,
     update,
     insertWatch,
+    findByUserId,
 };

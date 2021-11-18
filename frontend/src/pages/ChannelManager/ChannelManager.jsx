@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 import useFetch from '@/hooks/useFetch';
 
 import DashBoard from '@/components/DashBoard';
@@ -17,5 +17,6 @@ export default function ChannelManager() {
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;
 
+    if (data.role !== 'ROLE_OWNER') return <Navigate to="/" />;
     return <DashBoard info={data} />;
 }

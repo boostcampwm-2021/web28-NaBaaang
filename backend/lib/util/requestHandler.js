@@ -17,8 +17,13 @@ const getUserFromHeader = headers => {
     return jwtUtil.decode(accessToken);
 };
 
+const setRole = (req, role) => {
+    req.params = { ...req.params, role };
+};
+
 export default {
     getTokensFromHeader,
     updateAccessToken,
     getUserFromHeader,
+    setRole,
 };

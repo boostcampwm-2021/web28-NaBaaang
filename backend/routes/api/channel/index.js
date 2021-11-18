@@ -19,11 +19,12 @@ import authController from '../auth/auth.controller.js';
  *         $ref: '#/components/responses/get/200/pet'
  *
  */
-router.get('/:id', channelController.getChannel);
+router.get('/:id', channelController.setUserRole, channelController.getChannel);
+router.get('/:id/authenticate', channelController.getAuthenticatedChannel);
+
 router.get('/', channelController.getLiveChannels);
 router.patch('/:id/open', channelController.openChannel);
 router.patch('/:id/close', channelController.closeChannel);
 router.post('/', authController.authenticate, channelController.createChannel);
 router.post('/:id/watch', channelController.watchChannel);
-
 export default router;

@@ -56,7 +56,6 @@ const exchangeCodeForToken = async code => {
     }
 };
 
-const isValidAccessToken = accessToken => {};
 const isAuthenticate = headers => {
     if (!headers.authorization || !headers.refresh) return false;
 
