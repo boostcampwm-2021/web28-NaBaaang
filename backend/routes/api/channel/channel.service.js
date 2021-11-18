@@ -82,6 +82,7 @@ const watchChannel = async req => {
             { channelId: channel.id, viewerId: user.id },
             transaction,
         );
+        await transaction.commit();
         return channel;
     } catch (error) {
         await transaction.rollback();
