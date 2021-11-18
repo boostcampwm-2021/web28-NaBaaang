@@ -56,6 +56,7 @@ export default function useAuth() {
 
     const authSignOut = () => {
         removeTokenFromLocalStorage();
+        setUserInfo({ isSignIn: false });
     };
 
     useEffect(() => {
