@@ -8,8 +8,8 @@ import ROLE from './constant/role.js';
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
     try {
-        const stream_key = v4();
-        channelInfo.stream_key = stream_key;
+        const streamKey = v4();
+        channelInfo.streamKey = streamKey;
         const channelId = await channelDAO.insertChannel(
             channelInfo,
             transaction,
@@ -26,8 +26,6 @@ const getChannelById = async id => {
     const transaction = await db.sequelize.transaction();
     try {
         let result = await channelDAO.findByChannelId(id, transaction);
-
-        delete result.dataValues.streamKey;
         await transaction.commit();
         return result;
     } catch (error) {
