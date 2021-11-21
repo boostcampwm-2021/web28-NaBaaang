@@ -10,7 +10,7 @@
     "concurrently": "^6.4.0"
   },
   "scripts": {
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\" \"npm run start:socket\"",
+    "start": "concurrently -n 'frontend,backend,socket' -c 'bgMagenta.black,bgCyan.black,bgYellow.black' \"npm run start:frontend\" \"npm run start:backend\" \"npm run start:socket\"",
     "start:frontend": "cd frontend && yarn start",
     "start:backend": "cd backend && yarn start",
     "start:socket": "cd socket && yarn start"
