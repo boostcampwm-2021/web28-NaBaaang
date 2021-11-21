@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import ChannelManager from '@/components/ChannelManager';
+import ChannelManager from './ChannelManager';
 
 const dummyInfo = {
     title: '바삭끝판왕 BBQ 황금올리브치킨 먹방!🍗',
