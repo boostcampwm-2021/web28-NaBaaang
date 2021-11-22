@@ -22,7 +22,7 @@ const StyledButton = styled.button`
     ${({ type }) => BORDER_RADIUS_TYPE[type]}
     background-color: ${({ theme }) => theme.color.black};
     box-sizing: content-box;
-    transition: background-color ease-in 200ms;
+    transition: background-color ease-in 100ms;
 
     svg,
     img {
