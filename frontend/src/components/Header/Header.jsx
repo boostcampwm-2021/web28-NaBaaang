@@ -77,7 +77,6 @@ const HeaderWrap = styled.header`
     z-index: ${({ theme }) => theme.zIndex.header};
     ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
     padding: 0 1em;
     box-sizing: border-box;
 `;
