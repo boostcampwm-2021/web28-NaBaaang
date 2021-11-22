@@ -4,8 +4,7 @@ import styled, { css } from 'styled-components';
 import { ReactComponent as LeftArrowIcon } from '@/assets/images/left-arrow.svg';
 import { ReactComponent as RightArrowIcon } from '@/assets/images/right-arrow.svg';
 
-import Box from '@/components/Common/Box';
-import IconButton from '@/components/Common/IconButton';
+import { Box, IconButton } from '@/components/Common';
 
 const MOVE_DIR = {
     prev: -1,

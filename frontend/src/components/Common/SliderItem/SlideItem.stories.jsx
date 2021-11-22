@@ -1,8 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Box from '@/components/Common/Box';
-import SliderItem from './SliderItem';
+import {Box, SliderItem} from '@/components/Common';
 
 storiesOf('SliderItem', module)
     .add('default', () => (

@@ -1,10 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Box from '@/components/Common/Box';
-
-import Slider from './Slider';
-import SliderItem from '../SliderItem';
+import { Box, Slider, SliderItem } from '@/components/Common';
 
 const TestComponent = (navigation = false) => (
     <Box width="300px" height="300px" alignItems="stretch">
@@ -13,7 +10,6 @@ const TestComponent = (navigation = false) => (
             <SliderItem>2</SliderItem>
             <SliderItem>3</SliderItem>
             <SliderItem>4</SliderItem>
-
         </Slider>
     </Box>
 );

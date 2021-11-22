@@ -4,10 +4,8 @@ import styled from 'styled-components';
 import { flexMixin, fontMixin } from '@/styles/mixins.js';
 
 import Portal from '@/Portal';
-import Card from '@/components/Common/Card';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import Typography from '../Typography/Typography';
+
+import { Card, Button, Box, Typography } from '@/components/Common';
 
 export default function Modal({
     open,
