@@ -81,6 +81,7 @@ export default function Header() {
                         toggleButtonChild={<Logo src={ProfileIcon} />}
                         items={profileDropDownItems()}
                         contentSize={{ width: '100px' }}
+                        contentPos={{ left: '-40px', top: '60px' }}
                     />
                 </Box>
             )}

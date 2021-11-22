@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { flexMixin } from '@/styles/mixins';
+import { sizeMixin, flexMixin } from '@/styles/mixins';
 
-export default function DropDown({ toggleButtonChild, items, contentSize }) {
+import Box from '@/components/Common/Box';
+
+export default function DropDown({
+    toggleButtonChild,
+    items,
+    contentSize,
+    contentPos,
+}) {
     const [open, setOpen] = useState(false);
 
     const toggleDropDownContent = () => {
         setOpen(prev => !prev);
     };
+
+    const DropDownItems = items
+        ? items.map(item => {
+              return (
+                  <DropDownItem onClick={item.handler}>
+                      {item.text}
+                  </DropDownItem>
+              );
+          })
+        : 'no items';
 
     return (
         <DropDownWrapper>
@@ -16,26 +33,15 @@ export default function DropDown({ toggleButtonChild, items, contentSize }) {
                 {toggleButtonChild}
             </DropDownMainButton>
             {open ? (
-                <DropDownContent
-                    width={contentSize.width}
-                    height={contentSize.height}
-                >
-                    {items
-                        ? items.map(item => {
-                              return (
-                                  <DropDownItem onClick={item.handler}>
-                                      {item.text}
-                                  </DropDownItem>
-                              );
-                          })
-                        : 'no items'}
+                <DropDownContent size={contentSize} pos={contentPos}>
+                    {DropDownItems}
                 </DropDownContent>
             ) : null}
         </DropDownWrapper>
     );
 }
 
-const DropDownWrapper = styled.div``;
+const DropDownWrapper = styled(Box)``;
 
 const DropDownMainButton = styled.button`
     border: none;
@@ -46,10 +52,15 @@ const DropDownMainButton = styled.button`
 `;
 
 const DropDownContent = styled.div`
+    ${({ size }) => sizeMixin(size.width, size.height)}
     position: absolute;
+    ${({ pos }) =>
+        css`
+            top: ${pos.top};
+            left: ${pos.left};
+        `}
     ${flexMixin('column', 'center', 'center')}
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
 `;
 
 const DropDownItem = styled.div``;
