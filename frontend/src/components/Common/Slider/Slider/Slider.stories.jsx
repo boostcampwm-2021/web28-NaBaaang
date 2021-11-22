@@ -2,6 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import Box from '@/components/Common/Box';
+
 import Slider from './Slider';
 import SliderItem from '../SliderItem';
 
@@ -10,6 +11,9 @@ const TestComponent = (navigation = false) => (
         <Slider navigation={navigation}>
             <SliderItem>1</SliderItem>
             <SliderItem>2</SliderItem>
+            <SliderItem>3</SliderItem>
+            <SliderItem>4</SliderItem>
+
         </Slider>
     </Box>
 );
