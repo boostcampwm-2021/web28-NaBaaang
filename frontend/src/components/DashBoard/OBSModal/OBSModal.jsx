@@ -1,11 +1,41 @@
 import React from 'react';
 
-import { Slider, SliderItem, Typography, Modal } from '@/components/Common';
+import { OBS_DESCRIPTION_LIST } from '@/constants';
+
+import {
+    Slider,
+    SliderItem,
+    Typography,
+    Modal,
+    Box,
+} from '@/components/Common';
 
 export default function OBSModal({ onClose, open }) {
+    const slierItemList = OBS_DESCRIPTION_LIST.map(
+        ({ id, title, subTitle }) => (
+            <SliderItem key={id} padding={3}>
+                <Box
+                    flex={1}
+                    flexDirection="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                >
+                    <Typography variant="h2" marginBottom={2} align="left">
+                        {title}
+                    </Typography>
+                    <Typography variant="h4" marginBottom={1} align="left">
+                        {subTitle}
+                    </Typography>
+                </Box>
+
+                <Box flex={3}>이미지</Box>
+            </SliderItem>
+        ),
+    );
+
     return (
         <Modal
-            width="600px"
+            width="80%"
             height="600px"
             open={open}
             showButton={false}
@@ -13,30 +43,7 @@ export default function OBSModal({ onClose, open }) {
             onClose={onClose}
             justifyContent="flex-start"
         >
-            <Slider flex={1} navigation>
-                <SliderItem flexDirection="column">
-                    <Typography variant="h1" marginBottom={2}>
-                        Step 1
-                    </Typography>
-
-                    <Typography variant="h4" marginBottom={1}>
-                        Media URL, 스트림 키를 확인해주세요.
-                    </Typography>
-                </SliderItem>
-                <SliderItem flexDirection="column">
-                    <Typography variant="h1" marginBottom={2}>
-                        Step 2
-                    </Typography>
-
-                    <Typography variant="h4" marginBottom={1}>
-                        OBS Studio를 다운받아 주세요.
-                    </Typography>
-
-                    <Typography variant="h4">
-                        <a href="https://obsproject.com/ko">Link</a>
-                    </Typography>
-                </SliderItem>
-            </Slider>
+            <Slider navigation>{slierItemList}</Slider>
         </Modal>
     );
 }
