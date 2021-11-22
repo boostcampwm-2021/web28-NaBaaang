@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 
 import { flexMixin } from '@/styles/mixins';
 
+import { UserContext } from '@/store/userStore';
+
 export default function DropDown() {
     const [open, setOpen] = useState(false);
 
+    const { authSignOut } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const toggleDropDownContent = () => {
         setOpen(prev => !prev);
+    };
+
+    const logoutHandler = () => {
+        authSignOut();
+        navigate(window.location.pathname);
     };
 
     return (
@@ -24,9 +35,10 @@ export default function DropDown() {
             </DropDownMainButton>
             {open ? (
                 <DropDownContent>
-                    <button type="button">Link 1</button>
-                    <button type="button">Link 2</button>
-                    <button type="button">Link 3</button>
+                    <button type="button">닉네임 변경</button>
+                    <button type="button" onClick={logoutHandler}>
+                        로그아웃
+                    </button>
                 </DropDownContent>
             ) : null}
         </DropDownWrapper>

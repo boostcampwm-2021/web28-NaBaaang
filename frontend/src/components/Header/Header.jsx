@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
@@ -16,8 +16,7 @@ import ChannelModal from './ChannelModal';
 export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
-    const { userInfo, authSignOut } = useContext(UserContext);
-    const navigate = useNavigate();
+    const { userInfo } = useContext(UserContext);
 
     const handleOpenModal = handler => {
         handler(true);
@@ -25,11 +24,6 @@ export default function Header() {
 
     const handleHideModal = handler => {
         handler(false);
-    };
-
-    const logoutHandler = () => {
-        authSignOut();
-        navigate(window.location.pathname);
     };
 
     return (
@@ -60,11 +54,6 @@ export default function Header() {
                         onClick={() => handleOpenModal(setChannelModal)}
                     />
                     <DropDown />
-                    <Button
-                        text="로그아웃"
-                        size="medium"
-                        onClick={logoutHandler}
-                    />
                 </Box>
             )}
         </HeaderWrap>
