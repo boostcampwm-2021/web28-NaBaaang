@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
-import ProfileIcon from '@/assets/images/profile-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
+import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
@@ -59,7 +59,7 @@ export default function Header() {
                         src={CameraIcon}
                         onClick={() => handleOpenModal(setChannelModal)}
                     />
-                    <Logo src={ProfileIcon} />
+                    <DropDown />
                     <Button
                         text="로그아웃"
                         size="medium"
