@@ -1,0 +1,7 @@
+schemas: 
+    $ref: ../message/components.yaml
+    Error:
+      type: object
+      properties:
+        error:
+          type: string

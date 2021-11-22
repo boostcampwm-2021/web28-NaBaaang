@@ -1,0 +1,295 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Nabaaang API
+  description: Nabaaang API 문서입니다
+servers:
+  - url: 'http://localhost:4000'
+components:
+  schemas:
+    Channel:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: auto-increment id
+        title:
+          type: String
+          description: 메시지 내용
+        category:
+          type: integer
+          description: 메시지가 작성된 채팅(채널) id
+        description:
+          type: integer
+          description: 메시지를 작성한 유저 id
+        streamerId:
+          type: integer
+          description: 메시지를 작성한 유저 id
+        streamerKey:
+          type: integer
+          description: 메시지를 작성한 유저 id
+        isLive:
+          type: integer
+          description: 메시지를 작성한 유저 id
+        chat:
+          type: object
+          properties:
+            id:
+              type: integer
+              description: 메시지를 작성한 유저 id
+    Message:
+      type: object
+      required:
+        - content
+        - chatId
+        - senderId
+      properties:
+        id:
+          type: integer
+          description: auto-increment id
+        content:
+          type: String
+          description: 메시지 내용
+        chatId:
+          type: integer
+          description: 메시지가 작성된 채팅(채널) id
+        senderId:
+          type: integer
+          description: 메시지를 작성한 유저 id
+paths:
+  /api/channels:
+    get:
+      tags:
+        - Channel
+      summary: 라이브 방송 조회
+      description: channel isLive
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        title:
+                          type: string
+                          description: 메시지를 작성한 유저 id
+                        category:
+                          type: string
+                          description: 메시지를 작성한 유저 id
+                        description:
+                          type: string
+                          description: 메시지를 작성한 유저 id
+                        streamerId:
+                          type: integer
+                          description: 메시지를 작성한 유저 id
+                        streamerKey:
+                          type: string
+                          description: 메시지를 작성한 유저 id
+                        isLive:
+                          type: boolean
+                          description: 메시지를 작성한 유저 id
+                        streamer:
+                          type: object
+                          properties:
+                            nickname:
+                              type: string
+                              description: 메시지를 작성한 유저 id
+                            imageUrl:
+                              type: string
+                              description: 메시지를 작성한 유저 id
+        '204':
+          description: 컨텐츠가 없음
+          content: null
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+              example:
+                error: Internal Server Error
+                message: error message
+    post:
+      tags:
+        - Channel
+      summary: 방송 생성
+      description: Channel 생성
+      produces:
+        - application/json
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: token
+          in: header
+          required: true
+          description: access 및 refresh token
+        - in: body
+          name: channelInfo
+          description: 채널 생성 정보
+          schema:
+            type: object
+            required:
+              - userId
+              - title
+              - category
+              - description
+            properties:
+              userId:
+                type: integer
+              title:
+                type: string
+              category:
+                type: string
+              description:
+                type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                channelId: 1
+        '401':
+          description: 해당 리소스에 유효한 인증 정보가 없음.
+          content:
+            application/json:
+              example:
+                error: TOKEN IS INVALID
+        '500':
+          $ref: '#/paths/~1api~1channels/get/responses/500'
+  '/api/channels/{id}':
+    get:
+      tags:
+        - Channel
+      summary: Channel 조회
+      description: channel id로 채널 정보 조회
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: 방송 id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                id: 1
+                title: 황금 올리브 먹방 시작합니다.
+                category: 먹방
+                description: 황금 올리브 4마리 + 치즈볼
+                streamerId: 1
+                streamKey: 1asdqw1
+                isLive: true
+                chat:
+                  id: 1
+                streamer:
+                  nickname: test
+                  imageUrl: 'https://lh3.googleusercontent.com/a/AATXAJx8G_3hTwJUKgnMGM2mO8wS1-v3lM97vqEc_7UyUA=s96-c'
+        '204':
+          $ref: '#/paths/~1api~1channels/get/responses/204'
+        '500':
+          $ref: '#/paths/~1api~1channels/get/responses/500'
+  '/api/channels/{id}/authenticate':
+    get:
+      tags:
+        - Channel
+      summary: Channel 및 사용자 권한 조회
+      description: channel id로 채널 정보 및 사용자 권한 조회
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 방송 id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                id: 1
+                title: 황금 올리브 먹방 시작합니다.
+                category: 먹방
+                description: 황금 올리브 4마리 + 치즈볼
+                streamerId: 1
+                streamKey: 1asdqw1
+                isLive: true
+                chat:
+                  id: 1
+                streamer:
+                  nickname: test
+                  imageUrl: 'https://lh3.googleusercontent.com/a/AATXAJx8G_3hTwJUKgnMGM2mO8wS1-v3lM97vqEc_7UyUA=s96-c'
+                role: ROLE_GUEST
+        '204':
+          $ref: '#/paths/~1api~1channels/get/responses/204'
+        '401':
+          $ref: '#/paths/~1api~1channels/post/responses/401'
+        '500':
+          $ref: '#/paths/~1api~1channels/get/responses/500'
+  '/api/channels/{id}/open':
+    patch:
+      tags:
+        - Channel
+      summary: 방송 open
+      description: Channel 라이브 상태(isLive) true로 변경
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 방송 id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                message: success
+        '500':
+          $ref: '#/paths/~1api~1channels/get/responses/500'
+  '/api/channels/{id}/close':
+    patch:
+      tags:
+        - Channel
+      summary: 방송 close
+      description: Channel 라이브 상태(isLive) false 변경
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 방송 id
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              example:
+                message: success
+        '500':
+          $ref: '#/paths/~1api~1channels/get/responses/500'
+  components: null
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
