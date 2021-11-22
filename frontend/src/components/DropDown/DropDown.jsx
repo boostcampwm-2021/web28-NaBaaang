@@ -57,6 +57,7 @@ const DropDownMainButton = styled.button`
     outline: none;
     color: white;
     background-color: inherit;
+    cursor: pointer;
 `;
 
 const DropDownContent = styled.div`
