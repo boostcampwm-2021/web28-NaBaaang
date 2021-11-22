@@ -1,11 +1,6 @@
 import React from 'react';
 
-import Modal from '@/components/Common/Modal';
-
-import { Slider, SliderItem } from '@/components/Common/Slider';
-
-// import Box from '@/components/Common/Box';
-import Typography from '@/components/Common/Typography/Typography';
+import { Slider, SliderItem, Typography, Modal } from '@/components/Common';
 
 export default function OBSModal({ onClose, open }) {
     return (
