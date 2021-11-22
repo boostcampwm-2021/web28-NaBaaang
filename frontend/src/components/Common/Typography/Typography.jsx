@@ -52,6 +52,7 @@ const FontSizeType = {
 
 const generatorTag = variant => styled(variant)`
     ${({ variant = 'p' }) => FontSizeType[variant]};
+    color: ${({ color = 'black' }) => color};
     text-align: ${({ align = 'center' }) => align};
     background-color: ${({ backgroundColor = 'transparent' }) =>
         backgroundColor};
