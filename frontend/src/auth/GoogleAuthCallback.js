@@ -8,10 +8,11 @@ import { UserContext } from '@/store/userStore';
 export default function GoogleAuthCallback() {
     const { authSignIn } = useContext(UserContext);
     const { search } = useLocation();
-    const { code } = qs.parse(search, {
+    const navigate = useNavigate();
+    const { code, state } = qs.parse(search, {
         ignoreQueryPrefix: true,
     });
-    const navigate = useNavigate();
+    const { referrer } = JSON.parse(state);
 
     const handleSignIn = async () => {
         try {
@@ -23,7 +24,7 @@ export default function GoogleAuthCallback() {
         } catch (err) {
             authSignIn({ type: 'error' });
         } finally {
-            navigate('/');
+            navigate(referrer);
         }
     };
 
