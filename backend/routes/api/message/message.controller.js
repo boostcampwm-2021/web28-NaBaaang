@@ -5,8 +5,7 @@ import STATUS from '../../../lib/util/statusCode.js';
 
 const createMessage = async (req, res, next) => {
     const { id: channelId } = req.params;
-    const { sender_id: senderId, content } = req.body;
-
+    const { senderId, content } = req.body;
     if (existUndefinedInParameters(channelId, senderId, content)) {
         res.status(STATUS.BAD_REQUEST).send();
         return;
