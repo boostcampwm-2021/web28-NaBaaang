@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  input,
   button{
     outline: none;
     border: none;
