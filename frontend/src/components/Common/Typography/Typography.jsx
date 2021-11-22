@@ -3,15 +3,10 @@ import styled, { css } from 'styled-components';
 
 import { fontMixin } from '@/styles/mixins';
 
-export default function Typography({
-    variant = 'p',
-    color = 'black',
-    align = 'left',
-    children = '',
-    backgroundColor = 'transparent',
-}) {
-    const styleProps = { variant, color, align, backgroundColor };
-    switch (variant) {
+export default function Typography(props) {
+    const { children, ...styleProps } = props;
+
+    switch (styleProps.variant) {
         case 'h1':
             return <H1Tag {...styleProps}>{children}</H1Tag>;
         case 'h2':
@@ -27,7 +22,7 @@ export default function Typography({
         case 'p':
             return <PTag {...styleProps}>{children}</PTag>;
         default:
-            return null;
+            return <PTag {...styleProps}>{children}</PTag>;
     }
 }
 
@@ -56,10 +51,15 @@ const FontSizeType = {
 };
 
 const generatorTag = variant => styled(variant)`
-    ${({ variant }) => FontSizeType[variant]};
-    color: ${({ color }) => color};
-    text-align: ${({ align }) => align};
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    ${({ variant = 'p' }) => FontSizeType[variant]};
+    text-align: ${({ align = 'center' }) => align};
+    background-color: ${({ backgroundColor = 'transparent' }) =>
+        backgroundColor};
+
+    margin-top: ${({ marginTop = 0 }) => `${marginTop}rem`};
+    margin-left: ${({ marginLeft = 0 }) => `${marginLeft}rem`};
+    margin-bottom: ${({ marginBottom = 0 }) => `${marginBottom}rem`};
+    margin-right: ${({ marginRight = 0 }) => `${marginRight}rem`};
 `;
 
 const H1Tag = generatorTag('h1');

@@ -13,4 +13,12 @@ storiesOf('Typography', module)
     .add('h5', () => <Typography variant="h5">Hello World</Typography>)
     .add('h6', () => <Typography variant="h6">Hello World</Typography>)
     .add('p', () => <Typography variant="p">Hello World</Typography>)
-    .add('span', () => <Typography variant="span">Hello World</Typography>);
+    .add('span', () => <Typography variant="span">Hello World</Typography>)
+    .add('margin', () => (
+        <>
+            <Typography variant="h3" marginBottom={1}>
+                Hello World
+            </Typography>
+            <Typography variant="h3">Hello World</Typography>
+        </>
+    ));
