@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Box from '@/components/Common/Box';
+import {Box} from '@/components/Common';
 
 export default function Overlay({ onClick }) {
     return <StyledOverlay onClick={onClick} />;

@@ -7,10 +7,12 @@ import Divider from './Divider';
 import IconButton from './IconButton';
 import Modal from './Modal';
 import PageStatus from './PageStatus';
+import Overlay from './Overlay';
 import Slider from './Slider';
 import SliderItem from './SliderItem';
 import TextField from './TextField';
 import Typography from './Typography';
+import Loading from './Loading';
 
 export {
     Box,
@@ -22,8 +24,10 @@ export {
     IconButton,
     Modal,
     PageStatus,
+    Overlay,
     Slider,
     SliderItem,
     TextField,
     Typography,
+    Loading,
 };
