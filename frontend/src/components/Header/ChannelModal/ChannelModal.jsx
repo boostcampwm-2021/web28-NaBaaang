@@ -5,7 +5,7 @@ import ChannelCreateValidation from '@/validation/ChannelModal';
 import { fetchCreateChannel } from '@/apis/channel';
 import useForm from '@/hooks/useForm';
 
-import Modal from '@/components/Common/Modal';
+import {Modal} from '@/components/Common';
 import ChannelModalForm from '../ChannelModalForm/ChannelModalForm';
 
 export default function ChannelCreateModal({ onClose, open }) {
@@ -33,10 +33,9 @@ export default function ChannelCreateModal({ onClose, open }) {
     return (
         <Modal
             open={open}
-            showButton
-            onSuccessText="방송 생성"
+            successText="방송 생성"
+            closeText="취소"
             onSuccess={handleSubmit}
-            onCancelText="취소"
             onClose={onClose}
         >
             <ChannelModalForm

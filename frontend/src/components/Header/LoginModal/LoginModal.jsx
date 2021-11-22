@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal from '@/components/Common/Modal';
-import Button from '@/components/Common/Button';
+
 import { GOOGLE_AUTH_RESOURCE_SERVER_URL } from '@/constants/url';
+
+import { Modal, Button } from '@/components/Common';
 
 export default function LoginModal({ onClose, open }) {
     const handleOnSubmit = () => {

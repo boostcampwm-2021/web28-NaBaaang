@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Modal from '@/components/Common/Modal';
-import Button from '@/components/Common/Button';
+
+import { Modal, Button } from '@/components/Common';
 import DonationItemList from './DonationItemList';
 
 export default function DonationModal({ onClose, onSuccess }) {
@@ -22,9 +22,8 @@ export default function DonationModal({ onClose, onSuccess }) {
     return (
         <Modal
             open
-            showButton
-            onSuccessText="전송"
-            onCancelText="취소"
+            successText="전송"
+            closeText="취소"
             onClose={onClose}
             onSuccess={handleClickSubmit}
         >

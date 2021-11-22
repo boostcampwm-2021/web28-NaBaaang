@@ -1,22 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import Modal from '@/components/Common/Modal/Modal';
+import { Modal, Typography } from '@/components/Common';
 
 function AlertModal() {
     const navigate = useNavigate();
-    const handleSubmit = () => {
+    const handleSuccessButtonClick = () => {
         navigate(`/`);
     };
     return (
-        <Modal
-            open
-            showButton
-            alert
-            onSuccessText="확인"
-            onSuccess={handleSubmit}
-        >
-            <p>방송을 종료합니다</p>
+        <Modal open successText="확인" onSuccess={handleSuccessButtonClick}>
+            <Typography varaint="p">방송을 종료합니다</Typography>
         </Modal>
     );
 }

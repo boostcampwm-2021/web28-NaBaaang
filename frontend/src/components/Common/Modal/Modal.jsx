@@ -4,24 +4,18 @@ import styled from 'styled-components';
 import { flexMixin, fontMixin } from '@/styles/mixins.js';
 
 import Portal from '@/Portal';
-
 import { Card, Button, Box, Typography } from '@/components/Common';
 
 export default function Modal({
     open,
-    showButton,
-    alert,
     onClose,
     onSuccess,
-    onCancelText,
-    onSuccessText,
+    closeText,
+    successText,
     children,
     width = '350px',
     height = '350px',
 }) {
-    const cancleText = !onCancelText ? 'Cancle' : onCancelText;
-    const successText = !onSuccessText ? 'OK' : onSuccessText;
-
     if (!open) return null;
 
     return (
@@ -46,30 +40,25 @@ export default function Modal({
 
                     <ContentBox flex={3}>{children}</ContentBox>
 
-                    {showButton && alert ? (
+                    {(closeText || successText) && (
                         <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
-                        </ButtonBox>
-                    ) : (
-                        <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="error"
-                                onClick={onClose}
-                                text={cancleText}
-                                size="small"
-                            />
+                            {closeText && (
+                                <Button
+                                    color="error"
+                                    onClick={onClose}
+                                    text={closeText}
+                                    size="small"
+                                />
+                            )}
 
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
+                            {successText && (
+                                <Button
+                                    color="success"
+                                    onClick={onSuccess}
+                                    text={successText}
+                                    size="small"
+                                />
+                            )}
                         </ButtonBox>
                     )}
                 </Card>
