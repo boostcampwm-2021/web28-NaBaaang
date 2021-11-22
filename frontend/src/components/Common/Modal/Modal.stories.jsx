@@ -31,6 +31,7 @@ const InputModal = () => {
 storiesOf('Modal', module)
     .add('closed', () => <Modal />)
     .add('open', () => <Modal open />)
+    .add('without Button', () => <Modal open showButton={false} />)
     .add('buttonText', () => (
         <Modal open showButton onCancelText="Foo" onSuccessText="Bar" />
     ))

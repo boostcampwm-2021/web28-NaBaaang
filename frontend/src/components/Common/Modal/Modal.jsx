@@ -30,7 +30,12 @@ export default function Modal({
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
                 <OverlayBox onClick={onClose} width="100%" height="100%" />
-                <Card flexDirection="column" width={width} height={height}>
+                <Card
+                    alignItems="stretch"
+                    flexDirection="column"
+                    width={width}
+                    height={height}
+                >
                     <Box flex={0.5}>
                         <Typography
                             variant="h3"
@@ -40,7 +45,8 @@ export default function Modal({
                             Nabaaang
                         </Typography>
                     </Box>
-                    {children && <ContentBox flex={3}>{children}</ContentBox>}
+
+                    <ContentBox flex={3}>{children}</ContentBox>
 
                     {showButton && alert ? (
                         <ButtonBox flex={1} alignItems="center">
