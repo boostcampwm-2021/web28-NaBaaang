@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     border: none;
     background: none;
+    cursor: pointer;
   }
     
   
