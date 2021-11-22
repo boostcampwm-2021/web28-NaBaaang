@@ -38,7 +38,7 @@ export default function Slider({ children, navigation = false }) {
     const showNextSlide = () => handleSliceButtonClick('next');
 
     useEffect(() => {
-        if (children) {
+        if (children && children.length > 1) {
             slideCount.current = children.length;
         }
     }, []);
