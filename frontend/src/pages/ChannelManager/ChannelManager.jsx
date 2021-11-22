@@ -11,7 +11,7 @@ export default function ChannelManager() {
             <Box flex={1} width="100%">
                 <Header />
             </Box>
-            <Box flex={20} witdh="100%">
+            <Box flex={20} width="100%">
                 <DashBoard />
             </Box>
         </Box>

@@ -67,7 +67,11 @@ export default function DashBoard() {
     };
 
     return (
-        <Box backgroundColor="black2" height="100%" alignItems="stretch">
+        <DashBoardWrapper
+            backgroundColor="black2"
+            height="100%"
+            alignItems="stretch"
+        >
             {openAlertModal && <AlertModal />}
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
@@ -92,9 +96,14 @@ export default function DashBoard() {
                 <DashBoardTab text="채팅 칸" />
                 <Chat role={role} />
             </StyledBox>
-        </Box>
+        </DashBoardWrapper>
     );
 }
+
+const DashBoardWrapper = styled(Box)`
+    width: 100%;
+    height: 100%;
+`;
 
 const StyledBox = styled(Box)`
     flex-direction: column;
