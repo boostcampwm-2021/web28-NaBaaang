@@ -4,6 +4,7 @@ import Box from '@/components/Common/Box';
 
 export default function SliderItem({
     children,
+    padding = 0,
     flexDirection,
     alignItems = 'stretch',
     justifyContent,
@@ -13,6 +14,7 @@ export default function SliderItem({
             flexDirection={flexDirection}
             alignItems={alignItems}
             justifyContent={justifyContent}
+            padding={padding}
         >
             {children}
         </SliderItemBox>
