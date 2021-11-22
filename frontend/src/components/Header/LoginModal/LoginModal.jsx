@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { GOOGLE_AUTH_RESOURCE_SERVER_URL } from '@/constants/url';
 
-import { Modal, Button } from '@/components/Common';
+import { Modal, Button, Typography } from '@/components/Common';
 
 export default function LoginModal({ onClose, open }) {
     const handleOnSubmit = () => {
@@ -12,7 +11,9 @@ export default function LoginModal({ onClose, open }) {
 
     return (
         <Modal open={open} onClose={onClose}>
-            <Title>로그인</Title>
+            <Typography variant="h1" marginBottom={2}>
+                로그인
+            </Typography>
             <Button
                 text="Sign in with Google"
                 size="medium"
@@ -21,7 +22,3 @@ export default function LoginModal({ onClose, open }) {
         </Modal>
     );
 }
-
-const Title = styled.h1`
-    margin-bottom: 30px;
-`;
