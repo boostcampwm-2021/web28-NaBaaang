@@ -1,58 +1,43 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
-import ProfileIcon from '@/assets/images/profile-icon.svg';
 
 import { flexMixin } from '@/styles/mixins';
 
-import { UserContext } from '@/store/userStore';
-
-export default function DropDown() {
+export default function DropDown({ toggleButtonChild, items, contentSize }) {
     const [open, setOpen] = useState(false);
-
-    const { authSignOut } = useContext(UserContext);
-    const navigate = useNavigate();
 
     const toggleDropDownContent = () => {
         setOpen(prev => !prev);
     };
 
-    const logoutHandler = () => {
-        authSignOut();
-        navigate(window.location.pathname);
-    };
-
     return (
-        <DropDownWrapper width="60px" height="60px">
+        <DropDownWrapper>
             <DropDownMainButton onClick={toggleDropDownContent}>
-                <img
-                    src={ProfileIcon}
-                    alt="profile"
-                    width="100%"
-                    height="100%"
-                />
+                {toggleButtonChild}
             </DropDownMainButton>
             {open ? (
-                <DropDownContent>
-                    <button type="button">닉네임 변경</button>
-                    <button type="button" onClick={logoutHandler}>
-                        로그아웃
-                    </button>
+                <DropDownContent
+                    width={contentSize.width}
+                    height={contentSize.height}
+                >
+                    {items
+                        ? items.map(item => {
+                              return (
+                                  <DropDownItem onClick={item.handler}>
+                                      {item.text}
+                                  </DropDownItem>
+                              );
+                          })
+                        : 'no items'}
                 </DropDownContent>
             ) : null}
         </DropDownWrapper>
     );
 }
 
-const DropDownWrapper = styled.div`
-    width: ${({ width }) => width};
-    height: ${({ height }) => height};
-`;
+const DropDownWrapper = styled.div``;
 
 const DropDownMainButton = styled.button`
-    width: 60px;
-    height: 60px;
     border: none;
     outline: none;
     color: white;
@@ -66,3 +51,5 @@ const DropDownContent = styled.div`
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 `;
+
+const DropDownItem = styled.div``;

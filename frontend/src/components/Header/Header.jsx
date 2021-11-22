@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
+import ProfileIcon from '@/assets/images/profile-icon.svg';
 
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
@@ -16,7 +18,7 @@ import ChannelModal from './ChannelModal';
 export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
-    const { userInfo } = useContext(UserContext);
+    const { userInfo, authSignOut } = useContext(UserContext);
 
     const handleOpenModal = handler => {
         handler(true);
@@ -24,6 +26,28 @@ export default function Header() {
 
     const handleHideModal = handler => {
         handler(false);
+    };
+
+    const navigate = useNavigate();
+
+    const changeNicknameHandler = () => {};
+
+    const logoutHandler = () => {
+        authSignOut();
+        navigate(window.location.pathname);
+    };
+
+    const profileDropDownItems = () => {
+        const items = [
+            ['닉네임 변경', changeNicknameHandler],
+            ['로그아웃', logoutHandler],
+        ];
+
+        const dropDownItems = items.map(([text, handler]) => {
+            return { text, handler };
+        });
+
+        return dropDownItems;
     };
 
     return (
@@ -53,7 +77,11 @@ export default function Header() {
                         src={CameraIcon}
                         onClick={() => handleOpenModal(setChannelModal)}
                     />
-                    <DropDown />
+                    <DropDown
+                        toggleButtonChild={<Logo src={ProfileIcon} />}
+                        items={profileDropDownItems()}
+                        contentSize={{ width: '100px' }}
+                    />
                 </Box>
             )}
         </HeaderWrap>
