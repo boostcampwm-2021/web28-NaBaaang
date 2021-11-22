@@ -1,0 +1,33 @@
+{
+  "name": "nabaaang",
+  "version": "1.0.0",
+  "description": "> 나만의 방송을 만들어봐! 나방 💙",
+  "main": "index.js",
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  },
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "start": "concurrently -n 'frontend,backend,socket' -c 'bgMagenta.black,bgCyan.black,bgYellow.black' \"npm run start:frontend\" \"npm run start:backend\" \"npm run start:socket\"",
+    "start-m": "run-p ttab:frontend ttab:backend ttab:socket",
+    "start:frontend": "cd frontend && yarn start",
+    "start:backend": "cd backend && yarn start",
+    "start:socket": "cd socket && yarn start",
+    "ttab:frontend": "ttab npm run start:frontend",
+    "ttab:backend": "ttab npm run start:backend",
+    "ttab:socket": "ttab npm run start:socket"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boostcampwm-2021/web28-NaBaaang.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/boostcampwm-2021/web28-NaBaaang/issues"
+  },
+  "homepage": "https://github.com/boostcampwm-2021/web28-NaBaaang#readme"
+}
