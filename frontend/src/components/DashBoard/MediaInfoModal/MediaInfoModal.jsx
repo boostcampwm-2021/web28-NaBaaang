@@ -11,7 +11,7 @@ export default function MediaInfoModal({ onClose, open, streamKey }) {
     return (
         <Modal
             width="600px"
-            hegiht="400px"
+            height="400px"
             open={open}
             showButton={false}
             onCancleText="닫기"
