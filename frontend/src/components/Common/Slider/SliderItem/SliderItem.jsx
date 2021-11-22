@@ -2,8 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import Box from '@/components/Common/Box';
 
-export default function SliderItem({ children }) {
-    return <SliderItemBox>{children}</SliderItemBox>;
+export default function SliderItem({
+    children,
+    flexDirection,
+    alignItems,
+    justifyContent,
+}) {
+    return (
+        <SliderItemBox
+            flexDirection={flexDirection}
+            alignItems={alignItems}
+            justifyContent={justifyContent}
+        >
+            {children}
+        </SliderItemBox>
+    );
 }
 
 const SliderItemBox = styled(Box)`
