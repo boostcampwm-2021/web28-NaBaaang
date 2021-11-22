@@ -15,9 +15,13 @@ const createChannel = async (req, res) => {
         });
         res.status(STATUS.CREATED).json(channelId);
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
+
 const setUserRole = async (req, res, next) => {
     try {
         if (!authService.isAuthenticate(req.headers)) {
@@ -42,7 +46,10 @@ const setUserRole = async (req, res, next) => {
         requestHandler.setRole(req, ROLE.VIEWER);
         next();
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -51,10 +58,16 @@ const getChannel = async (req, res) => {
         const { id, role } = req.params;
 
         let data = await channelService.getChannelById(id);
-
-        res.status(STATUS.OK).json(data);
+        if (!data || !Object.keys(data).length) {
+            res.status(STATUS.NO_CONTENT).json();
+        } else {
+            res.status(STATUS.OK).json(data);
+        }
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -62,10 +75,16 @@ const getLiveChannels = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await channelService.getLiveChannels(id);
-        console.log(data);
-        res.status(STATUS.OK).json(data);
+        if (!data || !Object.keys(data).length) {
+            res.status(STATUS.NO_CONTENT).json();
+        } else {
+            res.status(STATUS.OK).json(data);
+        }
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -75,7 +94,10 @@ const openChannel = async (req, res) => {
         await channelService.updateLive(id, true);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -85,7 +107,10 @@ const closeChannel = async (req, res) => {
         await channelService.updateLive(id, false);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -100,7 +125,10 @@ const watchChannel = async (req, res) => {
         const data = await channelService.watchChannel(req);
         res.status(STATUS.ACCEPT).json(data);
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 
@@ -111,9 +139,16 @@ const getAuthenticatedChannel = async (req, res) => {
             id,
             role,
         });
-        res.status(STATUS.OK).json({ ...data.dataValues, role });
+        if (!data || !Object.keys(data).length) {
+            res.status(STATUS.NO_CONTENT).json();
+        } else {
+            res.status(STATUS.OK).json({ ...data.dataValues, role });
+        }
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
     }
 };
 export default {
