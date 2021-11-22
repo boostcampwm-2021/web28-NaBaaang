@@ -5,7 +5,7 @@ import Box from '@/components/Common/Box';
 export default function SliderItem({
     children,
     flexDirection,
-    alignItems,
+    alignItems = 'stretch',
     justifyContent,
 }) {
     return (
