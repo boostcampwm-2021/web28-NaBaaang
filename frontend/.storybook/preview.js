@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import theme from '@/styles/theme';
 import GlobalStyle from '@/styles/global';
 
-import ModalStore from '@/store/modalStore';
+import ModalStore from '@/store/ModalStore';
 
 export const decorators = [
     Story => (
