@@ -25,6 +25,8 @@ const channel = socket => {
     };
 
     const clearChannelEvents = () => {
+        socket.emit(EVENT_TYPE.LEAVE_CHANNEL);
+
         socket.off(EVENT_TYPE.JOIN_CHANNEL);
         socket.off(EVENT_TYPE.LEAVE_CHANNEL);
         socket.off(EVENT_TYPE.TERMINATE_CHANNEL);

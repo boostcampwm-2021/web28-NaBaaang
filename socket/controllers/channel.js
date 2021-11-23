@@ -1,3 +1,5 @@
+import { changeUserCnt } from "../utils/user.js";
+
 const JOIN_CHANNEL = "join";
 const LEAVE_CHANNEL = "leave";
 const TERMINATE_CHANNEL = "noticeChannelEnded";
@@ -14,10 +16,7 @@ const channel = (io, socket) => {
             socket.auth = auth.toString();
             socket.join(socket.channelId);
 
-            const clients = io.sockets.adapter.rooms.get(socket.channelId);
-            const numClients = clients ? clients.size : 0;
-
-            io.to(socket.channelId).emit("changeUserCnt", numClients);
+            changeUserCnt(io, socket.channelId);
 
             io.to(socket.channelId).emit("join", `${socket.id} entered #${socket.channelId} channel (${socket.auth})`);
         } catch (err) {
@@ -28,6 +27,9 @@ const channel = (io, socket) => {
         try {
             const channelId = socket.channelId;
             socket.leave(channelId);
+
+            changeUserCnt(io, socket.channelId);
+
             console.log(`${socket.id}(${socket.auth}) leaved #${channelId}`);
             io.to(channelId).emit("leave", `${socket.id}(${socket.auth}) leaved #${channelId}`);
         } catch (err) {
