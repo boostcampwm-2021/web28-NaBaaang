@@ -27,11 +27,11 @@ const connectionTest = async () => {
 
 const db = initModels(sequelize);
 
-await connectionTest();
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 const init = async () => {
+    await connectionTest();
     if (process.env.NODE_ENV === 'production') {
         await sequelize.sync();
     } else {
