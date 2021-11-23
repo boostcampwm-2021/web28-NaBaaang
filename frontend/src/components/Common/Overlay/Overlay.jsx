@@ -13,6 +13,6 @@ const StyledOverlay = styled(Box)`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgb(0, 0, 0, 0.8);
+    background-color: rgb(0, 0, 0, 0.5);
     z-index: 1;
 `;
