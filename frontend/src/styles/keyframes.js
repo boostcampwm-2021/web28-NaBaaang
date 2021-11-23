@@ -18,4 +18,18 @@ const jumpWhen60 = keyframes`
     }
 `;
 
-export {jumpWhen20 ,jumpWhen40, jumpWhen60}
+const skeletonGradient = keyframes`
+    0% {
+        background-color: rgba(128, 128, 128, 0.1);
+    }
+
+    50% {
+        background-color: rgba(128, 128, 128, 0.3);
+    }
+
+    100% {
+        background-color: rgba(128, 128, 128, 0.1);
+    }
+`
+
+export {jumpWhen20 ,jumpWhen40, jumpWhen60, skeletonGradient}
