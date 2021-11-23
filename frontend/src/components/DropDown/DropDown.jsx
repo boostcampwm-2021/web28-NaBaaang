@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { sizeMixin, flexMixin } from '@/styles/mixins';
+import { flexMixin } from '@/styles/mixins';
 
-import Box from '@/components/Common/Box';
+import { Box, IconButton } from '@/components/Common';
 
-export default function DropDown({
-    toggleButtonChild,
-    items,
-    contentSize,
-    contentPos,
-}) {
+export default function DropDown({ toggleButtonChild, items, contentPos }) {
     const [open, setOpen] = useState(false);
 
     const toggleDropDownContent = () => {
@@ -29,11 +24,15 @@ export default function DropDown({
 
     return (
         <DropDownWrapper>
-            <DropDownMainButton onClick={toggleDropDownContent}>
+            <IconButton
+                type="square"
+                size="large"
+                onClick={toggleDropDownContent}
+            >
                 {toggleButtonChild}
-            </DropDownMainButton>
+            </IconButton>
             {open && (
-                <DropDownContent size={contentSize} pos={contentPos}>
+                <DropDownContent pos={contentPos}>
                     {DropDownItems}
                 </DropDownContent>
             )}
@@ -43,16 +42,7 @@ export default function DropDown({
 
 const DropDownWrapper = styled(Box)``;
 
-const DropDownMainButton = styled.button`
-    border: none;
-    outline: none;
-    color: white;
-    background-color: inherit;
-    cursor: pointer;
-`;
-
-const DropDownContent = styled.div`
-    ${({ size }) => sizeMixin(size.width, size.height)}
+const DropDownContent = styled(Box)`
     position: absolute;
     ${({ pos }) =>
         css`
