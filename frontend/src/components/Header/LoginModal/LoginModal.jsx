@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 
 import { GOOGLE_AUTH_RESOURCE_SERVER_URL } from '@/constants/url';
 
-import { Modal, Button, Typography } from '@/components/Common';
+import { Button, Typography } from '@/components/Common';
 
-export default function LoginModal({ onClose, open }) {
+export default function LoginModal() {
     const location = useLocation();
     const handleOnSubmit = () => {
         const stateParam = `&state={"referrer":"${location.pathname}"}`;
@@ -13,7 +13,7 @@ export default function LoginModal({ onClose, open }) {
     };
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <>
             <Typography variant="h1" marginBottom={2}>
                 로그인
             </Typography>
@@ -22,6 +22,6 @@ export default function LoginModal({ onClose, open }) {
                 size="medium"
                 onClick={handleOnSubmit}
             />
-        </Modal>
+        </>
     );
 }

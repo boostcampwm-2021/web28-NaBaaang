@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import LiveCollection from '@/components/LiveCollection';
 import Channel from '@/components/Channel/Channel';
@@ -12,43 +12,33 @@ import PrivateRoute from './components/Route/PrivateRoute';
 
 function App() {
     return (
-            <UserStore>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Main />}>
-                            <Route
-                                path=""
-                                element={
-                                    <PublicRoute
-                                        component={LiveCollection}
-                                    />
-                                }
-                            />
-                            <Route
-                                path="channel/:channelId"
-                                element={
-                                    <PublicRoute
-                                        component={Channel}
-                                    />
-                                }
-                            />
-                        </Route>
-                        <Route
-                            path="/auth/google/callback"
-                            element={<GoogleAuthCallback />}
-                        />
+        <UserStore>
+            <Routes>
+                <Route path="/" element={<Main />}>
+                    <Route
+                        path=""
+                        element={<PublicRoute component={LiveCollection} />}
+                    />
+                    <Route
+                        path="channel/:channelId"
+                        element={<PublicRoute component={Channel} />}
+                    />
+                </Route>
+                <Route
+                    path="/auth/google/callback"
+                    element={<GoogleAuthCallback />}
+                />
 
-                        <Route
-                            path="/stream-manager/:channelId"
-                            element={
-                                <PrivateRoute>
-                                    <ChannelManager />
-                                </PrivateRoute>
-                            }
-                        />
-                    </Routes>
-                </BrowserRouter>
-            </UserStore>
+                <Route
+                    path="/stream-manager/:channelId"
+                    element={
+                        <PrivateRoute>
+                            <ChannelManager />
+                        </PrivateRoute>
+                    }
+                />
+            </Routes>
+        </UserStore>
     );
 }
 

@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ChannelCreateValidation from '@/validation/ChannelModal';
 import { fetchCreateChannel } from '@/apis/channel';
 import useForm from '@/hooks/useForm';
 
-import {Modal} from '@/components/Common';
-import ChannelModalForm from '../ChannelModalForm/ChannelModalForm';
+import { ModalContext } from '@/store/ModalStore';
 
-export default function ChannelCreateModal({ onClose, open }) {
+import ChannelModalForm from '../ChannelModalForm';
+
+export default function ChannelCreateModal() {
     const navigate = useNavigate();
+    const { closeModal } = useContext(ModalContext);
 
     const handleOnSubmit = async formData => {
         try {
             const channelID = await fetchCreateChannel(formData);
+            closeModal();
             navigate(`/stream-manager/${channelID}`);
         } catch (err) {
             throw new Error(err);
@@ -31,18 +34,10 @@ export default function ChannelCreateModal({ onClose, open }) {
     });
 
     return (
-        <Modal
-            open={open}
-            successText="방송 생성"
-            closeText="취소"
-            onSuccess={handleSubmit}
-            onClose={onClose}
-        >
-            <ChannelModalForm
-                errors={errors}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-            />
-        </Modal>
+        <ChannelModalForm
+            errors={errors}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+        />
     );
 }

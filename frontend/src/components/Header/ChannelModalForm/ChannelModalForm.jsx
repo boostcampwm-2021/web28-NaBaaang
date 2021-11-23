@@ -5,6 +5,7 @@ import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import TextField from '@/components/Common/TextField';
 import Box from '@/components/Common/Box';
+import Button from '@/components/Common/Button/Button';
 
 export default function ChannelModalForm({
     handleSubmit,
@@ -39,6 +40,8 @@ export default function ChannelModalForm({
                     <ErrorText>{errors.description}</ErrorText>
                 )}
             </Box>
+
+            <Button text="방송 시작" color="success" onClick={handleSubmit} />
         </Form>
     );
 }

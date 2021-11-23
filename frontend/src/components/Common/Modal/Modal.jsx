@@ -1,33 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { flexMixin, fontMixin } from '@/styles/mixins.js';
 
+import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
+
 import Portal from '@/Portal';
-import { Card, Button, Box, Typography } from '@/components/Common';
+import { Card, Button, Box, Typography, IconButton } from '@/components/Common';
+import { ModalContext } from '@/store/ModalStore';
 
 export default function Modal({
-    open,
     onClose,
     onSuccess,
     closeText,
     successText,
-    children,
     width = '350px',
     height = '350px',
 }) {
-    if (!open) return null;
+    const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
+
+    if (!isModalOpen) return null;
 
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
-                <OverlayBox onClick={onClose} width="100%" height="100%" />
+                <OverlayBox onClick={closeModal} width="100%" height="100%" />
+
                 <Card
                     alignItems="stretch"
                     flexDirection="column"
                     width={width}
                     height={height}
                 >
+                    <CloseButtonBox>
+                        <IconButton type="square" onClick={closeModal}>
+                            <CloseIcon />
+                        </IconButton>
+                    </CloseButtonBox>
+
                     <Box flex={0.5}>
                         <Typography
                             variant="h3"
@@ -38,7 +48,7 @@ export default function Modal({
                         </Typography>
                     </Box>
 
-                    <ContentBox flex={3}>{children}</ContentBox>
+                    <ContentBox flex={3}>{modalContent}</ContentBox>
 
                     {(closeText || successText) && (
                         <ButtonBox flex={1} alignItems="center">
@@ -73,6 +83,13 @@ const ModalBox = styled(Box)`
     top: 0;
     border: 1px solid black;
     z-index: 1024;
+`;
+
+const CloseButtonBox = styled(Box)`
+    position: absolute;
+    left: 100%;
+    margin-left: 1rem;
+    top: 0;
 `;
 
 const OverlayBox = styled(Box)`
