@@ -19,7 +19,7 @@ export default function Channel() {
         payload: channelId,
     });
 
-    useSocket(data);
+    const { userCnt } = useSocket(data);
 
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;
@@ -31,7 +31,7 @@ export default function Channel() {
                     <Video streamKey={data.streamKey} />
                 </Box>
                 <Box width="100%" flex={1}>
-                    <ChannelDetail channelInfo={data} />
+                    <ChannelDetail channelInfo={data} userCnt={userCnt} />
                 </Box>
             </Box>
 

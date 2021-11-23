@@ -4,7 +4,7 @@ import { borderBoxMixin, flexMixin, fontMixin } from '@/styles/mixins';
 
 import { Box, Avatar } from '@/components/Common';
 
-function ChannelDetails({ channelInfo }) {
+function ChannelDetails({ channelInfo, userCnt }) {
     return (
         <StyledBox flex={1}>
             <StyledRow>
@@ -22,7 +22,7 @@ function ChannelDetails({ channelInfo }) {
             </StyledRow>
             <StyledRow marginLeft="auto" alignSelf="flex-start">
                 <StyledColumn>
-                    <StyledViews>시청자 수 12000</StyledViews>
+                    <StyledViews>시청자 수 {userCnt}</StyledViews>
                 </StyledColumn>
             </StyledRow>
         </StyledBox>

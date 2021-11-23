@@ -13,6 +13,12 @@ const channel = (io, socket) => {
             socket.chatId = chatId.toString();
             socket.auth = auth.toString();
             socket.join(socket.channelId);
+
+            const clients = io.sockets.adapter.rooms.get(socket.channelId);
+            const numClients = clients ? clients.size : 0;
+
+            io.to(socket.channelId).emit("changeUserCnt", numClients);
+
             io.to(socket.channelId).emit("join", `${socket.id} entered #${socket.channelId} channel (${socket.auth})`);
         } catch (err) {
             console.log(err);
