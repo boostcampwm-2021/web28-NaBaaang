@@ -8,9 +8,10 @@ import Form from './Form';
 import MessageList from './MessageList';
 
 export default function Chat() {
-    const { messageList } = useChatMessage();
+    const { messageList, throttleNewMessage } = useChatMessage();
 
     const handleSubmit = message => {
+        throttleNewMessage(message);
         socket.chat.sendMessage(message);
         return () => {
             socket.chat.clearChatEvents();
