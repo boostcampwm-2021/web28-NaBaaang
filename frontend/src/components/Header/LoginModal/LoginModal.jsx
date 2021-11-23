@@ -20,6 +20,7 @@ export default function LoginModal() {
             <Button
                 text="Sign in with Google"
                 size="medium"
+                color="error"
                 onClick={handleOnSubmit}
             />
         </Box>
