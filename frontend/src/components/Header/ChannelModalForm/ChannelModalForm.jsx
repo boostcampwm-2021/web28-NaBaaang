@@ -11,7 +11,6 @@ export default function ChannelModalForm({
     handleSubmit,
     handleChange,
     errors,
-    formData,
 }) {
     return (
         <Form onSubmit={handleSubmit}>
