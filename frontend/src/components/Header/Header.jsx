@@ -3,15 +3,14 @@ import styled from 'styled-components';
 
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
-import CameraIcon from '@/assets/images/camera-icon.svg';
+import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 
-import { ModalContext } from '@/store/ModalStore';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
+import { Button, Box, IconButton } from '@/components/Common';
+import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
@@ -55,10 +54,14 @@ export default function Header() {
                 />
             ) : (
                 <Box>
-                    <Logo
-                        src={CameraIcon}
+                    <IconButton
+                        size="large"
+                        type="square"
                         onClick={() => handleModal(<ChannelModal />)}
-                    />
+                    >
+                        <CameraIcon />
+                    </IconButton>
+
                     <DropDown
                         toggleButtonChild={<Logo src={ProfileIcon} />}
                         items={profileDropDownItems()}
