@@ -53,7 +53,7 @@ export default function Header() {
                     onClick={() => handleModal(<LoginModal />)}
                 />
             ) : (
-                <Box>
+                <IconBox>
                     <IconButton
                         size="large"
                         type="square"
@@ -67,7 +67,7 @@ export default function Header() {
                         items={profileDropDownItems()}
                         contentPos={{ left: '-3.4rem', top: '4rem' }}
                     />
-                </Box>
+                </IconBox>
             )}
         </HeaderWrap>
     );
@@ -86,4 +86,15 @@ const HeaderWrap = styled.header`
 const Logo = styled.img`
     height: 60px;
     cursor: pointer;
+`;
+
+const IconBox = styled(Box)`
+    button {
+        &:not(:last-child) {
+            margin: 0 0.25rem;
+        }
+        &:last-child {
+            margin-left: 0.25rem;
+        }
+    }
 `;
