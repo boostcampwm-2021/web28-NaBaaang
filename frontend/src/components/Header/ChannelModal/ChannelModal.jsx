@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import ChannelCreateValidation from '@/validation/ChannelModal';
 import useForm from '@/hooks/useForm';
 
-import { Modal } from '@/components/Common';
+import { ModalContext } from '@/store/ModalStore';
+import { Box } from '@/components/Common';
 import ChannelModalForm from '../ChannelModalForm';
 
-export default function ChannelModal({
-    onClose,
-    open,
-    successText,
-    initFormData,
-    handleOnSubmit,
-}) {
-    const { errors, formData, handleChange, handleSubmit } = useForm({
-        initState: initFormData || {
+export default function ChannelCreateModal() {
+    const navigate = useNavigate();
+    const { closeModal } = useContext(ModalContext);
+
+    const handleOnSubmit = async formData => {
+        try {
+            const channelID = await fetchCreateChannel(formData);
+            closeModal();
+            navigate(`/stream-manager/${channelID}`);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const { errors, handleChange, handleSubmit } = useForm({
+        initState: {
             title: '',
             category: '',
             description: '',
@@ -24,19 +33,13 @@ export default function ChannelModal({
     });
 
     return (
-        <Modal
-            open={open}
-            successText={successText}
-            closeText="취소"
-            onSuccess={handleSubmit}
-            onClose={onClose}
-        >
+        <Box width="100%" height="auto">
             <ChannelModalForm
                 errors={errors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 formData={formData}
             />
-        </Modal>
+        </Box>
     );
 }

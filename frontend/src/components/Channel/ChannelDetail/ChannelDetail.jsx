@@ -1,9 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { borderBoxMixin, flexMixin, fontMixin } from '@/styles/mixins';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import Avatar from '@/components/Common/Avatar';
+
+import { Box, Avatar } from '@/components/Common';
 
 function ChannelDetails({ channelInfo }) {
     return (
@@ -23,7 +22,6 @@ function ChannelDetails({ channelInfo }) {
             </StyledRow>
             <StyledRow marginLeft="auto" alignSelf="flex-start">
                 <StyledColumn>
-                    <Button color="success" text="팔로우" size="medium" />
                     <StyledViews>시청자 수 12000</StyledViews>
                 </StyledColumn>
             </StyledRow>

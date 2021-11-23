@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
-export default function MessageList({ messageList }) {
+export default function MessageList({ messageList, setMessageList }) {
     const messageBoxRef = useRef();
 
     const scrollToBottom = () => {
@@ -13,14 +13,21 @@ export default function MessageList({ messageList }) {
         }
     };
 
+    const onDelete = id => () => {
+        setMessageList(prev => prev.filter(x => x.id !== id));
+    };
+
     const convertedMessageList =
         messageList &&
         messageList.map(message => (
             <Message
                 key={message.id}
+                id={message.id}
                 type={message.type}
                 nickname={message.nickname}
                 content={message.content}
+                status={message.status}
+                onDelete={onDelete}
             />
         ));
 

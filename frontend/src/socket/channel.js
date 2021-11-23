@@ -13,10 +13,10 @@ const channel = socket => {
         socket.emit(EVENT_TYPE.TERMINATE_CHANNEL, '방송을 종료합니다');
     };
 
-    const channelEnded = ({ setAlertModal }) => {
+    const channelEnded = done => {
         socket.on(EVENT_TYPE.TERMINATE_CHANNEL, () => {
-            setAlertModal(true);
             leaveChannel();
+            done();
         });
     };
 

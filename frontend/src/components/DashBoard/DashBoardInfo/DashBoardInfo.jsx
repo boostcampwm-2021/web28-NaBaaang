@@ -1,48 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 
-import Box from '@/components/Common/Box';
-import ChannelModal from '@/components/Header/ChannelModal';
-import { fetchUpdateChannel } from '@/apis/channel';
+import { ModalContext } from '@/store/ModalStore';
+
+import { Box } from '@/components/Common';
 import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
+import OBSModal from '../OBSModal';
 
 export default function DashBoardInfo({ info }) {
-    const { id, streamKey, title, category, description } = info;
-    const [medialModalOpen, setMedialModalOpen] = useState(false);
-    const [channelFormModalOpen, setChannelFormModalOpen] = useState(false);
+    const { streamKey } = info;
+    const { openModal } = useContext(ModalContext);
 
-    const navigate = useNavigate();
-
-    const handleMedialModalOpen = () => {
-        setMedialModalOpen(true);
+    const openMedialModal = () => {
+        openModal(<MediaInfoModal streamKey={streamKey} />);
     };
 
-    const handleMedialModalClose = () => {
-        setMedialModalOpen(false);
+    const openOBSModal = () => {
+        openModal(<OBSModal />);
     };
-
-    const handleChannelModalOpen = () => {
-        setChannelFormModalOpen(true);
-    };
-
-    const handleChannelModalClose = () => {
-        setChannelFormModalOpen(false);
-    };
-
-    const handleUpdateChannel = async formData => {
-        try {
-            const { id: channelId } = await fetchUpdateChannel({
-                id,
-                ...formData,
-            });
-            handleChannelModalClose();
-            navigate(`/stream-manager/${channelId}`);
-        } catch (err) {
-            throw new Error(err);
-        }
-    };
-
     return (
         <Box
             height="100%"
@@ -52,31 +27,9 @@ export default function DashBoardInfo({ info }) {
             alignItems="stretch"
             flex={1}
         >
-            <MediaInfoModal
-                open={medialModalOpen}
-                streamKey={streamKey}
-                onClose={handleMedialModalClose}
-            />
-
-            <ChannelModal
-                open={channelFormModalOpen}
-                onClose={handleChannelModalClose}
-                successText="방송 수정"
-                initFormData={{ title, category, description }}
-                handleOnSubmit={handleUpdateChannel}
-            />
-
-            <DashBoardCard
-                onClick={handleChannelModalOpen}
-                title="방송 정보 편집"
-                info={info}
-            />
-
-            <DashBoardCard
-                onClick={handleMedialModalOpen}
-                title="송출 정보 확인"
-            />
-            <DashBoardCard title="OBS 가이드" />
+            <DashBoardCard title="방송 정보 편집" info={info} />
+            <DashBoardCard onClick={openMedialModal} title="송출 정보 확인" />
+            <DashBoardCard onClick={openOBSModal} title="OBS 가이드" />
         </Box>
     );
 }

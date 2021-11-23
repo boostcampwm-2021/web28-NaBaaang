@@ -6,11 +6,10 @@ import {
     Slider,
     SliderItem,
     Typography,
-    Modal,
     Box,
 } from '@/components/Common';
 
-export default function OBSModal({ onClose, open }) {
+export default function OBSModal() {
     const slierItemList = OBS_DESCRIPTION_LIST.map(
         ({ id, title, subTitle }) => (
             <SliderItem key={id} padding={3}>
@@ -34,16 +33,8 @@ export default function OBSModal({ onClose, open }) {
     );
 
     return (
-        <Modal
-            width="80%"
-            height="600px"
-            open={open}
-            showButton={false}
-            onCancleText="닫기"
-            onClose={onClose}
-            justifyContent="flex-start"
-        >
+        <Box width="60rem" height="42rem">
             <Slider navigation>{slierItemList}</Slider>
-        </Modal>
+        </Box>
     );
 }

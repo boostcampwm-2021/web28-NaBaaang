@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,35 +7,17 @@ import CameraIcon from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 
+import { ModalContext } from '@/store/ModalStore';
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
 import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
-import { fetchCreateChannel } from '@/apis/channel';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
 export default function Header() {
-    const [openLoginModal, setOpenLoginModal] = useState(false);
-    const [openChannelModal, setChannelModal] = useState(false);
+    const { handleModal } = useContext(ModalContext);
     const { userInfo, authSignOut } = useContext(UserContext);
-
-    const handleOpenModal = handler => {
-        handler(true);
-    };
-
-    const handleHideModal = handler => {
-        handler(false);
-    };
-
-    const handleCreateChannel = async formData => {
-        try {
-            const channelID = await fetchCreateChannel(formData);
-            navigate(`/stream-manager/${channelID}`);
-        } catch (err) {
-            throw new Error(err);
-        }
-    };
 
     const navigate = useNavigate();
 
@@ -61,17 +43,6 @@ export default function Header() {
 
     return (
         <HeaderWrap>
-            <LoginModal
-                open={openLoginModal}
-                onClose={() => handleHideModal(setOpenLoginModal)}
-            />
-            <ChannelModal
-                open={openChannelModal}
-                onClose={() => handleHideModal(setChannelModal)}
-                successText="방송 생성"
-                handleOnSubmit={handleCreateChannel}
-            />
-
             <Link to="/">
                 <Logo src={HeaderLogo} alt="header-logo" />
             </Link>
@@ -80,19 +51,18 @@ export default function Header() {
                 <Button
                     text="로그인"
                     size="medium"
-                    onClick={() => handleOpenModal(setOpenLoginModal)}
+                    onClick={() => handleModal(<LoginModal />)}
                 />
             ) : (
                 <Box>
                     <Logo
                         src={CameraIcon}
-                        onClick={() => handleOpenModal(setChannelModal)}
+                        onClick={() => handleModal(<ChannelModal />)}
                     />
                     <DropDown
                         toggleButtonChild={<Logo src={ProfileIcon} />}
                         items={profileDropDownItems()}
-                        contentSize={{ width: 'auto', height: 'auto' }}
-                        contentPos={{ left: '-40px', top: '60px' }}
+                        contentPos={{ left: '-3.4rem', top: '4rem' }}
                     />
                 </Box>
             )}
