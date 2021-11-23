@@ -24,12 +24,7 @@ export default function Modal() {
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
                 <Overlay onClick={closeModal} />
-                <Card
-                    alignItems="stretch"
-                    flexDirection="column"
-                    width="350px"
-                    height="350px"
-                >
+                <ModalCard alignItems="stretch" flexDirection="column">
                     <CloseButtonBox>
                         <IconButton type="square" onClick={closeModal}>
                             <CloseIcon />
@@ -47,7 +42,7 @@ export default function Modal() {
                     </Box>
 
                     <ContentBox flex={3}>{modalContent}</ContentBox>
-                </Card>
+                </ModalCard>
             </ModalBox>
         </Portal>
     );
@@ -73,4 +68,11 @@ const ContentBox = styled(Box)`
     text-align: center;
     margin-bottom: auto;
     ${flexMixin('column', 'center', 'center')}
+`;
+
+const ModalCard = styled(Card)`
+    min-width: 350px;
+    min-height: 350px;
+    width: auto;
+    height: auto;
 `;

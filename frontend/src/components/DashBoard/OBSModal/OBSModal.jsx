@@ -33,7 +33,7 @@ export default function OBSModal() {
     );
 
     return (
-        <Box width="80%" height="600px">
+        <Box width="60rem" height="42rem">
             <Slider navigation>{slierItemList}</Slider>
         </Box>
     );
