@@ -6,29 +6,31 @@ config:
     target: 'http://localhost:5000'
     phases:
         - duration: 10
-          arrivalRate: 50
+          arrivalRate: 100
     variables:
         greeting: ['hello', 'goedemorgen', 'guten tag', 'bonjour', 'hola']
 
 scenarios:
     - name: 'A user that just lurks'
-      weight: 15
+      weight: 10
       engine: 'socketio'
       flow:
           - emit:
                 channel: 'join'
                 data: 
+                  "chatId": "1"
                   "channelId": "1"
                   "auth": "viewer"
           - think: 5
 
     - name: 'A mostly quiet user'
-      weight: 75
+      weight: 80
       engine: 'socketio'
       flow:
           - emit:
                 channel: 'join'
                 data: 
+                  "chatId": "1"
                   "channelId": "1"
                   "auth": "viewer"
           - think: 5
@@ -37,6 +39,7 @@ scenarios:
                 data: 
                   "id": "{{$randomString()}}"
                   "type": "NORMAL"
+                  "userId": 1
                   "nickname": "quiet-{{ $randomString() }}"
                   "content": "{{ greeting }}"
           - think: 15
@@ -48,6 +51,7 @@ scenarios:
           - emit:
                 channel: 'join'
                 data: 
+                  "chatId": "1"
                   "channelId": "1"
                   "auth": "viewer"
           - think: 5
@@ -57,6 +61,7 @@ scenarios:
                     data: 
                       "id": "{{$randomString()}}"
                       "type": "NORMAL"
+                      "userId": 1
                       "nickname": "chatty-{{ $randomString() }}"
                       "content": "{{ greeting }}"
               - think: 1
