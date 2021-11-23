@@ -1,30 +1,22 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
 import { borderBoxMixin, fontMixin } from '@/styles/mixins';
-import { UserContext } from '@/store/userStore';
 
+import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
 import DonationModal from './DonationModal';
 import LoginAlertModal from './LoginAlertModal';
 
 export default function Form({ handleSubmit }) {
     const messageInput = useRef();
     const { userInfo } = useContext(UserContext);
+    const { openModal } = useContext(ModalContext);
+
     const { user } = userInfo;
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [openLoginAlert, setOpenLoginAlert] = useState(false);
-
-    const handleShowModal = handler => {
-        handler(true);
-    };
-
-    const handleHideModal = handler => {
-        handler(false);
-    };
-
-    const handleClickDonation = value => {
+    const handleDonationButtonClick = value => {
         const message = {
             id: v1(),
             type: 'DONATION',
@@ -33,11 +25,14 @@ export default function Form({ handleSubmit }) {
             content: value,
         };
         handleSubmit(message);
-        setModalOpen(false);
     };
 
-    const handleClickAlert = () => {
-        setOpenLoginAlert(false);
+    const openLoginAlertModal = () => {
+        openModal(<LoginAlertModal />);
+    };
+
+    const openDonationModal = () => {
+        openModal(<DonationModal onDonation={handleDonationButtonClick} />);
     };
 
     const sendMessage = e => {
@@ -46,7 +41,7 @@ export default function Form({ handleSubmit }) {
         if (txt === '') return;
 
         if (!userInfo.isSignIn) {
-            setOpenLoginAlert(true);
+            openLoginAlertModal();
             return;
         }
 
@@ -62,26 +57,12 @@ export default function Form({ handleSubmit }) {
     };
     return (
         <>
-            {modalOpen && (
-                <DonationModal
-                    open
-                    onClose={() => handleHideModal(setModalOpen)}
-                    onSuccess={handleClickDonation}
-                />
-            )}
-            {openLoginAlert && (
-                <LoginAlertModal
-                    open
-                    onClose={() => handleHideModal(setOpenLoginAlert)}
-                    onSuccess={handleClickAlert}
-                />
-            )}
             <StyledForm onSubmit={sendMessage}>
                 <StyledDiv>
                     <StyledInput ref={messageInput} />
                 </StyledDiv>
                 <StyledDiv>
-                    <StyledButton type="button" onClick={handleShowModal}>
+                    <StyledButton type="button" onClick={openDonationModal}>
                         도네이션
                     </StyledButton>
                     <StyledButton>채팅</StyledButton>

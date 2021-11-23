@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 
-import { Modal, Button } from '@/components/Common';
+import { Box, Button, Typography } from '@/components/Common';
 import DonationItemList from './DonationItemList';
 
-export default function DonationModal({ onClose, onSuccess }) {
+export default function DonationModal({ onDonation }) {
     const [totalDonation, setTotalDonation] = useState(0);
 
     const handleTotalDonation = value => {
@@ -16,37 +15,27 @@ export default function DonationModal({ onClose, onSuccess }) {
     };
 
     const handleClickSubmit = () => {
-        onSuccess(totalDonation);
+        onDonation(totalDonation);
     };
 
     return (
-        <Modal
-            open
-            successText="전송"
-            closeText="취소"
-            onClose={onClose}
-            onSuccess={handleClickSubmit}
-        >
-            <Title>비트를 선택해주세요</Title>
+        <Box flexDirection="column">
+            <Typography variant="h3">비트를 선택해주세요</Typography>
 
-            <Row>
+            <Box>
                 <DonationItemList handleTotalDonation={handleTotalDonation} />
-            </Row>
+            </Box>
 
-            <Row>
+            <Box>
                 누적 값 : {totalDonation}
                 <Button
                     onClick={handleTotalDonationInit}
                     text="초기화"
                     color="error"
                 />
-            </Row>
-        </Modal>
+            </Box>
+
+            <Button onClick={handleClickSubmit} text="보내기" color="success" />
+        </Box>
     );
 }
-
-const Title = styled.h2`
-    margin-bottom: 30px;
-`;
-
-const Row = styled.div``;
