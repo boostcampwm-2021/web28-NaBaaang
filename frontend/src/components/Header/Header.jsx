@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
@@ -12,6 +11,7 @@ import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
 import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
+import { fetchCreateChannel } from '@/apis/channel';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
@@ -26,6 +26,15 @@ export default function Header() {
 
     const handleHideModal = handler => {
         handler(false);
+    };
+
+    const handleCreateChannel = async formData => {
+        try {
+            const channelID = await fetchCreateChannel(formData);
+            navigate(`/stream-manager/${channelID}`);
+        } catch (err) {
+            throw new Error(err);
+        }
     };
 
     const navigate = useNavigate();
@@ -59,6 +68,8 @@ export default function Header() {
             <ChannelModal
                 open={openChannelModal}
                 onClose={() => handleHideModal(setChannelModal)}
+                successText="방송 생성"
+                handleOnSubmit={handleCreateChannel}
             />
 
             <Link to="/">

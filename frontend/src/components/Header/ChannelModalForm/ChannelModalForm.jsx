@@ -10,6 +10,7 @@ export default function ChannelModalForm({
     handleSubmit,
     handleChange,
     errors,
+    formData,
 }) {
     return (
         <Form onSubmit={handleSubmit}>
@@ -18,6 +19,7 @@ export default function ChannelModalForm({
                     labelText="제목"
                     name="title"
                     handleChange={handleChange}
+                    value={formData ? formData.title : ''}
                 />
                 {errors.title && <ErrorText>{errors.title}</ErrorText>}
             </Box>
@@ -26,6 +28,7 @@ export default function ChannelModalForm({
                     labelText="카테고리"
                     name="category"
                     handleChange={handleChange}
+                    value={formData ? formData.category : ''}
                 />
                 {errors.category && <ErrorText>{errors.category}</ErrorText>}
             </Box>
@@ -34,6 +37,7 @@ export default function ChannelModalForm({
                     labelText="설명"
                     name="description"
                     handleChange={handleChange}
+                    value={formData ? formData.description : ''}
                 />
                 {errors.description && (
                     <ErrorText>{errors.description}</ErrorText>
