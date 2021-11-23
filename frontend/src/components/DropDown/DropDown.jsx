@@ -32,11 +32,11 @@ export default function DropDown({
             <DropDownMainButton onClick={toggleDropDownContent}>
                 {toggleButtonChild}
             </DropDownMainButton>
-            {open ? (
+            {open && (
                 <DropDownContent size={contentSize} pos={contentPos}>
                     {DropDownItems}
                 </DropDownContent>
-            ) : null}
+            )}
         </DropDownWrapper>
     );
 }
