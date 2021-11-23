@@ -9,18 +9,11 @@ import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
 import { ROLE } from '@/constants/role';
 
-import PageStatus from '@/components/Common/PageStatus';
-
-import Box from '@/components/Common/Box';
-
-import AlertModal from '@/components/AlertModal';
-
+import { PageStatus, Box, Divider } from '@/components/Common';
 import DashBoardInfo from '@/components/DashBoard/DashBoardInfo';
 import DashBoardVideo from '@/components/DashBoard/DashBoardVideo';
 import DashBoardTab from '@/components/DashBoard/DashBoardTab';
-
 import Chat from '@/components/Chat';
-import Divider from '@/components/Common/Divider/Divider';
 
 export default function DashBoard() {
     const params = useParams();
@@ -31,8 +24,8 @@ export default function DashBoard() {
         type: 'FETCH_CHANNEL_AUTHENTICATE',
         payload: channelId,
     });
+    useSocket(data);
 
-    const { openAlertModal } = useSocket(data);
     const role = ROLE.ALL;
 
     useEffect(() => {
@@ -72,7 +65,6 @@ export default function DashBoard() {
             height="100%"
             alignItems="stretch"
         >
-            {openAlertModal && <AlertModal />}
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
                 <DashBoardInfo info={data} />

@@ -8,7 +8,6 @@ import useSocket from '@/hooks/useSocket';
 import Video from '@/components/Video';
 import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
-import AlertModal from '@/components/AlertModal';
 import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
 
@@ -20,14 +19,13 @@ export default function Channel({ role }) {
         payload: channelId,
     });
 
-    const { openAlertModal } = useSocket(data);
+    useSocket(data);
 
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;
 
     return (
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
-            {openAlertModal && <AlertModal />}
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={3}>
                     <Video streamKey={data.streamKey} />
