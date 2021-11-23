@@ -1,0 +1,41 @@
+SuccessRequest:
+  description: 성공
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas.yaml#/schemas/Error"
+      example:
+        success: false
+        message: 잘못된 요청
+
+NoContent:
+  description: 컨텐츠가 없음
+  content:
+    null
+
+UnAuthorized:
+  description: 해당 리소스에 유효한 인증 정보가 없음.
+  content:
+    application/json:
+      example:
+        error: TOKEN IS INVALID
+
+InternalServerError:
+  description: 서버 에러
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas.yaml#/schemas/Error"
+      example:
+        error: Internal Server Error
+        message: error message
+
+BadRequest:
+  description: 잘못된 요청
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas.yaml#/schemas/Error"
+      example:
+        success: false
+        message: 잘못된 요청
