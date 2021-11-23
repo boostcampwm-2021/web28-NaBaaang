@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
-import ProfileIcon from '@/assets/images/profile-icon.svg';
 import { flexMixin } from '@/styles/mixins';
+import ProfileIcon from '@/assets/images/profile-icon.svg';
 
 import Button from '@/components/Common/Button';
 import Box from '@/components/Common/Box';
+import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
@@ -17,7 +19,6 @@ export default function Header() {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openChannelModal, setChannelModal] = useState(false);
     const { userInfo, authSignOut } = useContext(UserContext);
-    const navigate = useNavigate();
 
     const handleOpenModal = handler => {
         handler(true);
@@ -27,9 +28,26 @@ export default function Header() {
         handler(false);
     };
 
+    const navigate = useNavigate();
+
+    const changeNicknameHandler = () => {};
+
     const logoutHandler = () => {
         authSignOut();
         navigate(window.location.pathname);
+    };
+
+    const profileDropDownItems = () => {
+        const items = [
+            ['닉네임 변경', changeNicknameHandler],
+            ['로그아웃', logoutHandler],
+        ];
+
+        const dropDownItems = items.map(([text, handler]) => {
+            return { text, handler };
+        });
+
+        return dropDownItems;
     };
 
     return (
@@ -59,11 +77,11 @@ export default function Header() {
                         src={CameraIcon}
                         onClick={() => handleOpenModal(setChannelModal)}
                     />
-                    <Logo src={ProfileIcon} />
-                    <Button
-                        text="로그아웃"
-                        size="medium"
-                        onClick={logoutHandler}
+                    <DropDown
+                        toggleButtonChild={<Logo src={ProfileIcon} />}
+                        items={profileDropDownItems()}
+                        contentSize={{ width: 'auto', height: 'auto' }}
+                        contentPos={{ left: '-40px', top: '60px' }}
                     />
                 </Box>
             )}
