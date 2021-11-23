@@ -13,6 +13,7 @@ import SliderItem from './SliderItem';
 import TextField from './TextField';
 import Typography from './Typography';
 import Loading from './Loading';
+import Skeleton from './Skeleton';
 
 export {
     Box,
@@ -30,4 +31,5 @@ export {
     TextField,
     Typography,
     Loading,
+    Skeleton,
 };
