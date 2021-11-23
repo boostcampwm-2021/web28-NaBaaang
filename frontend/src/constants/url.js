@@ -28,10 +28,14 @@ const GOOGLE_AUTH_RESOURCE_SERVER_URL = replaceBlankAndNewLine(`
      access_type=offline&
     include_granted_scopes=true&
     response_type=code&
-    state=state_parameter_passthrough_value&
     redirect_uri=${GOOGLE_REDIRECT_URI}&
     client_id=${GOOGLE_CLIENT_ID}
-`)
+`);
 
-
-export { API_URL, SOCKET_URL, MEDIA_URL, GOOGLE_AUTH_REDIRECT_URL,GOOGLE_AUTH_RESOURCE_SERVER_URL };
+export {
+    API_URL,
+    SOCKET_URL,
+    MEDIA_URL,
+    GOOGLE_AUTH_REDIRECT_URL,
+    GOOGLE_AUTH_RESOURCE_SERVER_URL,
+};
