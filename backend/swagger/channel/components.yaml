@@ -1,0 +1,102 @@
+Channel:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: auto-increment id
+    title:
+      type: String
+      description: 메시지 내용
+    category:
+      type: integer
+      description: 메시지가 작성된 채팅(채널) id
+    description:
+      type: integer
+      description: 메시지를 작성한 유저 id
+    streamerId:
+      type: integer
+      description: 메시지를 작성한 유저 id
+    streamerKey:
+      type: integer
+      description: 메시지를 작성한 유저 id
+    isLive:
+      type: integer
+      description: 메시지를 작성한 유저 id
+    chat:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 메시지를 작성한 유저 id
+    
+
+channelList:
+  schema:
+    type: object
+    properties:
+      category:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+              description: 메시지를 작성한 유저 id
+            category:
+              type: string
+              description: 메시지를 작성한 유저 id
+            description:
+              type: string
+              description: 메시지를 작성한 유저 id
+            streamerId:
+              type: integer
+              description: 메시지를 작성한 유저 id
+            streamerKey:
+              type: string
+              description: 메시지를 작성한 유저 id
+            isLive:
+              type: boolean
+              description: 메시지를 작성한 유저 id
+            streamer:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                  description: 메시지를 작성한 유저 id
+                imageUrl:
+                  type: string
+                  description: 메시지를 작성한 유저 id
+channel:
+  example:
+    id: 1
+    title: 황금 올리브 먹방 시작합니다.
+    category: 먹방
+    description: 황금 올리브 4마리 + 치즈볼
+    streamerId: 1
+    streamKey: 1asdqw1
+    isLive: true
+    chat: 
+      id: 1
+    streamer:
+      nickname: test
+      imageUrl: https://lh3.googleusercontent.com/a/AATXAJx8G_3hTwJUKgnMGM2mO8wS1-v3lM97vqEc_7UyUA=s96-c
+
+channelWithRole:
+  id: 1
+  title: 황금 올리브 먹방 시작합니다.
+  category: 먹방
+  description: 황금 올리브 4마리 + 치즈볼
+  streamerId: 1
+  streamKey: 1asdqw1
+  isLive: true
+  chat: 
+    id: 1
+  streamer:
+    nickname: test
+    imageUrl: https://lh3.googleusercontent.com/a/AATXAJx8G_3hTwJUKgnMGM2mO8wS1-v3lM97vqEc_7UyUA=s96-c
+  role: ROLE_GUEST
+
+successMessage:
+  message: success

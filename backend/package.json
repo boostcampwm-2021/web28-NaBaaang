@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "start": "nodemon ./bin/www.js",
+        "api-docs": "swagger-cli bundle ./swagger/root/root.yaml --outfile ./swagger/build/bundle.yaml --type yaml",
         "init-sequelize-models": "./node_modules/.bin/sequelize-auto --config './config/sequelize-auto-config.json'",
         "test": "jest"
     },
@@ -18,13 +19,16 @@
         "morgan": "~1.9.1",
         "mysql2": "^2.3.0",
         "sequelize": "^6.7.0",
+        "swagger-cli": "^4.0.4",
         "swagger-jsdoc": "^6.1.0",
-        "swagger-ui-express": "^4.1.6"
+        "swagger-ui-express": "^4.1.6",
+        "yamljs": "^0.3.0"
     },
     "devDependencies": {
         "@babel/core": "^7.16.0",
         "@babel/node": "^7.16.0",
         "@babel/preset-env": "^7.16.0",
+        "@types/yamljs": "^0.2.31",
         "babel-plugin-module-resolver": "^4.1.0",
         "eslint": "^7.2.0",
         "eslint-config-airbnb": "^18.2.1",
