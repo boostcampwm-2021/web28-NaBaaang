@@ -34,14 +34,20 @@ export default function useChatMessage() {
 
     const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
+    const filterMessageToRender = msg => {
+        return (
+            (user.id !== msg.userId && msg.status > 0) ||
+            (user.id === msg.userId && msg.status === -1)
+        );
+    };
+
     const throttleNewMessage = msg => {
         pushBuffer(msg);
         onThrottle();
     };
 
     const handleSocketMessage = msg => {
-        if (user.id !== msg.userId && msg.status === -1) return;
-        throttleNewMessage(msg);
+        return filterMessageToRender(msg) && throttleNewMessage(msg);
     };
 
     useEffect(() => {

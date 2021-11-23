@@ -21,6 +21,7 @@ export default function MessageList({ messageList }) {
                 type={message.type}
                 nickname={message.nickname}
                 content={message.content}
+                status={-1}
             />
         ));
 
