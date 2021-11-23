@@ -10,6 +10,7 @@ ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
             <GlobalStyle />
+            <div id="modal-root" />
             <App />
         </ThemeProvider>
     </React.StrictMode>,
