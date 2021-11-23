@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
-import Box from '@/components/Common/Box';
+import { ModalContext } from '@/store/ModalStore';
+
+import { Box } from '@/components/Common';
 import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
 
 export default function DashBoardInfo({ info }) {
     const { streamKey } = info;
-    const [medialModalOpen, setMedialModalOpen] = useState(false);
+    const { openModal } = useContext(ModalContext);
 
-    const handleMedialModalOpen = () => {
-        setMedialModalOpen(true);
+    const openMedialModal = () => {
+        openModal(<MediaInfoModal streamKey={streamKey} />);
     };
 
-    const handleMedialModalClose = () => {
-        setMedialModalOpen(false);
-    };
     return (
         <Box
             height="100%"
@@ -24,17 +23,8 @@ export default function DashBoardInfo({ info }) {
             alignItems="stretch"
             flex={1}
         >
-            <MediaInfoModal
-                open={medialModalOpen}
-                streamKey={streamKey}
-                onClose={handleMedialModalClose}
-            />
-
             <DashBoardCard title="방송 정보 편집" info={info} />
-            <DashBoardCard
-                onClick={handleMedialModalOpen}
-                title="송출 정보 확인"
-            />
+            <DashBoardCard onClick={openMedialModal} title="송출 정보 확인" />
             <DashBoardCard title="OBS 가이드" />
         </Box>
     );
