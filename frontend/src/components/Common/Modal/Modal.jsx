@@ -6,7 +6,13 @@ import { flexMixin, fontMixin } from '@/styles/mixins.js';
 import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
 
 import Portal from '@/Portal';
-import { Card, Box, Typography, IconButton } from '@/components/Common';
+import {
+    Card,
+    Box,
+    Typography,
+    IconButton,
+    Overlay,
+} from '@/components/Common';
 import { ModalContext } from '@/store/ModalStore';
 
 export default function Modal() {
@@ -17,9 +23,13 @@ export default function Modal() {
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
-                <OverlayBox onClick={closeModal} width="100%" height="100%" />
-
-                <Card alignItems="stretch" flexDirection="column" width="350px" height="350px">
+                <Overlay onClick={closeModal} />
+                <Card
+                    alignItems="stretch"
+                    flexDirection="column"
+                    width="350px"
+                    height="350px"
+                >
                     <CloseButtonBox>
                         <IconButton type="square" onClick={closeModal}>
                             <CloseIcon />
@@ -56,14 +66,6 @@ const CloseButtonBox = styled(Box)`
     left: 100%;
     margin-left: 1rem;
     top: 0;
-`;
-
-const OverlayBox = styled(Box)`
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgb(0, 0, 0, 0.8);
-    z-index: -1;
 `;
 
 const ContentBox = styled(Box)`
