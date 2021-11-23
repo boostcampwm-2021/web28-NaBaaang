@@ -57,5 +57,5 @@ export default function useChatMessage() {
         };
     }, []);
 
-    return { messageList, throttleNewMessage };
+    return { messageList, setMessageList, throttleNewMessage };
 }

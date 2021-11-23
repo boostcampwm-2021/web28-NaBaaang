@@ -6,25 +6,32 @@ import { MESSAGE_TYPE } from '@/constants/messageType';
 
 import { Box, Button, Typography } from '../Common';
 
-export default function Message({ type, nickname, content, status }) {
+export default function Message({
+    id,
+    type,
+    nickname,
+    content,
+    status,
+    onDelete,
+}) {
     if (MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL) {
         return status > 0 ? (
             <SentMessage>
-                <Typography variant="span" align="left">
+                <Typography variant="span">
                     {nickname}:{content}
                 </Typography>
             </SentMessage>
         ) : (
-            <UnSentMessage
-                flexDirection="column"
-                width="250px"
-                height="55px"
-                alignSelf="left"
-            >
-                <Typography variant="span" align="left">
+            <UnSentMessage flexDirection="column" width="250px" height="55px">
+                <Typography variant="span">
                     {nickname}:{content}
                 </Typography>
-                <Button text="X" color="error" size="extra_small" />
+                <Button
+                    text="X"
+                    color="error"
+                    size="extra_small"
+                    onClick={onDelete(id)}
+                />
             </UnSentMessage>
         );
     }

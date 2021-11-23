@@ -8,10 +8,11 @@ import Form from './Form';
 import MessageList from './MessageList';
 
 export default function Chat() {
-    const { messageList, throttleNewMessage } = useChatMessage();
+    const { messageList, setMessageList, throttleNewMessage } =
+        useChatMessage();
 
     const handleSubmit = message => {
-        throttleNewMessage(message);
+        throttleNewMessage({ ...message, status: 1 });
         socket.chat.sendMessage(message);
         return () => {
             socket.chat.clearChatEvents();
@@ -26,7 +27,10 @@ export default function Chat() {
             height="100%"
         >
             <Box width="100%" flex={3} backgroundColor="white">
-                <MessageList messageList={messageList} />
+                <MessageList
+                    messageList={messageList}
+                    setMessageList={setMessageList}
+                />
             </Box>
             <Box width="100%" flex={1}>
                 <Form handleSubmit={handleSubmit} />
