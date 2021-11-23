@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { flexMixin, fontMixin } from '@/styles/mixins.js';
+import { fontMixin } from '@/styles/mixins.js';
 
 import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
 
@@ -66,8 +66,9 @@ const CloseButtonBox = styled(Box)`
 const ContentBox = styled(Box)`
     ${fontMixin('1rem', '1em', 'notoSansMedium')}
     text-align: center;
-    margin-bottom: auto;
-    ${flexMixin('column', 'center', 'center')}
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
 `;
 
 const ModalCard = styled(Card)`

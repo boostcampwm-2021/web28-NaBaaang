@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { GOOGLE_AUTH_RESOURCE_SERVER_URL } from '@/constants/url';
 
-import { Button, Typography } from '@/components/Common';
+import { Box, Button, Typography } from '@/components/Common';
 
 export default function LoginModal() {
     const location = useLocation();
@@ -13,7 +13,7 @@ export default function LoginModal() {
     };
 
     return (
-        <>
+        <Box flexDirection="column">
             <Typography variant="h1" marginBottom={2}>
                 로그인
             </Typography>
@@ -22,6 +22,6 @@ export default function LoginModal() {
                 size="medium"
                 onClick={handleOnSubmit}
             />
-        </>
+        </Box>
     );
 }

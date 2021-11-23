@@ -14,31 +14,35 @@ export default function ChannelModalForm({
 }) {
     return (
         <Form onSubmit={handleSubmit}>
-            <Box width="100%" flex={1}>
-                <TextField
-                    labelText="제목"
-                    name="title"
-                    handleChange={handleChange}
-                />
-                {errors.title && <ErrorText>{errors.title}</ErrorText>}
-            </Box>
-            <Box width="100%" flex={1}>
-                <TextField
-                    labelText="카테고리"
-                    name="category"
-                    handleChange={handleChange}
-                />
-                {errors.category && <ErrorText>{errors.category}</ErrorText>}
-            </Box>
-            <Box width="100%" flex={1}>
-                <TextField
-                    labelText="설명"
-                    name="description"
-                    handleChange={handleChange}
-                />
-                {errors.description && (
-                    <ErrorText>{errors.description}</ErrorText>
-                )}
+            <Box width="100%" height="100%" flexDirection="column">
+                <Box width="100%" flex={1}>
+                    <TextField
+                        labelText="제목"
+                        name="title"
+                        handleChange={handleChange}
+                    />
+                    {errors.title && <ErrorText>{errors.title}</ErrorText>}
+                </Box>
+                <Box width="100%" flex={1}>
+                    <TextField
+                        labelText="카테고리"
+                        name="category"
+                        handleChange={handleChange}
+                    />
+                    {errors.category && (
+                        <ErrorText>{errors.category}</ErrorText>
+                    )}
+                </Box>
+                <Box width="100%" flex={1}>
+                    <TextField
+                        labelText="설명"
+                        name="description"
+                        handleChange={handleChange}
+                    />
+                    {errors.description && (
+                        <ErrorText>{errors.description}</ErrorText>
+                    )}
+                </Box>
             </Box>
 
             <Button text="방송 시작" color="success" onClick={handleSubmit} />

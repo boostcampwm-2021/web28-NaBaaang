@@ -6,7 +6,7 @@ import { fetchCreateChannel } from '@/apis/channel';
 import useForm from '@/hooks/useForm';
 
 import { ModalContext } from '@/store/ModalStore';
-
+import { Box } from '@/components/Common';
 import ChannelModalForm from '../ChannelModalForm';
 
 export default function ChannelCreateModal() {
@@ -34,10 +34,12 @@ export default function ChannelCreateModal() {
     });
 
     return (
-        <ChannelModalForm
-            errors={errors}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-        />
+        <Box width="100%" height="auto">
+            <ChannelModalForm
+                errors={errors}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+            />
+        </Box>
     );
 }
