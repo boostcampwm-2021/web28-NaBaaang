@@ -50,7 +50,10 @@ describe('Channel Controller Test', () => {
         // then
         expect(channelService.create).toHaveBeenCalledWith(req.body);
         expect(res.status).toHaveBeenCalledWith(STATUS.INTERNAL_SERVER_ERROR);
-        expect(res.json).toHaveBeenCalledWith(errorMessage);
+        expect(res.json).toHaveBeenCalledWith({
+            error: 'Internal Server Error',
+            message: errorMessage,
+        });
     });
 
     test('방송 조회 성공 시, 해당 channel 정보와 OK STATUS 응답', async () => {

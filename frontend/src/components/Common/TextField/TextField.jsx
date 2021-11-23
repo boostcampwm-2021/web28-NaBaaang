@@ -6,6 +6,7 @@ export default function TextField({
     name,
     inputRef,
     handleChange,
+    value,
 }) {
     return (
         <>
@@ -15,6 +16,7 @@ export default function TextField({
                     ref={inputRef}
                     name={name}
                     onChange={handleChange}
+                    value={value}
                 />
             </InputBox>
         </>

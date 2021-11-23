@@ -18,7 +18,6 @@ export default function DashBoardInfo({ info }) {
     const openOBSModal = () => {
         openModal(<OBSModal />);
     };
-
     return (
         <Box
             height="100%"

@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ChannelCreateValidation from '@/validation/ChannelModal';
-import { fetchCreateChannel } from '@/apis/channel';
 import useForm from '@/hooks/useForm';
 
 import { ModalContext } from '@/store/ModalStore';
@@ -39,6 +38,7 @@ export default function ChannelCreateModal() {
                 errors={errors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                formData={formData}
             />
         </Box>
     );

@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
 import CameraIcon from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';

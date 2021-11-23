@@ -9,10 +9,14 @@ router.get(
     channelController.setUserRole,
     channelController.getAuthenticatedChannel,
 );
-
 router.get('/', channelController.getLiveChannels);
+router.post('/', authController.authenticate, channelController.createChannel);
+router.patch(
+    '/:id',
+    authController.authenticate,
+    channelController.updateChannel,
+);
 router.patch('/:id/open', channelController.openChannel);
 router.patch('/:id/close', channelController.closeChannel);
-router.post('/', authController.authenticate, channelController.createChannel);
 router.post('/:id/watch', channelController.watchChannel);
 export default router;

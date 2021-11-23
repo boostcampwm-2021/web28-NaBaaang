@@ -15,6 +15,26 @@ const insertChannel = async (channelInfo, transaction) => {
     }
 };
 
+const updateChannel = async (channelInfo, transaction) => {
+    let option = { returning: true };
+    if (transaction) option.transaction = transaction;
+    try {
+        const { id, title, category, description } = channelInfo;
+        const updatedChannel = await Channel.update(
+            {
+                title,
+                category,
+                description,
+            },
+            { where: { id } },
+            option,
+        );
+        return updatedChannel;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const findByChannelId = async (channelId, transaction) => {
     let option = {};
     if (transaction) option.transaction = transaction;
@@ -116,6 +136,7 @@ const findByUserId = async (streamerId, transaction) => {
 };
 export default {
     insertChannel,
+    updateChannel,
     findByChannelId,
     findAllLiveChannel,
     update,

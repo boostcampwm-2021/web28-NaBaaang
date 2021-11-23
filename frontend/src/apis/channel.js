@@ -18,6 +18,18 @@ async function fetchCreateChannel(formData) {
         throw new Error(err);
     }
 }
+async function fetchUpdateChannel(formData) {
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_UPDATE_CHANNEL',
+            payload: formData,
+        });
+        const data = await getFetchData(url, option);
+        return data;
+    } catch (err) {
+        throw new Error(err);
+    }
+}
 
 async function fetchOpenChannel(id) {
     try {
@@ -57,6 +69,7 @@ async function fetchAuthChannel(id) {
 
 export {
     fetchCreateChannel,
+    fetchUpdateChannel,
     fetchOpenChannel,
     fetchCloseChannel,
     fetchAuthChannel,

@@ -19,7 +19,7 @@ describe('Message Controller Test', () => {
                 id: 1,
             },
             body: {
-                sender_id: 1,
+                senderId: 1,
                 content: 'hi',
             },
         };
