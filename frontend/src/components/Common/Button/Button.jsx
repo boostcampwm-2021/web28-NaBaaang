@@ -3,7 +3,12 @@ import styled, { css } from 'styled-components';
 
 import { colorMixin, fontMixin } from '@/styles/mixins';
 
-export default function Button({ onClick, text, color, size = 'small' }) {
+export default function Button({
+    onClick,
+    text,
+    color = 'light',
+    size = 'small',
+}) {
     return (
         <StyledButton onClick={onClick} color={color} size={size}>
             {text}
@@ -11,15 +16,7 @@ export default function Button({ onClick, text, color, size = 'small' }) {
     );
 }
 
-const ERROR_COLOR_CSS = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.red)}
-`;
-
-const SUCCESS_COLOR_CSS = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.primary)}
-`;
-
-const SIZE_ENUM = {
+const BUTTON_SIZE_TYPE = {
     small: css`
         padding: 10px 15px;
         ${fontMixin('16px', '1em', 'notoSansMedium')};
@@ -34,18 +31,22 @@ const SIZE_ENUM = {
     `,
 };
 
-const BUTTON_CSS_ENUM = {
-    error: ERROR_COLOR_CSS,
-    success: SUCCESS_COLOR_CSS,
+const BUTTON_COLOR_TYPE = {
+    error: css`
+        ${({ theme: { color } }) => colorMixin(color.white, color.red)}
+    `,
+    success: css`
+        ${({ theme: { color } }) => colorMixin(color.white, color.primary)}
+    `,
+    light: css`
+        ${({ theme: { color } }) => colorMixin(color.black, color.gray3)}
+    `,
 };
 
 const StyledButton = styled.button`
     width: auto;
-    ${({ size }) => SIZE_ENUM[size]}
-    ${({ color }) => BUTTON_CSS_ENUM[color]}
-    outline: none;
-    border: none;
+    ${({ size }) => BUTTON_SIZE_TYPE[size]};
+    ${({ color }) => BUTTON_COLOR_TYPE[color]};
     border-radius: 5px;
-    cursor: pointer;
     box-sizing: content-box;
 `;

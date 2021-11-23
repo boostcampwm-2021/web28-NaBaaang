@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
-import Box from '@/components/Common/Box';
-import Button from '@/components/Common/Button';
+import { ReactComponent as LeftArrowIcon } from '@/assets/images/left-arrow.svg';
+import { ReactComponent as RightArrowIcon } from '@/assets/images/right-arrow.svg';
+
+import { Box, IconButton } from '@/components/Common';
 
 const MOVE_DIR = {
     prev: -1,
@@ -36,7 +38,7 @@ export default function Slider({ children, navigation = false }) {
     const showNextSlide = () => handleSliceButtonClick('next');
 
     useEffect(() => {
-        if (children) {
+        if (children && children.length > 1) {
             slideCount.current = children.length;
         }
     }, []);
@@ -46,11 +48,15 @@ export default function Slider({ children, navigation = false }) {
             {navigation && (
                 <>
                     <PrevButtonWrap>
-                        <Button text="prev" onClick={showPrevSlide} />
+                        <IconButton onClick={showPrevSlide}>
+                            <LeftArrowIcon />
+                        </IconButton>
                     </PrevButtonWrap>
 
                     <NextButtonWrap>
-                        <Button text="next" onClick={showNextSlide} />
+                        <IconButton onClick={showNextSlide}>
+                            <RightArrowIcon />
+                        </IconButton>
                     </NextButtonWrap>
                 </>
             )}

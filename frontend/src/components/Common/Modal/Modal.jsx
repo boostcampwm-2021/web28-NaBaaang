@@ -4,33 +4,30 @@ import styled from 'styled-components';
 import { flexMixin, fontMixin } from '@/styles/mixins.js';
 
 import Portal from '@/Portal';
-import Card from '@/components/Common/Card';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import Typography from '../Typography/Typography';
+import { Card, Button, Box, Typography } from '@/components/Common';
 
 export default function Modal({
     open,
-    showButton,
-    alert,
     onClose,
     onSuccess,
-    onCancelText,
-    onSuccessText,
+    closeText,
+    successText,
     children,
     width = '350px',
     height = '350px',
 }) {
-    const cancleText = !onCancelText ? 'Cancle' : onCancelText;
-    const successText = !onSuccessText ? 'OK' : onSuccessText;
-
     if (!open) return null;
 
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
                 <OverlayBox onClick={onClose} width="100%" height="100%" />
-                <Card flexDirection="column" width={width} height={height}>
+                <Card
+                    alignItems="stretch"
+                    flexDirection="column"
+                    width={width}
+                    height={height}
+                >
                     <Box flex={0.5}>
                         <Typography
                             variant="h3"
@@ -40,32 +37,28 @@ export default function Modal({
                             Nabaaang
                         </Typography>
                     </Box>
-                    {children && <ContentBox flex={3}>{children}</ContentBox>}
 
-                    {showButton && alert ? (
-                        <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
-                        </ButtonBox>
-                    ) : (
-                        <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="error"
-                                onClick={onClose}
-                                text={cancleText}
-                                size="small"
-                            />
+                    <ContentBox flex={3}>{children}</ContentBox>
 
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
+                    {(closeText || successText) && (
+                        <ButtonBox flex={1} alignItems="center">
+                            {closeText && (
+                                <Button
+                                    color="error"
+                                    onClick={onClose}
+                                    text={closeText}
+                                    size="small"
+                                />
+                            )}
+
+                            {successText && (
+                                <Button
+                                    color="success"
+                                    onClick={onSuccess}
+                                    text={successText}
+                                    size="small"
+                                />
+                            )}
                         </ButtonBox>
                     )}
                 </Card>

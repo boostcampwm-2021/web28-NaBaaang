@@ -26,6 +26,14 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  input,
+  button{
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+    
   
 
   ${fontMixin('notoSansLight', notoSansLight)}

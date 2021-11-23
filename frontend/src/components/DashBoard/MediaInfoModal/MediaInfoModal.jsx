@@ -2,19 +2,15 @@ import React from 'react';
 
 import { MEDIA_URL } from '@/constants/url';
 
-import Modal from '@/components/Common/Modal';
-import Box from '@/components/Common/Box';
-
-import Typography from '@/components/Common/Typography/Typography';
+import { Modal, Box, Typography } from '@/components/Common';
 
 export default function MediaInfoModal({ onClose, open, streamKey }) {
     return (
         <Modal
             width="600px"
-            hegiht="400px"
+            height="400px"
             open={open}
-            showButton={false}
-            onCancleText="닫기"
+            closeText="닫기"
             onClose={onClose}
             justifyContent="flex-start"
         >
