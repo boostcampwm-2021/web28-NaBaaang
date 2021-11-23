@@ -6,17 +6,10 @@ import { flexMixin, fontMixin } from '@/styles/mixins.js';
 import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
 
 import Portal from '@/Portal';
-import { Card, Button, Box, Typography, IconButton } from '@/components/Common';
+import { Card, Box, Typography, IconButton } from '@/components/Common';
 import { ModalContext } from '@/store/ModalStore';
 
-export default function Modal({
-    onClose,
-    onSuccess,
-    closeText,
-    successText,
-    width = '350px',
-    height = '350px',
-}) {
+export default function Modal() {
     const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
 
     if (!isModalOpen) return null;
@@ -26,12 +19,7 @@ export default function Modal({
             <ModalBox width="100%" height="100%">
                 <OverlayBox onClick={closeModal} width="100%" height="100%" />
 
-                <Card
-                    alignItems="stretch"
-                    flexDirection="column"
-                    width={width}
-                    height={height}
-                >
+                <Card alignItems="stretch" flexDirection="column" width="350px" height="350px">
                     <CloseButtonBox>
                         <IconButton type="square" onClick={closeModal}>
                             <CloseIcon />
@@ -49,28 +37,6 @@ export default function Modal({
                     </Box>
 
                     <ContentBox flex={3}>{modalContent}</ContentBox>
-
-                    {(closeText || successText) && (
-                        <ButtonBox flex={1} alignItems="center">
-                            {closeText && (
-                                <Button
-                                    color="error"
-                                    onClick={onClose}
-                                    text={closeText}
-                                    size="small"
-                                />
-                            )}
-
-                            {successText && (
-                                <Button
-                                    color="success"
-                                    onClick={onSuccess}
-                                    text={successText}
-                                    size="small"
-                                />
-                            )}
-                        </ButtonBox>
-                    )}
                 </Card>
             </ModalBox>
         </Portal>
@@ -105,12 +71,4 @@ const ContentBox = styled(Box)`
     text-align: center;
     margin-bottom: auto;
     ${flexMixin('column', 'center', 'center')}
-`;
-
-const ButtonBox = styled(Box)`
-    width: 100%;
-    margin-top: auto;
-    button {
-        margin: 0 auto;
-    }
 `;
