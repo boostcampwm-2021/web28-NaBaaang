@@ -6,6 +6,7 @@ import useForm from '@/hooks/useForm';
 
 import { ModalContext } from '@/store/ModalStore';
 import { Box } from '@/components/Common';
+import { fetchCreateChannel } from '@/apis/channel';
 import ChannelModalForm from '../ChannelModalForm';
 
 export default function ChannelCreateModal() {
@@ -38,7 +39,6 @@ export default function ChannelCreateModal() {
                 errors={errors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                formData={formData}
             />
         </Box>
     );
