@@ -11,7 +11,7 @@ const fetchTemplate = (method, payload = '', header = '') => {
             headers,
         },
     };
-    if (method === 'POST') {
+    if (['POST', 'PATCH'].includes(method)) {
         return {
             option: { ...template.option, body: JSON.stringify(payload) },
         };
@@ -28,6 +28,15 @@ const actionTypeInfo = payload => {
                 refresh: `${window.localStorage.refreshToken}`,
             }),
         },
+
+        FETCH_UPDATE_CHANNEL: {
+            url: `${API_URL}/api/channels/${payload.id}`,
+            ...fetchTemplate('PATCH', payload, {
+                Authorization: `Bearer ${window.localStorage.accessToken}`,
+                refresh: `${window.localStorage.refreshToken}`,
+            }),
+        },
+
         FETCH_WATCH_CHANNEL: {
             url: `${API_URL}/api/channels/${payload}/watch`,
             ...fetchTemplate(
