@@ -53,8 +53,7 @@ const DropDownContent = styled(Box)`
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const DropDownItem = styled.div`
-    display: block;
+const DropDownItem = styled(Box)`
     padding: 12px 16px;
     :hover {
         cursor: pointer;
