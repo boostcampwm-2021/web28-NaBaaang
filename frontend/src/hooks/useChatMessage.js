@@ -30,18 +30,17 @@ export default function useChatMessage() {
 
     const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
-
-    const handleSocketMessage = msg => {
+    const handleMessageFromBuffer = msg => {
         pushBuffer(msg);
         onThrottle();
     };
 
     useEffect(() => {
-        socket.chat.onMessage(handleSocketMessage);
+        socket.chat.onMessage(handleMessageFromBuffer);
         return () => {
             socket.chat.clearChatEvents();
         };
     }, []);
 
-    return { messageList };
+    return { messageList, handleMessageFromBuffer };
 }
