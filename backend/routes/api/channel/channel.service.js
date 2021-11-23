@@ -19,9 +19,26 @@ const create = async channelInfo => {
         return channelId;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw error;
     }
 };
+
+const update = async channelInfo => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        await channelDAO.updateChannel(channelInfo, transaction);
+        const updatedChannel = await channelDAO.findByChannelId(
+            channelInfo.id,
+            transaction,
+        );
+        await transaction.commit();
+        return updatedChannel;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
+};
+
 const getChannelById = async id => {
     const transaction = await db.sequelize.transaction();
     try {
@@ -121,6 +138,7 @@ const isChannelOwner = async req => {
 
 export default {
     create,
+    update,
     getChannelById,
     getAuthenticatedChannelById,
     getLiveChannels,

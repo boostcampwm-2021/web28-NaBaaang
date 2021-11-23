@@ -22,6 +22,26 @@ const createChannel = async (req, res) => {
     }
 };
 
+const updateChannel = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        // parameter undefined일 경우 에러 처리
+        const { title, category, description } = req.body;
+        const updatedChannel = await channelService.update({
+            id,
+            title,
+            category,
+            description,
+        });
+        res.status(STATUS.OK).json(updatedChannel);
+    } catch (error) {
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
+    }
+};
+
 const setUserRole = async (req, res, next) => {
     try {
         if (!authService.isAuthenticate(req.headers)) {
@@ -153,6 +173,7 @@ const getAuthenticatedChannel = async (req, res) => {
 };
 export default {
     createChannel,
+    updateChannel,
     setUserRole,
     getChannel,
     getLiveChannels,
