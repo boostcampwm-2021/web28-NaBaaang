@@ -7,7 +7,7 @@ import useBuffer from './useBuffer';
 import useArray from './useArray';
 import useThrottle from './useThrottle';
 
-const THROTTLE_LIMIT = 50;
+const THROTTLE_LIMIT = 1000;
 const BUFFER_LIMIT = 50;
 const MESSAGE_LIMIT = 20;
 

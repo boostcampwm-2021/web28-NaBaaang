@@ -12,7 +12,7 @@ const insertMessage = async ({ channelId, senderId, content }) => {
 
         return messageModel.id;
     } catch (error) {
-        console.error(error);
+        return -1;
     }
 };
 
