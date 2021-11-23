@@ -9,22 +9,21 @@ const BORDER_RADIUS_TYPE = {
     `,
 };
 
-
 const BUTTON_SIZE_TYPE = {
     small: css`
         width: 1rem;
         height: 1rem;
-        padding: 0.5rem;
+        padding: 0.3rem;
     `,
     medium: css`
         width: 1.5rem;
         height: 1.5rem;
-        padding: 0.75rem;
+        padding: 0.3rem;
     `,
     large: css`
         width: 2rem;
         height: 2rem;
-        padding: 1rem;
+        padding: 0.3rem;
     `,
 };
 
