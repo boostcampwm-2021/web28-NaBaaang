@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import NotoSansKRLightWOFF from '@/assets/fonts/NotoSansKR-Light.woff';
 import NotoSansKRLightWOFF2 from '@/assets/fonts/NotoSansKR-Light.woff2';
 import NotoSansKRLightOTF from '@/assets/fonts/NotoSansKR-Light.otf';
@@ -8,16 +8,7 @@ import NotoSansKRMediumOTF from '@/assets/fonts/NotoSansKR-Medium.otf';
 import NotoSansKRBoldWOFF from '@/assets/fonts/NotoSansKR-Bold.woff';
 import NotoSansKRBoldWOFF2 from '@/assets/fonts/NotoSansKR-Bold.woff2';
 import NotoSansKRBoldOTF from '@/assets/fonts/NotoSansKR-Bold.otf';
-
-const fontMixin = ({ name, bold = 500, woff2, woff, otf }) => css`
-    @font-face {
-        font-family: ${name};
-        font-weight: ${bold};
-        font-display: fallback;
-        src: local(${name}), url(${woff2}) format('woff2'),
-            url(${woff}) format('woff'), url(${otf}) format('opentype');
-    }
-`;
+import { fontFaceMixin } from './mixins';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -45,21 +36,21 @@ const GlobalStyle = createGlobalStyle`
     
   
 
-  ${fontMixin({
+  ${fontFaceMixin({
       name: 'Noto Sans Kr Light',
       bold: 300,
       woff: NotoSansKRLightWOFF,
       woff2: NotoSansKRLightWOFF2,
       otf: NotoSansKRLightOTF,
   })}
-  ${fontMixin({
+  ${fontFaceMixin({
       name: 'Noto Sans Kr Medium',
       bold: 500,
       woff: NotoSansKRMeidumWOFF,
       woff2: NotoSansKRMeidumWOFF2,
       otf: NotoSansKRMediumOTF,
   })}
-  ${fontMixin({
+  ${fontFaceMixin({
       name: 'Noto Sans KR Bold',
       bold: 900,
       woff: NotoSansKRBoldWOFF,

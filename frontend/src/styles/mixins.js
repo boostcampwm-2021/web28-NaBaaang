@@ -28,4 +28,21 @@ const fontMixin = (size, lineh, fontFamily = 'Noto Sans Kr Medium') => css`
     font-family: '${fontFamily}';
 `;
 
-export { flexMixin, borderBoxMixin, sizeMixin, colorMixin, fontMixin };
+const fontFaceMixin = ({ name, bold = 500, woff2, woff, otf }) => css`
+    @font-face {
+        font-family: ${name};
+        font-weight: ${bold};
+        font-display: fallback;
+        src: local(${name}), url(${woff2}) format('woff2'),
+            url(${woff}) format('woff'), url(${otf}) format('opentype');
+    }
+`;
+
+export {
+    flexMixin,
+    borderBoxMixin,
+    sizeMixin,
+    colorMixin,
+    fontMixin,
+    fontFaceMixin,
+};
