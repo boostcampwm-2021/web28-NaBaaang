@@ -22,16 +22,10 @@ const borderBoxMixin = (stroke, radius, color = 'black') => css`
     border: ${stroke} solid ${color};
 `;
 
-const fontMixin = (
-    size,
-    lineh,
-    fontFamily = 'notoSansLight',
-    color = 'black',
-) => css`
+const fontMixin = (size, lineh, fontFamily = 'Noto Sans Kr Medium') => css`
     font-size: ${size};
     line-height: ${lineh};
     font-family: '${fontFamily}';
-    color: ${color};
 `;
 
 export { flexMixin, borderBoxMixin, sizeMixin, colorMixin, fontMixin };
