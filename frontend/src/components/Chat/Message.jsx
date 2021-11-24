@@ -14,7 +14,7 @@ export default function Message({
     status,
     onDelete,
 }) {
-    const deleteButton = status && (
+    const deleteButton = !status && (
         <DeleteButton
             text="X"
             color="error"
