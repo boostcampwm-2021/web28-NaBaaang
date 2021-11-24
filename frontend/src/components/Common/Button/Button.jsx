@@ -1,7 +1,6 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-
-import { colorMixin, fontMixin } from '@/styles/mixins';
+import styled from 'styled-components';
+import { BUTTON_SIZE_TYPE, BUTTON_COLOR_TYPE } from '@/constants/css';
 
 export default function Button({
     onClick,
@@ -15,37 +14,6 @@ export default function Button({
         </StyledButton>
     );
 }
-
-const BUTTON_SIZE_TYPE = {
-    extra_small: css`
-        padding: 10px;
-        ${fontMixin('12px', '0.5em', 'notoSansMedium')};
-    `,
-    small: css`
-        padding: 10px 15px;
-        ${fontMixin('16px', '1em', 'notoSansMedium')};
-    `,
-    medium: css`
-        padding: 12px 20px;
-        ${fontMixin('20px', '1em', 'notoSansMedium')};
-    `,
-    large: css`
-        padding: 14px 25px;
-        ${fontMixin('24px', '1em', 'notoSansMedium')};
-    `,
-};
-
-const BUTTON_COLOR_TYPE = {
-    error: css`
-        ${({ theme: { color } }) => colorMixin(color.white, color.red)}
-    `,
-    success: css`
-        ${({ theme: { color } }) => colorMixin(color.white, color.primary)}
-    `,
-    light: css`
-        ${({ theme: { color } }) => colorMixin(color.black, color.gray3)}
-    `,
-};
 
 const StyledButton = styled.button`
     width: auto;

@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import { colorMixin } from '@/styles/mixins';
 
 const BORDER_RADIUS_TYPE = {
     squre: css`
@@ -27,4 +28,16 @@ const BUTTON_SIZE_TYPE = {
     `,
 };
 
-export { BORDER_RADIUS_TYPE, BUTTON_SIZE_TYPE };
+const BUTTON_COLOR_TYPE = {
+    error: css`
+        ${({ theme: { color } }) => colorMixin(color.white, color.red)}
+    `,
+    success: css`
+        ${({ theme: { color } }) => colorMixin(color.white, color.primary)}
+    `,
+    light: css`
+        ${({ theme: { color } }) => colorMixin(color.black, color.gray3)}
+    `,
+};
+
+export { BORDER_RADIUS_TYPE, BUTTON_SIZE_TYPE, BUTTON_COLOR_TYPE };

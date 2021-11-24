@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import DeleteIcon from '@/assets/images/delete-icon.svg';
+import { BUTTON_COLOR_TYPE } from '@/constants/css';
 
 import { isFunction } from '@/util';
 
-import { Box, Typography } from '@/components/Common';
+import { Box } from '@/components/Common';
 
 export default function Chip({ onDelete = null, text, color, size = 'small' }) {
     const [isShow, setIsShow] = useState(true);
@@ -25,26 +26,17 @@ export default function Chip({ onDelete = null, text, color, size = 'small' }) {
             color={color}
             size={size}
         >
-            <Typography variant="span">{text}</Typography>
+            {text}
             {isFunction(onDelete) && <Icon src={DeleteIcon} />}
         </StyledChip>
     );
 }
 
-const CHIP_COLOR_TYPE = {
-    success: css`
-        background-color: ${({ theme: { color } }) => color.primary};
-    `,
-    error: css`
-        background-color: ${({ theme: { color } }) => color.red};
-    `,
-};
-
 const StyledChip = styled(Box)`
-    padding: 0.1rem 0.2rem;
+    padding: 0.25rem 0.5rem;
     box-sizing: content-box;
     border-radius: 15px;
-    ${({ color }) => CHIP_COLOR_TYPE[color]};
+    ${({ color }) => BUTTON_COLOR_TYPE[color]};
     cursor: pointer;
     margin: 0.5rem;
 `;
