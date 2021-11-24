@@ -71,6 +71,7 @@ export default function Header() {
                             handleModal(
                                 <ChannelModal
                                     subHandleOnSubmit={handleOnCreateChannel}
+                                    successText="방송 시작"
                                 />,
                             )
                         }

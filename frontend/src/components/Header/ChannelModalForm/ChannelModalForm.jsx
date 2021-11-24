@@ -14,6 +14,7 @@ export default function ChannelModalForm({
     handleChange,
     handleInputChange,
     initFormData,
+    successText,
     errors,
 }) {
     const { title, description, category } = initFormData || {
@@ -69,7 +70,7 @@ export default function ChannelModalForm({
                 </Box>
             </Box>
 
-            <Button text="방송 시작" color="success" onClick={handleSubmit} />
+            <Button text={successText} color="success" onClick={handleSubmit} />
         </Form>
     );
 }

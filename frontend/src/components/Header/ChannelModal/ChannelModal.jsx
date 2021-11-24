@@ -7,7 +7,11 @@ import { ModalContext } from '@/store/ModalStore';
 import { Box } from '@/components/Common';
 import ChannelModalForm from '../ChannelModalForm';
 
-export default function ChannelModal({ subHandleOnSubmit, initFormData }) {
+export default function ChannelModal({
+    subHandleOnSubmit,
+    initFormData,
+    successText,
+}) {
     const { closeModal } = useContext(ModalContext);
 
     const handleOnSubmit = async formData => {
@@ -38,6 +42,7 @@ export default function ChannelModal({ subHandleOnSubmit, initFormData }) {
                 handleSubmit={handleSubmit}
                 handleInputChange={handleInputChange}
                 initFormData={formData}
+                successText={successText}
             />
         </Box>
     );

@@ -38,6 +38,7 @@ export default function DashBoardInfo({ info }) {
             <ChannelModal
                 initFormData={{ id, title, description, category }}
                 subHandleOnSubmit={handleOnUpdateChannel}
+                successText="방송 수정"
             />,
         );
     };
