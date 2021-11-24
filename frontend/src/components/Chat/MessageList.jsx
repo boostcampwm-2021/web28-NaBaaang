@@ -21,10 +21,9 @@ export default function MessageList({
 
     const convertedMessageList = () => {
         const filtered = filterUnsentMessage();
-        const targetList = filtered.length ? filtered : messageList;
         return (
-            targetList &&
-            targetList.map(message => (
+            filtered &&
+            filtered.map(message => (
                 <Message
                     key={message.id}
                     id={message.id}

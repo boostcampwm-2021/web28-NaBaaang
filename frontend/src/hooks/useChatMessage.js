@@ -50,7 +50,7 @@ export default function useChatMessage() {
             );
             return filteredMessageList;
         }
-        return [];
+        return messageList;
     };
 
     const deleteMessage = id => () => {

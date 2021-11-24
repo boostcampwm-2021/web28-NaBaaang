@@ -2,8 +2,6 @@ import EVENT from "../constants/socketEvents.js";
 
 const channel = (io, socket) => {
   const joinChannel = ({ channelId, chatId, auth }) => {
-    console.log("SERVER CHANNEL JOIN CHANNEL");
-    console.log(channelId, chatId, auth);
     try {
       if (!channelId || !chatId) return;
       socket.channelId = channelId.toString();
