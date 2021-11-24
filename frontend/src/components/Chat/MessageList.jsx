@@ -1,9 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+
 import styled, { css } from 'styled-components';
+
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
-export default function MessageList({ messageList, setMessageList }) {
+export default function MessageList({
+    messageList,
+    filterUnsentMessage,
+    deleteMessage,
+}) {
     const messageBoxRef = useRef();
 
     const scrollToBottom = () => {
@@ -13,23 +19,23 @@ export default function MessageList({ messageList, setMessageList }) {
         }
     };
 
-    const onDelete = id => () => {
-        setMessageList(prev => prev.filter(x => x.id !== id));
+    const convertedMessageList = () => {
+        const filtered = filterUnsentMessage();
+        return (
+            filtered &&
+            filtered.map(message => (
+                <Message
+                    key={message.id}
+                    id={message.id}
+                    type={message.type}
+                    nickname={message.nickname}
+                    content={message.content}
+                    status={message.status}
+                    onDelete={deleteMessage}
+                />
+            ))
+        );
     };
-
-    const convertedMessageList =
-        messageList &&
-        messageList.map(message => (
-            <Message
-                key={message.id}
-                id={message.id}
-                type={message.type}
-                nickname={message.nickname}
-                content={message.content}
-                status={message.status}
-                onDelete={onDelete}
-            />
-        ));
 
     useEffect(() => {
         scrollToBottom();
@@ -38,11 +44,12 @@ export default function MessageList({ messageList, setMessageList }) {
     return (
         <StyledBox flex={1} height="100%" ref={messageBoxRef}>
             <MessageListBox
+                width="100%"
                 flexDirection="column"
                 alignItems="flex-start"
                 flex={1}
             >
-                {convertedMessageList}
+                {convertedMessageList()}
             </MessageListBox>
         </StyledBox>
     );

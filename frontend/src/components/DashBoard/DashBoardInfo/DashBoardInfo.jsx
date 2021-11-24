@@ -9,8 +9,9 @@ import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
 import OBSModal from '../OBSModal';
 
-export default function DashBoardInfo({ info, fetchData }) {
+export default function DashBoardInfo({ info, fetchData, userCnt }) {
     const { id, title, description, category, streamKey } = info;
+
     const { openModal } = useContext(ModalContext);
 
     const handleOnUpdateChannel = async formData => {
@@ -56,6 +57,7 @@ export default function DashBoardInfo({ info, fetchData }) {
             />
             <DashBoardCard onClick={openMedialModal} title="송출 정보 확인" />
             <DashBoardCard onClick={openOBSModal} title="OBS 가이드" />
+            <DashBoardCard title={`시청자 수 ${userCnt}`} />
         </Box>
     );
 }

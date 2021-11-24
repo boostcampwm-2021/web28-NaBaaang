@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BORDER_RADIUS_TYPE, BUTTON_SIZE_TYPE } from '@/constants/css';
+import { BORDER_RADIUS_TYPE, ICON_BUTTON_SIZE_TYPE } from '@/constants/css';
 
 export default function IconButton({
     onClick,
@@ -18,7 +18,7 @@ export default function IconButton({
 
 const StyledButton = styled.button`
     width: auto;
-    ${({ size }) => BUTTON_SIZE_TYPE[size]}
+    ${({ size }) => ICON_BUTTON_SIZE_TYPE[size]}
     ${({ type }) => BORDER_RADIUS_TYPE[type]}
     box-sizing: content-box;
     transition: background-color ease-in 100ms;

@@ -105,7 +105,7 @@ const HeaderWrap = styled.header`
 `;
 
 const Logo = styled.img`
-    height: 60px;
+    height: 35px;
     cursor: pointer;
 `;
 
