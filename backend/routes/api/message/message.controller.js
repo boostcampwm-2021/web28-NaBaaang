@@ -20,7 +20,7 @@ const createMessage = async (req, res, next) => {
 
         res.status(STATUS.CREATED).json(messageId);
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).send();
+        res.status(STATUS.INTERNAL_SERVER_ERROR).send(error);
     }
 };
 

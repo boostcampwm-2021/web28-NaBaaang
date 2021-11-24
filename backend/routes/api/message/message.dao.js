@@ -6,12 +6,12 @@ const insertMessage = async ({ channelId, senderId, content }) => {
     try {
         const messageModel = await message.create({
             content,
-            chatId: channelId, 
+            chatId: channelId,
             senderId,
         });
         return messageModel.id;
     } catch (error) {
-        return -1;
+        throw new Error('MESSAGE_NOT_CREATED');
     }
 };
 

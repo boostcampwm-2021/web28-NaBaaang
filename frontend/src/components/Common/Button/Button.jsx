@@ -18,7 +18,7 @@ export default function Button({
 
 const BUTTON_SIZE_TYPE = {
     extra_small: css`
-        padding: 10px;
+        padding: 0.5em;
         ${fontMixin('12px', '0.5em', 'notoSansMedium')};
     `,
     small: css`
