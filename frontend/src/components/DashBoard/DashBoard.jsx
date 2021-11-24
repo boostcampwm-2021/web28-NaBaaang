@@ -20,10 +20,11 @@ export default function DashBoard() {
     const { channelId } = params;
     const navigate = useNavigate();
     const [isStreamLive, setIsStreamLive] = useState(false);
-    const { data, loading, error } = useFetch({
+    const { data, loading, error, fetchData } = useFetch({
         type: 'FETCH_CHANNEL_AUTHENTICATE',
         payload: channelId,
     });
+
     useSocket(data);
 
     const role = ROLE.ALL;
@@ -67,7 +68,7 @@ export default function DashBoard() {
         >
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
-                <DashBoardInfo info={data} />
+                <DashBoardInfo info={data} fetchData={fetchData} />
             </StyledBox>
 
             <Divider direction="column" />

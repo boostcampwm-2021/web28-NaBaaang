@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { ModalContext } from '@/store/ModalStore';
 
@@ -10,16 +9,14 @@ import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
 import OBSModal from '../OBSModal';
 
-export default function DashBoardInfo({ info }) {
+export default function DashBoardInfo({ info, fetchData }) {
     const { id, title, description, category, streamKey } = info;
     const { openModal } = useContext(ModalContext);
 
-    const navigate = useNavigate();
-
     const handleOnUpdateChannel = async formData => {
         try {
-            const { id } = await fetchUpdateChannel(formData);
-            navigate(`/stream-manager/${id}`);
+            await fetchUpdateChannel(formData);
+            fetchData();
         } catch (err) {
             throw new Error(err);
         }
