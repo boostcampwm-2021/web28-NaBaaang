@@ -10,6 +10,7 @@ import ProfileIcon from '@/assets/images/profile-icon.svg';
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
+import { fetchCreateChannel } from '@/apis/channel';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
@@ -25,6 +26,15 @@ export default function Header() {
     const logoutHandler = () => {
         authSignOut();
         navigate(window.location.pathname);
+    };
+
+    const handleOnCreateChannel = async formData => {
+        try {
+            const channelID = await fetchCreateChannel(formData);
+            navigate(`/stream-manager/${channelID}`);
+        } catch (err) {
+            throw new Error(err);
+        }
     };
 
     const profileDropDownItems = () => {
@@ -57,15 +67,26 @@ export default function Header() {
                     <IconButton
                         size="large"
                         type="square"
-                        onClick={() => handleModal(<ChannelModal />)}
+                        onClick={() =>
+                            handleModal(
+                                <ChannelModal
+                                    subHandleOnSubmit={handleOnCreateChannel}
+                                    successText="방송 시작"
+                                />,
+                            )
+                        }
                     >
                         <CameraIcon />
                     </IconButton>
 
                     <DropDown
-                        toggleButtonChild={<Logo src={ProfileIcon} />}
+                        toggleButtonChild={
+                            <IconButton type="square" size="large">
+                                <Logo src={ProfileIcon} />
+                            </IconButton>
+                        }
                         items={profileDropDownItems()}
-                        contentPos={{ left: '-3.4rem', top: '4rem' }}
+                        contentPos={{ top: '4rem' }}
                     />
                 </IconBox>
             )}

@@ -1,20 +1,16 @@
-export default function ChannelCreateValidation({
-    title,
-    category,
-    description,
-}) {
+export default function validateChannelForm({ title, category, description }) {
     const errors = {};
 
     if (!title) {
-        errors.title = '방송 제목이 생성되지 않았습니다.';
+        errors.title = '방송 제목을 입력해주세요.';
     }
 
     if (!category) {
-        errors.category = '방송 카테고리가 생성되지 않았습니다.';
+        errors.category = '방송 카테고리를 입력해주세요. ';
     }
 
     if (!description) {
-        errors.description = '방송 설명이 생성되지 않았습니다.';
+        errors.description = '방송 설명을 입력해주세요.';
     }
 
     return errors;
