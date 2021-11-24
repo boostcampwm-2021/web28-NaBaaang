@@ -16,9 +16,9 @@
     "start:frontend": "cd frontend && yarn start",
     "start:backend": "cd backend && yarn start",
     "start:socket": "cd socket && yarn start",
-    "ttab:frontend": "ttab npm run start:frontend",
-    "ttab:backend": "ttab npm run start:backend",
-    "ttab:socket": "ttab npm run start:socket"
+    "ttab:frontend": "ttab -a iTerm2 npm run start:frontend",
+    "ttab:backend": "ttab -a iTerm2 npm run start:backend",
+    "ttab:socket": "ttab -a iTerm2 npm run start:socket"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,7 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 
 import { go } from '@/util/fp';
 import socket from '@/socket';
-import { UserContext } from '@/store/userStore';
 
 import useBuffer from './useBuffer';
 import useArray from './useArray';
@@ -16,9 +15,6 @@ export default function useChatMessage() {
     const { arr: messageList, set: setMessageList } = useArray([]);
     const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
         useBuffer(BUFFER_LIMIT);
-    const {
-        userInfo: { user },
-    } = useContext(UserContext);
 
     const concatBufferToMessage = msg => msg.concat(getBufferList());
     const sliceMessage = msg => msg.slice(-MESSAGE_LIMIT);
@@ -34,28 +30,44 @@ export default function useChatMessage() {
 
     const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
-    const filterMessageToRender = msg => {
-        return (
-            (user.id !== msg.userId && msg.status > 0) ||
-            (user.id === msg.userId && msg.status === -1)
-        );
-    };
-
     const throttleNewMessage = msg => {
         pushBuffer(msg);
         onThrottle();
     };
 
-    const handleSocketMessage = msg => {
-        return filterMessageToRender(msg) && throttleNewMessage(msg);
+    const filterUnsentMessage = () => {
+        const unsentMessageList = messageList.filter(x => !x.status);
+        if (unsentMessageList.length) {
+            const toRemove = [];
+            unsentMessageList.forEach(unsent => {
+                const idxToRemove = messageList.findIndex(
+                    message => message.id === unsent.id && message.status,
+                );
+                toRemove.push(idxToRemove);
+            });
+            const filteredMessageList = messageList.filter(
+                (message, idx) => !toRemove.includes(idx),
+            );
+            return filteredMessageList;
+        }
+        return messageList;
+    };
+
+    const deleteMessage = id => () => {
+        setMessageList(prev => prev.filter(x => x.id !== id));
     };
 
     useEffect(() => {
-        socket.chat.onMessage(handleSocketMessage);
+        socket.chat.onMessage(throttleNewMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
     }, []);
 
-    return { messageList, setMessageList, throttleNewMessage };
+    return {
+        messageList,
+        filterUnsentMessage,
+        deleteMessage,
+        throttleNewMessage,
+    };
 }
