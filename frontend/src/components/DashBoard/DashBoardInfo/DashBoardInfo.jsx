@@ -7,7 +7,7 @@ import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
 import OBSModal from '../OBSModal';
 
-export default function DashBoardInfo({ info }) {
+export default function DashBoardInfo({ info, userCnt }) {
     const { streamKey } = info;
     const { openModal } = useContext(ModalContext);
 
@@ -30,6 +30,7 @@ export default function DashBoardInfo({ info }) {
             <DashBoardCard title="방송 정보 편집" info={info} />
             <DashBoardCard onClick={openMedialModal} title="송출 정보 확인" />
             <DashBoardCard onClick={openOBSModal} title="OBS 가이드" />
+            <DashBoardCard title={`시청자 수 ${userCnt}`} />
         </Box>
     );
 }
