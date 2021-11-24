@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { MESSAGE_TYPE } from '@/constants/messageType';
-import { Box, Button, Typography } from '@/components/Common';
-// import { Box, Button } from '../Common';
+// import { Box, Button, Typography } from '@/components/Common';
+import { Box, Button } from '@/components/Common';
 
 export default function Message({
     id,
@@ -24,11 +24,7 @@ export default function Message({
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
         <MessageBox flexDirection="column" width="85%" alignItems="flex-start">
             {nickname}
-            <Box
-                flexDirection="row"
-                width="85%"
-                justifyContent="flex-start"
-            >
+            <Box flexDirection="row" width="85%" justifyContent="flex-start">
                 {deleteButton}
                 <Bubble>{content}</Bubble>
             </Box>
@@ -56,13 +52,6 @@ export default function Message({
 const MessageBox = styled(Box)`
     min-height: 1rem;
     margin: 1rem;
-     ${/*fontMixin(
-         '1em',
-         '1em',
-         'notoSansMedium',
-         ({ theme }) => theme.color.primary,
-     )*/}
-
 `;
 
 const Bubble = styled.div`
@@ -72,12 +61,6 @@ const Bubble = styled.div`
     padding: 0.5em;
     border-radius: 15px;
     background-color: ${({ theme }) => theme.color.offwhite};
-    ${/*fontMixin(
-        '1em',
-        '1em',
-        'notoSansMedium',
-        ({ theme }) => theme.color.black2,
-    )*/};
 `;
 
 const DeleteButton = styled(Button)`
@@ -89,9 +72,4 @@ const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
     text-align: center;
-`;
-
-const StyledDonationValue = styled.div`
-    text-align: center;
-    ${/*fontMixin('1em', '1em', 'notoSansMedium')*/}
 `;
