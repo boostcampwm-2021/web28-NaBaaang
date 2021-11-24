@@ -27,10 +27,15 @@ export default function Channel() {
     return (
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
             <Box flexDirection="column" height="100%" flex={3}>
-                <Box width="100%" flex={3}>
+                <Box width="100%" flex={5}>
                     <Video streamKey={data.streamKey} />
                 </Box>
-                <Box width="100%" flex={1}>
+                <Box
+                    width="100%"
+                    flex={1}
+                    alignItems="unset"
+                    justifyContent="unset"
+                >
                     <ChannelDetail channelInfo={data} />
                 </Box>
             </Box>

@@ -14,9 +14,16 @@ const removeItemFromLocalStorage = keyList => {
     keyList.forEach(k => window.localStorage.removeItem(k));
 };
 
+const isFunction = fn => fn && {}.toString.call(fn) === '[object Function]';
+
+const isString = str =>
+    Object.prototype.toString.call(str) === '[object String]';
+
 export {
     replaceBlankAndNewLine,
     isTokenExist,
     setItemToLocalStorage,
     removeItemFromLocalStorage,
+    isFunction,
+    isString,
 };

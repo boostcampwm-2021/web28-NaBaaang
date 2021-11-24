@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { colorMixin } from '@/styles/mixins';
 import DeleteIcon from '@/assets/images/delete-icon.svg';
 
-import Box from '@/components/Common/Box';
-import Typography from '../Typography';
+import { isFunction } from '@/util';
 
-export default function Chip({ onDelete, text, color, size = 'small' }) {
+import { Box, Typography } from '@/components/Common';
+
+export default function Chip({ onDelete = null, text, color, size = 'small' }) {
     const [isShow, setIsShow] = useState(true);
 
     const handleClick = () => {
-        setIsShow(false);
-        onDelete();
+        if (isFunction(onDelete)) {
+            setIsShow(false);
+            onDelete();
+        }
     };
 
     if (!isShow) return null;
@@ -24,30 +26,25 @@ export default function Chip({ onDelete, text, color, size = 'small' }) {
             size={size}
         >
             <Typography variant="span">{text}</Typography>
-            {onDelete && <Icon src={DeleteIcon} />}
+            {isFunction(onDelete) && <Icon src={DeleteIcon} />}
         </StyledChip>
     );
 }
 
-const ErrorColor = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.red)}
-`;
-
-const SuccessColor = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.primary)}
-`;
-
-const ChipColorType = {
-    error: ErrorColor,
-    success: SuccessColor,
+const CHIP_COLOR_TYPE = {
+    success: css`
+        background-color: ${({ theme: { color } }) => color.primary};
+    `,
+    error: css`
+        background-color: ${({ theme: { color } }) => color.red};
+    `,
 };
 
 const StyledChip = styled(Box)`
-    height: 44px;
-    padding: 6px 16px;
-    font-size: 20px;
-    ${({ color }) => ChipColorType[color]}
+    padding: 0.1rem 0.2rem;
+    box-sizing: content-box;
     border-radius: 15px;
+    ${({ color }) => CHIP_COLOR_TYPE[color]};
     cursor: pointer;
     margin: 0.5rem;
 `;
