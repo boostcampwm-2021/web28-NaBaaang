@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { fontMixin } from '@/styles/mixins.js';
-
 import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
 
 import Portal from '@/Portal';
@@ -64,7 +62,6 @@ const CloseButtonBox = styled(Box)`
 `;
 
 const ContentBox = styled(Box)`
-    ${fontMixin('1rem', '1em', 'notoSansMedium')}
     text-align: center;
     width: 100%;
     height: 100%;

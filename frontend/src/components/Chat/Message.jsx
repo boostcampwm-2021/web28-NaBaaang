@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fontMixin } from '@/styles/mixins';
 import { MESSAGE_TYPE } from '@/constants/messageType';
-
-import { Box, Button, Typography } from '../Common';
+import { Box, Button, Typography } from '@/components/Common';
 
 export default function Message({
     id,
@@ -49,7 +47,6 @@ export default function Message({
 const SentMessage = styled(Box)`
     min-height: 1rem;
     margin: 1rem;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
 `;
 
 const UnSentMessage = styled(Box)`
@@ -57,17 +54,14 @@ const UnSentMessage = styled(Box)`
     border: 1px solid red;
     min-height: 1rem;
     margin: 1rem;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
 `;
 
 const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
+    text-align: center;
 `;
 
 const StyledDonationValue = styled.div`
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
+    text-align: center;
 `;
