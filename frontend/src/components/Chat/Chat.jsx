@@ -12,7 +12,7 @@ export default function Chat() {
         useChatMessage();
 
     const handleSubmit = message => {
-        throttleNewMessage({ ...message, status: 1 });
+        throttleNewMessage({ ...message, status: true });
         socket.chat.sendMessage(message);
         return () => {
             socket.chat.clearChatEvents();

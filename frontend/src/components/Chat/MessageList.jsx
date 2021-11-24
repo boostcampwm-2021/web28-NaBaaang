@@ -17,19 +17,43 @@ export default function MessageList({ messageList, setMessageList }) {
         setMessageList(prev => prev.filter(x => x.id !== id));
     };
 
-    const convertedMessageList =
-        messageList &&
-        messageList.map(message => (
-            <Message
-                key={message.id}
-                id={message.id}
-                type={message.type}
-                nickname={message.nickname}
-                content={message.content}
-                status={message.status}
-                onDelete={onDelete}
-            />
-        ));
+    const filterUnsentMessage = () => {
+        const unsentMessageList = messageList.filter(x => !x.status);
+        console.log(messageList, unsentMessageList);
+        if (unsentMessageList.length) {
+            const toRemove = [];
+            unsentMessageList.forEach(unsent => {
+                const idxToRemove = messageList.findIndex(
+                    message => message.id === unsent.id && message.status,
+                );
+                toRemove.push(idxToRemove);
+            });
+            const filteredMessageList = messageList.filter(
+                (message, idx) => !toRemove.includes(idx),
+            );
+            return filteredMessageList;
+        }
+        return [];
+    };
+
+    const convertedMessageList = () => {
+        const filtered = filterUnsentMessage();
+        const targetList = filtered.length ? filtered : messageList;
+        return (
+            targetList &&
+            targetList.map(message => (
+                <Message
+                    key={message.id}
+                    id={message.id}
+                    type={message.type}
+                    nickname={message.nickname}
+                    content={message.content}
+                    status={message.status}
+                    onDelete={onDelete}
+                />
+            ))
+        );
+    };
 
     useEffect(() => {
         scrollToBottom();
@@ -42,7 +66,7 @@ export default function MessageList({ messageList, setMessageList }) {
                 alignItems="flex-start"
                 flex={1}
             >
-                {convertedMessageList}
+                {convertedMessageList()}
             </MessageListBox>
         </StyledBox>
     );

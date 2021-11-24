@@ -15,7 +15,7 @@ export default function Message({
     onDelete,
 }) {
     if (MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL) {
-        return status > 0 ? (
+        return status ? (
             <SentMessage>
                 <Typography variant="span">
                     {nickname}:{content}

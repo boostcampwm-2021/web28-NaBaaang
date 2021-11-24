@@ -35,12 +35,9 @@ export default function useChatMessage() {
         onThrottle();
     };
 
-    const handleSocketMessage = msg => {
-        return throttleNewMessage(msg);
-    };
 
     useEffect(() => {
-        socket.chat.onMessage(handleSocketMessage);
+        socket.chat.onMessage(throttleNewMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
