@@ -14,35 +14,44 @@ export default function Message({
     status,
     onDelete,
 }) {
-    if (MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL) {
-        return status ? (
-            <MessageBox
-                flexDirection="column"
+    const deleteButton = status && (
+        <DeleteButton
+            text="X"
+            color="error"
+            size="extra_small"
+            onClick={onDelete(id)}
+        />
+    );
+    return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
+        <MessageBox flexDirection="column" width="85%" alignItems="flex-start">
+            {nickname}
+            <Box
+                flexDirection="row"
                 width="85%"
+                justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                {nickname}
+                {deleteButton}
                 <Bubble>{content}</Bubble>
-            </MessageBox>
-        ) : (
-            <MessageBox flexDirection="column" width="250px" height="55px">
-                {nickname}:{content}
-                <Button
-                    text="X"
-                    color="error"
-                    size="extra_small"
-                    onClick={onDelete(id)}
-                />
-            </MessageBox>
-        );
-    }
-    return (
+            </Box>
+        </MessageBox>
+    ) : (
         <StyledDonation>
-            <StyledDonationValue>{content}</StyledDonationValue>
-            <MessageBox>
-                {nickname}님이 <br />
-                비트 {content}개 선물하였습니다!!
-            </MessageBox>
+            <Box
+                flexDirection="row"
+                width="85%"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+            >
+                {deleteButton}
+                <Bubble>
+                    <StyledDonationValue>{content}</StyledDonationValue>
+                    <MessageBox>
+                        {nickname}님이 <br />
+                        비트 {content}개 선물하였습니다!!
+                    </MessageBox>
+                </Bubble>
+            </Box>
         </StyledDonation>
     );
 }
@@ -73,14 +82,19 @@ const Bubble = styled.div`
     )};
 `;
 
+const DeleteButton = styled(Button)`
+    position: absolute;
+    right: 0;
+`;
+
 const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
+    text-align: center;
     ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
 `;
 
 const StyledDonationValue = styled.div`
+    text-align: center;
     ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
 `;
