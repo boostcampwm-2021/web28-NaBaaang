@@ -4,6 +4,7 @@ import qs from 'qs';
 
 import { fetchSiginInGoogle } from '@/apis/auth';
 import { UserContext } from '@/store/userStore';
+import { Loading } from '@/components/Common';
 
 export default function GoogleAuthCallback() {
     const { authSignIn } = useContext(UserContext);
@@ -32,5 +33,5 @@ export default function GoogleAuthCallback() {
         handleSignIn();
     }, []);
 
-    return <div />;
+    return <Loading />;
 }
