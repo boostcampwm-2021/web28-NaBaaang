@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Box, Avatar, Typography, Chip } from '@/components/Common';
 
-export default function ChannelDetails({ channelInfo }) {
+export default function ChannelDetails({ channelInfo, userCnt }) {
     const {
         streamer: { imageUrl, nickname },
         title,
@@ -26,7 +26,7 @@ export default function ChannelDetails({ channelInfo }) {
             </Box>
 
             <Box marginLeft="auto" alignSelf="flex-start">
-                <Typography variant="span">시청자수: 1000</Typography>
+                <Typography variant="span">시청자수: {userCnt}</Typography>
             </Box>
         </StyledBox>
     );

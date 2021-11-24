@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const SEND_CHAT = "chat";
+import STATUS from "../constants/statusCode.js";
+import EVENT from "../constants/socketEvents.js";
 
 const API_SERVER = "http://localhost:4000";
 
@@ -8,10 +8,15 @@ const chat = (io, socket) => {
   const sendChatMessage = async message => {
     const { chatId } = socket;
     const { userId: senderId, content } = message;
-    const status = await saveChatMessage(chatId, senderId, content);
-    console.log(message);
-    console.log(status);
-    io.to(socket.channelId).emit("chat", { ...message, status });
+    const storeStatus = await saveChatMessage(chatId, senderId, content);
+    console.log(message, storeStatus);
+    if (storeStatus) {
+      socket
+        .to(socket.channelId)
+        .emit(EVENT.SEND_CHAT, { ...message, status: true });
+    } else {
+      socket.emit(EVENT.SEND_CHAT, { ...message, status: false });
+    }
   };
 
   const saveChatMessage = async (chatId, senderId, message) => {
@@ -23,13 +28,15 @@ const chat = (io, socket) => {
           content: message,
         }
       );
-      return response.data;
-    } catch (err) {
-      return -1;
+      if (response.status === STATUS.CREATED) return true;
+      else return false;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 
-  socket.on(SEND_CHAT, sendChatMessage);
+  socket.on(EVENT.SEND_CHAT, sendChatMessage);
 };
 
 export default chat;
