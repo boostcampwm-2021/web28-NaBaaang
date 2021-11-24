@@ -23,7 +23,7 @@ export default function ChannelCreateModal() {
         }
     };
 
-    const { errors, handleChange, handleSubmit } = useForm({
+    const { errors, handleChange, handleSubmit, handleInputChange } = useForm({
         initState: {
             title: '',
             category: '',
@@ -39,6 +39,7 @@ export default function ChannelCreateModal() {
                 errors={errors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
             />
         </Box>
     );
