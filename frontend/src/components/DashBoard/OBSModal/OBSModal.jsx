@@ -13,7 +13,7 @@ const parseContent = contents =>
 
 const parseImages = images =>
     images.map(image => (
-        <SliderItem color="success" key={image.id}>
+        <SliderItem key={image.id}>
             <img width="100%" src={image.src} alt="" />
         </SliderItem>
     ));
@@ -27,7 +27,7 @@ const paresLinks = links =>
 
 export default function OBSModal() {
     const slierItemList = OBS_DESCRIPTION_LIST.map(
-        ({ id, title, contents, images, links }) => (
+        ({ id, title, contents, links, images }) => (
             <SliderItem key={id} padding={3}>
                 <Box
                     flex={1}
