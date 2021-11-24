@@ -10,7 +10,6 @@ const Main = lazy(() => import('./pages/Main'));
 const ChannelManager = lazy(() => import('./pages/ChannelManager'));
 const LiveCollection = lazy(() => import('@/components/LiveCollection'));
 const Channel = lazy(() => import('@/components/Channel'));
-// const GoogleAuthCallback = lazy(() => import('@/auth/GoogleAuthCallback'));
 
 export default function Router() {
     return (
