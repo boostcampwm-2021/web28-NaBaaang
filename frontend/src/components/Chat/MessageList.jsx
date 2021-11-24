@@ -45,6 +45,7 @@ export default function MessageList({
     return (
         <StyledBox flex={1} height="100%" ref={messageBoxRef}>
             <MessageListBox
+                width="100%"
                 flexDirection="column"
                 alignItems="flex-start"
                 flex={1}

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { fontMixin } from '@/styles/mixins';
 import { MESSAGE_TYPE } from '@/constants/messageType';
 
-import { Box, Button, Typography } from '../Common';
+import { Box, Button } from '../Common';
 
 export default function Message({
     id,
@@ -16,48 +16,61 @@ export default function Message({
 }) {
     if (MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL) {
         return status ? (
-            <SentMessage>
-                <Typography variant="span">
-                    {nickname}:{content}
-                </Typography>
-            </SentMessage>
+            <MessageBox
+                flexDirection="column"
+                width="85%"
+                alignItems="flex-start"
+            >
+                {nickname}
+                <Bubble>{content}</Bubble>
+            </MessageBox>
         ) : (
-            <UnSentMessage flexDirection="column" width="250px" height="55px">
-                <Typography variant="span">
-                    {nickname}:{content}
-                </Typography>
+            <MessageBox flexDirection="column" width="250px" height="55px">
+                {nickname}:{content}
                 <Button
                     text="X"
                     color="error"
                     size="extra_small"
                     onClick={onDelete(id)}
                 />
-            </UnSentMessage>
+            </MessageBox>
         );
     }
     return (
         <StyledDonation>
             <StyledDonationValue>{content}</StyledDonationValue>
-            <SentMessage>
+            <MessageBox>
                 {nickname}님이 <br />
                 비트 {content}개 선물하였습니다!!
-            </SentMessage>
+            </MessageBox>
         </StyledDonation>
     );
 }
 
-const SentMessage = styled(Box)`
+const MessageBox = styled(Box)`
     min-height: 1rem;
     margin: 1rem;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
+    ${fontMixin(
+        '1em',
+        '1em',
+        'notoSansMedium',
+        ({ theme }) => theme.color.primary,
+    )}
 `;
 
-const UnSentMessage = styled(Box)`
+const Bubble = styled.div`
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin-top: 0.5em;
+    padding: 0.5em;
     border-radius: 15px;
-    border: 1px solid red;
-    min-height: 1rem;
-    margin: 1rem;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
+    background-color: ${({ theme }) => theme.color.offwhite};
+    ${fontMixin(
+        '1em',
+        '1em',
+        'notoSansMedium',
+        ({ theme }) => theme.color.black2,
+    )};
 `;
 
 const StyledDonation = styled.div`
