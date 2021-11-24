@@ -63,9 +63,13 @@ export default function Header() {
                     </IconButton>
 
                     <DropDown
-                        toggleButtonChild={<Logo src={ProfileIcon} />}
+                        toggleButtonChild={
+                            <IconButton type="square" size="large">
+                                <Logo src={ProfileIcon} />
+                            </IconButton>
+                        }
                         items={profileDropDownItems()}
-                        contentPos={{ left: '-3.4rem', top: '4rem' }}
+                        contentPos={{ top: '4rem' }}
                     />
                 </IconBox>
             )}
