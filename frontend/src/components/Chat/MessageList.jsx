@@ -1,10 +1,14 @@
 import React, { useEffect, useRef } from 'react';
+
 import styled, { css } from 'styled-components';
+import useChatMessage from '@/hooks/useChatMessage';
+
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
-export default function MessageList({ messageList, setMessageList }) {
+export default function MessageList() {
     const messageBoxRef = useRef();
+    const { messageList, setMessageList } = useChatMessage();
 
     const scrollToBottom = () => {
         if (messageBoxRef.current) {

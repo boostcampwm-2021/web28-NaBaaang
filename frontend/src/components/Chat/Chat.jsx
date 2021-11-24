@@ -8,8 +8,7 @@ import Form from './Form';
 import MessageList from './MessageList';
 
 export default function Chat() {
-    const { messageList, setMessageList, throttleNewMessage } =
-        useChatMessage();
+    const { throttleNewMessage } = useChatMessage();
 
     const handleSubmit = message => {
         throttleNewMessage({ ...message, status: true });
@@ -27,10 +26,7 @@ export default function Chat() {
             height="100%"
         >
             <Box width="100%" flex={3} backgroundColor="white">
-                <MessageList
-                    messageList={messageList}
-                    setMessageList={setMessageList}
-                />
+                <MessageList />
             </Box>
             <Box width="100%" flex={1}>
                 <Form handleSubmit={handleSubmit} />
