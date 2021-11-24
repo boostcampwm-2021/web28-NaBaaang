@@ -7,7 +7,7 @@ import TextField from '@/components/Common/TextField';
 import Box from '@/components/Common/Box';
 import Button from '@/components/Common/Button/Button';
 import SelectionBox from '@/components/Common/SelectionBox';
-import { CATEGORY } from '@/constants/category';
+import { CHANNEL_CATEGORY } from '@/constants/channelCategory';
 
 export default function ChannelModalForm({
     handleSubmit,
@@ -22,13 +22,12 @@ export default function ChannelModalForm({
         description: '',
         category: '',
     };
-
     const [selectedItem, setSelectedItems] = useState(
-        CATEGORY.indexOf(category),
+        CHANNEL_CATEGORY.indexOf(category),
     );
     useEffect(() => {
         if (selectedItem !== -1) {
-            handleChange('category', CATEGORY[selectedItem]);
+            handleChange('category', CHANNEL_CATEGORY[selectedItem]);
         }
     }, [selectedItem]);
 
@@ -49,7 +48,7 @@ export default function ChannelModalForm({
 
                     <SelectionBox
                         width="80%"
-                        items={CATEGORY}
+                        items={CHANNEL_CATEGORY}
                         selectedItem={selectedItem}
                         setSelectedItems={setSelectedItems}
                     />

@@ -3,9 +3,8 @@ import styled, { css } from 'styled-components';
 
 import { borderBoxMixin, flexMixin } from '@/styles/mixins';
 
-import { Box } from '@/components/Common';
-import Overlay from '@/components/Common/Overlay/Overlay';
-import { ReactComponent as DropButtIcn } from '@/assets/images/dropdown-icn.svg';
+import { Box, Overlay } from '@/components/Common';
+import { ReactComponent as DropIcon } from '@/assets/images/dropdown-icon.svg';
 
 export default function SelectionBox({
     items,
@@ -28,7 +27,7 @@ export default function SelectionBox({
             {selectedItem === -1
                 ? '선택'
                 : items.find((item, idx) => idx === selectedItem)}
-            <DropButtIcn />
+            <DropIcon />
         </SelectionButton>
     ) : (
         'no items'

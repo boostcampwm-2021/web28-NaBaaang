@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { CATEGORY } from '@/constants/category';
+import { CHANNEL_CATEGORY } from '@/constants/channelCategory';
 import SelectionBox from './SelectionBox';
 
 storiesOf('SelectionBox', module)
@@ -11,7 +11,7 @@ storiesOf('SelectionBox', module)
         return (
             <SelectionBox
                 toggleButtonChild="button"
-                items={CATEGORY}
+                items={CHANNEL_CATEGORY}
                 setSelectedItems={setSelectedItems}
                 selectedItem={selectedItem}
             />

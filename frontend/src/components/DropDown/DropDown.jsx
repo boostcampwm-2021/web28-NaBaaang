@@ -3,8 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { flexMixin } from '@/styles/mixins';
 
-import { Box } from '@/components/Common';
-import Overlay from '../Common/Overlay/Overlay';
+import { Box, Overlay } from '@/components/Common';
 
 export default function DropDown({ toggleButtonChild, items, contentPos }) {
     const [open, setOpen] = useState(false);
