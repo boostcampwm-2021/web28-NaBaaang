@@ -1,16 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { BORDER_RADIUS_TYPE, ICON_BUTTON_SIZE_TYPE } from '@/constants/css';
+import {
+    BORDER_RADIUS_TYPE,
+    ICON_BUTTON_SIZE_TYPE,
+    ICON_BUTTON_COLOR_TYPE,
+} from '@/constants/css';
 
-export default function IconButton({
-    onClick,
-    type = 'circle',
-    size = 'small',
-    children,
-}) {
+export default function IconButton({ onClick, children, ...styleProps }) {
     return (
-        <StyledButton onClick={onClick} type={type} size={size}>
+        <StyledButton onClick={onClick} {...styleProps}>
             {children}
         </StyledButton>
     );
@@ -18,8 +17,10 @@ export default function IconButton({
 
 const StyledButton = styled.button`
     width: auto;
-    ${({ size }) => ICON_BUTTON_SIZE_TYPE[size]}
-    ${({ type }) => BORDER_RADIUS_TYPE[type]}
+    ${({ size = 'small' }) => ICON_BUTTON_SIZE_TYPE[size]}
+    ${({ color = 'light' }) => ICON_BUTTON_COLOR_TYPE[color]}
+    ${({ type = 'circle' }) => BORDER_RADIUS_TYPE[type]}
+
     box-sizing: content-box;
     transition: background-color ease-in 100ms;
 
@@ -27,9 +28,5 @@ const StyledButton = styled.button`
     img {
         width: 100%;
         height: 100%;
-    }
-
-    &:hover {
-        background-color: ${({ theme }) => theme.color.gray4};
     }
 `;
