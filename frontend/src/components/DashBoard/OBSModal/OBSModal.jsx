@@ -27,7 +27,7 @@ const renderImages = images =>
 
 const renderLinks = links =>
     links.map(link => (
-        <a key={link.id} href={link.url}>
+        <a key={link.id} href={link.url} target="_blank" rel="noreferrer">
             {link.text}
         </a>
     ));
