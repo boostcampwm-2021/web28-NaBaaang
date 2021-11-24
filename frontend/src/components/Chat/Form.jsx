@@ -11,7 +11,7 @@ import DonationModal from './DonationModal';
 import LoginAlertModal from './LoginAlertModal';
 
 export default function Form({ handleSubmit }) {
-    const messageInput = useRef();
+    const messageInputRef = useRef();
     const { userInfo } = useContext(UserContext);
     const { openModal } = useContext(ModalContext);
 
@@ -38,7 +38,7 @@ export default function Form({ handleSubmit }) {
 
     const sendMessage = e => {
         e.preventDefault();
-        const txt = messageInput.current.value;
+        const txt = messageInputRef.current.value;
         if (txt === '') return;
 
         if (!userInfo.isSignIn) {
@@ -54,12 +54,12 @@ export default function Form({ handleSubmit }) {
             content: txt,
         };
         handleSubmit(message);
-        messageInput.current.value = '';
+        messageInputRef.current.value = '';
     };
     return (
         <StyledForm onSubmit={sendMessage}>
             <Box marginBottom={1}>
-                <StyledInput ref={messageInput} />
+                <StyledInput ref={messageInputRef} />
             </Box>
             <Box justifyContent="flex-end">
                 <Button
@@ -67,6 +67,7 @@ export default function Form({ handleSubmit }) {
                     text="도네이션"
                     onClick={openDonationModal}
                     marginRight={1}
+                    type="button"
                 />
                 <Button color="success" text="채팅" type="submit" />
             </Box>
