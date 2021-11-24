@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import ChannelFormValidation from '@/validation/ChannelModal';
+import validateChannelFrom from '@/validation/ChannelModal';
 import useForm from '@/hooks/useForm';
 
 import { ModalContext } from '@/store/ModalStore';
@@ -31,7 +31,7 @@ export default function ChannelModal({
                 category: '',
             },
             onSubmit: handleOnSubmit,
-            validate: ChannelFormValidation,
+            validate: validateChannelFrom,
         });
 
     return (

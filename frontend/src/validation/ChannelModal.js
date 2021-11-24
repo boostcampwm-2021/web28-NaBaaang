@@ -1,8 +1,4 @@
-export default function ChannelFormValidation({
-    title,
-    category,
-    description,
-}) {
+export default function validateChannelForm({ title, category, description }) {
     const errors = {};
 
     if (!title) {
