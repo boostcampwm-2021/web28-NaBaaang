@@ -4,12 +4,13 @@ import { Route, Routes } from 'react-router-dom';
 import { Loading } from '@/components/Common';
 import PublicRoute from './components/Route/PublicRoute';
 import PrivateRoute from './components/Route/PrivateRoute';
+import GoogleAuthCallback from '@/auth/GoogleAuthCallback';
 
 const Main = lazy(() => import('./pages/Main'));
 const ChannelManager = lazy(() => import('./pages/ChannelManager'));
 const LiveCollection = lazy(() => import('@/components/LiveCollection'));
 const Channel = lazy(() => import('@/components/Channel'));
-const GoogleAuthCallback = lazy(() => import('@/auth/GoogleAuthCallback'));
+// const GoogleAuthCallback = lazy(() => import('@/auth/GoogleAuthCallback'));
 
 export default function Router() {
     return (
