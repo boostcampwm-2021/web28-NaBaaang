@@ -1,8 +1,8 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 
 import { go } from '@/util/fp';
 import socket from '@/socket';
-import { UserContext } from '@/store/userStore';
+// import { UserContext } from '@/store/userStore';
 
 import useBuffer from './useBuffer';
 import useArray from './useArray';
@@ -16,9 +16,9 @@ export default function useChatMessage() {
     const { arr: messageList, set: setMessageList } = useArray([]);
     const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
         useBuffer(BUFFER_LIMIT);
-    const {
-        userInfo: { user },
-    } = useContext(UserContext);
+    // const {
+    //     userInfo: { user },
+    // } = useContext(UserContext);
 
     const concatBufferToMessage = msg => msg.concat(getBufferList());
     const sliceMessage = msg => msg.slice(-MESSAGE_LIMIT);
@@ -34,12 +34,12 @@ export default function useChatMessage() {
 
     const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
-    const filterMessageToRender = msg => {
-        return (
-            (user.id !== msg.userId && msg.status > 0) ||
-            (user.id === msg.userId && msg.status === -1)
-        );
-    };
+    // const filterMessageToRender = msg => {
+    //     return (
+    //         (user.id !== msg.userId && msg.status > 0) ||
+    //         (user.id === msg.userId && msg.status === -1)
+    //     );
+    // };
 
     const throttleNewMessage = msg => {
         pushBuffer(msg);
@@ -47,7 +47,7 @@ export default function useChatMessage() {
     };
 
     const handleSocketMessage = msg => {
-        return filterMessageToRender(msg) && throttleNewMessage(msg);
+        return throttleNewMessage(msg);
     };
 
     useEffect(() => {
