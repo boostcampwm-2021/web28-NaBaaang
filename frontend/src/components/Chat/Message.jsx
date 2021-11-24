@@ -45,7 +45,6 @@ export default function Message({
             >
                 {deleteButton}
                 <Bubble>
-                    <StyledDonationValue>{content}</StyledDonationValue>
                     <MessageBox>
                         {nickname}님이 <br />
                         비트 {content}개 선물하였습니다!!
@@ -90,11 +89,6 @@ const DeleteButton = styled(Button)`
 const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
-    text-align: center;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
-`;
-
-const StyledDonationValue = styled.div`
     text-align: center;
     ${fontMixin('1em', '1em', 'notoSansMedium')}
 `;
