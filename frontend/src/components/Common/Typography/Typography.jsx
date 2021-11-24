@@ -1,11 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { fontMixin } from '@/styles/mixins';
-
-export default function Typography(props) {
-    const { children, ...styleProps } = props;
-
+export default function Typography({ children, ...styleProps }) {
     switch (styleProps.variant) {
         case 'h1':
             return <H1Tag {...styleProps}>{children}</H1Tag>;
@@ -26,37 +22,50 @@ export default function Typography(props) {
     }
 }
 
-const FontSizeType = {
+const FONT_SIZE_TYPE = {
     h1: css`
-        ${fontMixin('2rem', '1em', 'notoSansMedium')};
+        font-size: 2rem;
     `,
     h2: css`
-        ${fontMixin('1.8rem', '1em', 'notoSansMedium')};
+        font-size: 1.8rem;
     `,
     h3: css`
-        ${fontMixin('1.6rem', '1em', 'notoSansMedium')};
+        font-size: 1.6rem;
     `,
     h4: css`
-        ${fontMixin('1.4rem', '1em', 'notoSansMedium')};
+        font-size: 1.4rem;
     `,
     h5: css`
-        ${fontMixin('1.2rem', '1em', 'notoSansMedium')};
+        font-size: 1.2rem;
     `,
     p: css`
-        ${fontMixin('1rem', '1em', 'notoSansMedium')};
+        font-size: 1rem;
     `,
     span: css`
-        ${fontMixin('1rem', '1em', 'notoSansMedium')};
+        font-size: 1rem;
+    `,
+};
+
+const FONT_WEIGHT_TYPE = {
+    light: css`
+        font-family: 'Noto Sans Kr Light';
+    `,
+    medium: css`
+        font-family: 'Noto Sans Kr Medium';
+    `,
+    Bold: css`
+        font-family: 'Noto Sans Kr Bold';
     `,
 };
 
 const generatorTag = variant => styled(variant)`
-    ${({ variant = 'p' }) => FontSizeType[variant]};
+    ${({ variant = 'p' }) => FONT_SIZE_TYPE[variant]};
+    ${({ weight = 'medium' }) => FONT_WEIGHT_TYPE[weight]};
+
     color: ${({ color = 'black' }) => color};
     text-align: ${({ align = 'center' }) => align};
     background-color: ${({ backgroundColor = 'transparent' }) =>
         backgroundColor};
-
     margin-top: ${({ marginTop = 0 }) => `${marginTop}rem`};
     margin-left: ${({ marginLeft = 0 }) => `${marginLeft}rem`};
     margin-bottom: ${({ marginBottom = 0 }) => `${marginBottom}rem`};

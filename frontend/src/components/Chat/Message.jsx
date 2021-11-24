@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { fontMixin } from '@/styles/mixins';
 import { MESSAGE_TYPE } from '@/constants/messageType';
-
-import { Box, Button } from '../Common';
+import { Box, Button, Typography } from '@/components/Common';
+// import { Box, Button } from '../Common';
 
 export default function Message({
     id,
@@ -57,12 +56,13 @@ export default function Message({
 const MessageBox = styled(Box)`
     min-height: 1rem;
     margin: 1rem;
-    ${fontMixin(
-        '1em',
-        '1em',
-        'notoSansMedium',
-        ({ theme }) => theme.color.primary,
-    )}
+     ${/*fontMixin(
+         '1em',
+         '1em',
+         'notoSansMedium',
+         ({ theme }) => theme.color.primary,
+     )*/}
+
 `;
 
 const Bubble = styled.div`
@@ -72,12 +72,12 @@ const Bubble = styled.div`
     padding: 0.5em;
     border-radius: 15px;
     background-color: ${({ theme }) => theme.color.offwhite};
-    ${fontMixin(
+    ${/*fontMixin(
         '1em',
         '1em',
         'notoSansMedium',
         ({ theme }) => theme.color.black2,
-    )};
+    )*/};
 `;
 
 const DeleteButton = styled(Button)`
@@ -89,5 +89,9 @@ const StyledDonation = styled.div`
     min-height: 30px;
     margin: 30px;
     text-align: center;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
+`;
+
+const StyledDonationValue = styled.div`
+    text-align: center;
+    ${/*fontMixin('1em', '1em', 'notoSansMedium')*/}
 `;

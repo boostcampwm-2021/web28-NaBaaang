@@ -1,14 +1,14 @@
-import { createGlobalStyle, css } from 'styled-components';
-import notoSansLight from '@/assets/fonts/NotoSansKR-Light.otf';
-import notoSansMedium from '@/assets/fonts/NotoSansKR-Medium.otf';
-import notoSansBold from '@/assets/fonts/NotoSansKR-Bold.otf';
-
-const fontMixin = (fontName, fontUrl) => css`
-    @font-face {
-        font-family: ${fontName};
-        src: local(${fontName}), url(${fontUrl}) format('opentype');
-    }
-`;
+import { createGlobalStyle } from 'styled-components';
+import NotoSansKRLightWOFF from '@/assets/fonts/NotoSansKR-Light.woff';
+import NotoSansKRLightWOFF2 from '@/assets/fonts/NotoSansKR-Light.woff2';
+import NotoSansKRLightOTF from '@/assets/fonts/NotoSansKR-Light.otf';
+import NotoSansKRMeidumWOFF from '@/assets/fonts/NotoSansKR-Medium.woff';
+import NotoSansKRMeidumWOFF2 from '@/assets/fonts/NotoSansKR-Medium.woff2';
+import NotoSansKRMediumOTF from '@/assets/fonts/NotoSansKR-Medium.otf';
+import NotoSansKRBoldWOFF from '@/assets/fonts/NotoSansKR-Bold.woff';
+import NotoSansKRBoldWOFF2 from '@/assets/fonts/NotoSansKR-Bold.woff2';
+import NotoSansKRBoldOTF from '@/assets/fonts/NotoSansKR-Bold.otf';
+import { fontFaceMixin } from './mixins';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -36,9 +36,28 @@ const GlobalStyle = createGlobalStyle`
     
   
 
-  ${fontMixin('notoSansLight', notoSansLight)}
-  ${fontMixin('notoSansMedium', notoSansMedium)}
-  ${fontMixin('notoSansBold', notoSansBold)}
+  ${fontFaceMixin({
+      name: 'Noto Sans Kr Light',
+      bold: 300,
+      woff: NotoSansKRLightWOFF,
+      woff2: NotoSansKRLightWOFF2,
+      otf: NotoSansKRLightOTF,
+  })}
+  ${fontFaceMixin({
+      name: 'Noto Sans Kr Medium',
+      bold: 500,
+      woff: NotoSansKRMeidumWOFF,
+      woff2: NotoSansKRMeidumWOFF2,
+      otf: NotoSansKRMediumOTF,
+  })}
+  ${fontFaceMixin({
+      name: 'Noto Sans KR Bold',
+      bold: 900,
+      woff: NotoSansKRBoldWOFF,
+      woff2: NotoSansKRBoldWOFF2,
+      otf: NotoSansKRBoldOTF,
+  })}
+
 `;
 
 export default GlobalStyle;

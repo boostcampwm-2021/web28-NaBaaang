@@ -10,7 +10,13 @@ module.exports = {
         'plugin:import/warnings',
         'plugin:prettier/recommended',
     ],
-    // parser: 'babel-eslint',
+
+    parser: 'babel-eslint',
+    parserOptions: {
+        sourceType: 'module',
+        allowImportExportEverywhere: true,
+    },
+
     rules: {
         'linebreak-style': 0,
         'import/prefer-default-export': 0,
