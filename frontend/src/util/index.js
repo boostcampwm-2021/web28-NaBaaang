@@ -19,6 +19,8 @@ const isFunction = fn => fn && {}.toString.call(fn) === '[object Function]';
 const isString = str =>
     Object.prototype.toString.call(str) === '[object String]';
 
+const transMarginProp = v => (!isString(v) ? `${v}rem` : v);
+
 export {
     replaceBlankAndNewLine,
     isTokenExist,
@@ -26,4 +28,5 @@ export {
     removeItemFromLocalStorage,
     isFunction,
     isString,
+    transMarginProp,
 };

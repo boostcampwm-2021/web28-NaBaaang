@@ -2,10 +2,11 @@ import React, { useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
-import { borderBoxMixin, fontMixin } from '@/styles/mixins';
-
+import { borderBoxMixin } from '@/styles/mixins';
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
+
+import { Button, Box } from '@/components/Common';
 import DonationModal from './DonationModal';
 import LoginAlertModal from './LoginAlertModal';
 
@@ -56,19 +57,20 @@ export default function Form({ handleSubmit }) {
         messageInput.current.value = '';
     };
     return (
-        <>
-            <StyledForm onSubmit={sendMessage}>
-                <StyledDiv>
-                    <StyledInput ref={messageInput} />
-                </StyledDiv>
-                <StyledDiv>
-                    <StyledButton type="button" onClick={openDonationModal}>
-                        도네이션
-                    </StyledButton>
-                    <StyledButton>채팅</StyledButton>
-                </StyledDiv>
-            </StyledForm>
-        </>
+        <StyledForm onSubmit={sendMessage}>
+            <Box marginBottom={1}>
+                <StyledInput ref={messageInput} />
+            </Box>
+            <Box justifyContent="flex-end">
+                <Button
+                    color="success"
+                    text="도네이션"
+                    onClick={openDonationModal}
+                    marginRight={1}
+                />
+                <Button color="success" text="채팅" type="submit" />
+            </Box>
+        </StyledForm>
     );
 }
 
@@ -76,11 +78,7 @@ const StyledForm = styled.form`
     width: 100%;
     height: 100%;
 `;
-const StyledDiv = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin: 1em 0;
-`;
+
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
@@ -88,15 +86,5 @@ const StyledInput = styled.input`
         css`
             background-color: ${theme.color.offwhite};
             ${borderBoxMixin('0', '0.6em', theme.color.black)}
-        `}
-`;
-const StyledButton = styled.button`
-    margin: 0 0.1em;
-    padding: 0.5em 1em;
-    ${({ theme }) =>
-        css`
-            background-color: ${theme.color.primary};
-            ${borderBoxMixin('1px', '0.6em', theme.color.black)}
-            ${fontMixin('1em', '1em', 'notoSansMedium', theme.color.white)}
         `}
 `;

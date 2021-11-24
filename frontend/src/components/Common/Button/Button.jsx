@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BUTTON_SIZE_TYPE, BUTTON_COLOR_TYPE } from '@/constants/css';
+import { transMarginProp } from '@/util';
 
-export default function Button({
-    onClick,
-    text,
-    color = 'light',
-    size = 'small',
-}) {
+export default function Button({ onClick, text, ...styleProps }) {
     return (
-        <StyledButton onClick={onClick} color={color} size={size}>
+        <StyledButton onClick={onClick} {...styleProps}>
             {text}
         </StyledButton>
     );
@@ -17,8 +13,13 @@ export default function Button({
 
 const StyledButton = styled.button`
     width: auto;
-    ${({ size }) => BUTTON_SIZE_TYPE[size]};
-    ${({ color }) => BUTTON_COLOR_TYPE[color]};
+    ${({ size = 'small' }) => BUTTON_SIZE_TYPE[size]};
+    ${({ color = 'light' }) => BUTTON_COLOR_TYPE[color]};
     border-radius: 5px;
     box-sizing: content-box;
+
+    margin-top: ${({ marginTop = 0 }) => transMarginProp(marginTop)};
+    margin-left: ${({ marginLeft = 0 }) => transMarginProp(marginLeft)};
+    margin-bottom: ${({ marginBottom = 0 }) => transMarginProp(marginBottom)};
+    margin-right: ${({ marginRight = 0 }) => transMarginProp(marginRight)};
 `;

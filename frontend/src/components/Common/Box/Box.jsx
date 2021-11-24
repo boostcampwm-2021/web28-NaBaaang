@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
-import { isString } from '@/util';
+import { transMarginProp } from '@/util';
 
 export default forwardRef((props, ref) => {
     const { children } = props;
@@ -17,10 +17,6 @@ const generateCss = (cssLine, v) =>
     css`
         ${cssLine}
     `;
-
-const transMarginProp = v => {
-    return !isString(v) ? `${v}rem` : v;
-};
 
 const BoxColorType = {
     black: css`
