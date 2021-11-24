@@ -13,10 +13,18 @@ export default function ChannelModalForm({
     handleSubmit,
     handleChange,
     handleInputChange,
+    initFormData,
     errors,
 }) {
-    const [selectedItem, setSelectedItems] = useState(-1);
+    const { title, description, category } = initFormData || {
+        title: '',
+        description: '',
+        category: '',
+    };
 
+    const [selectedItem, setSelectedItems] = useState(
+        CATEGORY.indexOf(category),
+    );
     useEffect(() => {
         if (selectedItem !== -1) {
             handleChange('category', CATEGORY[selectedItem]);
@@ -31,6 +39,7 @@ export default function ChannelModalForm({
                         labelText="제목"
                         name="title"
                         handleChange={handleInputChange}
+                        value={title}
                     />
                     {errors.title && <ErrorText>{errors.title}</ErrorText>}
                 </Box>
@@ -52,6 +61,7 @@ export default function ChannelModalForm({
                         labelText="설명"
                         name="description"
                         handleChange={handleInputChange}
+                        value={description}
                     />
                     {errors.description && (
                         <ErrorText>{errors.description}</ErrorText>
