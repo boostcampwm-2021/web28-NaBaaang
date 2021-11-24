@@ -29,7 +29,6 @@ export default function Message({
                 flexDirection="row"
                 width="85%"
                 justifyContent="flex-start"
-                alignItems="flex-start"
             >
                 {deleteButton}
                 <Bubble>{content}</Bubble>
