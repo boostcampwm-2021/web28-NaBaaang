@@ -1,3 +1,4 @@
+import { changeUserCnt } from "../utils/user.js";
 import EVENT from "../constants/socketEvents.js";
 
 const channel = (io, socket) => {
@@ -8,6 +9,9 @@ const channel = (io, socket) => {
       socket.chatId = chatId.toString();
       socket.auth = auth.toString();
       socket.join(socket.channelId);
+      
+      changeUserCnt(io, socket.channelId);
+      
       io.to(socket.channelId).emit(
         EVENT.JOIN_CHANNEL,
         `${socket.id} entered #${socket.channelId} channel (${socket.auth})`
@@ -20,6 +24,9 @@ const channel = (io, socket) => {
     try {
       const channelId = socket.channelId;
       socket.leave(channelId);
+      
+      changeUserCnt(io, socket.channelId);
+      
       console.log(`${socket.id}(${socket.auth}) leaved #${channelId}`);
       io.to(channelId).emit(
         EVENT.LEAVE_CHANNEL,

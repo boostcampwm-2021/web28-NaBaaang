@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import socket from '@/socket';
 import { UserContext } from '@/store/userStore';
@@ -12,6 +12,8 @@ function isChannelOwner(streamerId, user) {
 }
 
 export default function useSocket(channel) {
+    const [userCnt, setUserCnt] = useState(0);
+
     const { userInfo } = useContext(UserContext);
     const { openModal } = useContext(ModalContext);
     const { user } = userInfo;
@@ -30,9 +32,12 @@ export default function useSocket(channel) {
                 ? 'streamer'
                 : 'viewer',
         });
+        socket.channel.channelUserCntChanged(setUserCnt);
         socket.channel.channelEnded(handleSocketEnded);
         return () => {
             socket.channel.clearChannelEvents();
         };
     }, [channel]);
+
+    return { userCnt };
 }

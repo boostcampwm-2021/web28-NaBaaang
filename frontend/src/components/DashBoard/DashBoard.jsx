@@ -24,7 +24,7 @@ export default function DashBoard() {
         type: 'FETCH_CHANNEL_AUTHENTICATE',
         payload: channelId,
     });
-    useSocket(data);
+    const { userCnt } = useSocket(data);
 
     const role = ROLE.ALL;
 
@@ -67,7 +67,7 @@ export default function DashBoard() {
         >
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
-                <DashBoardInfo info={data} />
+                <DashBoardInfo info={data} userCnt={userCnt} />
             </StyledBox>
 
             <Divider direction="column" />
