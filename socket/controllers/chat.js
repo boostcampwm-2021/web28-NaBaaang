@@ -11,7 +11,9 @@ const chat = (io, socket) => {
     const storeStatus = await saveChatMessage(chatId, senderId, content);
     console.log(message, storeStatus);
     if (storeStatus) {
-      socket.to(socket.channelId).emit(EVENT.SEND_CHAT, { ...message, status: true });
+      socket
+        .to(socket.channelId)
+        .emit(EVENT.SEND_CHAT, { ...message, status: true });
     } else {
       socket.emit(EVENT.SEND_CHAT, { ...message, status: false });
     }
@@ -26,16 +28,8 @@ const chat = (io, socket) => {
           content: message,
         }
       );
-      switch (response.status) {
-        case STATUS.CREATED:
-          return true;
-        case STATUS.BAD_REQUEST:
-          return false;
-        case STATUS.INTERNAL_SERVER_ERROR:
-          return false;
-        default:
-          return false;
-      }
+      if (response.status === STATUS.CREATED) return true;
+      else return false;
     } catch (error) {
       console.log(error);
       return false;
