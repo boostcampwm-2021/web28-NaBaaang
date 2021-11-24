@@ -35,6 +35,27 @@ export default function useChatMessage() {
         onThrottle();
     };
 
+    const filterUnsentMessage = () => {
+        const unsentMessageList = messageList.filter(x => !x.status);
+        if (unsentMessageList.length) {
+            const toRemove = [];
+            unsentMessageList.forEach(unsent => {
+                const idxToRemove = messageList.findIndex(
+                    message => message.id === unsent.id && message.status,
+                );
+                toRemove.push(idxToRemove);
+            });
+            const filteredMessageList = messageList.filter(
+                (message, idx) => !toRemove.includes(idx),
+            );
+            return filteredMessageList;
+        }
+        return [];
+    };
+
+    const deleteMessage = id => () => {
+        setMessageList(prev => prev.filter(x => x.id !== id));
+    };
 
     useEffect(() => {
         socket.chat.onMessage(throttleNewMessage);
@@ -43,5 +64,10 @@ export default function useChatMessage() {
         };
     }, []);
 
-    return { messageList, setMessageList, throttleNewMessage };
+    return {
+        messageList,
+        filterUnsentMessage,
+        deleteMessage,
+        throttleNewMessage,
+    };
 }

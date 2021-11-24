@@ -5,7 +5,11 @@ import styled, { css } from 'styled-components';
 import Box from '@/components/Common/Box';
 import Message from './Message';
 
-export default function MessageList({ messageList, setMessageList }) {
+export default function MessageList({
+    messageList,
+    filterUnsentMessage,
+    deleteMessage,
+}) {
     const messageBoxRef = useRef();
 
     const scrollToBottom = () => {
@@ -13,29 +17,6 @@ export default function MessageList({ messageList, setMessageList }) {
             messageBoxRef.current.scrollTop =
                 messageBoxRef.current.scrollHeight;
         }
-    };
-
-    const onDelete = id => () => {
-        setMessageList(prev => prev.filter(x => x.id !== id));
-    };
-
-    const filterUnsentMessage = () => {
-        const unsentMessageList = messageList.filter(x => !x.status);
-        console.log(messageList, unsentMessageList);
-        if (unsentMessageList.length) {
-            const toRemove = [];
-            unsentMessageList.forEach(unsent => {
-                const idxToRemove = messageList.findIndex(
-                    message => message.id === unsent.id && message.status,
-                );
-                toRemove.push(idxToRemove);
-            });
-            const filteredMessageList = messageList.filter(
-                (message, idx) => !toRemove.includes(idx),
-            );
-            return filteredMessageList;
-        }
-        return [];
     };
 
     const convertedMessageList = () => {
@@ -51,7 +32,7 @@ export default function MessageList({ messageList, setMessageList }) {
                     nickname={message.nickname}
                     content={message.content}
                     status={message.status}
-                    onDelete={onDelete}
+                    onDelete={deleteMessage}
                 />
             ))
         );
