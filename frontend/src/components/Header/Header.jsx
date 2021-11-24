@@ -3,15 +3,14 @@ import styled from 'styled-components';
 
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
-import CameraIcon from '@/assets/images/camera-icon.svg';
+import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 
-import { ModalContext } from '@/store/ModalStore';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import DropDown from '@/components/DropDown';
 import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
+import { Button, Box, IconButton } from '@/components/Common';
+import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 
@@ -54,17 +53,21 @@ export default function Header() {
                     onClick={() => handleModal(<LoginModal />)}
                 />
             ) : (
-                <Box>
-                    <Logo
-                        src={CameraIcon}
+                <IconBox>
+                    <IconButton
+                        size="large"
+                        type="square"
                         onClick={() => handleModal(<ChannelModal />)}
-                    />
+                    >
+                        <CameraIcon />
+                    </IconButton>
+
                     <DropDown
                         toggleButtonChild={<Logo src={ProfileIcon} />}
                         items={profileDropDownItems()}
                         contentPos={{ left: '-3.4rem', top: '4rem' }}
                     />
-                </Box>
+                </IconBox>
             )}
         </HeaderWrap>
     );
@@ -83,4 +86,15 @@ const HeaderWrap = styled.header`
 const Logo = styled.img`
     height: 60px;
     cursor: pointer;
+`;
+
+const IconBox = styled(Box)`
+    button {
+        &:not(:last-child) {
+            margin: 0 0.25rem;
+        }
+        &:last-child {
+            margin-left: 0.25rem;
+        }
+    }
 `;

@@ -20,7 +20,6 @@ const StyledButton = styled.button`
     width: auto;
     ${({ size }) => BUTTON_SIZE_TYPE[size]}
     ${({ type }) => BORDER_RADIUS_TYPE[type]}
-    background-color: ${({ theme }) => theme.color.black};
     box-sizing: content-box;
     transition: background-color ease-in 100ms;
 
@@ -31,6 +30,6 @@ const StyledButton = styled.button`
     }
 
     &:hover {
-        background-color: ${({ theme }) => theme.color.primary};
+        background-color: ${({ theme }) => theme.color.gray4};
     }
 `;
