@@ -8,7 +8,9 @@ async function getFetchData(url, option) {
 
 async function getFetchDataV2(url, option) {
     const res = await fetch(url, option);
-    return res;
+    const { status } = res;
+    const data = status === 204 ? {} : await res.json();
+    return { status, data };
 }
 
 async function fetchCreateChannel(formData) {
@@ -78,8 +80,8 @@ async function fetchChannelOwnedByUser(id) {
             type: 'FETCH_CHANNEL_BY_USER',
             payload: id,
         });
-        const result = await getFetchDataV2(url, option);
-        return result;
+        const { status, data } = await getFetchDataV2(url, option);
+        return { status, data };
     } catch (err) {
         throw new Error(err);
     }
