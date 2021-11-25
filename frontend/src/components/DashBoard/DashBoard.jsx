@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
 
-import { fetchOpenChannel, fetchCloseChannel, fetchPauseChannel } from '@/apis/channel';
+import {
+    fetchOpenChannel,
+    fetchCloseChannel,
+} from '@/apis/channel';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
@@ -18,7 +21,6 @@ import Chat from '@/components/Chat';
 export default function DashBoard() {
     const params = useParams();
     const { channelId } = params;
-    const navigate = useNavigate();
     const [isStreamLive, setIsStreamLive] = useState(false);
     const { data, loading, error, fetchData } = useFetch({
         type: 'FETCH_CHANNEL_AUTHENTICATE',
@@ -50,20 +52,10 @@ export default function DashBoard() {
         }
     };
 
-    const handlePauseLive = async () => {
-        try {
-            await fetchPauseChannel(id);
-            setIsStreamLive(false);
-        } catch (err) {
-            throw new Error(err);
-        }
-    };
-
     const handleEndLive = async () => {
         try {
             await fetchCloseChannel(id);
             socket.channel.endChannel();
-            navigate('/');
         } catch (err) {
             throw new Error(err);
         }
@@ -92,7 +84,6 @@ export default function DashBoard() {
                     streamKey={streamKey}
                     isLive={isStreamLive}
                     handleStartLive={handleStartLive}
-                    handlePauseLive={handlePauseLive}
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>
