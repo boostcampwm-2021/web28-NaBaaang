@@ -86,6 +86,7 @@ const StyledForm = styled.form`
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
+    padding : 0 1rem;
     ${({ theme }) =>
         css`
             background-color: ${theme.color.offwhite};
