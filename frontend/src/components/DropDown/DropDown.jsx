@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
+import { v1 } from 'uuid';
 import { flexMixin } from '@/styles/mixins';
 
 import { Box, Overlay, Typography } from '@/components/Common';
@@ -20,6 +21,7 @@ export default function DropDown({ toggleButtonChild, items, contentPos }) {
         ? items.map(item => {
               return (
                   <DropDownItem
+                      key={v1()}
                       onClick={() => {
                           item.handler();
                           closeDropDown();
@@ -66,21 +68,21 @@ const DropDownBox = styled(Box)`
     top: 0;
     width: 100%;
     height: 100%;
-    border: 1px solid black;
     z-index: 10;
 `;
 
 const DropDownWrapper = styled(Box)`
-    width: 8em;
     position: relative;
     z-index: 20;
 `;
 
 const DropDownContent = styled(Box)`
+    width: max-content;
     position: absolute;
-    ${({ pos }) =>
+    ${({ pos: { top = 0, right = 0 } }) =>
         css`
-            top: ${pos.top};
+            top: ${top};
+            right: ${right};
         `}
     ${flexMixin('column', 'center', 'center')}
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);

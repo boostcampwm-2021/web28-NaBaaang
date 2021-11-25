@@ -55,8 +55,6 @@ export default function Header() {
             );
         } else if (status === STATUS.OK) {
             openModal(<ChannelAlertModal channelInfo={channelInfo} />);
-        } else {
-            alert(`Error: status code[${status}]`);
         }
     };
 
@@ -107,7 +105,7 @@ export default function Header() {
                     onClick={() => handleModal(<LoginModal />)}
                 />
             ) : (
-                <IconBox>
+                <Box>
                     <IconButton
                         size="large"
                         type="square"
@@ -123,9 +121,9 @@ export default function Header() {
                             </IconButton>
                         }
                         items={profileDropDownItems()}
-                        contentPos={{ top: '4rem' }}
+                        contentPos={{ top: '4rem', right: '0' }}
                     />
-                </IconBox>
+                </Box>
             )}
         </HeaderWrap>
     );
@@ -146,13 +144,3 @@ const Logo = styled.img`
     cursor: pointer;
 `;
 
-const IconBox = styled(Box)`
-    button {
-        &:not(:last-child) {
-            margin: 0 0.25rem;
-        }
-        &:last-child {
-            margin-left: 0.25rem;
-        }
-    }
-`;
