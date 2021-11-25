@@ -13,7 +13,7 @@ async function getFetchData(url, option) {
 async function fetchUpdateNickname(data) {
     const { url, option } = fetchAction({
         type: 'FETCH_UPDATE_NICKNAME',
-        payload: { data },
+        payload: data,
     });
     const result = await getFetchData(url, option);
     return result;

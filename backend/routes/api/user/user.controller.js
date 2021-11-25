@@ -5,8 +5,9 @@ const updateNickname = async (req, res) => {
     try {
         const { id } = req.params;
         const { nickname } = req.body;
-        const updatedNickname = await userService.update({ id, nickname });
-        res.status(STATUS.OK).json(updatedNickname);
+        const updatedUser = await userService.update({ id, nickname });
+        if (updatedUser) res.status(STATUS.OK).json(updatedUser);
+        else throw new Error('NICKNAME IS NOT CHANGED');
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json({
             error: 'Internal Server Error',
@@ -14,5 +15,6 @@ const updateNickname = async (req, res) => {
         });
     }
 };
+
 
 export default { updateNickname };

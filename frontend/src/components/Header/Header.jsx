@@ -45,9 +45,9 @@ export default function Header() {
         try {
             const response = await fetchUpdateNickname({
                 ...data,
-                id: userInfo.id,
+                id: userInfo.user.id,
             });
-            console.log(response);
+            return response;
         } catch (err) {
             throw new Error(err);
         }

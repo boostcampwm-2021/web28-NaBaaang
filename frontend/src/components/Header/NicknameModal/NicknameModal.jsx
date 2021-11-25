@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import { ModalContext } from '@/store/ModalStore';
@@ -16,11 +16,11 @@ function NicknameModal({ onSubmit }) {
             const inputData = inputRef.current.value;
             if (inputData === '') setError('닉네임을 입력해주세요');
             else {
-                onSubmit({ nickname: inputData });
+                await onSubmit({ nickname: inputData });
                 closeModal();
             }
         } catch (err) {
-            throw new Error(err);
+            setError(err.message);
         }
     };
 

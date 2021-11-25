@@ -47,7 +47,7 @@ const getRefreshToken = async id => {
 
 const updateNickname = async ({ id, nickname }) => {
     try {
-        const updatedUser = await User.update(nickname, { where: { id } });
+        const updatedUser = await User.update({ nickname }, { where: { id } });
         return updatedUser;
     } catch (error) {
         console.log(error);
