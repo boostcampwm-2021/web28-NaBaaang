@@ -1,36 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { flexMixin, fontMixin } from '@/styles/mixins.js';
+import { ReactComponent as CloseIcon } from '@/assets/images/x.svg';
 
 import Portal from '@/Portal';
-import Card from '@/components/Common/Card';
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
-import Typography from '../Typography/Typography';
+import {
+    Card,
+    Box,
+    Typography,
+    IconButton,
+    Overlay,
+} from '@/components/Common';
+import { ModalContext } from '@/store/ModalStore';
 
-export default function Modal({
-    open,
-    showButton,
-    alert,
-    onClose,
-    onSuccess,
-    onCancelText,
-    onSuccessText,
-    children,
-    width = '350px',
-    height = '350px',
-}) {
-    const cancleText = !onCancelText ? 'Cancle' : onCancelText;
-    const successText = !onSuccessText ? 'OK' : onSuccessText;
-
-    if (!open) return null;
+export default function Modal() {
+    const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
+    if (!isModalOpen) return null;
 
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
-                <OverlayBox onClick={onClose} width="100%" height="100%" />
-                <Card flexDirection="column" width={width} height={height}>
+                <Overlay onClick={() => closeModal(modalContent)} />
+                <ModalCard alignItems="stretch" flexDirection="column">
+                    <CloseButtonBox>
+                        <IconButton
+                            color="error"
+                            type="square"
+                            onClick={() => closeModal(modalContent)}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </CloseButtonBox>
+
                     <Box flex={0.5}>
                         <Typography
                             variant="h3"
@@ -40,35 +41,9 @@ export default function Modal({
                             Nabaaang
                         </Typography>
                     </Box>
-                    {children && <ContentBox flex={3}>{children}</ContentBox>}
 
-                    {showButton && alert ? (
-                        <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
-                        </ButtonBox>
-                    ) : (
-                        <ButtonBox flex={1} alignItems="center">
-                            <Button
-                                color="error"
-                                onClick={onClose}
-                                text={cancleText}
-                                size="small"
-                            />
-
-                            <Button
-                                color="success"
-                                onClick={onSuccess}
-                                text={successText}
-                                size="small"
-                            />
-                        </ButtonBox>
-                    )}
-                </Card>
+                    <ContentBox flex={3}>{modalContent}</ContentBox>
+                </ModalCard>
             </ModalBox>
         </Portal>
     );
@@ -82,25 +57,23 @@ const ModalBox = styled(Box)`
     z-index: 1024;
 `;
 
-const OverlayBox = styled(Box)`
+const CloseButtonBox = styled(Box)`
     position: absolute;
+    left: 100%;
+    margin-left: 1rem;
     top: 0;
-    left: 0;
-    background-color: rgb(0, 0, 0, 0.8);
-    z-index: -1;
 `;
 
 const ContentBox = styled(Box)`
-    ${fontMixin('1rem', '1em', 'notoSansMedium')}
     text-align: center;
-    margin-bottom: auto;
-    ${flexMixin('column', 'center', 'center')}
+    width: 100%;
+    height: 100%;
+    align-items: stretch;
 `;
 
-const ButtonBox = styled(Box)`
-    width: 100%;
-    margin-top: auto;
-    button {
-        margin: 0 auto;
-    }
+const ModalCard = styled(Card)`
+    min-width: 350px;
+    min-height: 350px;
+    width: auto;
+    height: auto;
 `;

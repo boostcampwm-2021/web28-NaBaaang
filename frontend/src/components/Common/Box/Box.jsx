@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
+import { transMarginProp } from '@/util';
 
 export default forwardRef((props, ref) => {
     const { children } = props;
@@ -44,5 +45,10 @@ const StyledBox = styled.div`
         generateCss(`background-color: ${theme.color[fontColor]};`, fontColor)}
 
     ${({ flexDirection, justifyContent = 'center', alignItems = 'center' }) =>
-        flexMixin(flexDirection, justifyContent, alignItems)}
+        flexMixin(flexDirection, justifyContent, alignItems)};
+
+    margin-top: ${({ marginTop = 0 }) => transMarginProp(marginTop)};
+    margin-left: ${({ marginLeft = 0 }) => transMarginProp(marginLeft)};
+    margin-bottom: ${({ marginBottom = 0 }) => transMarginProp(marginBottom)};
+    margin-right: ${({ marginRight = 0 }) => transMarginProp(marginRight)};
 `;

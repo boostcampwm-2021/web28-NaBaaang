@@ -20,11 +20,15 @@ async function fetchSiginInGoogle(code) {
 }
 
 async function fetchAuthTokenValidation() {
-    const { url, option } = fetchAction({
-        type: 'FETCH_AUTH_TOKEN_VALIDATION',
-    });
-    const result = await getFetchData(url, option);
-    return result;
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_AUTH_TOKEN_VALIDATION',
+        });
+        const result = await getFetchData(url, option);
+        return result;
+    } catch (err) {
+        throw new Error(err);
+    }
 }
 
 export { fetchSiginInGoogle, fetchAuthTokenValidation };

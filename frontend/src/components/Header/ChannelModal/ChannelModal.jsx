@@ -1,49 +1,49 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 
-import ChannelCreateValidation from '@/validation/ChannelModal';
-import { fetchCreateChannel } from '@/apis/channel';
+import validateChannelFrom from '@/validation/ChannelModal';
 import useForm from '@/hooks/useForm';
 
-import Modal from '@/components/Common/Modal';
-import ChannelModalForm from '../ChannelModalForm/ChannelModalForm';
+import { ModalContext } from '@/store/ModalStore';
+import { Box } from '@/components/Common';
+import ChannelModalForm from '../ChannelModalForm';
 
-export default function ChannelCreateModal({ onClose, open }) {
-    const navigate = useNavigate();
+export default function ChannelModal({
+    subHandleOnSubmit,
+    initFormData,
+    successText,
+}) {
+    const { closeModal } = useContext(ModalContext);
 
     const handleOnSubmit = async formData => {
         try {
-            const channelID = await fetchCreateChannel(formData);
-            navigate(`/stream-manager/${channelID}`);
+            subHandleOnSubmit(formData);
+            closeModal();
         } catch (err) {
             throw new Error(err);
         }
     };
 
-    const { errors, handleChange, handleSubmit } = useForm({
-        initState: {
-            title: '',
-            category: '',
-            description: '',
-        },
-        onSubmit: handleOnSubmit,
-        validate: ChannelCreateValidation,
-    });
+    const { errors, handleChange, handleSubmit, handleInputChange, formData } =
+        useForm({
+            initState: initFormData || {
+                title: '',
+                description: '',
+                category: '',
+            },
+            onSubmit: handleOnSubmit,
+            validate: validateChannelFrom,
+        });
 
     return (
-        <Modal
-            open={open}
-            showButton
-            onSuccessText="방송 생성"
-            onSuccess={handleSubmit}
-            onCancelText="취소"
-            onClose={onClose}
-        >
+        <Box width="100%" height="auto">
             <ChannelModalForm
                 errors={errors}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
+                handleInputChange={handleInputChange}
+                initFormData={formData}
+                successText={successText}
             />
-        </Modal>
+        </Box>
     );
 }

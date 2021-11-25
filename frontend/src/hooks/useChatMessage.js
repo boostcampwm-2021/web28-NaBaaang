@@ -30,18 +30,53 @@ export default function useChatMessage() {
 
     const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
 
-
-    const handleSocketMessage = msg => {
+    const throttleNewMessage = msg => {
         pushBuffer(msg);
         onThrottle();
     };
 
+    const getMessageIdxToRemove = unsentMessageList => {
+        const toRemove = [];
+        unsentMessageList.forEach(unsent => {
+            const idxToRemove = messageList.findIndex(
+                message => message.id === unsent.id && message.status,
+            );
+            toRemove.push(idxToRemove);
+        });
+        return toRemove;
+    };
+
+    const removeUnsentFromMessageList = toRemove => {
+        return messageList.filter((_, idx) => !toRemove.includes(idx));
+    };
+
+    const filterUnsentMessage = () => {
+        const unsentMessageList = messageList.filter(x => x.status === false);
+        if (unsentMessageList.length) {
+            return go(
+                unsentMessageList,
+                getMessageIdxToRemove,
+                removeUnsentFromMessageList,
+            );
+        }
+        return messageList;
+    };
+
+    const deleteMessage = id => () => {
+        setMessageList(prev => prev.filter(x => x.id !== id));
+    };
+
     useEffect(() => {
-        socket.chat.onMessage(handleSocketMessage);
+        socket.chat.onMessage(throttleNewMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
     }, []);
 
-    return { messageList };
+    return {
+        messageList,
+        filterUnsentMessage,
+        deleteMessage,
+        throttleNewMessage,
+    };
 }

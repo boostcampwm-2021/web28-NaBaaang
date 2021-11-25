@@ -13,14 +13,20 @@ const channel = socket => {
         socket.emit(EVENT_TYPE.TERMINATE_CHANNEL, '방송을 종료합니다');
     };
 
-    const channelEnded = ({ setAlertModal }) => {
+    const channelUserCntChanged = setState => {
+        socket.on(EVENT_TYPE.CHANGE_USERCNT, clientCnt => setState(clientCnt));
+    };
+
+    const channelEnded = done => {
         socket.on(EVENT_TYPE.TERMINATE_CHANNEL, () => {
-            setAlertModal(true);
             leaveChannel();
+            done();
         });
     };
 
     const clearChannelEvents = () => {
+        socket.emit(EVENT_TYPE.LEAVE_CHANNEL);
+
         socket.off(EVENT_TYPE.JOIN_CHANNEL);
         socket.off(EVENT_TYPE.LEAVE_CHANNEL);
         socket.off(EVENT_TYPE.TERMINATE_CHANNEL);
@@ -33,6 +39,7 @@ const channel = socket => {
         joinChannel,
         leaveChannel,
         endChannel,
+        channelUserCntChanged,
         channelEnded,
         clearChannelEvents,
     };

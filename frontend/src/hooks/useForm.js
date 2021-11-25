@@ -6,8 +6,12 @@ export default function useForm({ initState, onSubmit, validate }) {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = useCallback(({ target }) => {
+    const handleInputChange = useCallback(({ target }) => {
         const { name, value } = target;
+        setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+    }, []);
+
+    const handleChange = useCallback((name, value) => {
         setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
     }, []);
 
@@ -34,6 +38,7 @@ export default function useForm({ initState, onSubmit, validate }) {
         errors,
         isLoading,
         handleChange,
+        handleInputChange,
         handleSubmit,
     };
 }

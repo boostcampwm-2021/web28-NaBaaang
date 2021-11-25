@@ -1,13 +1,9 @@
 import React from 'react';
 
-import Modal from '@/components/Common/Modal/Modal';
+import { Typography } from '@/components/Common';
 
-function LoginAlertModal({ onSuccess }) {
-    return (
-        <Modal open showButton alert onSuccessText="확인" onSuccess={onSuccess}>
-            <p>로그인을 해주세요.</p>
-        </Modal>
-    );
+function LoginAlertModal() {
+    return <Typography variant="p">채팅을 위해 로그인을 해주세요.</Typography>;
 }
 
 export default LoginAlertModal;

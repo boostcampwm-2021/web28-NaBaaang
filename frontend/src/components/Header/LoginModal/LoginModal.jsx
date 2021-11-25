@@ -1,26 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
-import Modal from '@/components/Common/Modal';
-import Button from '@/components/Common/Button';
+import { useLocation } from 'react-router-dom';
+
 import { GOOGLE_AUTH_RESOURCE_SERVER_URL } from '@/constants/url';
 
-export default function LoginModal({ onClose, open }) {
+import { Box, Button, Typography } from '@/components/Common';
+
+export default function LoginModal() {
+    const location = useLocation();
     const handleOnSubmit = () => {
-        window.location.href = GOOGLE_AUTH_RESOURCE_SERVER_URL;
+        const stateParam = `&state={"referrer":"${location.pathname}"}`;
+        window.location.href = GOOGLE_AUTH_RESOURCE_SERVER_URL + stateParam;
     };
 
     return (
-        <Modal open={open} onClose={onClose}>
-            <Title>로그인</Title>
+        <Box flexDirection="column">
+            <Typography variant="h3" marginBottom={2}>
+                로그인
+            </Typography>
             <Button
                 text="Sign in with Google"
                 size="medium"
+                color="light"
                 onClick={handleOnSubmit}
             />
-        </Modal>
+        </Box>
     );
 }
-
-const Title = styled.h1`
-    margin-bottom: 30px;
-`;

@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import chatDao from '../chat/chat.dao.js';
 import requestHandler from '../../../lib/util/requestHandler.js';
 import ROLE from './constant/role.js';
+import CHANNEL_STATE from './constant/state.js';
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
@@ -19,9 +20,26 @@ const create = async channelInfo => {
         return channelId;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw error;
     }
 };
+
+const update = async channelInfo => {
+    const transaction = await db.sequelize.transaction();
+    try {
+        await channelDAO.updateChannel(channelInfo, transaction);
+        const updatedChannel = await channelDAO.findByChannelId(
+            channelInfo.id,
+            transaction,
+        );
+        await transaction.commit();
+        return updatedChannel;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
+};
+
 const getChannelById = async id => {
     const transaction = await db.sequelize.transaction();
     try {
@@ -31,6 +49,15 @@ const getChannelById = async id => {
     } catch (error) {
         await transaction.rollback();
         console.error(error);
+    }
+};
+
+const getChannelByStreamerId = async streamerId => {
+    try {
+        let result = await channelDAO.findByStreamerId(streamerId);
+        return result;
+    } catch (error) {
+        throw new Error(error);
     }
 };
 
@@ -70,13 +97,30 @@ const getLiveChannels = async () => {
     }
 };
 
-const updateLive = async (id, isLive) => {
+const changeChannelState = async (id, channelState) => {
     const transaction = await db.sequelize.transaction();
     try {
-        const result = await channelDAO.update(
-            { id, updateTarget: { isLive } },
-            transaction,
-        );
+        let result;
+        switch (channelState) {
+            case CHANNEL_STATE.LIVE:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: true } },
+                    transaction,
+                );
+                break;
+            case CHANNEL_STATE.READY:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: false } },
+                    transaction,
+                );
+                break;
+            case CHANNEL_STATE.CLOSE:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: false, isDelete: true } },
+                    transaction,
+                );
+                break;
+        }
 
         await transaction.commit();
         return result;
@@ -121,10 +165,12 @@ const isChannelOwner = async req => {
 
 export default {
     create,
+    update,
     getChannelById,
+    getChannelByStreamerId,
     getAuthenticatedChannelById,
     getLiveChannels,
-    updateLive,
+    changeChannelState,
     watchChannel,
     isChannelOwner,
 };

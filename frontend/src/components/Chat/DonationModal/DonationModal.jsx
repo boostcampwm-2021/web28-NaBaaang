@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Modal from '@/components/Common/Modal';
-import Button from '@/components/Common/Button';
+import React, { useState, useContext } from 'react';
+
+import { ModalContext } from '@/store/ModalStore';
+import { Box, Button, Typography } from '@/components/Common';
 import DonationItemList from './DonationItemList';
 
-export default function DonationModal({ onClose, onSuccess }) {
+export default function DonationModal({ onDonation }) {
     const [totalDonation, setTotalDonation] = useState(0);
+    const { closeModal } = useContext(ModalContext);
 
     const handleTotalDonation = value => {
         setTotalDonation(totalDonation + value);
@@ -16,38 +17,40 @@ export default function DonationModal({ onClose, onSuccess }) {
     };
 
     const handleClickSubmit = () => {
-        onSuccess(totalDonation);
+        if (totalDonation > 0) {
+            onDonation(totalDonation);
+            closeModal();
+        }
     };
 
     return (
-        <Modal
-            open
-            showButton
-            onSuccessText="전송"
-            onCancelText="취소"
-            onClose={onClose}
-            onSuccess={handleClickSubmit}
-        >
-            <Title>비트를 선택해주세요</Title>
+        <Box flexDirection="column" width="100%" alignItems="stretch">
+            <Typography variant="h3" marginBottom={2}>
+                비트를 선택해주세요
+            </Typography>
 
-            <Row>
+            <Box marginBottom={2}>
                 <DonationItemList handleTotalDonation={handleTotalDonation} />
-            </Row>
+            </Box>
 
-            <Row>
-                누적 값 : {totalDonation}
+            <Box marginBottom={1}>
+                <Typography variant="h5">
+                    총 도네이션 : {totalDonation}
+                </Typography>
+            </Box>
+
+            <Box justifyContent="space-around">
                 <Button
                     onClick={handleTotalDonationInit}
                     text="초기화"
                     color="error"
                 />
-            </Row>
-        </Modal>
+                <Button
+                    onClick={handleClickSubmit}
+                    text="보내기"
+                    color="success"
+                />
+            </Box>
+        </Box>
     );
 }
-
-const Title = styled.h2`
-    margin-bottom: 30px;
-`;
-
-const Row = styled.div``;

@@ -1,30 +1,23 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
-import { borderBoxMixin, fontMixin } from '@/styles/mixins';
+import { borderBoxMixin } from '@/styles/mixins';
 import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
 
+import { Button, Box } from '@/components/Common';
 import DonationModal from './DonationModal';
 import LoginAlertModal from './LoginAlertModal';
 
 export default function Form({ handleSubmit }) {
-    const messageInput = useRef();
+    const messageInputRef = useRef();
     const { userInfo } = useContext(UserContext);
+    const { openModal } = useContext(ModalContext);
+
     const { user } = userInfo;
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [openLoginAlert, setOpenLoginAlert] = useState(false);
-
-    const handleShowModal = handler => {
-        handler(true);
-    };
-
-    const handleHideModal = handler => {
-        handler(false);
-    };
-
-    const handleClickDonation = value => {
+    const handleDonationButtonClick = value => {
         const message = {
             id: v1(),
             type: 'DONATION',
@@ -33,20 +26,23 @@ export default function Form({ handleSubmit }) {
             content: value,
         };
         handleSubmit(message);
-        setModalOpen(false);
     };
 
-    const handleClickAlert = () => {
-        setOpenLoginAlert(false);
+    const openLoginAlertModal = () => {
+        openModal(<LoginAlertModal />);
+    };
+
+    const openDonationModal = () => {
+        openModal(<DonationModal onDonation={handleDonationButtonClick} />);
     };
 
     const sendMessage = e => {
         e.preventDefault();
-        const txt = messageInput.current.value;
+        const txt = messageInputRef.current.value;
         if (txt === '') return;
 
         if (!userInfo.isSignIn) {
-            setOpenLoginAlert(true);
+            openLoginAlertModal();
             return;
         }
 
@@ -58,36 +54,24 @@ export default function Form({ handleSubmit }) {
             content: txt,
         };
         handleSubmit(message);
-        messageInput.current.value = '';
+        messageInputRef.current.value = '';
     };
     return (
-        <>
-            {modalOpen && (
-                <DonationModal
-                    open
-                    onClose={() => handleHideModal(setModalOpen)}
-                    onSuccess={handleClickDonation}
+        <StyledForm onSubmit={sendMessage}>
+            <Box marginBottom={1}>
+                <StyledInput ref={messageInputRef} />
+            </Box>
+            <Box justifyContent="flex-end">
+                <Button
+                    color="success"
+                    text="도네이션"
+                    onClick={openDonationModal}
+                    marginRight={1}
+                    type="button"
                 />
-            )}
-            {openLoginAlert && (
-                <LoginAlertModal
-                    open
-                    onClose={() => handleHideModal(setOpenLoginAlert)}
-                    onSuccess={handleClickAlert}
-                />
-            )}
-            <StyledForm onSubmit={sendMessage}>
-                <StyledDiv>
-                    <StyledInput ref={messageInput} />
-                </StyledDiv>
-                <StyledDiv>
-                    <StyledButton type="button" onClick={handleShowModal}>
-                        도네이션
-                    </StyledButton>
-                    <StyledButton>채팅</StyledButton>
-                </StyledDiv>
-            </StyledForm>
-        </>
+                <Button color="success" text="채팅" type="submit" />
+            </Box>
+        </StyledForm>
     );
 }
 
@@ -95,11 +79,7 @@ const StyledForm = styled.form`
     width: 100%;
     height: 100%;
 `;
-const StyledDiv = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin: 1em 0;
-`;
+
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
@@ -107,15 +87,5 @@ const StyledInput = styled.input`
         css`
             background-color: ${theme.color.offwhite};
             ${borderBoxMixin('0', '0.6em', theme.color.black)}
-        `}
-`;
-const StyledButton = styled.button`
-    margin: 0 0.1em;
-    padding: 0.5em 1em;
-    ${({ theme }) =>
-        css`
-            background-color: ${theme.color.primary};
-            ${borderBoxMixin('1px', '0.6em', theme.color.black)}
-            ${fontMixin('1em', '1em', 'notoSansMedium', theme.color.white)}
         `}
 `;

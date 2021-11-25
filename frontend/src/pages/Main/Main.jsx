@@ -3,35 +3,32 @@ import { Outlet } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import Box from '@/components/Common/Box';
+import { Box } from '@/components/Common';
 import Header from '@/components/Header';
-import SideBar from '@/components/SideBar';
 
-function MainPage() {
+export default function Main() {
     return (
         <MainBox flexDirection="column" width="100%" height="100%">
-            {/* 첫 번쨰 row */}
-            <Box flex={1} width="100%">
+            <HeaderBox flex={1} width="100%" padding={0.5}>
                 <Header />
-            </Box>
+            </HeaderBox>
 
-            {/* 두 번째 row */}
-            <Box flex={20} width="100%">
-                <Box flex={1} height="100%">
-                    <SideBar />
-                </Box>
-                <BodyBox flex={20} height="100%" padding={1.5}>
-                    <AbsoluteBox width="100%" height="100%">
-                        <Outlet />
-                    </AbsoluteBox>
-                </BodyBox>
-            </Box>
+            <BodyBox flex={20} padding={1.5}>
+                <AbsoluteBox width="100%" height="100%">
+                    <Outlet />
+                </AbsoluteBox>
+            </BodyBox>
         </MainBox>
     );
 }
 
 const MainBox = styled(Box)`
     overflow: hidden;
+`;
+
+const HeaderBox = styled(Box)`
+    box-sizing: content-box;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
 `;
 
 const BodyBox = styled(Box)`
@@ -46,5 +43,3 @@ const AbsoluteBox = styled(Box)`
     top: 0;
     padding: inherit;
 `;
-
-export default MainPage;

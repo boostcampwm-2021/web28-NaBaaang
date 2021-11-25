@@ -1,51 +1,26 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { BUTTON_SIZE_TYPE, BUTTON_COLOR_TYPE } from '@/constants/css';
+import { transMarginProp } from '@/util';
 
-import { colorMixin, fontMixin } from '@/styles/mixins';
-
-export default function Button({ onClick, text, color, size = 'small' }) {
+export default function Button({ onClick, text, ...styleProps }) {
     return (
-        <StyledButton onClick={onClick} color={color} size={size}>
+        <StyledButton onClick={onClick} {...styleProps}>
             {text}
         </StyledButton>
     );
 }
 
-const ERROR_COLOR_CSS = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.red)}
-`;
-
-const SUCCESS_COLOR_CSS = css`
-    ${({ theme }) => colorMixin(theme.color.white, theme.color.primary)}
-`;
-
-const SIZE_ENUM = {
-    small: css`
-        padding: 10px 15px;
-        ${fontMixin('16px', '1em', 'notoSansMedium')};
-    `,
-    medium: css`
-        padding: 12px 20px;
-        ${fontMixin('20px', '1em', 'notoSansMedium')};
-    `,
-    large: css`
-        padding: 14px 25px;
-        ${fontMixin('24px', '1em', 'notoSansMedium')};
-    `,
-};
-
-const BUTTON_CSS_ENUM = {
-    error: ERROR_COLOR_CSS,
-    success: SUCCESS_COLOR_CSS,
-};
-
 const StyledButton = styled.button`
     width: auto;
-    ${({ size }) => SIZE_ENUM[size]}
-    ${({ color }) => BUTTON_CSS_ENUM[color]}
-    outline: none;
-    border: none;
+    ${({ size = 'small' }) => BUTTON_SIZE_TYPE[size]};
+    ${({ color = 'light' }) => BUTTON_COLOR_TYPE[color]};
     border-radius: 5px;
-    cursor: pointer;
     box-sizing: content-box;
+
+    margin-top: ${({ marginTop = 0 }) => transMarginProp(marginTop)};
+    margin-left: ${({ marginLeft = 0 }) => transMarginProp(marginLeft)};
+    margin-bottom: ${({ marginBottom = 0 }) => transMarginProp(marginBottom)};
+    margin-right: ${({ marginRight = 0 }) => transMarginProp(marginRight)};
 `;
+

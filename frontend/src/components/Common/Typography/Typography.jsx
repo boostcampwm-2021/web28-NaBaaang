@@ -1,17 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import theme from '@/styles/theme';
 
-import { fontMixin } from '@/styles/mixins';
-
-export default function Typography({
-    variant = 'p',
-    color = 'black',
-    align = 'left',
-    children = '',
-    backgroundColor = 'transparent',
-}) {
-    const styleProps = { variant, color, align, backgroundColor };
-    switch (variant) {
+export default function Typography({ children, ...styleProps }) {
+    switch (styleProps.variant) {
         case 'h1':
             return <H1Tag {...styleProps}>{children}</H1Tag>;
         case 'h2':
@@ -27,39 +19,58 @@ export default function Typography({
         case 'p':
             return <PTag {...styleProps}>{children}</PTag>;
         default:
-            return null;
+            return <PTag {...styleProps}>{children}</PTag>;
     }
 }
 
-const FontSizeType = {
+const FONT_SIZE_TYPE = {
     h1: css`
-        ${fontMixin('2rem', '1em', 'notoSansMedium')};
+        font-size: 2rem;
     `,
     h2: css`
-        ${fontMixin('1.8rem', '1em', 'notoSansMedium')};
+        font-size: 1.8rem;
     `,
     h3: css`
-        ${fontMixin('1.6rem', '1em', 'notoSansMedium')};
+        font-size: 1.6rem;
     `,
     h4: css`
-        ${fontMixin('1.4rem', '1em', 'notoSansMedium')};
+        font-size: 1.4rem;
     `,
     h5: css`
-        ${fontMixin('1.2rem', '1em', 'notoSansMedium')};
+        font-size: 1.2rem;
     `,
     p: css`
-        ${fontMixin('1rem', '1em', 'notoSansMedium')};
+        font-size: 1rem;
     `,
     span: css`
-        ${fontMixin('1rem', '1em', 'notoSansMedium')};
+        font-size: 1rem;
+    `,
+};
+
+const FONT_WEIGHT_TYPE = {
+    light: css`
+        font-family: 'Noto Sans Kr Light';
+    `,
+    medium: css`
+        font-family: 'Noto Sans Kr Medium';
+    `,
+    Bold: css`
+        font-family: 'Noto Sans Kr Bold';
     `,
 };
 
 const generatorTag = variant => styled(variant)`
-    ${({ variant }) => FontSizeType[variant]};
-    color: ${({ color }) => color};
-    text-align: ${({ align }) => align};
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    ${({ variant = 'p' }) => FONT_SIZE_TYPE[variant]};
+    ${({ weight = 'medium' }) => FONT_WEIGHT_TYPE[weight]};
+
+    color: ${({ color = 'black' }) => theme.color[color]};
+    text-align: ${({ align = 'center' }) => align};
+    background-color: ${({ backgroundColor = 'transparent' }) =>
+        backgroundColor};
+    margin-top: ${({ marginTop = 0 }) => `${marginTop}rem`};
+    margin-left: ${({ marginLeft = 0 }) => `${marginLeft}rem`};
+    margin-bottom: ${({ marginBottom = 0 }) => `${marginBottom}rem`};
+    margin-right: ${({ marginRight = 0 }) => `${marginRight}rem`};
 `;
 
 const H1Tag = generatorTag('h1');

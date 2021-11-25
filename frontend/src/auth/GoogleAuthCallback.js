@@ -4,14 +4,16 @@ import qs from 'qs';
 
 import { fetchSiginInGoogle } from '@/apis/auth';
 import { UserContext } from '@/store/userStore';
+import { Loading } from '@/components/Common';
 
 export default function GoogleAuthCallback() {
     const { authSignIn } = useContext(UserContext);
     const { search } = useLocation();
-    const { code } = qs.parse(search, {
+    const navigate = useNavigate();
+    const { code, state } = qs.parse(search, {
         ignoreQueryPrefix: true,
     });
-    const navigate = useNavigate();
+    const { referrer } = JSON.parse(state);
 
     const handleSignIn = async () => {
         try {
@@ -23,7 +25,7 @@ export default function GoogleAuthCallback() {
         } catch (err) {
             authSignIn({ type: 'error' });
         } finally {
-            navigate('/');
+            navigate(referrer);
         }
     };
 
@@ -31,5 +33,5 @@ export default function GoogleAuthCallback() {
         handleSignIn();
     }, []);
 
-    return <div />;
+    return <Loading />;
 }

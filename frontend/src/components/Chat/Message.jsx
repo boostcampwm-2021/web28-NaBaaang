@@ -1,38 +1,86 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fontMixin } from '@/styles/mixins';
-import { MESSAGE_TYPE } from '@/constants/messageType';
 
-export default function Message({ type, nickname, content }) {
+import { ReactComponent as DeleteIcon } from '@/assets/images/x.svg';
+
+import { MESSAGE_TYPE } from '@/constants/messageType';
+import { Box, Typography, IconButton } from '@/components/Common';
+
+export default function Message({
+    id,
+    type,
+    nickname,
+    content,
+    status,
+    onDelete,
+}) {
+    const deleteButton = !status && (
+        <IconButton color="delete" onClick={onDelete(id)}>
+            <DeleteIcon />
+        </IconButton>
+    );
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
-        <StyledMessage>
-            {nickname}: {content}
-        </StyledMessage>
+        <MessageBox flexDirection="column" width="90%" alignItems="flex-start">
+            <Typography color="primary" align="left" variant="span">
+                {nickname}
+            </Typography>
+            <Box
+                flexDirection="row"
+                width="100%"
+                justifyContent="flex-start"
+                alignItems="flex-end"
+            >
+                {deleteButton}
+                <Bubble>
+                    <Typography color="black3" align="left">
+                        {content}
+                    </Typography>
+                </Bubble>
+            </Box>
+        </MessageBox>
     ) : (
-        <StyledDonation>
-            <StyledDonationValue>{content}</StyledDonationValue>
-            <StyledMessage>
-                {nickname}님이 <br />
-                비트 {content}개 선물하였습니다!!
-            </StyledMessage>
+        <StyledDonation
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >
+            <Box alignItems="flex-end">
+                {deleteButton}
+                <Bubble>
+                    <MessageBox>
+                        <Typography color="black3" align="center">
+                            <Typography
+                                color="primary"
+                                align="left"
+                                variant="span"
+                            >
+                                {nickname}
+                            </Typography>
+                            님이 비트 {content}개 선물하였습니다!!!
+                        </Typography>
+                    </MessageBox>
+                </Bubble>
+            </Box>
         </StyledDonation>
     );
 }
 
-const StyledMessage = styled.p`
+const MessageBox = styled(Box)`
     min-height: 1rem;
     margin: 1rem;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
 `;
 
-const StyledDonation = styled.div`
-    min-height: 30px;
-    margin: 30px;
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
+const Bubble = styled.div`
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin-top: 0.5em;
+    padding: 0.5em;
+    border-radius: 15px;
+    background-color: ${({ theme }) => theme.color.offwhite};
 `;
 
-const StyledDonationValue = styled.div`
-    ${fontMixin('1em', '1em', 'notoSansMedium')}
-    text-align:center;
+const StyledDonation = styled(Box)`
+    width: 95%;
+    height: auto;
+    margin: 1rem;
 `;

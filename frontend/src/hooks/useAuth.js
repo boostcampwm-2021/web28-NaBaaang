@@ -56,5 +56,5 @@ export default function useAuth() {
         isAuthTokenValidate();
     }, []);
 
-    return { userInfo, authLoading, authSignIn, authSignOut };
+    return { userInfo, setUserInfo, authLoading, authSignIn, authSignOut };
 }

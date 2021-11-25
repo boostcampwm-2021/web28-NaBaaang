@@ -4,13 +4,18 @@ import { BrowserRouter } from 'react-router-dom';
 import theme from '@/styles/theme';
 import GlobalStyle from '@/styles/global';
 
+import ModalStore from '@/store/ModalStore';
+
 export const decorators = [
     Story => (
         <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <BrowserRouter>
-                <Story />
-            </BrowserRouter>
+            <ModalStore>
+                <GlobalStyle />
+                <div id="modal-root"></div>
+                <BrowserRouter>
+                    <Story />
+                </BrowserRouter>
+            </ModalStore>
         </ThemeProvider>
     ),
 ];

@@ -22,16 +22,35 @@ const borderBoxMixin = (stroke, radius, color = 'black') => css`
     border: ${stroke} solid ${color};
 `;
 
-const fontMixin = (
-    size,
-    lineh,
-    fontFamily = 'notoSansLight',
-    color = 'black',
-) => css`
+const fontMixin = (size, lineh, fontFamily = 'Noto Sans Kr Medium') => css`
     font-size: ${size};
     line-height: ${lineh};
     font-family: '${fontFamily}';
-    color: ${color};
 `;
 
-export { flexMixin, borderBoxMixin, sizeMixin, colorMixin, fontMixin };
+const fontFaceMixin = ({ name, bold = 500, woff2, woff, otf }) => css`
+    @font-face {
+        font-family: ${name};
+        font-weight: ${bold};
+        font-display: fallback;
+        src: local(${name}), url(${woff2}) format('woff2'),
+            url(${woff}) format('woff'), url(${otf}) format('opentype');
+    }
+`;
+
+const hoverMixin = (bgColor, hoverColor) => css`
+    background-color: ${bgColor};
+    &:hover {
+        background-color: ${hoverColor};
+    }
+`;
+
+export {
+    flexMixin,
+    borderBoxMixin,
+    sizeMixin,
+    colorMixin,
+    fontMixin,
+    fontFaceMixin,
+    hoverMixin,
+};

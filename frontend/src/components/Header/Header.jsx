@@ -1,30 +1,38 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from '@/assets/images/header-logo.svg';
-import CameraIcon from '@/assets/images/camera-icon.svg';
-import ProfileIcon from '@/assets/images/profile-icon.svg';
+import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
+import ProfileIcon from '@/assets/images/profile-icon.svg';
+import STATUS from '@/constants/statusCode';
 
-import Button from '@/components/Common/Button';
-import Box from '@/components/Common/Box';
 import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
+import { Button, Box, IconButton } from '@/components/Common';
+import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
+import { fetchUpdateNickname } from '@/apis/user';
+import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
+import NicknameModal from './NicknameModal';
+import ChannelAlertModal from './ChannelAlertModal';
 
 export default function Header() {
-    const [openLoginModal, setOpenLoginModal] = useState(false);
-    const [openChannelModal, setChannelModal] = useState(false);
-    const { userInfo, authSignOut } = useContext(UserContext);
+    const { handleModal, openModal } = useContext(ModalContext);
+    const { setUserInfo, userInfo, authSignOut } = useContext(UserContext);
+
     const navigate = useNavigate();
 
-    const handleOpenModal = handler => {
-        handler(true);
-    };
-
-    const handleHideModal = handler => {
-        handler(false);
+    const changeNicknameHandler = () => {
+        handleModal(
+            <NicknameModal
+                onSubmit={handleOnChangeNickname}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+            />,
+        );
     };
 
     const logoutHandler = () => {
@@ -32,17 +40,60 @@ export default function Header() {
         navigate(window.location.pathname);
     };
 
+    const handleOnClickCameraIcon = async () => {
+        const { user } = userInfo;
+        const { data: channelInfo, status } = await fetchChannelOwnedByUser(
+            user.id,
+        );
+
+        if (status === STATUS.NO_CONTENT) {
+            openModal(
+                <ChannelModal
+                    subHandleOnSubmit={handleOnCreateChannel}
+                    successText="방송 시작"
+                />,
+            );
+        } else if (status === STATUS.OK) {
+            openModal(<ChannelAlertModal channelInfo={channelInfo} />);
+        }
+    };
+
+    const handleOnCreateChannel = async formData => {
+        try {
+            const channelID = await fetchCreateChannel(formData);
+            navigate(`/stream-manager/${channelID}`);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const handleOnChangeNickname = async data => {
+        try {
+            const response = await fetchUpdateNickname({
+                ...data,
+                id: userInfo.user.id,
+            });
+            return response;
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const profileDropDownItems = () => {
+        const items = [
+            ['닉네임 변경', changeNicknameHandler],
+            ['로그아웃', logoutHandler],
+        ];
+
+        const dropDownItems = items.map(([text, handler]) => {
+            return { text, handler };
+        });
+
+        return dropDownItems;
+    };
+
     return (
         <HeaderWrap>
-            <LoginModal
-                open={openLoginModal}
-                onClose={() => handleHideModal(setOpenLoginModal)}
-            />
-            <ChannelModal
-                open={openChannelModal}
-                onClose={() => handleHideModal(setChannelModal)}
-            />
-
             <Link to="/">
                 <Logo src={HeaderLogo} alt="header-logo" />
             </Link>
@@ -51,19 +102,26 @@ export default function Header() {
                 <Button
                     text="로그인"
                     size="medium"
-                    onClick={() => handleOpenModal(setOpenLoginModal)}
+                    onClick={() => handleModal(<LoginModal />)}
                 />
             ) : (
                 <Box>
-                    <Logo
-                        src={CameraIcon}
-                        onClick={() => handleOpenModal(setChannelModal)}
-                    />
-                    <Logo src={ProfileIcon} />
-                    <Button
-                        text="로그아웃"
-                        size="medium"
-                        onClick={logoutHandler}
+                    <IconButton
+                        size="large"
+                        type="square"
+                        onClick={handleOnClickCameraIcon}
+                    >
+                        <CameraIcon />
+                    </IconButton>
+
+                    <DropDown
+                        toggleButtonChild={
+                            <IconButton type="square" size="large">
+                                <Logo src={ProfileIcon} />
+                            </IconButton>
+                        }
+                        items={profileDropDownItems()}
+                        contentPos={{ top: '4rem', right: '0' }}
                     />
                 </Box>
             )}
@@ -77,12 +135,12 @@ const HeaderWrap = styled.header`
     z-index: ${({ theme }) => theme.zIndex.header};
     ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.23);
     padding: 0 1em;
     box-sizing: border-box;
 `;
 
 const Logo = styled.img`
-    height: 60px;
+    height: 35px;
     cursor: pointer;
 `;
+

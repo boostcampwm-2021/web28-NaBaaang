@@ -1,20 +1,46 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
-import Box from '@/components/Common/Box';
+import { ModalContext } from '@/store/ModalStore';
+
+import { Box } from '@/components/Common';
+import ChannelModal from '@/components/Header/ChannelModal';
+import { fetchUpdateChannel } from '@/apis/channel';
 import DashBoardCard from '../DashBoardCard';
 import MediaInfoModal from '../MediaInfoModal';
+import OBSModal from '../OBSModal';
 
-export default function DashBoardInfo({ info }) {
-    const { streamKey } = info;
-    const [medialModalOpen, setMedialModalOpen] = useState(false);
+export default function DashBoardInfo({ info, fetchData, userCnt }) {
+    const { id, title, description, category, streamKey } = info;
 
-    const handleMedialModalOpen = () => {
-        setMedialModalOpen(true);
+    const { openModal } = useContext(ModalContext);
+
+    const handleOnUpdateChannel = async formData => {
+        try {
+            await fetchUpdateChannel(formData);
+            fetchData();
+        } catch (err) {
+            throw new Error(err);
+        }
     };
 
-    const handleMedialModalClose = () => {
-        setMedialModalOpen(false);
+    const openMedialModal = () => {
+        openModal(<MediaInfoModal streamKey={streamKey} />);
     };
+
+    const openOBSModal = () => {
+        openModal(<OBSModal />);
+    };
+
+    const openChannelFormModal = () => {
+        openModal(
+            <ChannelModal
+                initFormData={{ id, title, description, category }}
+                subHandleOnSubmit={handleOnUpdateChannel}
+                successText="방송 수정"
+            />,
+        );
+    };
+
     return (
         <Box
             height="100%"
@@ -24,18 +50,14 @@ export default function DashBoardInfo({ info }) {
             alignItems="stretch"
             flex={1}
         >
-            <MediaInfoModal
-                open={medialModalOpen}
-                streamKey={streamKey}
-                onClose={handleMedialModalClose}
-            />
-
-            <DashBoardCard title="방송 정보 편집" info={info} />
             <DashBoardCard
-                onClick={handleMedialModalOpen}
-                title="송출 정보 확인"
+                onClick={openChannelFormModal}
+                title="방송 정보 편집"
+                info={info}
             />
-            <DashBoardCard title="OBS 가이드" />
+            <DashBoardCard onClick={openMedialModal} title="송출 정보 확인" />
+            <DashBoardCard onClick={openOBSModal} title="OBS 가이드" />
+            <DashBoardCard title={`시청자 수 ${userCnt}`} />
         </Box>
     );
 }

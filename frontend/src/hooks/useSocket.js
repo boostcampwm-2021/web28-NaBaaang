@@ -1,7 +1,10 @@
-import { useEffect, useContext, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import socket from '@/socket';
 import { UserContext } from '@/store/userStore';
+import { ModalContext } from '@/store/ModalStore';
+
+import AlertModal from '@/components/AlertModal';
 
 function isChannelOwner(streamerId, user) {
     if (!user) return false;
@@ -9,9 +12,15 @@ function isChannelOwner(streamerId, user) {
 }
 
 export default function useSocket(channel) {
-    const [openAlertModal, setAlertModal] = useState(false);
+    const [userCnt, setUserCnt] = useState(0);
+
     const { userInfo } = useContext(UserContext);
+    const { openModal } = useContext(ModalContext);
     const { user } = userInfo;
+
+    const handleSocketEnded = () => {
+        openModal(<AlertModal />);
+    };
 
     useEffect(() => {
         if (!channel) return null;
@@ -23,11 +32,12 @@ export default function useSocket(channel) {
                 ? 'streamer'
                 : 'viewer',
         });
-        socket.channel.channelEnded({ setAlertModal });
+        socket.channel.channelUserCntChanged(setUserCnt);
+        socket.channel.channelEnded(handleSocketEnded);
         return () => {
             socket.channel.clearChannelEvents();
         };
     }, [channel]);
 
-    return { openAlertModal };
+    return { userCnt };
 }

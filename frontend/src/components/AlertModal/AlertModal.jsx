@@ -1,23 +1,29 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 
-import Modal from '@/components/Common/Modal/Modal';
+import { ModalContext } from '@/store/ModalStore';
+import { Box, Typography, Button } from '@/components/Common';
 
 function AlertModal() {
-    const navigate = useNavigate();
-    const handleSubmit = () => {
-        navigate(`/`);
+    const { closeModal, setRedirectUrl } = useContext(ModalContext);
+
+    useEffect(() => {
+        setRedirectUrl('/');
+    }, []);
+
+    const handleSuccessButtonClick = () => {
+        closeModal();
     };
     return (
-        <Modal
-            open
-            showButton
-            alert
-            onSuccessText="확인"
-            onSuccess={handleSubmit}
-        >
-            <p>방송을 종료합니다</p>
-        </Modal>
+        <Box flexDirection="column">
+            <Typography varaint="p" marginBottom={2}>
+                방송이 종료되었습니다.
+            </Typography>
+            <Button
+                text="확인"
+                color="success"
+                onClick={handleSuccessButtonClick}
+            />
+        </Box>
     );
 }
 

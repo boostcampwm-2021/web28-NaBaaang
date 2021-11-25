@@ -1,0 +1,167 @@
+/api/channels:
+  get:
+    tags:
+      - Channel
+    summary: 라이브 방송 조회
+    description: channel isLive 
+    produces:
+      - application/json
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            $ref: "./components.yaml#/channelList"
+      204:
+        $ref: "../common/response.yaml#/NoContent"
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+  post:
+    tags:
+      - Channel
+    summary: 방송 생성
+    description: Channel 생성
+    produces:
+      - application/json
+    security:
+      - bearerAuth: []
+    parameters:
+      - name: token
+        in: header
+        required: true
+        description: access 및 refresh token
+      - in: body
+        name: channelInfo
+        description: 채널 생성 정보
+        schema:
+          type: object
+          required:
+            - userId
+            - title
+            - category
+            - description
+          properties:
+            userId:
+              type: integer
+            title:
+              type: string
+            category:
+              type: string
+            description:
+              type: string
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            example:
+              channelId: 1
+      401:
+        $ref: "../common/response.yaml#/UnAuthorized"
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+
+/api/channels/{id}:
+  get:
+    tags:
+      - Channel
+    summary: Channel 조회
+    description: channel id로 채널 정보 조회
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: 방송 id
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            $ref: "./components.yaml#/channel"
+      204:
+        $ref: "../common/response.yaml#/NoContent"
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+
+/api/channels/{id}/authenticate:
+  get:
+    tags:
+      - Channel
+    summary: Channel 및 사용자 권한 조회
+    description: channel id로 채널 정보 및 사용자 권한 조회
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: 방송 id
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            example:
+              $ref: "./components.yaml#/channelWithRole"
+      204:
+        $ref: "../common/response.yaml#/NoContent"
+      401:
+        $ref: "../common/response.yaml#/UnAuthorized"
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+
+
+/api/channels/{id}/open:
+  patch:
+    tags:
+      - Channel
+    summary: 방송 open
+    description: Channel 라이브 상태(isLive) true로 변경
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: 방송 id
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            example:
+              message: success
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+
+/api/channels/{id}/close:
+  patch:
+    tags:
+      - Channel
+    summary: 방송 close
+    description: Channel 라이브 상태(isLive) false 변경
+    produces:
+      - application/json
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: 방송 id
+    responses:
+      200:
+        description: Ok
+        content:
+          application/json:
+            example:
+              message: success
+      500:
+        $ref: "../common/response.yaml#/InternalServerError"
+
+components:
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT  # optional, for documentation purposes only
