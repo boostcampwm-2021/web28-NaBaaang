@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { borderBoxMixin, flexMixin } from '@/styles/mixins';
 
-import { Box, Overlay } from '@/components/Common';
+import { Box, Overlay, Typography } from '@/components/Common';
 import { ReactComponent as DropIcon } from '@/assets/images/dropdown-icon.svg';
 
 export default function SelectionBox({
@@ -24,9 +24,11 @@ export default function SelectionBox({
 
     const getSelectedItem = items ? (
         <SelectionButton onClick={toggleSelectionBox}>
-            {selectedItem === -1
-                ? '선택'
-                : items.find((item, idx) => idx === selectedItem)}
+            <Typography variant="p">
+                {selectedItem === -1
+                    ? '선택'
+                    : items.find((item, idx) => idx === selectedItem)}
+            </Typography>
             <DropIcon />
         </SelectionButton>
     ) : (
@@ -43,14 +45,14 @@ export default function SelectionBox({
                           closeSelection();
                       }}
                   >
-                      {item}
+                      <Typography variant="p">{item}</Typography>
                   </SelectionItem>
               );
           })
         : 'no items';
 
     return (
-        <SelectionContainer>
+        <>
             {open && (
                 <OverlayWrapper width="100%" height="100%">
                     <Overlay
@@ -64,19 +66,16 @@ export default function SelectionBox({
                 {getSelectedItem}
                 {open && <SelectionContent>{selectionItems}</SelectionContent>}
             </SelectionWrapper>
-        </SelectionContainer>
+        </>
     );
 }
 
-const SelectionContainer = styled(Box)`
-    width: 100%;
-`;
 const OverlayWrapper = styled(Box)`
     position: fixed;
     left: 0;
     top: 0;
-    width:100%;
-    heigth:100%
+    width: 100%;
+    height: 100%;
     border: 1px solid black;
     z-index: 10;
 `;
@@ -106,7 +105,7 @@ const SelectionButton = styled(Box)`
         cursor: pointer;
     }
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem;
 `;
 
 const SelectionItem = styled('div')`

@@ -72,6 +72,12 @@ const actionTypeInfo = {
             ...fetchTemplate('GET'),
         };
     },
+    FETCH_CHANNEL_BY_USER(payload) {
+        return {
+            url: `${API_URL}/api/users/${payload}/channels`,
+            ...fetchTemplate('GET', payload),
+        };
+    },
     FETCH_GET_LIVE_CHANNELS() {
         return {
             url: `${API_URL}/api/channels`,
@@ -81,6 +87,12 @@ const actionTypeInfo = {
     FETCH_OPEN_CHANNEL(payload) {
         return {
             url: `${API_URL}/api/channels/${payload}/open`,
+            ...fetchTemplate('PATCH', {}),
+        };
+    },
+    FETCH_PAUSE_CHANNEL(payload) {
+        return {
+            url: `${API_URL}/api/channels/${payload}/pause`,
             ...fetchTemplate('PATCH', {}),
         };
     },

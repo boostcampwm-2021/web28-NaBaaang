@@ -36,6 +36,11 @@ export default function (sequelize, DataTypes) {
                 defaultValue: false,
                 allowNull: false,
             },
+            isDelete: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
+            },
         },
         {
             sequelize,

@@ -14,6 +14,7 @@ import TextField from './TextField';
 import Typography from './Typography';
 import Loading from './Loading';
 import Skeleton from './Skeleton';
+import SelectionBox from './SelectionBox';
 
 export {
     Box,
@@ -32,4 +33,5 @@ export {
     Typography,
     Loading,
     Skeleton,
+    SelectionBox,
 };

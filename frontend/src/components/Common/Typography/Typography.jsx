@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import theme from '@/styles/theme';
 
 export default function Typography({ children, ...styleProps }) {
     switch (styleProps.variant) {
@@ -62,7 +63,7 @@ const generatorTag = variant => styled(variant)`
     ${({ variant = 'p' }) => FONT_SIZE_TYPE[variant]};
     ${({ weight = 'medium' }) => FONT_WEIGHT_TYPE[weight]};
 
-    color: ${({ color = 'black' }) => color};
+    color: ${({ color = 'black' }) => theme.color[color]};
     text-align: ${({ align = 'center' }) => align};
     background-color: ${({ backgroundColor = 'transparent' }) =>
         backgroundColor};

@@ -10,15 +10,16 @@ import ProfileIcon from '@/assets/images/profile-icon.svg';
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
-import { fetchCreateChannel } from '@/apis/channel';
+import { fetchChannelOwnedByUser, fetchCreateChannel } from '@/apis/channel';
+import STATUS from '@/constants/statusCode';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
+import ChannelAlertModal from './ChannelAlertModal';
 
 export default function Header() {
-    const { handleModal } = useContext(ModalContext);
+    const { handleModal, openModal } = useContext(ModalContext);
     const { userInfo, authSignOut } = useContext(UserContext);
-
     const navigate = useNavigate();
 
     const changeNicknameHandler = () => {};
@@ -26,6 +27,26 @@ export default function Header() {
     const logoutHandler = () => {
         authSignOut();
         navigate(window.location.pathname);
+    };
+
+    const handleOnClickCameraIcon = async () => {
+        const { user } = userInfo;
+        const { data: channelInfo, status } = await fetchChannelOwnedByUser(
+            user.id,
+        );
+
+        if (status === STATUS.NO_CONTENT) {
+            openModal(
+                <ChannelModal
+                    subHandleOnSubmit={handleOnCreateChannel}
+                    successText="방송 시작"
+                />,
+            );
+        } else if (status === STATUS.OK) {
+            openModal(<ChannelAlertModal channelInfo={channelInfo} />);
+        } else {
+            alert(`Error: status code[${status}]`);
+        }
     };
 
     const handleOnCreateChannel = async formData => {
@@ -67,14 +88,7 @@ export default function Header() {
                     <IconButton
                         size="large"
                         type="square"
-                        onClick={() =>
-                            handleModal(
-                                <ChannelModal
-                                    subHandleOnSubmit={handleOnCreateChannel}
-                                    successText="방송 시작"
-                                />,
-                            )
-                        }
+                        onClick={handleOnClickCameraIcon}
                     >
                         <CameraIcon />
                     </IconButton>

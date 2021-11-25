@@ -17,6 +17,7 @@ router.patch(
     channelController.updateChannel,
 );
 router.patch('/:id/open', channelController.openChannel);
+router.patch('/:id/pause', channelController.standByChannel);
 router.patch('/:id/close', channelController.closeChannel);
 router.post('/:id/watch', channelController.watchChannel);
 export default router;
