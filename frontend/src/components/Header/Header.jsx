@@ -11,6 +11,7 @@ import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
 import { fetchChannelOwnedByUser, fetchCreateChannel } from '@/apis/channel';
+import STATUS from '@/constants/statusCode';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
@@ -34,14 +35,14 @@ export default function Header() {
             user.id,
         );
 
-        if (status === 204) {
+        if (status === STATUS.NO_CONTENT) {
             openModal(
                 <ChannelModal
                     subHandleOnSubmit={handleOnCreateChannel}
                     successText="방송 시작"
                 />,
             );
-        } else if (status === 200) {
+        } else if (status === STATUS.OK) {
             openModal(<ChannelAlertModal channelInfo={channelInfo} />);
         } else {
             alert(`Error: status code[${status}]`);

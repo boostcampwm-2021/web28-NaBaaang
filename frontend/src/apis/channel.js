@@ -1,4 +1,5 @@
 import fetchAction from '@/constants/fetchAction';
+import STATUS from '@/constants/statusCode';
 
 async function getFetchData(url, option) {
     const res = await fetch(url, option);
@@ -9,7 +10,7 @@ async function getFetchData(url, option) {
 async function getFetchDataV2(url, option) {
     const res = await fetch(url, option);
     const { status } = res;
-    const data = status === 204 ? {} : await res.json();
+    const data = status === STATUS.NO_CONTENT ? {} : await res.json();
     return { status, data };
 }
 
