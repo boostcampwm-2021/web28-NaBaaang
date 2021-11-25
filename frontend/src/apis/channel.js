@@ -49,7 +49,17 @@ async function fetchOpenChannel(id) {
         throw new Error(err);
     }
 }
-
+async function fetchPauseChannel(id){
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_PAUSE_CHANNEL',
+            payload: id,
+        });
+        return await getFetchData(url, option);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
 async function fetchCloseChannel(id) {
     try {
         const { url, option } = fetchAction({
@@ -61,7 +71,6 @@ async function fetchCloseChannel(id) {
         throw new Error(err);
     }
 }
-
 async function fetchAuthChannel(id) {
     try {
         const { url, option } = fetchAction({
@@ -90,6 +99,7 @@ export {
     fetchCreateChannel,
     fetchUpdateChannel,
     fetchOpenChannel,
+    fetchPauseChannel,
     fetchCloseChannel,
     fetchAuthChannel,
     fetchChannelOwnedByUser,

@@ -90,6 +90,12 @@ const actionTypeInfo = {
             ...fetchTemplate('PATCH', {}),
         };
     },
+    FETCH_PAUSE_CHANNEL(payload) {
+        return {
+            url: `${API_URL}/api/channels/${payload}/pause`,
+            ...fetchTemplate('PATCH', {}),
+        };
+    },
     FETCH_CLOSE_CHANNEL(payload) {
         return {
             url: `${API_URL}/api/channels/${payload}/close`,
