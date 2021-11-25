@@ -18,11 +18,10 @@ export default function ChannelDetails({ channelInfo, userCnt }) {
 
             <Box alignItems="flex-start" flexDirection="column">
                 <Typography variant="h5">{nickname}</Typography>
-                <Typography variant="h6">{title}</Typography>
-            </Box>
-
-            <Box alignSelf="flex-start">
-                <Chip text={category} color="success" />
+                <Typography variant="h6" marginBottom={0.5}>
+                    {title}
+                </Typography>
+                <Chip text={`#${category}`} color="success" />
             </Box>
 
             <Box marginLeft="auto" alignSelf="flex-start">
