@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { ReactComponent as DeleteIcon } from '@/assets/images/x.svg';
+
 import { MESSAGE_TYPE } from '@/constants/messageType';
-// import { Box, Button, Typography } from '@/components/Common';
-import { Box, Button, Typography } from '@/components/Common';
+import { Box, Typography, IconButton } from '@/components/Common';
 
 export default function Message({
     id,
@@ -13,13 +14,10 @@ export default function Message({
     status,
     onDelete,
 }) {
-    const deleteButton = status && (
-        <DeleteButton
-            text="X"
-            color="error"
-            size="extra_small"
-            onClick={onDelete(id)}
-        />
+    const deleteButton = !status && (
+        <IconButton color="delete" onClick={onDelete(id)}>
+            <DeleteIcon />
+        </IconButton>
     );
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
         <MessageBox flexDirection="column" width="90%" alignItems="flex-start">
@@ -39,9 +37,9 @@ export default function Message({
         <StyledDonation
             flexDirection="row"
             justifyContent="center"
-            alignItems="center"
+            alignItems="flex-start"
         >
-            <Box>
+            <Box alignItems="flex-start">
                 {deleteButton}
                 <Bubble>
                     <MessageBox>
@@ -70,11 +68,6 @@ const Bubble = styled.div`
     padding: 0.5em;
     border-radius: 15px;
     background-color: ${({ theme }) => theme.color.offwhite};
-`;
-
-const DeleteButton = styled(Button)`
-    position: absolute;
-    right: 0;
 `;
 
 const StyledDonation = styled(Box)`

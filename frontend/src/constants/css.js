@@ -65,6 +65,9 @@ const ICON_BUTTON_COLOR_TYPE = {
     light: css`
         ${({ theme: { color } }) => hoverMixin(color.white, color.gray3)}
     `,
+    delete: css`
+        ${({ theme: { color } }) => hoverMixin(color.red, color.primary)}
+    `,
 };
 
 export {
