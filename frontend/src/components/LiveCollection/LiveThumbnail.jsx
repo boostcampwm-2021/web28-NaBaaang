@@ -1,17 +1,11 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { flexMixin, sizeMixin } from '@/styles/mixins';
+import styled from 'styled-components';
+import { sizeMixin } from '@/styles/mixins';
 
-function LiveThumbnail({ thumbnail, viewer }) {
+function LiveThumbnail({ thumbnail }) {
     return (
         <ThumbnailBlock>
-            <img src={thumbnail} alt="" />
-            <LiveBadge>
-                <BadgeText>LIVE</BadgeText>
-            </LiveBadge>
-            <ViewerBadge>
-                <BadgeText>{viewer} watching</BadgeText>
-            </ViewerBadge>
+            <img src={thumbnail} alt="thumbnail" />
         </ThumbnailBlock>
     );
 }
@@ -24,35 +18,9 @@ const ThumbnailBlock = styled.div`
     ${sizeMixin('100%', '150px')}
 
     img {
-        position: absolute;
-        object-fit: cover;
-        ${sizeMixin('100%', '10em')}
+        width: 100%;
+        height: 100%;
     }
-`;
-
-const Badge = css`
-    position: absolute;
-    left: 10px;
-    border-radius: 0.25em;
-    padding: 0 0.25em;
-    ${flexMixin('inline-flex', 'center', 'center')}
-`;
-
-const LiveBadge = styled.div`
-    ${Badge}
-    top: 10px;
-    background-color: ${({ theme }) => theme.color.red};
-`;
-
-const ViewerBadge = styled.div`
-    ${Badge}
-    bottom: 10px;
-    background-color: ${({ theme }) => theme.color.gray1};
-`;
-
-const BadgeText = styled.span`
-    color: ${({ theme }) => theme.color.offwhite};
-    font-size: 14px;
 `;
 
 export default LiveThumbnail;

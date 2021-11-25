@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as CloseIcon } from '@/assets/images/close-icon.svg';
+import { ReactComponent as CloseIcon } from '@/assets/images/x.svg';
 
 import Portal from '@/Portal';
 import {
@@ -23,7 +23,11 @@ export default function Modal() {
                 <Overlay onClick={() => closeModal(modalContent)} />
                 <ModalCard alignItems="stretch" flexDirection="column">
                     <CloseButtonBox>
-                        <IconButton color="error" type="square" onClick={() => closeModal(modalContent)}>
+                        <IconButton
+                            color="error"
+                            type="square"
+                            onClick={() => closeModal(modalContent)}
+                        >
                             <CloseIcon />
                         </IconButton>
                     </CloseButtonBox>

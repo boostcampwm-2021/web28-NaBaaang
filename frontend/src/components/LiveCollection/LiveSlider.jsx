@@ -1,9 +1,6 @@
 import React from 'react';
-// import styled, { css } from 'styled-components';
-// import { sizeMixin, colorMixin, borderBoxMixin } from '@/styles/mixins';
-// import { ReactComponent as LeftArrow } from '@/assets/images/left-arrow.svg';
-// import { ReactComponent as RightArrow } from '@/assets/images/right-arrow.svg';
 
+import { v1 } from 'uuid';
 import { Slider, Box } from '@/components/Common';
 
 import LiveCard from './LiveCard';
@@ -25,7 +22,7 @@ function LiveSlider({ liveList }) {
 
         const sliderItems = slicedChunkArr.map(slicedChunk => {
             return (
-                <SliderItem justifyContent="start">
+                <SliderItem key={v1()} justifyContent="start">
                     {slicedChunk.map(item => {
                         return <LiveCard key={item.id} content={item} />;
                     })}
@@ -42,52 +39,5 @@ function LiveSlider({ liveList }) {
         </Box>
     );
 }
-
-// const SliderScrollBlock = styled.div`
-//     position: relative;
-//     width: 100%;
-//     overflow: hidden;
-//     margin-top: 1.5em;
-//     z-index: 3;
-
-//     &:hover button {
-//         display: block;
-//     }
-
-//     & button {
-//         display: none;
-//     }
-// `;
-
-// const SliderListWrapper = styled.div`
-//     display: flex;
-//     flex-wrap: nowrap;
-//     overflow-x: visible;
-//     width: 100%;
-//     min-height: 13em;
-// `;
-
-// const HoverButton = css`
-//     position: absolute;
-//     top: 0;
-//     z-index: 3;
-//     align-items: center;
-//     cursor: pointer;
-//     ${sizeMixin('40px', '150px')}
-//     ${borderBoxMixin('1px', '0.25em 0px 0px 0.25em')}
-//     ${colorMixin('white', 'rgba(0, 0, 0, 0.5)')}
-// `;
-
-// const RightButton = styled.button`
-//     ${HoverButton}
-//     justify-content: flex-end;
-//     right: 0;
-// `;
-
-// const LeftButton = styled.button`
-//     ${HoverButton}
-//     justify-content: flex-start;
-//     left: 0;
-// `;
 
 export default LiveSlider;

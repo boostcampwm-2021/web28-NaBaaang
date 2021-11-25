@@ -6,7 +6,7 @@ import Typography from '@/components/Common/Typography';
 export default function DashBoardTab({ text }) {
     return (
         <TabBox>
-            <Typography color="#fff" variant="h5">
+            <Typography color="white" variant="h5">
                 {text}
             </Typography>
         </TabBox>
