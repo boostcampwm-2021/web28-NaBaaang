@@ -3,10 +3,7 @@ import styled from 'styled-components';
 
 import { useParams, Navigate } from 'react-router-dom';
 
-import {
-    fetchOpenChannel,
-    fetchCloseChannel,
-} from '@/apis/channel';
+import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
@@ -92,7 +89,7 @@ export default function DashBoard() {
 
             <StyledBox flex={1.5}>
                 <DashBoardTab text="채팅 칸" />
-                <Chat role={role} />
+                <Chat role={role} isDonation={false} />
             </StyledBox>
         </DashBoardWrapper>
     );
