@@ -20,22 +20,34 @@ export default function DonationModal({ onDonation }) {
 
     return (
         <Box flexDirection="column">
-            <Typography variant="h3">비트를 선택해주세요</Typography>
+            <Typography variant="h3" marginBottom={2}>
+                비트를 선택해주세요
+            </Typography>
 
-            <Box>
+            <Box marginBottom={2}>
                 <DonationItemList handleTotalDonation={handleTotalDonation} />
             </Box>
 
+            <Box marginBottom={1}>
+                <Typography variant="h5">
+                    총 도네이션 : {totalDonation}
+                </Typography>
+            </Box>
+
             <Box>
-                누적 값 : {totalDonation}
                 <Button
                     onClick={handleTotalDonationInit}
                     text="초기화"
                     color="error"
+                    size="small"
+                    marginRight={1}
+                />
+                <Button
+                    onClick={handleClickSubmit}
+                    text="보내기"
+                    color="success"
                 />
             </Box>
-
-            <Button onClick={handleClickSubmit} text="보내기" color="success" />
         </Box>
     );
 }
