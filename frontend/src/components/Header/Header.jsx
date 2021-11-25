@@ -6,23 +6,34 @@ import HeaderLogo from '@/assets/images/header-logo.svg';
 import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
+import STATUS from '@/constants/statusCode';
 
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
-import { fetchChannelOwnedByUser, fetchCreateChannel } from '@/apis/channel';
-import STATUS from '@/constants/statusCode';
+import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
+import { fetchUpdateNickname } from '@/apis/user';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
+import NicknameModal from './NicknameModal';
 import ChannelAlertModal from './ChannelAlertModal';
 
 export default function Header() {
     const { handleModal, openModal } = useContext(ModalContext);
-    const { userInfo, authSignOut } = useContext(UserContext);
+    const { setUserInfo, userInfo, authSignOut } = useContext(UserContext);
+
     const navigate = useNavigate();
 
-    const changeNicknameHandler = () => {};
+    const changeNicknameHandler = () => {
+        handleModal(
+            <NicknameModal
+                onSubmit={handleOnChangeNickname}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+            />,
+        );
+    };
 
     const logoutHandler = () => {
         authSignOut();
@@ -53,6 +64,18 @@ export default function Header() {
         try {
             const channelID = await fetchCreateChannel(formData);
             navigate(`/stream-manager/${channelID}`);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
+    const handleOnChangeNickname = async data => {
+        try {
+            const response = await fetchUpdateNickname({
+                ...data,
+                id: userInfo.user.id,
+            });
+            return response;
         } catch (err) {
             throw new Error(err);
         }
