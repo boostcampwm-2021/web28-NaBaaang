@@ -38,6 +38,13 @@ const fontFaceMixin = ({ name, bold = 500, woff2, woff, otf }) => css`
     }
 `;
 
+const hoverMixin = (bgColor, hoverColor) => css`
+    background-color: ${bgColor};
+    &:hover {
+        background-color: ${hoverColor};
+    }
+`;
+
 export {
     flexMixin,
     borderBoxMixin,
@@ -45,4 +52,5 @@ export {
     colorMixin,
     fontMixin,
     fontFaceMixin,
+    hoverMixin,
 };
