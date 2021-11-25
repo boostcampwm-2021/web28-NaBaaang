@@ -7,6 +7,7 @@ import { Box, Button, Typography } from '@/components/Common';
 
 function NicknameModal({ onSubmit }) {
     const { closeModal } = useContext(ModalContext);
+
     const inputRef = useRef();
     const [error, setError] = useState(null);
 
@@ -15,7 +16,7 @@ function NicknameModal({ onSubmit }) {
             const inputData = inputRef.current.value;
             if (inputData === '') setError('닉네임을 입력해주세요');
             else {
-                onSubmit(inputData);
+                onSubmit({ nickname: inputData });
                 closeModal();
             }
         } catch (err) {

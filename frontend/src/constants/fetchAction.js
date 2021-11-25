@@ -40,6 +40,13 @@ const actionTypeInfo = {
         };
     },
 
+    FETCH_UPDATE_NICKNAME(payload) {
+        return {
+            url: `${API_URL}/api/user/${payload.id}`,
+            ...fetchTemplate('PATCH', payload),
+        };
+    },
+
     FETCH_WATCH_CHANNEL(payload) {
         return {
             url: `${API_URL}/api/channels/${payload}/watch`,

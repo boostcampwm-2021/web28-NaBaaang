@@ -11,6 +11,7 @@ import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
 import { fetchCreateChannel } from '@/apis/channel';
+import { fetchUpdateNickname } from '@/apis/user';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
@@ -40,7 +41,17 @@ export default function Header() {
         }
     };
 
-    const handleOnChangeNickname = async () => {};
+    const handleOnChangeNickname = async data => {
+        try {
+            const response = await fetchUpdateNickname({
+                ...data,
+                id: userInfo.id,
+            });
+            console.log(response);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
 
     const profileDropDownItems = () => {
         const items = [
