@@ -3,10 +3,13 @@ import styled from 'styled-components';
 
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
-import TextField from '@/components/Common/TextField';
-import Box from '@/components/Common/Box';
-import Button from '@/components/Common/Button/Button';
-import SelectionBox from '@/components/Common/SelectionBox';
+import {
+    TextField,
+    Box,
+    Button,
+    SelectionBox,
+    Typography,
+} from '@/components/Common';
 import { CHANNEL_CATEGORY } from '@/constants/channelCategory';
 
 export default function ChannelModalForm({
@@ -41,19 +44,32 @@ export default function ChannelModalForm({
                         handleChange={handleInputChange}
                         value={title}
                     />
-                    {errors.title && <ErrorText>{errors.title}</ErrorText>}
+                    {errors.title && (
+                        <ErrorText>
+                            <Typography color="red" variant="span">
+                                {errors.title}
+                            </Typography>
+                        </ErrorText>
+                    )}
                 </Box>
-                <Box width="100%" flex={1}>
-                    <Field>카테고리</Field>
-
+                <Box
+                    width="80%"
+                    flexDirection="row"
+                    justifyContent="space-around"
+                >
+                    <Typography variant="span">카테고리</Typography>
                     <SelectionBox
-                        width="80%"
+                        width="50%"
                         items={CHANNEL_CATEGORY}
                         selectedItem={selectedItem}
                         setSelectedItems={setSelectedItems}
                     />
                     {errors.category && (
-                        <ErrorText>{errors.category}</ErrorText>
+                        <ErrorText>
+                            <Typography color="red" variant="span">
+                                {errors.category}
+                            </Typography>
+                        </ErrorText>
                     )}
                 </Box>
                 <Box width="100%" flex={1}>
@@ -64,7 +80,11 @@ export default function ChannelModalForm({
                         value={description}
                     />
                     {errors.description && (
-                        <ErrorText>{errors.description}</ErrorText>
+                        <ErrorText>
+                            <Typography color="red" variant="span">
+                                {errors.description}
+                            </Typography>
+                        </ErrorText>
                     )}
                 </Box>
             </Box>
@@ -78,11 +98,8 @@ const Form = styled.form`
     ${flexMixin('column', 'space-around', 'center')}
     ${sizeMixin('100%', '100%')}
 `;
-const Field = styled.span`
-    width: 100%;
-`;
 const ErrorText = styled.div`
     position: absolute;
-    top: 80%;
+    top: 70%;
     color: ${({ theme }) => theme.color.red};
 `;

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
+import { Box, Typography } from '@/components/Common';
+
 export default function TextField({
     labelText,
     name,
@@ -9,8 +11,8 @@ export default function TextField({
     value,
 }) {
     return (
-        <>
-            <InputLabel>{labelText}</InputLabel>
+        <Box width="80%" flexDirection="row" justifyContent="space-around">
+            <Typography variant="p">{labelText}</Typography>
             <InputBox>
                 <Input
                     ref={inputRef}
@@ -19,13 +21,9 @@ export default function TextField({
                     value={value}
                 />
             </InputBox>
-        </>
+        </Box>
     );
 }
-
-const InputLabel = styled.label`
-    width: 100px;
-`;
 
 const InputBox = styled.div`
     ${({ theme }) =>
@@ -33,7 +31,7 @@ const InputBox = styled.div`
             background-color: ${theme.color.gray2};
         `}
     border-radius: 40px;
-    padding: 5px;
+    padding: 0.5rem;
 `;
 
 const Input = styled.input`
