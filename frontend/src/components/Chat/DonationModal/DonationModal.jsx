@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
+import { ModalContext } from '@/store/ModalStore';
 import { Box, Button, Typography } from '@/components/Common';
 import DonationItemList from './DonationItemList';
 
 export default function DonationModal({ onDonation }) {
     const [totalDonation, setTotalDonation] = useState(0);
+    const { closeModal } = useContext(ModalContext);
 
     const handleTotalDonation = value => {
         setTotalDonation(totalDonation + value);
@@ -16,6 +18,7 @@ export default function DonationModal({ onDonation }) {
 
     const handleClickSubmit = () => {
         onDonation(totalDonation);
+        closeModal();
     };
 
     return (
