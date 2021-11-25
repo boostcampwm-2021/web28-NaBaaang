@@ -17,6 +17,21 @@ storiesOf('IconButton', module)
             <LeftArrowIcon />
         </IconButton>
     ))
+    .add('light', () => (
+        <IconButton color="light" size="large">
+            <LeftArrowIcon />
+        </IconButton>
+    ))
+    .add('success', () => (
+        <IconButton color="success" size="large">
+            <LeftArrowIcon />
+        </IconButton>
+    ))
+    .add('error', () => (
+        <IconButton color="error" size="large">
+            <LeftArrowIcon />
+        </IconButton>
+    ))
     .add('large', () => (
         <IconButton size="large">
             <LeftArrowIcon />

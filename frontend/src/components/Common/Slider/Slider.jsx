@@ -48,13 +48,13 @@ export default function Slider({ children, navigation = false }) {
             {navigation && (
                 <>
                     <PrevButtonWrap>
-                        <IconButton onClick={showPrevSlide}>
+                        <IconButton color="success" onClick={showPrevSlide}>
                             <LeftArrowIcon />
                         </IconButton>
                     </PrevButtonWrap>
 
                     <NextButtonWrap>
-                        <IconButton onClick={showNextSlide}>
+                        <IconButton color="success" onClick={showNextSlide}>
                             <RightArrowIcon />
                         </IconButton>
                     </NextButtonWrap>

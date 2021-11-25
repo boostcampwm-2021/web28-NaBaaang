@@ -24,7 +24,7 @@ export default function Modal() {
                 <Overlay onClick={closeModal} />
                 <ModalCard alignItems="stretch" flexDirection="column">
                     <CloseButtonBox>
-                        <IconButton type="square" onClick={closeModal}>
+                        <IconButton color="error" type="square" onClick={closeModal}>
                             <CloseIcon />
                         </IconButton>
                     </CloseButtonBox>
