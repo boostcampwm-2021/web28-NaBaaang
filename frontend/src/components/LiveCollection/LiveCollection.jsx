@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import useFetch from '@/hooks/useFetch';
 
+import { PageStatus } from '@/components/Common';
 import LiveList from './LiveList';
-import PageStatus from '../Common/PageStatus';
 
 function LiveCollection() {
     const { data, error, loading } = useFetch({
