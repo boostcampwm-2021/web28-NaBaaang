@@ -79,6 +79,7 @@ const DropDownWrapper = styled(Box)`
 const DropDownContent = styled(Box)`
     width: max-content;
     position: absolute;
+    background-color: ${({ theme }) => theme.color.white};
     ${({ pos: { top = 0, right = 0 } }) =>
         css`
             top: ${top};
@@ -91,6 +92,7 @@ const DropDownContent = styled(Box)`
 const DropDownItem = styled(Box)`
     padding: 1rem 1rem;
     width: 100%;
+    transition: background-color ease-in 150ms;
     :hover {
         cursor: pointer;
         background-color: ${({ theme }) => theme.color.gray3};

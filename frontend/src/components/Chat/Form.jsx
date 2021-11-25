@@ -10,7 +10,7 @@ import { Button, Box } from '@/components/Common';
 import DonationModal from './DonationModal';
 import LoginAlertModal from './LoginAlertModal';
 
-export default function Form({ handleSubmit }) {
+export default function Form({ handleSubmit, isDonation }) {
     const messageInputRef = useRef();
     const { userInfo } = useContext(UserContext);
     const { openModal } = useContext(ModalContext);
@@ -62,13 +62,16 @@ export default function Form({ handleSubmit }) {
                 <StyledInput ref={messageInputRef} />
             </Box>
             <Box justifyContent="flex-end">
-                <Button
-                    color="success"
-                    text="도네이션"
-                    onClick={openDonationModal}
-                    marginRight={1}
-                    type="button"
-                />
+                {isDonation && (
+                    <Button
+                        color="success"
+                        text="도네이션"
+                        onClick={openDonationModal}
+                        marginRight={1}
+                        type="button"
+                    />
+                )}
+
                 <Button color="success" text="채팅" type="submit" />
             </Box>
         </StyledForm>
@@ -83,6 +86,7 @@ const StyledForm = styled.form`
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
+    padding : 0 1rem;
     ${({ theme }) =>
         css`
             background-color: ${theme.color.offwhite};
