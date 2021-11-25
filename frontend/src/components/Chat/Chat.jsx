@@ -30,7 +30,7 @@ export default function Chat() {
             flex={1}
             height="100%"
         >
-            <Box width="100%" flex={5} backgroundColor="white">
+            <Box width="100%" flex={5} backgroundColor="white" marginBottom={1}>
                 <MessageList
                     messageList={messageList}
                     filterUnsentMessage={filterUnsentMessage}
