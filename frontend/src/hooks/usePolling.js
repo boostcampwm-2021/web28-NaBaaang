@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import HLS from 'hls.js/dist/hls';
+import STATUS from '@/constants/statusCode';
 
 export default function usePolling(url, option, videoRef, delay) {
     const [error, setError] = useState(false);
@@ -9,12 +10,12 @@ export default function usePolling(url, option, videoRef, delay) {
         setLoading(true);
         try {
             const response = await fetch(url, option);
-            if (response.status === 204) {
+            if (response.status === STATUS.NO_CONTENT) {
                 setTimeout(() => {
                     fetchPolling();
                 }, delay);
                 setLoading(true);
-            } else if (response.status === 200) {
+            } else if (response.status === STATUS.OK) {
                 const currEtag = response.headers.get('etag');
                 if (prevEtag === currEtag) {
                     setTimeout(() => {

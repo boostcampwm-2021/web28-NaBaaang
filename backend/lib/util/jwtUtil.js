@@ -6,7 +6,7 @@ const sign = user => {
     const payload = {
         id: user.id,
         nickname: user.nickname,
-        imageUrl: user.image_url,
+        imageUrl: user.imageUrl,
     };
 
     return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });

@@ -15,19 +15,19 @@ export default function DashBoardVideo({
                 <Video streamKey={streamKey} />
             </Box>
             <Box flex={1}>
-                {isLive ? (
-                    <Button
-                        onClick={handleEndLive}
-                        text="방송 종료"
-                        color="error"
-                    />
-                ) : (
+                {!isLive && (
                     <Button
                         onClick={handleStartLive}
                         text="방송 시작"
                         color="success"
                     />
                 )}
+                <Button
+                    onClick={handleEndLive}
+                    text="방송 종료"
+                    color="error"
+                    marginLeft={1}
+                />
             </Box>
         </Box>
     );
