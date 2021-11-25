@@ -16,11 +16,12 @@ export default function IconButton({ onClick, children, ...styleProps }) {
 }
 
 const StyledButton = styled.button`
+    min-width: 1rem;
     width: auto;
     ${({ size = 'small' }) => ICON_BUTTON_SIZE_TYPE[size]}
     ${({ color = 'light' }) => ICON_BUTTON_COLOR_TYPE[color]}
     ${({ type = 'circle' }) => BORDER_RADIUS_TYPE[type]}
-
+    color: ${({ iconColor = 'white' }) => iconColor};
     box-sizing: content-box;
     transition: background-color ease-in 100ms;
 

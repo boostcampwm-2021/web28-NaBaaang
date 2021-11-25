@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flexMixin, sizeMixin } from '@/styles/mixins';
+import { sizeMixin } from '@/styles/mixins';
+import { Typography, Box } from '@/components/Common';
 
 export default function DonationItem({
     ImageComponent,
@@ -12,24 +13,24 @@ export default function DonationItem({
     };
 
     return (
-        <ItemWrap onClick={handleItemClick}>
+        <BoxWrap
+            onClick={handleItemClick}
+            flexDirection="column"
+            marginRight={1}
+        >
             {ImageComponent}
-            <ItemTitle>{value}</ItemTitle>
-        </ItemWrap>
+            <Typography variant="span">{value}</Typography>
+        </BoxWrap>
     );
 }
 
-const ItemWrap = styled.div`
-    ${flexMixin('column', 'center', 'center')};
+const BoxWrap = styled(Box)`
+    transition: transform ease-in 100ms;
     cursor: pointer;
     &:hover {
         transform: scale(1.1);
     }
     svg {
-        ${sizeMixin('50px', '50px')}
+        ${sizeMixin('40px', '40px')}
     }
-`;
-
-const ItemTitle = styled.h3`
-    font-size: 16px;
 `;

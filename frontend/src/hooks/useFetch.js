@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import fetchAction from '@/constants/fetchAction';
+import STATUS from '@/constants/statusCode';
 
 export default function useFetch({ type, payload }) {
     const { url, option } = fetchAction({ type, payload });
@@ -12,8 +13,10 @@ export default function useFetch({ type, payload }) {
         setLoading(true);
         try {
             const response = await fetch(url, option);
-            const json = await response.json();
-            setData(json);
+            if (response.status !== STATUS.NO_CONTENT) {
+                const json = await response.json();
+                setData(json);
+            }
             setLoading(false);
         } catch (err) {
             setError(true);

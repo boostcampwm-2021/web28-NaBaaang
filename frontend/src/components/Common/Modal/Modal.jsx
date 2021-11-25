@@ -15,16 +15,15 @@ import { ModalContext } from '@/store/ModalStore';
 
 export default function Modal() {
     const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
-
     if (!isModalOpen) return null;
 
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
-                <Overlay onClick={closeModal} />
+                <Overlay onClick={() => closeModal(modalContent)} />
                 <ModalCard alignItems="stretch" flexDirection="column">
                     <CloseButtonBox>
-                        <IconButton color="error" type="square" onClick={closeModal}>
+                        <IconButton color="error" type="square" onClick={() => closeModal(modalContent)}>
                             <CloseIcon />
                         </IconButton>
                     </CloseButtonBox>

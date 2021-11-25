@@ -27,6 +27,6 @@ app.use('/swagger', swaggerRouter);
 app.use('/api/channels', channelRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/chats', chatRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', userRouter);
 
 export default app;

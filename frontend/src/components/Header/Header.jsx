@@ -6,19 +6,21 @@ import HeaderLogo from '@/assets/images/header-logo.svg';
 import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
+import STATUS from '@/constants/statusCode';
 
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton } from '@/components/Common';
-import { fetchCreateChannel } from '@/apis/channel';
+import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
 import { fetchUpdateNickname } from '@/apis/user';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 import NicknameModal from './NicknameModal';
+import ChannelAlertModal from './ChannelAlertModal';
 
 export default function Header() {
-    const { handleModal } = useContext(ModalContext);
+    const { handleModal, openModal } = useContext(ModalContext);
     const { setUserInfo, userInfo, authSignOut } = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -36,6 +38,26 @@ export default function Header() {
     const logoutHandler = () => {
         authSignOut();
         navigate(window.location.pathname);
+    };
+
+    const handleOnClickCameraIcon = async () => {
+        const { user } = userInfo;
+        const { data: channelInfo, status } = await fetchChannelOwnedByUser(
+            user.id,
+        );
+
+        if (status === STATUS.NO_CONTENT) {
+            openModal(
+                <ChannelModal
+                    subHandleOnSubmit={handleOnCreateChannel}
+                    successText="방송 시작"
+                />,
+            );
+        } else if (status === STATUS.OK) {
+            openModal(<ChannelAlertModal channelInfo={channelInfo} />);
+        } else {
+            alert(`Error: status code[${status}]`);
+        }
     };
 
     const handleOnCreateChannel = async formData => {
@@ -89,14 +111,7 @@ export default function Header() {
                     <IconButton
                         size="large"
                         type="square"
-                        onClick={() =>
-                            handleModal(
-                                <ChannelModal
-                                    subHandleOnSubmit={handleOnCreateChannel}
-                                    successText="방송 시작"
-                                />,
-                            )
-                        }
+                        onClick={handleOnClickCameraIcon}
                     >
                         <CameraIcon />
                     </IconButton>
