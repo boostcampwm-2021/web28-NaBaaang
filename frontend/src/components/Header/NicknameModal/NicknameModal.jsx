@@ -5,11 +5,13 @@ import { ModalContext } from '@/store/ModalStore';
 
 import { Box, Button, Typography } from '@/components/Common';
 
-function NicknameModal({ onSubmit }) {
+export default function NicknameModal({ onSubmit, setUserInfo, userInfo }) {
     const { closeModal } = useContext(ModalContext);
 
     const inputRef = useRef();
     const [error, setError] = useState(null);
+
+    const { isSignIn, user } = userInfo;
 
     const handleOnSubmit = async () => {
         try {
@@ -17,6 +19,8 @@ function NicknameModal({ onSubmit }) {
             if (inputData === '') setError('닉네임을 입력해주세요');
             else {
                 await onSubmit({ nickname: inputData });
+                const updatedUser = { ...user, nickname: inputData };
+                setUserInfo({ isSignIn, user: updatedUser });
                 closeModal();
             }
         } catch (err) {
@@ -44,5 +48,3 @@ const InputBox = styled.input`
     border-radius: 40px;
     padding: 0.5rem;
 `;
-
-export default NicknameModal;

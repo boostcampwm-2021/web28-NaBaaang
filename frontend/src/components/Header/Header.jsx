@@ -19,12 +19,18 @@ import NicknameModal from './NicknameModal';
 
 export default function Header() {
     const { handleModal } = useContext(ModalContext);
-    const { userInfo, authSignOut } = useContext(UserContext);
+    const { setUserInfo, userInfo, authSignOut } = useContext(UserContext);
 
     const navigate = useNavigate();
 
     const changeNicknameHandler = () => {
-        handleModal(<NicknameModal onSubmit={handleOnChangeNickname} />);
+        handleModal(
+            <NicknameModal
+                onSubmit={handleOnChangeNickname}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
+            />,
+        );
     };
 
     const logoutHandler = () => {
