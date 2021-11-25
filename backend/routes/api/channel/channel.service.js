@@ -52,6 +52,15 @@ const getChannelById = async id => {
     }
 };
 
+const getChannelByStreamerId = async streamerId => {
+    try {
+        let result = await channelDAO.findByStreamerId(streamerId);
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const getAuthenticatedChannelById = async ({ id, role }) => {
     const transaction = await db.sequelize.transaction();
     try {
@@ -152,6 +161,7 @@ export default {
     create,
     update,
     getChannelById,
+    getChannelByStreamerId,
     getAuthenticatedChannelById,
     getLiveChannels,
     changeChannelState,
