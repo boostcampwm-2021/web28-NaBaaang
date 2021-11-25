@@ -18,7 +18,10 @@ export default () => {
     const closeModal = (content = false) => {
         setIsModalOpen(false);
         setModalContent(content);
-        if (redirectUrl) navigate(redirectUrl);
+        if (redirectUrl) {
+            navigate(redirectUrl);
+            setRedirectUrl(null);
+        }
     };
 
     const openModal = (content = false) => {
