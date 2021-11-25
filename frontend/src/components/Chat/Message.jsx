@@ -24,7 +24,12 @@ export default function Message({
             <Typography color="primary" align="left" variant="span">
                 {nickname}
             </Typography>
-            <Box flexDirection="row" width="100%" justifyContent="flex-start">
+            <Box
+                flexDirection="row"
+                width="100%"
+                justifyContent="flex-start"
+                alignItems="flex-end"
+            >
                 {deleteButton}
                 <Bubble>
                     <Typography color="black3" align="left">
@@ -39,14 +44,18 @@ export default function Message({
             justifyContent="center"
             alignItems="flex-start"
         >
-            <Box alignItems="flex-start">
+            <Box alignItems="flex-end">
                 {deleteButton}
                 <Bubble>
                     <MessageBox>
-                        <Typography color="primary" align="left" variant="span">
-                            {nickname}
-                        </Typography>
                         <Typography color="black3" align="center">
+                            <Typography
+                                color="primary"
+                                align="left"
+                                variant="span"
+                            >
+                                {nickname}
+                            </Typography>
                             님이 비트 {content}개 선물하였습니다!!!
                         </Typography>
                     </MessageBox>
@@ -71,6 +80,7 @@ const Bubble = styled.div`
 `;
 
 const StyledDonation = styled(Box)`
-    width: 100%;
+    width: 95%;
     height: auto;
+    margin: 1rem;
 `;
