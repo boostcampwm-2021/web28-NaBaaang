@@ -1,12 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import { flexMixin } from '@/styles/mixins';
 import { BIT_TYPE } from '@/constants/messageType';
+import { Box } from '@/components/Common';
 import DonationItem from '../DonationItem';
 
 export default function DonationItemList({ handleTotalDonation }) {
     return (
-        <ListWrap>
+        <Box>
             {Object.values(BIT_TYPE).map(({ image, value }) => (
                 <DonationItem
                     key={value}
@@ -15,11 +14,6 @@ export default function DonationItemList({ handleTotalDonation }) {
                     handleTotalDonation={handleTotalDonation}
                 />
             ))}
-        </ListWrap>
+        </Box>
     );
 }
-
-const ListWrap = styled.div`
-    ${flexMixin('row', 'space-between', 'center')};
-    }
-`;
