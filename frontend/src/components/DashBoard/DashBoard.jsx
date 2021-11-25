@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useNavigate, useParams, Navigate } from 'react-router-dom';
 
-import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import { fetchOpenChannel, fetchCloseChannel, fetchPauseChannel } from '@/apis/channel';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
@@ -50,6 +50,15 @@ export default function DashBoard() {
         }
     };
 
+    const handlePauseLive = async () => {
+        try {
+            await fetchPauseChannel(id);
+            setIsStreamLive(false);
+        } catch (err) {
+            throw new Error(err);
+        }
+    };
+
     const handleEndLive = async () => {
         try {
             await fetchCloseChannel(id);
@@ -68,8 +77,11 @@ export default function DashBoard() {
         >
             <StyledBox flex={1}>
                 <DashBoardTab text="방송 정보" />
-                <DashBoardInfo info={data} userCnt={userCnt} fetchData={fetchData} />
-
+                <DashBoardInfo
+                    info={data}
+                    userCnt={userCnt}
+                    fetchData={fetchData}
+                />
             </StyledBox>
 
             <Divider direction="column" />
@@ -80,6 +92,7 @@ export default function DashBoard() {
                     streamKey={streamKey}
                     isLive={isStreamLive}
                     handleStartLive={handleStartLive}
+                    handlePauseLive={handlePauseLive}
                     handleEndLive={handleEndLive}
                 />
             </StyledBox>

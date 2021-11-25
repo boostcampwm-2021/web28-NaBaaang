@@ -10,4 +10,5 @@ const STATUS = Object.freeze({
     CONFLICT: 409,
     INTERNAL_SERVER_ERROR: 500,
 });
+
 export default STATUS;

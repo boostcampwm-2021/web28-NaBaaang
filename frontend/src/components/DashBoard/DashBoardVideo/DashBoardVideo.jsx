@@ -7,6 +7,7 @@ export default function DashBoardVideo({
     streamKey,
     isLive,
     handleStartLive,
+    handlePauseLive,
     handleEndLive,
 }) {
     return (
@@ -17,9 +18,9 @@ export default function DashBoardVideo({
             <Box flex={1}>
                 {isLive ? (
                     <Button
-                        onClick={handleEndLive}
-                        text="방송 종료"
-                        color="error"
+                        onClick={handlePauseLive}
+                        text="방송 중지"
+                        color="light"
                     />
                 ) : (
                     <Button
@@ -28,6 +29,12 @@ export default function DashBoardVideo({
                         color="success"
                     />
                 )}
+                <Button
+                    onClick={handleEndLive}
+                    text="방송 종료"
+                    color="error"
+                    marginLeft={1}
+                />
             </Box>
         </Box>
     );

@@ -121,7 +121,18 @@ const openChannel = async (req, res) => {
         });
     }
 };
-
+const standByChannel = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await channelService.changeChannelState(id, CHANNEL_STATE.READY);
+        res.status(STATUS.OK).json({ message: 'success' });
+    } catch (error) {
+        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            error: 'Internal Server Error',
+            message: error.message,
+        });
+    }
+};
 const closeChannel = async (req, res) => {
     try {
         const { id } = req.params;
@@ -179,6 +190,7 @@ export default {
     getChannel,
     getLiveChannels,
     openChannel,
+    standByChannel,
     closeChannel,
     watchChannel,
     getAuthenticatedChannel,

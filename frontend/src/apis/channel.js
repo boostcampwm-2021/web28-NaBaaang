@@ -1,4 +1,5 @@
 import fetchAction from '@/constants/fetchAction';
+import STATUS from '@/constants/statusCode';
 
 async function getFetchData(url, option) {
     const res = await fetch(url, option);
@@ -9,7 +10,7 @@ async function getFetchData(url, option) {
 async function getFetchDataV2(url, option) {
     const res = await fetch(url, option);
     const { status } = res;
-    const data = status === 204 ? {} : await res.json();
+    const data = status === STATUS.NO_CONTENT ? {} : await res.json();
     return { status, data };
 }
 
@@ -49,7 +50,17 @@ async function fetchOpenChannel(id) {
         throw new Error(err);
     }
 }
-
+async function fetchPauseChannel(id){
+    try {
+        const { url, option } = fetchAction({
+            type: 'FETCH_PAUSE_CHANNEL',
+            payload: id,
+        });
+        return await getFetchData(url, option);
+    } catch (err) {
+        throw new Error(err);
+    }
+}
 async function fetchCloseChannel(id) {
     try {
         const { url, option } = fetchAction({
@@ -61,7 +72,6 @@ async function fetchCloseChannel(id) {
         throw new Error(err);
     }
 }
-
 async function fetchAuthChannel(id) {
     try {
         const { url, option } = fetchAction({
@@ -90,6 +100,7 @@ export {
     fetchCreateChannel,
     fetchUpdateChannel,
     fetchOpenChannel,
+    fetchPauseChannel,
     fetchCloseChannel,
     fetchAuthChannel,
     fetchChannelOwnedByUser,
