@@ -35,20 +35,29 @@ export default function useChatMessage() {
         onThrottle();
     };
 
-    const filterUnsentMessage = () => {
-        const unsentMessageList = messageList.filter(x => !x.status);
-        if (unsentMessageList.length) {
-            const toRemove = [];
-            unsentMessageList.forEach(unsent => {
-                const idxToRemove = messageList.findIndex(
-                    message => message.id === unsent.id && message.status,
-                );
-                toRemove.push(idxToRemove);
-            });
-            const filteredMessageList = messageList.filter(
-                (message, idx) => !toRemove.includes(idx),
+    const getMessageIdxToRemove = unsentMessageList => {
+        const toRemove = [];
+        unsentMessageList.forEach(unsent => {
+            const idxToRemove = messageList.findIndex(
+                message => message.id === unsent.id && message.status,
             );
-            return filteredMessageList;
+            toRemove.push(idxToRemove);
+        });
+        return toRemove;
+    };
+
+    const removeUnsentFromMessageList = toRemove => {
+        return messageList.filter((_, idx) => !toRemove.includes(idx));
+    };
+
+    const filterUnsentMessage = () => {
+        const unsentMessageList = messageList.filter(x => x.status === false);
+        if (unsentMessageList.length) {
+            return go(
+                unsentMessageList,
+                getMessageIdxToRemove,
+                removeUnsentFromMessageList,
+            );
         }
         return messageList;
     };

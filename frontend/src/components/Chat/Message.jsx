@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { ReactComponent as DeleteIcon } from '@/assets/images/x.svg';
+
 import { MESSAGE_TYPE } from '@/constants/messageType';
-// import { Box, Button, Typography } from '@/components/Common';
-import { Box, Button } from '@/components/Common';
+import { Box, Typography, IconButton } from '@/components/Common';
 
 export default function Message({
     id,
@@ -14,34 +15,49 @@ export default function Message({
     onDelete,
 }) {
     const deleteButton = !status && (
-        <DeleteButton
-            text="X"
-            color="error"
-            size="extra_small"
-            onClick={onDelete(id)}
-        />
+        <IconButton color="delete" onClick={onDelete(id)}>
+            <DeleteIcon />
+        </IconButton>
     );
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
-        <MessageBox flexDirection="column" width="85%" alignItems="flex-start">
-            {nickname}
-            <Box flexDirection="row" width="85%" justifyContent="flex-start">
-                {deleteButton}
-                <Bubble>{content}</Bubble>
-            </Box>
-        </MessageBox>
-    ) : (
-        <StyledDonation>
+        <MessageBox flexDirection="column" width="90%" alignItems="flex-start">
+            <Typography color="primary" align="left" variant="span">
+                {nickname}
+            </Typography>
             <Box
                 flexDirection="row"
-                width="85%"
+                width="100%"
                 justifyContent="flex-start"
-                alignItems="flex-start"
+                alignItems="flex-end"
             >
                 {deleteButton}
                 <Bubble>
+                    <Typography color="black3" align="left">
+                        {content}
+                    </Typography>
+                </Bubble>
+            </Box>
+        </MessageBox>
+    ) : (
+        <StyledDonation
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="flex-start"
+        >
+            <Box alignItems="flex-end">
+                {deleteButton}
+                <Bubble>
                     <MessageBox>
-                        {nickname}님이 <br />
-                        비트 {content}개 선물하였습니다!!
+                        <Typography color="black3" align="center">
+                            <Typography
+                                color="primary"
+                                align="left"
+                                variant="span"
+                            >
+                                {nickname}
+                            </Typography>
+                            님이 비트 {content}개 선물하였습니다!!!
+                        </Typography>
                     </MessageBox>
                 </Bubble>
             </Box>
@@ -63,13 +79,8 @@ const Bubble = styled.div`
     background-color: ${({ theme }) => theme.color.offwhite};
 `;
 
-const DeleteButton = styled(Button)`
-    position: absolute;
-    right: 0;
-`;
-
-const StyledDonation = styled.div`
-    min-height: 30px;
-    margin: 30px;
-    text-align: center;
+const StyledDonation = styled(Box)`
+    width: 95%;
+    height: auto;
+    margin: 1rem;
 `;

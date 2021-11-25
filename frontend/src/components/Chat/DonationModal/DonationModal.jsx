@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
+import { ModalContext } from '@/store/ModalStore';
 import { Box, Button, Typography } from '@/components/Common';
 import DonationItemList from './DonationItemList';
 
 export default function DonationModal({ onDonation }) {
     const [totalDonation, setTotalDonation] = useState(0);
+    const { closeModal } = useContext(ModalContext);
 
     const handleTotalDonation = value => {
         setTotalDonation(totalDonation + value);
@@ -16,26 +18,30 @@ export default function DonationModal({ onDonation }) {
 
     const handleClickSubmit = () => {
         onDonation(totalDonation);
+        closeModal();
     };
 
     return (
         <Box flexDirection="column">
             <Typography variant="h3">비트를 선택해주세요</Typography>
-
-            <Box>
+            <Box padding={1}>
                 <DonationItemList handleTotalDonation={handleTotalDonation} />
             </Box>
-
-            <Box>
-                누적 값 : {totalDonation}
+            <Box marginBottom={1}>
+                <Typography variant="h5">누적 값 : {totalDonation}</Typography>
+            </Box>
+            <Box width="100%" flexDirection="row" justifyContent="space-around">
                 <Button
                     onClick={handleTotalDonationInit}
                     text="초기화"
                     color="error"
                 />
+                <Button
+                    onClick={handleClickSubmit}
+                    text="보내기"
+                    color="success"
+                />
             </Box>
-
-            <Button onClick={handleClickSubmit} text="보내기" color="success" />
         </Box>
     );
 }
