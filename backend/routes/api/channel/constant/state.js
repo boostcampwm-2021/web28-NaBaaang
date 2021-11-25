@@ -1,4 +1,5 @@
 export default Object.freeze({
-    LIVE: 0,
-    CLOSE: 1,
+    READY: 0,
+    LIVE: 1,
+    CLOSE: 2,
 });

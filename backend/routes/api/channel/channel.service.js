@@ -108,6 +108,12 @@ const changeChannelState = async (id, channelState) => {
                     transaction,
                 );
                 break;
+            case CHANNEL_STATE.READY:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: false } },
+                    transaction,
+                );
+                break;
             case CHANNEL_STATE.CLOSE:
                 result = await channelDAO.update(
                     { id, updateTarget: { isLive: false, isDelete: true } },
