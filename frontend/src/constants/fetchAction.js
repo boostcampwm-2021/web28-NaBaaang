@@ -42,7 +42,7 @@ const actionTypeInfo = {
 
     FETCH_UPDATE_NICKNAME(payload) {
         return {
-            url: `${API_URL}/api/user/${payload.id}`,
+            url: `${API_URL}/api/users/${payload.id}`,
             ...fetchTemplate('PATCH', payload),
         };
     },
