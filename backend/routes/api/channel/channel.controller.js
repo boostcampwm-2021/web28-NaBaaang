@@ -3,6 +3,7 @@ import STATUS from '../../../lib/util/statusCode.js';
 import authService from '../auth/auth.service.js';
 import requestHandler from '../../../lib/util/requestHandler.js';
 import ROLE from './constant/role.js';
+import CHANNEL_STATE from './constant/state.js';
 
 const createChannel = async (req, res) => {
     try {
@@ -111,7 +112,7 @@ const getLiveChannels = async (req, res) => {
 const openChannel = async (req, res) => {
     try {
         const { id } = req.params;
-        await channelService.updateLive(id, true);
+        await channelService.changeChannelState(id, CHANNEL_STATE.LIVE);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json({
@@ -124,7 +125,7 @@ const openChannel = async (req, res) => {
 const closeChannel = async (req, res) => {
     try {
         const { id } = req.params;
-        await channelService.updateLive(id, false);
+        await channelService.changeChannelState(id, CHANNEL_STATE.CLOSE);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
         res.status(STATUS.INTERNAL_SERVER_ERROR).json({
