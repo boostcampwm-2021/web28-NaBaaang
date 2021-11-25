@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
 
-import Typography from '@/components/Common/Typography';
+import { Typography, Box } from '@/components/Common';
 import LiveSlider from './LiveSlider';
 
 function LiveList({ category, liveList }) {
@@ -14,7 +14,7 @@ function LiveList({ category, liveList }) {
     );
 }
 
-const LiveListWrapper = styled.div`
+const LiveListWrapper = styled(Box)`
     position: relative;
     margin-bottom: 1.5rem;
     ${flexMixin('column', 'center', 'flex-start')}

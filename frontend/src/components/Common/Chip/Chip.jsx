@@ -38,7 +38,6 @@ const StyledChip = styled(Box)`
     border-radius: 15px;
     ${({ color }) => BUTTON_COLOR_TYPE[color]};
     cursor: pointer;
-    margin: 0.5rem;
 `;
 
 const Icon = styled.img`

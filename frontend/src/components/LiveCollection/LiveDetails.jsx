@@ -1,21 +1,20 @@
 import React from 'react';
 
-import Avatar from '@/components/Common/Avatar';
-import Box from '@/components/Common/Box';
-import Typography from '@/components/Common/Typography';
+import { Avatar, Box, Typography } from '@/components/Common';
 
-function LiveDetails({ details }) {
+export default function LiveDetails({ details }) {
+    const { streamer, title } = details;
+    const { imageUrl, nickname } = streamer;
+
     return (
         <Box justifyContent="flex-start">
-            <Avatar size="medium" src={details.streamer.imageUrl} />
+            <Box marginRight={1}>
+                <Avatar size="small" src={imageUrl} />
+            </Box>
             <Box flexDirection="column" alignItems="flex-start">
-                <Typography varaint="span">{details.title}</Typography>
-                <Typography varaint="span">
-                    {details.streamer.nickname}
-                </Typography>
+                <Typography varaint="h5">{nickname}</Typography>
+                <Typography varaint="h6">{title}</Typography>
             </Box>
         </Box>
     );
 }
-
-export default LiveDetails;

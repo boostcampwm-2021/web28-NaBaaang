@@ -4,6 +4,7 @@ import { v4 } from 'uuid';
 import chatDao from '../chat/chat.dao.js';
 import requestHandler from '../../../lib/util/requestHandler.js';
 import ROLE from './constant/role.js';
+import CHANNEL_STATE from './constant/state.js';
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
@@ -51,6 +52,15 @@ const getChannelById = async id => {
     }
 };
 
+const getChannelByStreamerId = async streamerId => {
+    try {
+        let result = await channelDAO.findByStreamerId(streamerId);
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const getAuthenticatedChannelById = async ({ id, role }) => {
     const transaction = await db.sequelize.transaction();
     try {
@@ -87,13 +97,30 @@ const getLiveChannels = async () => {
     }
 };
 
-const updateLive = async (id, isLive) => {
+const changeChannelState = async (id, channelState) => {
     const transaction = await db.sequelize.transaction();
     try {
-        const result = await channelDAO.update(
-            { id, updateTarget: { isLive } },
-            transaction,
-        );
+        let result;
+        switch (channelState) {
+            case CHANNEL_STATE.LIVE:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: true } },
+                    transaction,
+                );
+                break;
+            case CHANNEL_STATE.READY:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: false } },
+                    transaction,
+                );
+                break;
+            case CHANNEL_STATE.CLOSE:
+                result = await channelDAO.update(
+                    { id, updateTarget: { isLive: false, isDelete: true } },
+                    transaction,
+                );
+                break;
+        }
 
         await transaction.commit();
         return result;
@@ -140,9 +167,10 @@ export default {
     create,
     update,
     getChannelById,
+    getChannelByStreamerId,
     getAuthenticatedChannelById,
     getLiveChannels,
-    updateLive,
+    changeChannelState,
     watchChannel,
     isChannelOwner,
 };

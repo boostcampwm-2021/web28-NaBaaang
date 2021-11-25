@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { flexMixin } from '@/styles/mixins';
 
-import { Box, Overlay } from '@/components/Common';
+import { Box, Overlay, Typography } from '@/components/Common';
 
 export default function DropDown({ toggleButtonChild, items, contentPos }) {
     const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function DropDown({ toggleButtonChild, items, contentPos }) {
                           closeDropDown();
                       }}
                   >
-                      {item.text}
+                      <Typography variant="p">{item.text}</Typography>
                   </DropDownItem>
               );
           })
@@ -64,8 +64,8 @@ const DropDownBox = styled(Box)`
     position: fixed;
     left: 0;
     top: 0;
-    width:100%;
-    heigth:100%
+    width: 100%;
+    height: 100%;
     border: 1px solid black;
     z-index: 10;
 `;
