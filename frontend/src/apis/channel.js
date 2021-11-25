@@ -6,6 +6,11 @@ async function getFetchData(url, option) {
     return json;
 }
 
+async function getFetchDataV2(url, option) {
+    const res = await fetch(url, option);
+    return res;
+}
+
 async function fetchCreateChannel(formData) {
     try {
         const { url, option } = fetchAction({
@@ -67,10 +72,23 @@ async function fetchAuthChannel(id) {
     }
 }
 
+async function fetchChannelOwnedByUser(id) {
+    try {
+        const { url, option } = await fetchAction({
+            type: 'FETCH_CHANNEL_BY_USER',
+            payload: id,
+        });
+        const result = await getFetchDataV2(url, option);
+        return result;
+    } catch (err) {
+        throw new Error(err);
+    }
+}
 export {
     fetchCreateChannel,
     fetchUpdateChannel,
     fetchOpenChannel,
     fetchCloseChannel,
     fetchAuthChannel,
+    fetchChannelOwnedByUser,
 };

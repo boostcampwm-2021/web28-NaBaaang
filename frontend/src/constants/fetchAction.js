@@ -72,6 +72,12 @@ const actionTypeInfo = {
             ...fetchTemplate('GET'),
         };
     },
+    FETCH_CHANNEL_BY_USER(payload) {
+        return {
+            url: `${API_URL}/api/channels/${payload}`,
+            ...fetchTemplate('GET', payload),
+        };
+    },
     FETCH_GET_LIVE_CHANNELS() {
         return {
             url: `${API_URL}/api/channels`,
