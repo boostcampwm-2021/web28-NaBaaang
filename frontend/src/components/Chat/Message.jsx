@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { MESSAGE_TYPE } from '@/constants/messageType';
 // import { Box, Button, Typography } from '@/components/Common';
-import { Box, Button } from '@/components/Common';
+import { Box, Button, Typography } from '@/components/Common';
 
 export default function Message({
     id,
@@ -13,7 +13,7 @@ export default function Message({
     status,
     onDelete,
 }) {
-    const deleteButton = !status && (
+    const deleteButton = status && (
         <DeleteButton
             text="X"
             color="error"
@@ -22,26 +22,35 @@ export default function Message({
         />
     );
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
-        <MessageBox flexDirection="column" width="85%" alignItems="flex-start">
-            {nickname}
-            <Box flexDirection="row" width="85%" justifyContent="flex-start">
+        <MessageBox flexDirection="column" width="90%" alignItems="flex-start">
+            <Typography color="primary" align="left" variant="span">
+                {nickname}
+            </Typography>
+            <Box flexDirection="row" width="100%" justifyContent="flex-start">
                 {deleteButton}
-                <Bubble>{content}</Bubble>
+                <Bubble>
+                    <Typography color="black3" align="left">
+                        {content}
+                    </Typography>
+                </Bubble>
             </Box>
         </MessageBox>
     ) : (
-        <StyledDonation>
-            <Box
-                flexDirection="row"
-                width="85%"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-            >
+        <StyledDonation
+            flexDirection="row"
+            justifyContent="center"
+            alignItems="center"
+        >
+            <Box>
                 {deleteButton}
                 <Bubble>
                     <MessageBox>
-                        {nickname}님이 <br />
-                        비트 {content}개 선물하였습니다!!
+                        <Typography color="primary" align="left" variant="span">
+                            {nickname}
+                        </Typography>
+                        <Typography color="black3" align="center">
+                            님이 비트 {content}개 선물하였습니다!!!
+                        </Typography>
                     </MessageBox>
                 </Bubble>
             </Box>
@@ -68,8 +77,7 @@ const DeleteButton = styled(Button)`
     right: 0;
 `;
 
-const StyledDonation = styled.div`
-    min-height: 30px;
-    margin: 30px;
-    text-align: center;
+const StyledDonation = styled(Box)`
+    width: 100%;
+    height: auto;
 `;
