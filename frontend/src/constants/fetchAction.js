@@ -74,7 +74,7 @@ const actionTypeInfo = {
     },
     FETCH_CHANNEL_BY_USER(payload) {
         return {
-            url: `${API_URL}/api/channels/${payload}`,
+            url: `${API_URL}/api/users/${payload}/channels`,
             ...fetchTemplate('GET', payload),
         };
     },
