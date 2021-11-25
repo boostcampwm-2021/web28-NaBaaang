@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState(null);
+    const [modalContent, setModalContent] = useState(false);
+    const [redirectUrl, setRedirectUrl] = useState(null);
+
+    const navigate = useNavigate();
 
     const handleModal = (content = false) => {
         setIsModalOpen(!isModalOpen);
@@ -14,6 +18,10 @@ export default () => {
     const closeModal = (content = false) => {
         setIsModalOpen(false);
         setModalContent(content);
+        if (redirectUrl) {
+            navigate(redirectUrl);
+            setRedirectUrl(null);
+        }
     };
 
     const openModal = (content = false) => {
@@ -27,6 +35,7 @@ export default () => {
         isModalOpen,
         modalContent,
         handleModal,
+        setRedirectUrl,
         closeModal,
         openModal,
     };
