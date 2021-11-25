@@ -45,4 +45,18 @@ const getRefreshToken = async id => {
     }
 };
 
-export default { getOrCreate, updateRefreshToken, getRefreshToken };
+const updateNickname = async ({ id, nickname }) => {
+    try {
+        const updatedUser = await User.update(nickname, { where: { id } });
+        return updatedUser;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export default {
+    getOrCreate,
+    updateRefreshToken,
+    getRefreshToken,
+    updateNickname,
+};

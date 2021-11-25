@@ -8,6 +8,7 @@ import swaggerRouter from './routes/api/swagger/index.js';
 import channelRouter from './routes/api/channel/index.js';
 import chatRouter from './routes/api/chat/index.js';
 import authRouter from './routes/api/auth/index.js';
+import userRouter from './routes/api/user/index.js';
 import db from './models/index.js';
 
 db.init();
@@ -26,5 +27,6 @@ app.use('/swagger', swaggerRouter);
 app.use('/api/channels', channelRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/chats', chatRouter);
+app.use('/api/user', userRouter);
 
 export default app;
