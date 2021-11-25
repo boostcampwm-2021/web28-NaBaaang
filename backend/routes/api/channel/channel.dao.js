@@ -55,6 +55,7 @@ const findByChannelId = async (channelId, transaction) => {
                 ],
                 where: {
                     id: channelId,
+                    isDelete: false,
                 },
             },
             option,
