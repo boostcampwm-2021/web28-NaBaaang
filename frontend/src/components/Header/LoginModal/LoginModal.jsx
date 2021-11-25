@@ -14,13 +14,13 @@ export default function LoginModal() {
 
     return (
         <Box flexDirection="column">
-            <Typography variant="h1" marginBottom={2}>
+            <Typography variant="h3" marginBottom={2}>
                 로그인
             </Typography>
             <Button
                 text="Sign in with Google"
                 size="medium"
-                color="error"
+                color="light"
                 onClick={handleOnSubmit}
             />
         </Box>

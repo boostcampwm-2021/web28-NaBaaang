@@ -14,6 +14,7 @@ import { fetchCreateChannel } from '@/apis/channel';
 import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
+import NicknameModal from './NicknameModal';
 
 export default function Header() {
     const { handleModal } = useContext(ModalContext);
@@ -21,7 +22,9 @@ export default function Header() {
 
     const navigate = useNavigate();
 
-    const changeNicknameHandler = () => {};
+    const changeNicknameHandler = () => {
+        handleModal(<NicknameModal onSubmit={handleOnChangeNickname} />);
+    };
 
     const logoutHandler = () => {
         authSignOut();
@@ -36,6 +39,8 @@ export default function Header() {
             throw new Error(err);
         }
     };
+
+    const handleOnChangeNickname = async () => {};
 
     const profileDropDownItems = () => {
         const items = [
