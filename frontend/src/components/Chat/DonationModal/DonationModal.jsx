@@ -15,7 +15,10 @@ export default function DonationModal({ onDonation }) {
     };
 
     const handleClickSubmit = () => {
-        onDonation(totalDonation);
+        if (totalDonation > 0) {
+            handleTotalDonationInit();
+            onDonation(totalDonation);
+        }
     };
 
     return (
