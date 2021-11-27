@@ -8,15 +8,15 @@ import ModalStore from '@/store/ModalStore';
 
 export const decorators = [
     Story => (
-        <ThemeProvider theme={theme}>
-            <ModalStore>
-                <GlobalStyle />
-                <div id="modal-root"></div>
-                <BrowserRouter>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
+                <ModalStore>
+                    <GlobalStyle />
+                    <div id="modal-root"></div>
                     <Story />
-                </BrowserRouter>
-            </ModalStore>
-        </ThemeProvider>
+                </ModalStore>
+            </ThemeProvider>
+        </BrowserRouter>
     ),
 ];
 

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import useFetch from '@/hooks/useFetch';
 
 import { PageStatus } from '@/components/Common';
-import LiveList from './LiveList';
+import LiveList from './LiveList/LiveList';
 
-function LiveCollection() {
+export default function LiveCollection() {
     const { data, error, loading } = useFetch({
         type: 'FETCH_GET_LIVE_CHANNELS',
         payload: '',
@@ -29,5 +29,3 @@ const CollectionLayout = styled.div`
     height: 100%;
     margin-right: 0;
 `;
-
-export default LiveCollection;

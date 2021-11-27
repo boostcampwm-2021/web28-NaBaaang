@@ -12,6 +12,8 @@ const MEDIA_URL =
     process.env.REACT_APP_MEDIA_HOST ||
     process.env.STORYBOOK_REACT_APP_MEDIA_HOST;
 
+const MEDIA_UPLOAD_URL = process.env.REACT_APP_MEDIA_UPLOAD_HOST;
+
 const GOOGLE_AUTH_REDIRECT_URL = replaceBlankAndNewLine(`
     https://accounts.google.com/o/oauth2/v2/auth?
     scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&s_type=offline&
@@ -36,6 +38,7 @@ export {
     API_URL,
     SOCKET_URL,
     MEDIA_URL,
+    MEDIA_UPLOAD_URL,
     GOOGLE_AUTH_REDIRECT_URL,
     GOOGLE_AUTH_RESOURCE_SERVER_URL,
 };
