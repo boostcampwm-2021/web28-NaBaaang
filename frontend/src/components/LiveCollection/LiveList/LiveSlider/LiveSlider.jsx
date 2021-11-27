@@ -3,8 +3,8 @@ import React from 'react';
 import { v1 } from 'uuid';
 import { Slider, Box } from '@/components/Common';
 
+import SliderItem from '@/components/Common/SliderItem';
 import LiveCard from './LiveCard';
-import SliderItem from '../Common/SliderItem/SliderItem';
 
 const SLIDER_ITEM_SIZE = 5;
 

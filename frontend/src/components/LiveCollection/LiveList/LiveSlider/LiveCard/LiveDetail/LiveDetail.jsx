@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Avatar, Box, Typography } from '@/components/Common';
 
-export default function LiveDetails({ details }) {
+export default function LiveDetail({ details }) {
     const { streamer, title } = details;
     const { imageUrl, nickname } = streamer;
 

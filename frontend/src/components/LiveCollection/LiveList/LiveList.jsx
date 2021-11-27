@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { flexMixin } from '@/styles/mixins';
 
 import { Typography, Box } from '@/components/Common';
-import LiveSlider from './LiveSlider';
+import LiveSlider from './LiveSlider/LiveSlider';
 
 function LiveList({ category, liveList }) {
     return (

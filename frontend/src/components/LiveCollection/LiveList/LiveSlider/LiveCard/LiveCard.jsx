@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
 import LiveThumbnail from './LiveThumbnail';
-import LiveDetails from './LiveDetails';
+import LiveDetail from './LiveDetail';
 
 function LiveCard({ content }) {
     const { id } = content;
@@ -16,7 +16,7 @@ function LiveCard({ content }) {
                     thumbnail="https://static-cdn.jtvnw.net/previews-ttv/live_user_qldhkwy-440x248.jpg"
                     viewer={1000}
                 />
-                <LiveDetails details={content} />
+                <LiveDetail details={content} />
             </CardLayout>
         </Link>
     );
