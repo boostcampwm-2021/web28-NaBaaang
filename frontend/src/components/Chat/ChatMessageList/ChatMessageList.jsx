@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import Box from '@/components/Common/Box';
-import Message from './Message';
+import ChatMessage from './ChatMessage';
 
-export default function MessageList({
+export default function ChatMessageList({
     messageList,
     filterUnsentMessage,
     deleteMessage,
@@ -24,7 +24,7 @@ export default function MessageList({
         return (
             filtered &&
             filtered.map(message => (
-                <Message
+                <ChatMessage
                     key={message.id}
                     id={message.id}
                     type={message.type}

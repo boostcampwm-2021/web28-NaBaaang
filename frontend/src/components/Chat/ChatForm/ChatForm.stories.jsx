@@ -1,4 +1,4 @@
-import Form from '../Form';
+import Form from './ChatForm';
 
 export default {
     title: 'Chat/Form',

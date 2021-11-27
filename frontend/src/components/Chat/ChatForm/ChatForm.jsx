@@ -7,8 +7,8 @@ import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 
 import { Button, Box } from '@/components/Common';
-import DonationModal from './DonationModal';
-import LoginAlertModal from './LoginAlertModal';
+import DonationModal from '../DonationModal';
+import LoginAlertModal from '../LoginAlertModal';
 
 export default function Form({ handleSubmit, isDonation }) {
     const messageInputRef = useRef();
