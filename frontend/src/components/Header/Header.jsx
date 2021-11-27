@@ -8,7 +8,7 @@ import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 import STATUS from '@/constants/statusCode';
 
-import { UserContext } from '@/store/userStore';
+import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton, DropDown } from '@/components/Common';
 import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';

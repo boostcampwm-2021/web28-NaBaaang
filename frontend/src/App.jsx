@@ -1,5 +1,5 @@
 import React from 'react';
-import UserStore from './store/userStore';
+import UserStore from './store/UserStore';
 import Router from './Router';
 
 export default function App() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MEDIA_URL } from '@/constants/url';
+import { MEDIA_UPLOAD_URL } from '@/constants/url';
 
 import { Box, Typography } from '@/components/Common';
 
@@ -12,7 +12,7 @@ export default function MediaInfo({ streamKey }) {
             </Typography>
 
             <Typography variant="h5" color="black">
-                media-url : {MEDIA_URL}
+                media-url : {MEDIA_UPLOAD_URL}
             </Typography>
         </Box>
     );

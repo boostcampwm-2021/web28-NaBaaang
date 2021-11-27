@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { v1 } from 'uuid';
 
 import { borderBoxMixin } from '@/styles/mixins';
-import { UserContext } from '@/store/userStore';
+import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
 
 import { Button, Box } from '@/components/Common';

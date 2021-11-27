@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
 import { fetchSiginInGoogle } from '@/apis/auth';
-import { UserContext } from '@/store/userStore';
+import { UserContext } from '@/store/UserStore';
 import { Loading } from '@/components/Common';
 
 export default function GoogleAuthCallback() {
