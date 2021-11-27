@@ -4,7 +4,7 @@ import socket from '@/socket';
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 
-import AlertModal from '@/components/AlertModal';
+import { ChannelEndModalContent } from '@/components/ModalContent';
 
 function isChannelOwner(streamerId, user) {
     if (!user) return false;
@@ -19,7 +19,7 @@ export default function useSocket(channel) {
     const { user } = userInfo;
 
     const handleSocketEnded = () => {
-        openModal(<AlertModal />);
+        openModal(<ChannelEndModalContent />);
     };
 
     useEffect(() => {

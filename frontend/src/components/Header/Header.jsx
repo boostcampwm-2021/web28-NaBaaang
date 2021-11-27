@@ -13,10 +13,12 @@ import { ModalContext } from '@/store/ModalStore';
 import { Button, Box, IconButton, DropDown } from '@/components/Common';
 import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
 import { fetchUpdateNickname } from '@/apis/user';
-import LoginModal from './LoginModal';
-import ChannelModal from './ChannelModal';
-import NicknameModal from './NicknameModal';
-import ChannelAlertModal from './ChannelAlertModal';
+import {
+    NicknameModalContent,
+    ChannelDetailModalContent,
+    LoginModalContent,
+    ChannelModalContent,
+} from '@/components/ModalContent';
 
 export default function Header() {
     const { handleModal, openModal } = useContext(ModalContext);
@@ -26,7 +28,7 @@ export default function Header() {
 
     const changeNicknameHandler = () => {
         handleModal(
-            <NicknameModal
+            <NicknameModalContent
                 onSubmit={handleOnChangeNickname}
                 setUserInfo={setUserInfo}
                 userInfo={userInfo}
@@ -47,13 +49,13 @@ export default function Header() {
 
         if (status === STATUS.NO_CONTENT) {
             openModal(
-                <ChannelModal
+                <ChannelModalContent
                     subHandleOnSubmit={handleOnCreateChannel}
                     successText="방송 시작"
                 />,
             );
         } else if (status === STATUS.OK) {
-            openModal(<ChannelAlertModal channelInfo={channelInfo} />);
+            openModal(<ChannelDetailModalContent channelInfo={channelInfo} />);
         }
     };
 
@@ -101,7 +103,7 @@ export default function Header() {
                 <Button
                     text="로그인"
                     size="medium"
-                    onClick={() => handleModal(<LoginModal />)}
+                    onClick={() => handleModal(<LoginModalContent />)}
                 />
             ) : (
                 <Box>

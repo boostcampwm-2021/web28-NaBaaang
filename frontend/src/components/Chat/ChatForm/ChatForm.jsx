@@ -7,8 +7,7 @@ import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
 
 import { Button, Box } from '@/components/Common';
-import DonationModal from '../DonationModal';
-import LoginAlertModal from '../LoginAlertModal';
+import { LoginAlertModalContent, DonationModalContent } from '@/components/ModalContent';
 
 export default function Form({ handleSubmit, isDonation }) {
     const messageInputRef = useRef();
@@ -29,11 +28,11 @@ export default function Form({ handleSubmit, isDonation }) {
     };
 
     const openLoginAlertModal = () => {
-        openModal(<LoginAlertModal />);
+        openModal(<LoginAlertModalContent />);
     };
 
     const openDonationModal = () => {
-        openModal(<DonationModal onDonation={handleDonationButtonClick} />);
+        openModal(<DonationModalContent onDonation={handleDonationButtonClick} />);
     };
 
     const sendMessage = e => {
