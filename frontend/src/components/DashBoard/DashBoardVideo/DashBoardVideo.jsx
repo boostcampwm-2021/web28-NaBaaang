@@ -1,7 +1,6 @@
 import React from 'react';
-import Video from '@/components/Video';
-import Box from '@/components/Common/Box';
-import Button from '@/components/Common/Button';
+import HLSVideo from '@/components/HLS/HLSVideo';
+import { Box, Button } from '@/components/Common';
 
 export default function DashBoardVideo({
     streamKey,
@@ -12,7 +11,7 @@ export default function DashBoardVideo({
     return (
         <Box flex={1} flexDirection="column" alignItems="stretch">
             <Box flex={9}>
-                <Video streamKey={streamKey} />
+                <HLSVideo streamKey={streamKey} />
             </Box>
             <Box flex={1}>
                 {!isLive && (

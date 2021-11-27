@@ -6,10 +6,10 @@ import { sizeMixin } from '@/styles/mixins';
 import fetchAction from '@/constants/fetchAction';
 
 import Box from '@/components/Common/Box';
-import VideoOverlay from '@/components/VideoOverlay';
+import HLSVideoOverlay from '@/components/HLS/HLSVideoOverlay';
 import usePolling from '@/hooks/usePolling';
 
-export default function Video({ streamKey }) {
+export default function HLSVideo({ streamKey }) {
     const videoRef = useRef();
     const { url, option } = fetchAction({
         type: 'FETCH_READY_MEDIA',
@@ -19,7 +19,7 @@ export default function Video({ streamKey }) {
 
     return HLS.isSupported() ? (
         <Box width="100%" height="100%">
-            {loading && <VideoOverlay open={loading} />}
+            {loading && <HLSVideoOverlay open={loading} />}
             <StyledVideo controls autoplay muted ref={videoRef} />
         </Box>
     ) : (

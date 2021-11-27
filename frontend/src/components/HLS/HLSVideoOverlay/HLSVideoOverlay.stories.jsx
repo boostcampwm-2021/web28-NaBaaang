@@ -1,18 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-// import { action } from '@storybook/addon-actions';
 
 import Box from '@/components/Common/Box';
-import VideoOverlay from '.';
+import HLSVideoOverlay from './HLSVideoOverlay';
 
-storiesOf('VideoOverlay', module)
+storiesOf('HLSVideoOverlay', module)
     .add('Not Open', () => (
         <Box width="100%" height="100%">
-            <VideoOverlay />
+            <HLSVideoOverlay />
         </Box>
     ))
     .add('Open', () => (
         <Box width="100%" height="100%">
-            <VideoOverlay open />
+            <HLSVideoOverlay open />
         </Box>
     ));

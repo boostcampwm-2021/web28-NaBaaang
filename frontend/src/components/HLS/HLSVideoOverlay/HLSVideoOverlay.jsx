@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Box from '@/components/Common/Box';
-import Overlay from '@/components/Common/Overlay';
-import Typography from '@/components/Common/Typography';
+import { Box, Overlay, Typography } from '@/components/Common';
 
-export default function VideoOverlay({ open }) {
+export default function HLSVideoOverlay({ open }) {
     if (!open) return null;
 
     return (
