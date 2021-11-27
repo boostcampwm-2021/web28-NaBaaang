@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Box from '@/components/Common/Box';
 import tempImage from '@/assets/images/kukucorn.jpg';
 
-import SideBarStreamerItem from './SideBarStreamerItem';
+import SideBarStreamer from './SideBarStreamer';
 
 export default function SideBarStreamerList() {
     const [streamerList, setStreamerList] = useState([]);
@@ -30,7 +30,7 @@ export default function SideBarStreamerList() {
     };
 
     const avatarListItems = streamerList.map(({ id, imageSrc }) => (
-        <SideBarStreamerItem key={id} id={id} imageSrc={imageSrc} />
+        <SideBarStreamer key={id} id={id} imageSrc={imageSrc} />
     ));
 
     return (

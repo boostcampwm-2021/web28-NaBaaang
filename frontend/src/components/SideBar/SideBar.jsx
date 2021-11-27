@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import Box from '@/components/Common/Box';
-import SideBarStreamerList from './SideBarStreamerList';
+import SideBarStreamerList from './SideBarStreamerList/SideBarStreamerList';
 
 export default function SideBar() {
     return (
