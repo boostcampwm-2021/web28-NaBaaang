@@ -10,10 +10,9 @@ import STATUS from '@/constants/statusCode';
 
 import { UserContext } from '@/store/userStore';
 import { ModalContext } from '@/store/ModalStore';
-import { Button, Box, IconButton } from '@/components/Common';
+import { Button, Box, IconButton, DropDown } from '@/components/Common';
 import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
 import { fetchUpdateNickname } from '@/apis/user';
-import DropDown from '../DropDown';
 import LoginModal from './LoginModal';
 import ChannelModal from './ChannelModal';
 import NicknameModal from './NicknameModal';
@@ -143,4 +142,3 @@ const Logo = styled.img`
     height: 35px;
     cursor: pointer;
 `;
-

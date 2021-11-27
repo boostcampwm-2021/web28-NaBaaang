@@ -15,6 +15,7 @@ import Typography from './Typography';
 import Loading from './Loading';
 import Skeleton from './Skeleton';
 import SelectionBox from './SelectionBox';
+import Dropdown from './Dropdown';
 
 export {
     Box,
@@ -34,4 +35,5 @@ export {
     Loading,
     Skeleton,
     SelectionBox,
+    Dropdown,
 };
