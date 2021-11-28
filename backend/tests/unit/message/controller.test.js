@@ -1,6 +1,6 @@
-import messageController from '../../../routes/api/message/message.controller';
-import messageService from '../../../routes/api/message/message.service';
-import STATUS from '../../../lib/util/statusCode';
+import messageController from '@/routes/api/message/message.controller';
+import messageService from '@/routes/api/message/message.service';
+import STATUS from '@/lib/util/statusCode';
 
 describe('Message Controller Test', () => {
     const res = {
