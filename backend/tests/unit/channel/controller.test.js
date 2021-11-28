@@ -1,6 +1,6 @@
-import channelController from '../../../routes/api/channel/channel.controller';
-import channelService from '../../../routes/api/channel/channel.service';
-import STATUS from '../../../lib/util/statusCode';
+import channelController from '@/routes/api/channel/channel.controller';
+import channelService from '@/routes/api/channel/channel.service';
+import STATUS from '@/lib/util/statusCode';
 
 describe('Channel Controller Test', () => {
     const res = {
