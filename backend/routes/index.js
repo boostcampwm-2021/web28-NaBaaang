@@ -1,28 +1,15 @@
-import express from 'express';
-var router = express.Router();
+import swaggerRouter from './api/swagger/index.js';
+import channelRouter from './api/channel/index.js';
+import chatRouter from './api/chat/index.js';
+import authRouter from './api/auth/index.js';
+import userRouter from './api/user/index.js';
 
-/**
- * @swagger
- *
- * /:
- *   get:
- *     tags:
- *       - pet
- *     description: pet id로 정보 가져오기
- *     produces:
- *       - application/json
- *     parameters:
- *       - $ref: '#/components/parameters/path/id'
- *     responses:
- *       200:
- *         $ref: '#/components/responses/get/200/pet'
- *
- */
-router.get("/", function (req, res, next) {
-    res.json({
-        message: "success",
-        data: {},
-    });
-});
+const loadRouter = app => {
+    app.use('/swagger', swaggerRouter);
+    app.use('/api/channels', channelRouter);
+    app.use('/api/auth', authRouter);
+    app.use('/api/chats', chatRouter);
+    app.use('/api/users', userRouter);
+};
 
-export default router;
+export { loadRouter };
