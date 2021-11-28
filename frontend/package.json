@@ -2,6 +2,16 @@
     "name": "frontend",
     "version": "0.1.0",
     "private": true,
+    "scripts": {
+        "start": "craco start",
+        "build": "craco build",
+        "test": "craco test",
+        "eject": "craco eject",
+        "storybook": "start-storybook -p 6006 -s public",
+        "build-storybook": "build-storybook -s public",
+        "report": "./node_modules/artillery/bin/artillery run -o ./src/tests/socketio-chat-report ./src/tests/socketio-chat-test.yaml",
+        "show": "./node_modules/artillery/bin/artillery report ./src/tests/socketio-chat-report"
+    },
     "dependencies": {
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^11.2.7",
@@ -17,15 +27,23 @@
         "uuid": "^8.3.2",
         "web-vitals": "^1.1.2"
     },
-    "scripts": {
-        "start": "craco start",
-        "build": "craco build",
-        "test": "craco test",
-        "eject": "craco eject",
-        "storybook": "start-storybook -p 6006 -s public",
-        "build-storybook": "build-storybook -s public",
-        "report": "./node_modules/artillery/bin/artillery run -o ./src/tests/socketio-chat-report ./src/tests/socketio-chat-test.yaml",
-        "show": "./node_modules/artillery/bin/artillery report ./src/tests/socketio-chat-report"
+    "devDependencies": {
+        "@craco/craco": "^6.4.0",
+        "@storybook/addon-actions": "^6.3.12",
+        "@storybook/addon-essentials": "^6.3.12",
+        "@storybook/addon-links": "^6.3.12",
+        "@storybook/node-logger": "^6.3.12",
+        "@storybook/preset-create-react-app": "^3.2.0",
+        "@storybook/react": "^6.3.12",
+        "craco-alias": "^3.0.1",
+        "eslint-config-airbnb": "18.2.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "2.22.1",
+        "eslint-plugin-jsx-a11y": "6.4.1",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-react": "7.21.5",
+        "eslint-plugin-react-hooks": "1.7.0",
+        "prettier": "^2.4.1"
     },
     "eslintConfig": {
         "extends": [
@@ -54,24 +72,6 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
-    },
-    "devDependencies": {
-        "@craco/craco": "^6.4.0",
-        "@storybook/addon-actions": "^6.3.12",
-        "@storybook/addon-essentials": "^6.3.12",
-        "@storybook/addon-links": "^6.3.12",
-        "@storybook/node-logger": "^6.3.12",
-        "@storybook/preset-create-react-app": "^3.2.0",
-        "@storybook/react": "^6.3.12",
-        "craco-alias": "^3.0.1",
-        "eslint-config-airbnb": "18.2.1",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-import": "2.22.1",
-        "eslint-plugin-jsx-a11y": "6.4.1",
-        "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-react": "7.21.5",
-        "eslint-plugin-react-hooks": "1.7.0",
-        "prettier": "^2.4.1"
     },
     "resolutions": {
         "babel-loader": "8.1.0"
