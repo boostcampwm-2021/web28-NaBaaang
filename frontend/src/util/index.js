@@ -24,11 +24,11 @@ const isString = str =>
 const transMarginProp = v => (!isString(v) ? `${v}rem` : v);
 
 const makeChatMessage = ({ type, user, content }) => {
-    const { id: userID, nickname } = user;
+    const { id: userId, nickname } = user;
     return {
         id: v1(),
         type,
-        userID,
+        userId,
         nickname,
         content,
     };
