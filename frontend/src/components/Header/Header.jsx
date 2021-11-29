@@ -7,6 +7,8 @@ import { ReactComponent as CameraIcon } from '@/assets/images/camera-icon.svg';
 import { flexMixin } from '@/styles/mixins';
 import ProfileIcon from '@/assets/images/profile-icon.svg';
 import STATUS from '@/constants/statusCode';
+import { removeItemFromLocalStorage } from '@/util';
+import { AUTH_TOKEN_LIST } from '@/constants/auth';
 
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
@@ -22,22 +24,20 @@ import {
 
 export default function Header() {
     const { handleModal, openModal } = useContext(ModalContext);
-    const { setUserInfo, userInfo, authSignOut } = useContext(UserContext);
+    const { userInfo, dispatch } = useContext(UserContext);
 
     const navigate = useNavigate();
 
     const changeNicknameHandler = () => {
-        handleModal(
-            <NicknameModalContent
-                onSubmit={handleOnChangeNickname}
-                setUserInfo={setUserInfo}
-                userInfo={userInfo}
-            />,
-        );
+        handleModal(<NicknameModalContent 
+            userInfo={userInfo}
+            dispatch={dispatch}
+            onSubmit={handleOnChangeNickname} />);
     };
 
     const logoutHandler = () => {
-        authSignOut();
+        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
+        dispatch({ type: 'SIGN_OUT' });
         navigate(window.location.pathname);
     };
 
