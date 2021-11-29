@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import { fetchAuthTokenValidation } from '@/apis/auth';
-import {
-    isTokenExist,
-    setItemToLocalStorage,
-    removeItemFromLocalStorage,
-} from '@/util';
+import { isTokenExist, removeItemFromLocalStorage } from '@/util';
+
+import userAuthReducer from '@/reducer/userAuthReducer';
 
 import { AUTH_TOKEN_LIST } from '@/constants/auth';
 
 export default function useAuth() {
-    const [userInfo, setUserInfo] = useState({ isSignIn: false });
+    const [userInfo, dispatch] = useReducer(userAuthReducer, {
+        isSignIn: false,
+    });
+
     const [authLoading, setAuthLoading] = useState(true);
 
     const isAuthTokenValidate = async () => {
@@ -26,35 +27,20 @@ export default function useAuth() {
                 setAuthLoading(false);
                 removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 const { isSignIn } = userInfo;
-                if (isSignIn) setUserInfo({ isSignIn: false });
+                if (isSignIn) dispatch({ type: 'SIGN_OUT' });
                 return;
             }
             window.localStorage.setItem('accessToken', accessToken);
-            setUserInfo({ isSignIn: true, user: decoded });
+            dispatch({ type: 'SIGN_IN_SUCCESS', payload: { user: decoded } });
             setAuthLoading(false);
         } catch (err) {
             throw new Error(err);
         }
     };
 
-    const authSignIn = ({ type, payload }) => {
-        if (type === 'success') {
-            const { user, accessToken, refreshToken, isSignIn } = payload;
-            setItemToLocalStorage({ accessToken, refreshToken });
-            setUserInfo({ isSignIn, user });
-        } else {
-            setUserInfo({ isSignIn: false });
-        }
-    };
-
-    const authSignOut = () => {
-        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
-        setUserInfo({ isSignIn: false });
-    };
-
     useEffect(() => {
         isAuthTokenValidate();
     }, []);
 
-    return { userInfo, setUserInfo, authLoading, authSignIn, authSignOut };
+    return { userInfo, authLoading, dispatch };
 }

@@ -5,13 +5,12 @@ import { ModalContext } from '@/store/ModalStore';
 
 import { Box, Button, Typography } from '@/components/Common';
 
-export default function Nickname({ onSubmit, setUserInfo, userInfo }) {
+export default function Nickname({ onSubmit, userInfo, dispatch }) {
     const { closeModal } = useContext(ModalContext);
+    const { user } = userInfo;
 
     const inputRef = useRef();
     const [error, setError] = useState(null);
-
-    const { isSignIn, user } = userInfo;
 
     const handleOnSubmit = async () => {
         try {
@@ -20,7 +19,10 @@ export default function Nickname({ onSubmit, setUserInfo, userInfo }) {
             else {
                 await onSubmit({ nickname: inputData });
                 const updatedUser = { ...user, nickname: inputData };
-                setUserInfo({ isSignIn, user: updatedUser });
+                dispatch({
+                    type: 'CHANGE_NICKNAME',
+                    payload: { user: updatedUser },
+                });
                 closeModal();
             }
         } catch (err) {

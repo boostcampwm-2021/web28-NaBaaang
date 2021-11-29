@@ -2,12 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
+import { setItemToLocalStorage } from '@/util';
+
 import { fetchSiginInGoogle } from '@/apis/auth';
 import { UserContext } from '@/store/UserStore';
 import { Loading } from '@/components/Common';
 
 export default function GoogleAuthCallback() {
-    const { authSignIn } = useContext(UserContext);
+    const { dispatch } = useContext(UserContext);
     const { search } = useLocation();
     const navigate = useNavigate();
     const { code, state } = qs.parse(search, {
@@ -18,12 +20,14 @@ export default function GoogleAuthCallback() {
     const handleSignIn = async () => {
         try {
             const res = await fetchSiginInGoogle(code);
-            authSignIn({
-                type: 'success',
-                payload: { ...res, isSignIn: true },
+            const { user, accessToken, refreshToken } = res;
+            setItemToLocalStorage({ accessToken, refreshToken });
+            dispatch({
+                type: 'SIGN_IN_SUCCESS',
+                payload: { user },
             });
         } catch (err) {
-            authSignIn({ type: 'error' });
+            dispatch({ type: 'SIGN_IN_ERROR' });
         } finally {
             navigate(referrer);
         }

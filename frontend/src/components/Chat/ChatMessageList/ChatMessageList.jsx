@@ -9,7 +9,7 @@ export default function ChatMessageList({
     filterUnsentMessage,
     deleteMessage,
 }) {
-    const isScrollBottomRef = useRef(false);
+    const isScrollBottomRef = useRef(true);
     const { scrollRef, isScrollBottom, moveScrollToBottom } = useScroll();
 
     const handleOnScroll = () => {
