@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { borderBoxMixin } from '@/styles/mixins';
 
 import { Button, Box } from '@/components/Common';
-import useChatForm from './useChatForm';
+import useChatForm from './hooks/useChatForm';
 
 export default function Form({ role, handleSubmit, isDonation }) {
     const messageInputRef = useRef();
