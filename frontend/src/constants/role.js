@@ -6,7 +6,6 @@ const ROLE = {
 };
 
 const PAGE_ROLE = {
-    LIVE_COLLECTION: ROLE.READ,
     CHANNEL: ROLE.READ,
 };
 
