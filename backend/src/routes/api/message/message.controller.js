@@ -1,15 +1,25 @@
 import messageService from './message.service.js';
 
-import { existUndefinedInParameters } from '@/lib/util/util.js';
-import STATUS from '@/lib/util/statusCode.js';
+import STATUS from '@/lib/constant/statusCode.js';
+import db from '@/models/index.js';
+import { SERVER_ERROR_CODE } from '@/lib/error/constant/ErrorCode.js';
+import errorHandler from '@/lib/util/errorHandler.js';
+
+const { ConnectionRefusedError } = db.Sequelize;
+const { SEQUELIZE_CONNECTION_REFURED_ERROR } = SERVER_ERROR_CODE;
 
 const createMessage = async (req, res, next) => {
     const { id: channelId } = req.params;
     const { senderId, content } = req.body;
-    if (existUndefinedInParameters(channelId, senderId, content)) {
-        res.status(STATUS.BAD_REQUEST).send();
-        return;
-    }
+    const isValidParams = errorHandler.validateParameters(
+        {
+            channelId,
+            senderId,
+            content,
+        },
+        next,
+    );
+    if (!isValidParams) return;
 
     try {
         const messageId = await messageService.create({
@@ -19,8 +29,17 @@ const createMessage = async (req, res, next) => {
         });
 
         res.status(STATUS.CREATED).json(messageId);
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).send(error);
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
