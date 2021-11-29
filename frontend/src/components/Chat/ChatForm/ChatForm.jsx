@@ -1,30 +1,31 @@
 import React, { useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
-import { v1 } from 'uuid';
 
 import { borderBoxMixin } from '@/styles/mixins';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
+import { makeChatMessage } from '@/util';
 
 import { Button, Box } from '@/components/Common';
-import { LoginAlertModalContent, DonationModalContent } from '@/components/ModalContent';
+import {
+    LoginAlertModalContent,
+    DonationModalContent,
+} from '@/components/ModalContent';
 
-export default function Form({ handleSubmit, isDonation }) {
+export default function ChatForm({ handleSubmit, isDonation }) {
     const messageInputRef = useRef();
-    const { userInfo } = useContext(UserContext);
+    const {
+        userInfo: { user, isSignIn },
+    } = useContext(UserContext);
     const { openModal } = useContext(ModalContext);
 
-    const { user } = userInfo;
-
-    const handleDonationButtonClick = value => {
-        const message = {
-            id: v1(),
+    const handleDonationButtonClick = content => {
+        const chatMessage = makeChatMessage({
             type: 'DONATION',
-            userId: user.id,
-            nickname: user.nickname,
-            content: value,
-        };
-        handleSubmit(message);
+            user,
+            content,
+        });
+        handleSubmit(chatMessage);
     };
 
     const openLoginAlertModal = () => {
@@ -32,27 +33,27 @@ export default function Form({ handleSubmit, isDonation }) {
     };
 
     const openDonationModal = () => {
-        openModal(<DonationModalContent onDonation={handleDonationButtonClick} />);
+        openModal(
+            <DonationModalContent onDonation={handleDonationButtonClick} />,
+        );
     };
 
     const sendMessage = e => {
         e.preventDefault();
-        const txt = messageInputRef.current.value;
-        if (txt === '') return;
+        const content = messageInputRef.current.value;
+        if (content === '') return;
 
-        if (!userInfo.isSignIn) {
+        if (!isSignIn) {
             openLoginAlertModal();
             return;
         }
 
-        const message = {
-            id: v1(),
+        const chatMessage = makeChatMessage({
             type: 'NORMAL',
-            userId: user.id,
-            nickname: user.nickname,
-            content: txt,
-        };
-        handleSubmit(message);
+            user,
+            content,
+        });
+        handleSubmit(chatMessage);
         messageInputRef.current.value = '';
     };
     return (
@@ -85,7 +86,7 @@ const StyledForm = styled.form`
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
-    padding : 0 1rem;
+    padding: 0 1rem;
     ${({ theme }) =>
         css`
             background-color: ${theme.color.offwhite};
