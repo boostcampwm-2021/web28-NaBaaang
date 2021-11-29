@@ -1,5 +1,6 @@
-import db from '@/models/index.js';
 import userDAO from './user.dao.js';
+
+import db from '@/models/index.js';
 
 const update = async userInfo => {
     const transaction = await db.sequelize.transaction();
@@ -9,7 +10,7 @@ const update = async userInfo => {
         return updatedUser[0];
     } catch (err) {
         await transaction.rollback();
-        throw err;
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 

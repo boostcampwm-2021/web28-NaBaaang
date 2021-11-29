@@ -1,10 +1,24 @@
 import channelDAO from './channel.dao.js';
-import db from '@/models/index.js';
-import { v4 } from 'uuid';
 import chatDao from '@/routes/api/chat/chat.dao.js';
-import requestHandler from '@/lib/util/requestHandler.js';
+
 import ROLE from './constant/role.js';
 import CHANNEL_STATE from './constant/state.js';
+import {
+    SERVER_ERROR_CODE,
+    CLIENT_ERROR_CODE,
+} from '@/lib/error/constant/ErrorCode.js';
+
+import requestHandler from '@/lib/util/requestHandler.js';
+
+import ServerError from '@/lib/error/ServerError.js';
+import ClientError from '@/lib/error/ClientError.js';
+
+import { v4 } from 'uuid';
+import db from '@/models/index.js';
+
+const { ForeignKeyConstraintError } = db.Sequelize;
+const { NOT_FOUND_USER } = CLIENT_ERROR_CODE;
+const { DATA_ACCESS_ERROR } = SERVER_ERROR_CODE;
 
 const create = async channelInfo => {
     const transaction = await db.sequelize.transaction();
@@ -20,7 +34,10 @@ const create = async channelInfo => {
         return channelId;
     } catch (error) {
         await transaction.rollback();
-        throw error;
+        if (error instanceof ForeignKeyConstraintError) {
+            throw new ClientError(NOT_FOUND_USER, error.message);
+        }
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -36,7 +53,10 @@ const update = async channelInfo => {
         return updatedChannel;
     } catch (error) {
         await transaction.rollback();
-        throw error;
+        if (error instanceof ForeignKeyConstraintError) {
+            throw new ClientError(NOT_FOUND_USER, error.message);
+        }
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -48,7 +68,7 @@ const getChannelById = async id => {
         return result;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -57,7 +77,7 @@ const getChannelByStreamerId = async streamerId => {
         let result = await channelDAO.findByStreamerId(streamerId);
         return result;
     } catch (error) {
-        throw new Error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -73,7 +93,7 @@ const getAuthenticatedChannelById = async ({ id, role }) => {
         return result;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -93,7 +113,7 @@ const getLiveChannels = async () => {
         return groupedData;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -126,7 +146,7 @@ const changeChannelState = async (id, channelState) => {
         return result;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -145,7 +165,7 @@ const watchChannel = async req => {
         return channel;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
@@ -159,7 +179,7 @@ const isChannelOwner = async req => {
         return channel && expectedId === channel.id;
     } catch (error) {
         await transaction.rollback();
-        console.error(error);
+        throw new ServerError(DATA_ACCESS_ERROR, error.message);
     }
 };
 
