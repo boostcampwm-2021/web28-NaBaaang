@@ -25,6 +25,10 @@ export default function useFetch({ type, payload }) {
 
     useEffect(() => {
         fetchData();
+        return () => {
+            setLoading(false);
+            setError(false);
+        };
     }, []);
 
     return { data, fetchData, error, loading };

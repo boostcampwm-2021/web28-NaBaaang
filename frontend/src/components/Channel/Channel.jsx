@@ -11,7 +11,7 @@ import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
 
-export default function Channel() {
+export default function Channel({ role }) {
     const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
@@ -36,14 +36,13 @@ export default function Channel() {
                     flex={1}
                     alignItems="unset"
                     justifyContent="unset"
-                   
                 >
-                   <ChannelDetail channelInfo={data} userCnt={userCnt} />
+                    <ChannelDetail channelInfo={data} userCnt={userCnt} />
                 </Box>
             </Box>
 
             <ChatMessageBox height="100%" flex={1}>
-                <Chat />
+                <Chat role={role} />
             </ChatMessageBox>
         </Box>
     );

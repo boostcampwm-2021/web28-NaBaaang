@@ -1,69 +1,21 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 import { borderBoxMixin } from '@/styles/mixins';
-import { UserContext } from '@/store/UserStore';
-import { ModalContext } from '@/store/ModalStore';
-import { makeChatMessage } from '@/util';
 
 import { Button, Box } from '@/components/Common';
-import {
-    LoginAlertModalContent,
-    DonationModalContent,
-} from '@/components/ModalContent';
+import useChatForm from './hooks/useChatForm';
 
-export default function ChatForm({ handleSubmit, isDonation }) {
+export default function Form({ role, handleSubmit, isDonation }) {
     const messageInputRef = useRef();
-    const {
-        userInfo: { user, isSignIn },
-    } = useContext(UserContext);
-    const { openModal } = useContext(ModalContext);
+    const { sendTextMessage, openDonationModal } = useChatForm({
+        role,
+        ref: messageInputRef,
+        handleSubmit,
+    });
 
-    const handleDonationButtonClick = content => {
-        const chatMessage = makeChatMessage({
-            type: 'DONATION',
-            user,
-            content,
-        });
-        handleSubmit(chatMessage);
-    };
-
-    const openLoginAlertModal = () => {
-        openModal(<LoginAlertModalContent />);
-    };
-
-    const openDonationModal = () => {
-        openModal(
-            <DonationModalContent onDonation={handleDonationButtonClick} />,
-        );
-    };
-
-    const validateionSendMessage = content => {
-        if (content === '') return false;
-        if (!isSignIn) {
-            openLoginAlertModal();
-            return false;
-        }
-
-        return true;
-    };
-
-    const sendMessage = e => {
-        e.preventDefault();
-        const content = messageInputRef.current.value;
-
-        if (validateionSendMessage(content)) {
-            const chatMessage = makeChatMessage({
-                type: 'NORMAL',
-                user,
-                content,
-            });
-            handleSubmit(chatMessage);
-            messageInputRef.current.value = '';
-        }
-    };
     return (
-        <StyledForm onSubmit={sendMessage}>
+        <StyledForm onSubmit={sendTextMessage}>
             <Box marginBottom={1}>
                 <StyledInput ref={messageInputRef} />
             </Box>

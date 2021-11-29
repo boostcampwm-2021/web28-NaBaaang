@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+
+import { ROLE } from '@/constants/role';
 import { UserContext } from '@/store/UserStore';
 
-export default function PrivateRoute({ children }) {
+export default function PrivateRoute({ component: Component }) {
     const {
         userInfo: { isSignIn },
         authLoading,
@@ -11,5 +13,5 @@ export default function PrivateRoute({ children }) {
     if (authLoading) return <div>Loading.....</div>;
     if (!isSignIn) return <Navigate to="/" />;
 
-    return children;
+    return <Component role={ROLE.ALL} />;
 }
