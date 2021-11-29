@@ -28,13 +28,7 @@ const fetchGoogleAccessToken = async code => {
             url,
             method: 'post',
             headers: {},
-            data: {
-                code,
-                client_id: config.clientID,
-                client_secret: config.secretKey,
-                grant_type: 'authorization_code',
-                redirect_uri: config.redirectUri,
-            },
+            data,
         });
         return result;
     } catch (error) {
