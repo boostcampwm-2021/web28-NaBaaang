@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import oauthConfig from '@config/oauth.js';
+import userDAO from '@/routes/api/user/user.dao.js';
 import jwtUtil from '@/lib/util/jwtUtil.js';
 import requestHandler from '@/lib/util/requestHandler.js';
 import ServerError from '@/lib/error/ServerError';
@@ -88,8 +89,25 @@ const isAuthenticate = headers => {
     return true;
 };
 
+const loginGoogle = async code => {
+    try {
+        const data = await exchangeCodeForToken(code);
+        const { access_token: googleToken } = data;
+        const result = await fetchGoogleInfoByAccessToken(googleToken);
+        const [user, isCreated] = await userDAO.getOrCreate(result);
+        const accessToken = jwtUtil.sign(user);
+        const refreshToken = jwtUtil.refresh();
+        await userDAO.updateRefreshToken(user.id, refreshToken);
+        return { user, isCreated, accessToken, refreshToken };
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+};
+
 export default {
     exchangeCodeForToken,
     fetchGoogleInfoByAccessToken,
     isAuthenticate,
+    loginGoogle,
 };

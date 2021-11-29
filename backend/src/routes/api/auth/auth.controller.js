@@ -1,21 +1,27 @@
-import STATUS from '@/lib/util/statusCode.js';
-import userDAO from '@/routes/api/user/user.dao.js';
+import STATUS from '@/lib/constant/statusCode.js';
 import jwtUtil from '@/lib/util/jwtUtil.js';
 import authService from './auth.service.js';
 import requestHandler from '@/lib/util/requestHandler.js';
+import ClientError from '@/lib/error/ClientError.js';
+import { CLIENT_ERROR_CODE } from '@/lib/error/constant/ErrorCode.js';
 
-const login = async (req, res) => {
+const { INVALID_PARAMETERS, INVALID_TOKEN } = CLIENT_ERROR_CODE;
+
+const login = async (req, res, next) => {
     try {
         const { code } = req.body;
-        const data = await authService.exchangeCodeForToken(code);
-        const { access_token: googleToken } = data;
-        const result = await authService.fetchGoogleInfoByAccessToken(
-            googleToken,
-        );
-        const [user, isCreated] = await userDAO.getOrCreate(result);
-        const accessToken = jwtUtil.sign(user);
-        const refreshToken = jwtUtil.refresh();
-        await userDAO.updateRefreshToken(user.id, refreshToken);
+        if (!code) {
+            next(
+                new ClientError(INVALID_PARAMETERS, {
+                    ...code,
+                }),
+            );
+            return;
+        }
+
+        const { user, isCreated, accessToken, refreshToken } =
+            await authService.loginGoogle(code);
+
         res.status(STATUS.ACCEPT).json({
             user,
             accessToken,
