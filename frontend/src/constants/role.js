@@ -6,8 +6,8 @@ const ROLE = {
 };
 
 const PAGE_ROLE = {
-    LiveCollection: ROLE.READ,
-    Channel: ROLE.READ,
+    LIVE_COLLECTION: ROLE.READ,
+    CHANNEL: ROLE.READ,
 };
 
 export { ROLE, PAGE_ROLE };
