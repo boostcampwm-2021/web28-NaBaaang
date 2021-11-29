@@ -9,7 +9,7 @@ import useThrottle from './useThrottle';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
-const MESSAGE_LIMIT = 20;
+const MESSAGE_LIMIT = 150;
 
 export default function useChatMessage() {
     const { arr: messageList, set: setMessageList } = useArray([]);
@@ -28,11 +28,21 @@ export default function useChatMessage() {
         flushBuffer();
     };
 
-    const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
+    const { startThrottle, stopThrottle } = useThrottle(
+        updateMessage,
+        THROTTLE_LIMIT,
+    );
 
     const throttleNewMessage = msg => {
         pushBuffer(msg);
-        onThrottle();
+
+        if (isBufferFull()) {
+            updateMessage();
+            stopThrottle();
+            return;
+        }
+
+        startThrottle();
     };
 
     const getMessageIdxToRemove = unsentMessageList => {
