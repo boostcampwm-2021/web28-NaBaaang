@@ -6,7 +6,7 @@ import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
 
 import {
-    LoginAlertModalContent,
+    LoginModalContent,
     DonationModalContent,
 } from '@/components/ModalContent';
 
@@ -19,7 +19,7 @@ export default function useChatForm({ role, ref, handleSubmit }) {
 
     const roleCheck = () => {
         if (role === ROLE.ALL) return true;
-        openModal(<LoginAlertModalContent />);
+        openModal(<LoginModalContent />);
         return false;
     };
 
