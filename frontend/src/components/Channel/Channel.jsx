@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -19,10 +19,6 @@ export default function Channel({ role }) {
         payload: channelId,
     });
 
-    useEffect(() => {
-        console.log('Channel component');
-        console.log(role);
-    }, []);
     const { userCnt } = useSocket(data);
 
     if (loading || error || !data)

@@ -1,69 +1,21 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { v1 } from 'uuid';
 
 import { borderBoxMixin } from '@/styles/mixins';
-import { UserContext } from '@/store/UserStore';
-import { ModalContext } from '@/store/ModalStore';
-import { ROLE } from '@/constants/role';
 
 import { Button, Box } from '@/components/Common';
-import {
-    LoginAlertModalContent,
-    DonationModalContent,
-} from '@/components/ModalContent';
+import useChatForm from './useChatForm';
 
 export default function Form({ role, handleSubmit, isDonation }) {
     const messageInputRef = useRef();
-    const {
-        userInfo: { user },
-    } = useContext(UserContext);
-    const { openModal } = useContext(ModalContext);
+    const { sendTextMessage, openDonationModal } = useChatForm({
+        role,
+        ref: messageInputRef,
+        handleSubmit,
+    });
 
-    const roleCheck = () => {
-        if (role === ROLE.ALL) return true;
-        openModal(<LoginAlertModalContent />);
-        return false;
-    };
-
-    const handleDonationButtonClick = value => {
-        if (roleCheck()) {
-            const message = {
-                id: v1(),
-                type: 'DONATION',
-                userId: user.id,
-                nickname: user.nickname,
-                content: value,
-            };
-            handleSubmit(message);
-        }
-    };
-
-    const openDonationModal = () => {
-        openModal(
-            <DonationModalContent onDonation={handleDonationButtonClick} />,
-        );
-    };
-
-    const sendMessage = e => {
-        e.preventDefault();
-        const txt = messageInputRef.current.value;
-        if (txt === '') return;
-
-        if (roleCheck()) {
-            const message = {
-                id: v1(),
-                type: 'NORMAL',
-                userId: user.id,
-                nickname: user.nickname,
-                content: txt,
-            };
-            handleSubmit(message);
-            messageInputRef.current.value = '';
-        }
-    };
     return (
-        <StyledForm onSubmit={sendMessage}>
+        <StyledForm onSubmit={sendTextMessage}>
             <Box marginBottom={1}>
                 <StyledInput ref={messageInputRef} />
             </Box>
