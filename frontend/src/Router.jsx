@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Loading } from '@/components/Common';
+import GoogleAuthCallback from '@/components/OauthCallback/GoogleAuthCallback';
 import PublicRoute from './components/Route/PublicRoute';
 import PrivateRoute from './components/Route/PrivateRoute';
-import GoogleAuthCallback from '@/components/OauthCallback/GoogleAuthCallback';
 
 const Main = lazy(() => import('./pages/Main'));
 const ChannelManager = lazy(() => import('./pages/ChannelManager'));
