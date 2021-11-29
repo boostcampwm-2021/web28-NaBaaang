@@ -6,52 +6,82 @@ export default function usePolling(url, option, videoRef, delay) {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        fetchPolling();
+    }, []);
+
     const fetchPolling = async prevEtag => {
-        setLoading(true);
         try {
             const response = await fetch(url, option);
-            if (response.status === STATUS.NO_CONTENT) {
-                setTimeout(() => {
-                    fetchPolling();
-                }, delay);
-                setLoading(true);
-            } else if (response.status === STATUS.OK) {
+
+            if (notExistHLSFile(response.status)) {
+                waitCustomHLSPolling();
+                return;
+            }
+
+            if (existHLSFile(response.status)) {
                 const currEtag = response.headers.get('etag');
-                if (prevEtag === currEtag) {
-                    setTimeout(() => {
-                        fetchPolling(currEtag);
-                    }, delay);
+
+                if (fileNotChanged(prevEtag, currEtag)) {
+                    waitCustomHLSPolling(currEtag);
                     return;
                 }
-                if (HLS.isSupported()) {
-                    const hls = new HLS();
 
-                    hls.attachMedia(videoRef.current);
-
-                    hls.on(HLS.Events.MEDIA_ATTACHED, () => {
-                        hls.loadSource(url);
-
-                        hls.on(HLS.Events.MANIFEST_PARSED, () => {
-                            videoRef.current.play();
-                        });
-                        hls.on(HLS.Events.ERROR, async () => {
-                            hls.destroy();
-
-                            const response = await fetch(url, option);
-                            fetchPolling(response.headers.get('etag'));
-                        });
-                    });
-                }
-                setLoading(false);
+                startHLSPolling();
+                return;
             }
+
+            // unhandled error
         } catch (err) {
             setError(true);
         }
     };
 
-    useEffect(() => {
-        fetchPolling();
-    }, []);
+    const waitCustomHLSPolling = (etag = null) => {
+        setTimeout(() => {
+            fetchPolling(etag);
+        }, delay);
+        setLoading(true);
+    };
+
+    const startHLSPolling = () => {
+        if (HLS.isSupported()) {
+            const hls = new HLS();
+
+            hls.attachMedia(videoRef.current);
+            registerHLSEvents(hls);
+
+            setLoading(false);
+        }
+    };
+
+    const registerHLSEvents = hls => {
+        hls.on(HLS.Events.MEDIA_ATTACHED, () => {
+            hls.loadSource(url);
+
+            hls.on(HLS.Events.MANIFEST_PARSED, () => {
+                videoRef.current.play();
+            });
+            hls.on(HLS.Events.ERROR, async () => {
+                hls.destroy();
+
+                const response = await fetch(url, option);
+                fetchPolling(response.headers.get('etag'));
+            });
+        });
+    };
 
     return { error, loading };
 }
+
+const notExistHLSFile = responseStatus => {
+    return responseStatus === STATUS.NO_CONTENT;
+};
+
+const existHLSFile = responseStatus => {
+    return responseStatus === STATUS.OK;
+};
+
+const fileNotChanged = (prevEtag, currEtag) => {
+    return prevEtag === currEtag;
+};
