@@ -7,7 +7,7 @@ import Box from '@/components/Common/Box';
 import ChatMessageList from './ChatMessageList';
 import ChatForm from './ChatForm';
 
-export default function Chat({ isDonation = true }) {
+export default function Chat({ role, isDonation = true }) {
     const {
         messageList,
         filterUnsentMessage,
@@ -38,7 +38,11 @@ export default function Chat({ isDonation = true }) {
                 />
             </Box>
             <Box width="100%" flex={1}>
-                <ChatForm handleSubmit={handleSubmit} isDonation={isDonation} />
+                <ChatForm
+                    role={role}
+                    handleSubmit={handleSubmit}
+                    isDonation={isDonation}
+                />
             </Box>
         </Box>
     );

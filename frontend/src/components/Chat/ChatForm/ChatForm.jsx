@@ -5,34 +5,44 @@ import { v1 } from 'uuid';
 import { borderBoxMixin } from '@/styles/mixins';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
+import { ROLE } from '@/constants/role';
 
 import { Button, Box } from '@/components/Common';
-import { LoginAlertModalContent, DonationModalContent } from '@/components/ModalContent';
+import {
+    LoginAlertModalContent,
+    DonationModalContent,
+} from '@/components/ModalContent';
 
-export default function Form({ handleSubmit, isDonation }) {
+export default function Form({ role, handleSubmit, isDonation }) {
     const messageInputRef = useRef();
-    const { userInfo } = useContext(UserContext);
+    const {
+        userInfo: { user },
+    } = useContext(UserContext);
     const { openModal } = useContext(ModalContext);
 
-    const { user } = userInfo;
-
-    const handleDonationButtonClick = value => {
-        const message = {
-            id: v1(),
-            type: 'DONATION',
-            userId: user.id,
-            nickname: user.nickname,
-            content: value,
-        };
-        handleSubmit(message);
+    const roleCheck = () => {
+        if (role === ROLE.ALL) return true;
+        openModal(<LoginAlertModalContent />);
+        return false;
     };
 
-    const openLoginAlertModal = () => {
-        openModal(<LoginAlertModalContent />);
+    const handleDonationButtonClick = value => {
+        if (roleCheck()) {
+            const message = {
+                id: v1(),
+                type: 'DONATION',
+                userId: user.id,
+                nickname: user.nickname,
+                content: value,
+            };
+            handleSubmit(message);
+        }
     };
 
     const openDonationModal = () => {
-        openModal(<DonationModalContent onDonation={handleDonationButtonClick} />);
+        openModal(
+            <DonationModalContent onDonation={handleDonationButtonClick} />,
+        );
     };
 
     const sendMessage = e => {
@@ -40,20 +50,17 @@ export default function Form({ handleSubmit, isDonation }) {
         const txt = messageInputRef.current.value;
         if (txt === '') return;
 
-        if (!userInfo.isSignIn) {
-            openLoginAlertModal();
-            return;
+        if (roleCheck()) {
+            const message = {
+                id: v1(),
+                type: 'NORMAL',
+                userId: user.id,
+                nickname: user.nickname,
+                content: txt,
+            };
+            handleSubmit(message);
+            messageInputRef.current.value = '';
         }
-
-        const message = {
-            id: v1(),
-            type: 'NORMAL',
-            userId: user.id,
-            nickname: user.nickname,
-            content: txt,
-        };
-        handleSubmit(message);
-        messageInputRef.current.value = '';
     };
     return (
         <StyledForm onSubmit={sendMessage}>
@@ -85,7 +92,7 @@ const StyledForm = styled.form`
 const StyledInput = styled.input`
     width: 100%;
     height: 3em;
-    padding : 0 1rem;
+    padding: 0 1rem;
     ${({ theme }) =>
         css`
             background-color: ${theme.color.offwhite};

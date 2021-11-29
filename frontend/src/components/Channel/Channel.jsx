@@ -20,6 +20,7 @@ export default function Channel({ role }) {
     });
 
     useEffect(() => {
+        console.log('Channel component');
         console.log(role);
     }, []);
     const { userCnt } = useSocket(data);
@@ -45,7 +46,7 @@ export default function Channel({ role }) {
             </Box>
 
             <ChatMessageBox height="100%" flex={1}>
-                <Chat />
+                <Chat role={role} />
             </ChatMessageBox>
         </Box>
     );

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
-import { ROLE } from '@/constants/role';
 import { UserContext } from '@/store/UserStore';
+
+import { ROLE } from '@/constants/role';
 
 export default function PublicRoute({ component: Component, role }) {
     const {
