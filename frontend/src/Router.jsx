@@ -17,8 +17,21 @@ export default function Router() {
     return (
         <Suspense fallback={<Loading />}>
             <Routes>
-                <Route path="/" element={<Main />}>
-                    <Route path="" element={<LiveCollection />} />
+                <Route
+                    path="/"
+                    element={
+                        <PublicRoute component={Main} role={PAGE_ROLE.MAIN} />
+                    }
+                >
+                    <Route
+                        path=""
+                        element={
+                            <PublicRoute
+                                component={LiveCollection}
+                                role={PAGE_ROLE.LIVE_COLLECTION}
+                            />
+                        }
+                    />
                     <Route
                         path="channel/:channelId"
                         element={
