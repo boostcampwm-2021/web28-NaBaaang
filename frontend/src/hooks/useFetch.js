@@ -20,13 +20,15 @@ export default function useFetch({ type, payload }) {
             setLoading(false);
         } catch (err) {
             setError(true);
-            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchData();
-        return () => setLoading(false);
+        return () => {
+            setLoading(false);
+            setError(false);
+        };
     }, []);
 
     return { data, fetchData, error, loading };
