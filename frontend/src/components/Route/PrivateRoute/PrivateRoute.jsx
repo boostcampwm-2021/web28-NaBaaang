@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+
+import { ROLE } from '@/constants/role';
 import { UserContext } from '@/store/UserStore';
 
 export default function PrivateRoute({ component: Component }) {
@@ -11,5 +13,5 @@ export default function PrivateRoute({ component: Component }) {
     if (authLoading) return <div>Loading.....</div>;
     if (!isSignIn) return <Navigate to="/" />;
 
-    return <Component />;
+    return <Component role={ROLE.ALL} />;
 }
