@@ -38,23 +38,29 @@ export default function ChatForm({ handleSubmit, isDonation }) {
         );
     };
 
+    const validateionSendMessage = content => {
+        if (content === '') return false;
+        if (!isSignIn) {
+            openLoginAlertModal();
+            return false;
+        }
+
+        return true;
+    };
+
     const sendMessage = e => {
         e.preventDefault();
         const content = messageInputRef.current.value;
-        if (content === '') return;
 
-        if (!isSignIn) {
-            openLoginAlertModal();
-            return;
+        if (validateionSendMessage(content)) {
+            const chatMessage = makeChatMessage({
+                type: 'NORMAL',
+                user,
+                content,
+            });
+            handleSubmit(chatMessage);
+            messageInputRef.current.value = '';
         }
-
-        const chatMessage = makeChatMessage({
-            type: 'NORMAL',
-            user,
-            content,
-        });
-        handleSubmit(chatMessage);
-        messageInputRef.current.value = '';
     };
     return (
         <StyledForm onSubmit={sendMessage}>
