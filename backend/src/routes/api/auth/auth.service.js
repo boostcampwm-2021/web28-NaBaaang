@@ -3,8 +3,15 @@ import axios from 'axios';
 import oauthConfig from '@config/oauth.js';
 import jwtUtil from '@/lib/util/jwtUtil.js';
 import requestHandler from '@/lib/util/requestHandler.js';
+import ServerError from '@/lib/error/ServerError';
+import { SERVER_ERROR_CODE } from '@/lib/error/constant/ErrorCode';
 const env = process.env.NODE_ENV || 'development';
 const config = oauthConfig[env];
+
+const {
+    GOOGLE_OAUTH_AUTHENTICATION_ERROR,
+    GOOGLE_OAUTH_RESOURCE_SERVER_ERROR,
+} = SERVER_ERROR_CODE;
 
 const fetchGoogleAccessToken = async code => {
     const url = 'https://www.googleapis.com/oauth2/v4/token';
@@ -43,7 +50,10 @@ const fetchGoogleInfoByAccessToken = async accessToken => {
         });
         return data;
     } catch (error) {
-        throw new Error(error);
+        throw new ServerError(
+            GOOGLE_OAUTH_RESOURCE_SERVER_ERROR,
+            error.message,
+        );
     }
 };
 
@@ -52,7 +62,7 @@ const exchangeCodeForToken = async code => {
         const { data } = await fetchGoogleAccessToken(code);
         return data;
     } catch (error) {
-        throw new Error(error);
+        throw new ServerError(GOOGLE_OAUTH_AUTHENTICATION_ERROR, error.message);
     }
 };
 
