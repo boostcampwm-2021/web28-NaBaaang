@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-
 import styled, { css } from 'styled-components';
-
-import Box from '@/components/Common/Box';
+import { Box } from '@/components/Common';
+import useScroll from '@/hooks/useScroll';
 import ChatMessage from './ChatMessage';
 
 export default function ChatMessageList({
@@ -10,16 +9,26 @@ export default function ChatMessageList({
     filterUnsentMessage,
     deleteMessage,
 }) {
-    const messageBoxRef = useRef();
+    const isScrollBottomRef = useRef(false);
+    const { scrollRef, isScrollBottom, moveScrollToBottom } = useScroll();
 
-    const scrollToBottom = () => {
-        if (messageBoxRef.current) {
-            messageBoxRef.current.scrollTop =
-                messageBoxRef.current.scrollHeight;
+    const handleOnScroll = () => {
+        if (!isScrollBottom()) {
+            isScrollBottomRef.current = false;
+        } else {
+            isScrollBottomRef.current = true;
         }
     };
 
-    const convertedMessageList = () => {
+    const handleChatMessageScroll = () => {
+        const { current: isScrollBottom } = isScrollBottomRef;
+
+        if (isScrollBottom) {
+            moveScrollToBottom();
+        }
+    };
+
+    const renderMessageList = () => {
         const filtered = filterUnsentMessage();
         return (
             filtered &&
@@ -38,18 +47,23 @@ export default function ChatMessageList({
     };
 
     useEffect(() => {
-        scrollToBottom();
+        handleChatMessageScroll();
     }, [messageList]);
 
     return (
-        <StyledBox flex={1} height="100%" ref={messageBoxRef}>
+        <StyledBox
+            onScroll={handleOnScroll}
+            flex={1}
+            height="100%"
+            ref={scrollRef}
+        >
             <MessageListBox
                 width="100%"
                 flexDirection="column"
                 alignItems="flex-start"
                 flex={1}
             >
-                {convertedMessageList()}
+                {renderMessageList()}
             </MessageListBox>
         </StyledBox>
     );
