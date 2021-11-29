@@ -8,6 +8,6 @@ export default function userAuthReducer(userInfo, { type, payload }) {
         case 'CHANGE_NICKNAME':
             return { ...userInfo, user: payload.user };
         default:
-            return '';
+            return {};
     }
 }
