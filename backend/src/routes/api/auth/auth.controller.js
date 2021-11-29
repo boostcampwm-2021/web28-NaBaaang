@@ -29,31 +29,27 @@ const login = async (req, res, next) => {
             isCreated,
         });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json(error.message);
+        next(error);
     }
 };
 
-const authenticate = async (req, res, next) => {
+const authenticate = (req, res, next) => {
     if (authService.isAuthenticate(req.headers)) {
         const user = requestHandler.getUserFromHeader(req.headers);
         req.body.userId = user.id;
         next();
-        return;
     } else {
-        res.status(STATUS.UNAUTHORIZED).json({ error: 'TOKEN IS INVALID' });
-        return;
+        next(new ClientError(INVALID_TOKEN));
     }
 };
 
-const getAuthValidation = async (req, res) => {
+const getAuthValidation = (req, res, next) => {
     if (authService.isAuthenticate(req.headers)) {
         const { accessToken } = requestHandler.getTokensFromHeader(req.headers);
         const decoded = jwtUtil.decode(accessToken);
         res.status(STATUS.OK).json({ accessToken, decoded });
-        return;
     } else {
-        res.status(STATUS.UNAUTHORIZED).json({ error: 'TOKEN IS INVALID' });
-        return;
+        next(new ClientError(INVALID_TOKEN));
     }
 };
 
