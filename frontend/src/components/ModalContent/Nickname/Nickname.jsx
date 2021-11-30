@@ -2,12 +2,14 @@ import React, { useState, useRef, useContext } from 'react';
 import styled, { css } from 'styled-components';
 
 import { ModalContext } from '@/store/ModalStore';
-
 import { Box, Button, Typography } from '@/components/Common';
 
-export default function Nickname({ onSubmit, userInfo, dispatch }) {
-    const { closeModal } = useContext(ModalContext);
-    const { user } = userInfo;
+import STATUS from '@/constants/statusCode';
+
+import { LoginErrorAlertModalContent } from '@/components/ModalContent';
+
+export default function Nickname({ onSubmit, dispatch }) {
+    const { closeModal, openModal } = useContext(ModalContext);
 
     const inputRef = useRef();
     const [error, setError] = useState(null);
@@ -17,13 +19,29 @@ export default function Nickname({ onSubmit, userInfo, dispatch }) {
             const inputData = inputRef.current.value;
             if (inputData === '') setError('닉네임을 입력해주세요');
             else {
-                await onSubmit({ nickname: inputData });
-                const updatedUser = { ...user, nickname: inputData };
-                dispatch({
-                    type: 'CHANGE_NICKNAME',
-                    payload: { user: updatedUser },
+                const { data, status } = await onSubmit({
+                    nickname: inputData,
                 });
-                closeModal();
+                
+                if (status === STATUS.OK) {
+                    const { updatedUser, accessToken, refreshToken } = data;
+                    dispatch({
+                        type: 'CHANGE_NICKNAME',
+                        payload: {
+                            user: updatedUser,
+                            accessToken,
+                            refreshToken,
+                        },
+                    });
+                    closeModal();
+                } else {
+                    const {
+                        errorSpec: { code },
+                    } = data;
+                    dispatch({ type: 'SIGN_OUT' });
+                    closeModal();
+                    openModal(<LoginErrorAlertModalContent errCode={code} />);
+                }
             }
         } catch (err) {
             setError(err.message);

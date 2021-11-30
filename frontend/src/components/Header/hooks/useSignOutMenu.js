@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import STATUS from '@/constants/statusCode';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
-import { removeItemFromLocalStorage } from '@/util';
-import { AUTH_TOKEN_LIST } from '@/constants/auth';
 import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
 import { fetchUpdateNickname } from '@/apis/user';
 import {
@@ -48,13 +46,13 @@ export default function useSignOutMenu() {
         }
     };
 
-    const changeNickname = async data => {
+    const changeNickname = async nickname => {
         try {
-            const response = await fetchUpdateNickname({
-                ...data,
+            const { status, data } = await fetchUpdateNickname({
+                nickname,
                 id: userInfo.user.id,
             });
-            return response;
+            return { status, data };
         } catch (err) {
             throw new Error(err);
         }
@@ -63,7 +61,6 @@ export default function useSignOutMenu() {
     const openNicknameModal = () => {
         openModal(
             <NicknameModalContent
-                userInfo={userInfo}
                 dispatch={dispatch}
                 onSubmit={changeNickname}
             />,
@@ -71,7 +68,6 @@ export default function useSignOutMenu() {
     };
 
     const signOutHandler = () => {
-        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
         dispatch({ type: 'SIGN_OUT' });
         navigate(window.location.pathname);
     };
