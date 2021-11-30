@@ -33,4 +33,6 @@ backend/config
 
 frontend/config
 
+socket/config
+
 artillery/reports
