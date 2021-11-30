@@ -8,7 +8,8 @@ async function fetchCreateChannel(formData) {
             payload: formData,
         });
 
-        return await getFetchData(url, option);
+        const { status, data } = await getFetchDataV2(url, option);
+        return { status, data };
     } catch (err) {
         throw new Error(err);
     }
@@ -37,7 +38,7 @@ async function fetchOpenChannel(id) {
         throw new Error(err);
     }
 }
-async function fetchPauseChannel(id){
+async function fetchPauseChannel(id) {
     try {
         const { url, option } = fetchAction({
             type: 'FETCH_PAUSE_CHANNEL',
