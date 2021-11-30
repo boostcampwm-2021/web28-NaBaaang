@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import STATUS from '@/constants/statusCode';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
-import { removeItemFromLocalStorage } from '@/util';
-import { AUTH_TOKEN_LIST } from '@/constants/auth';
 import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
 import { fetchUpdateNickname } from '@/apis/user';
 import {
     NicknameModalContent,
     ChannelDetailModalContent,
     ChannelModalContent,
+    LoginErrorAlertModalContent,
 } from '@/components/ModalContent';
 
 export default function useSignOutMenu() {
@@ -24,17 +23,23 @@ export default function useSignOutMenu() {
 
     const createChannel = async formData => {
         try {
-            const channelID = await fetchCreateChannel(formData);
-            navigate(`/stream-manager/${channelID}`);
+            const { status, data } = await fetchCreateChannel(formData);
+            if (status === STATUS.CREATED) {
+                navigate(`/stream-manager/${data}`);
+            } else {
+                const {
+                    errorSpec: { code },
+                } = data;
+                dispatch({ type: 'SIGN_OUT' });
+                openModal(<LoginErrorAlertModalContent errCode={code} />);
+            }
         } catch (err) {
             throw new Error(err);
         }
     };
 
     const openChannelModal = async () => {
-        const { data: channelInfo, status } = await fetchChannelOwnedByUser(
-            user.id,
-        );
+        const { data, status } = await fetchChannelOwnedByUser(user.id);
 
         if (status === STATUS.NO_CONTENT) {
             openModal(
@@ -44,17 +49,17 @@ export default function useSignOutMenu() {
                 />,
             );
         } else if (status === STATUS.OK) {
-            openModal(<ChannelDetailModalContent channelInfo={channelInfo} />);
+            openModal(<ChannelDetailModalContent channelInfo={data} />);
         }
     };
 
-    const changeNickname = async data => {
+    const changeNickname = async nickname => {
         try {
-            const response = await fetchUpdateNickname({
-                ...data,
+            const { status, data } = await fetchUpdateNickname({
+                nickname,
                 id: userInfo.user.id,
             });
-            return response;
+            return { status, data };
         } catch (err) {
             throw new Error(err);
         }
@@ -63,7 +68,6 @@ export default function useSignOutMenu() {
     const openNicknameModal = () => {
         openModal(
             <NicknameModalContent
-                userInfo={userInfo}
                 dispatch={dispatch}
                 onSubmit={changeNickname}
             />,
@@ -71,7 +75,6 @@ export default function useSignOutMenu() {
     };
 
     const signOutHandler = () => {
-        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
         dispatch({ type: 'SIGN_OUT' });
         navigate(window.location.pathname);
     };

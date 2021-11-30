@@ -1,34 +1,28 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+
 import { ModalContext } from '@/store/ModalStore';
-import { Box, Typography } from '@/components/Common';
-import { useCounter, useDidMount, useWillUnmount } from '@/hooks';
+import { Box, Typography, Button } from '@/components/Common';
 
 export default function ChannelEnd() {
-    const { closeModal } = useContext(ModalContext);
-    const navigate = useNavigate();
-    const { count, startCounter, stopCounter } = useCounter({
-        initCount: 3,
-        delay: 1000,
-        onStop: closeModal,
-    });
+    const { closeModal, setRedirectUrl } = useContext(ModalContext);
 
-    useDidMount(() => {
-        startCounter();
-    });
-    useWillUnmount(() => {
-        stopCounter();
-        navigate('/');
-    });
+    useEffect(() => {
+        setRedirectUrl('/');
+    }, []);
 
+    const handleSuccessButtonClick = () => {
+        closeModal();
+    };
     return (
         <Box flexDirection="column">
             <Typography varaint="p" marginBottom={2}>
-                방송이 종료 되었습니다.
+                방송이 종료되었습니다.
             </Typography>
-            <Typography varaint="p">
-                {count}초 뒤에 홈 화면으로 이동합니다.
-            </Typography>
+            <Button
+                text="확인"
+                color="success"
+                onClick={handleSuccessButtonClick}
+            />
         </Box>
     );
 }

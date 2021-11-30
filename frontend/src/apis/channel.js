@@ -1,18 +1,5 @@
 import fetchAction from '@/constants/fetchAction';
-import STATUS from '@/constants/statusCode';
-
-async function getFetchData(url, option) {
-    const res = await fetch(url, option);
-    const json = await res.json();
-    return json;
-}
-
-async function getFetchDataV2(url, option) {
-    const res = await fetch(url, option);
-    const { status } = res;
-    const data = status === STATUS.NO_CONTENT ? {} : await res.json();
-    return { status, data };
-}
+import { getFetchData, getFetchDataV2 } from './fetchUtill';
 
 async function fetchCreateChannel(formData) {
     try {
@@ -21,7 +8,8 @@ async function fetchCreateChannel(formData) {
             payload: formData,
         });
 
-        return await getFetchData(url, option);
+        const { status, data } = await getFetchDataV2(url, option);
+        return { status, data };
     } catch (err) {
         throw new Error(err);
     }
@@ -50,7 +38,7 @@ async function fetchOpenChannel(id) {
         throw new Error(err);
     }
 }
-async function fetchPauseChannel(id){
+async function fetchPauseChannel(id) {
     try {
         const { url, option } = fetchAction({
             type: 'FETCH_PAUSE_CHANNEL',

@@ -45,9 +45,10 @@ const authenticate = (req, res, next) => {
 
 const getAuthValidation = (req, res, next) => {
     if (authService.isAuthenticate(req.headers)) {
-        const { accessToken } = requestHandler.getTokensFromHeader(req.headers);
+        const { accessToken, refreshToken } =
+            requestHandler.getTokensFromHeader(req.headers);
         const decoded = jwtUtil.decode(accessToken);
-        res.status(STATUS.OK).json({ accessToken, decoded });
+        res.status(STATUS.OK).json({ accessToken,refreshToken, decoded });
     } else {
         next(new ClientError(INVALID_TOKEN));
     }
