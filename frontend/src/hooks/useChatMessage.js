@@ -1,8 +1,13 @@
-import { useEffect } from 'react';
+/* eslint-disable no-debugger */
+import React, { useContext, useEffect } from 'react';
 
 import { go } from '@/util/fp';
 import socket from '@/socket';
 
+import { UserContext } from '@/store/UserStore';
+import { ModalContext } from '@/store/ModalStore';
+
+import { LoginErrorAlertModalContent } from '@/components/ModalContent';
 import useBuffer from './useBuffer';
 import useArray from './useArray';
 import useThrottle from './useThrottle';
@@ -12,6 +17,8 @@ const BUFFER_LIMIT = 50;
 const MESSAGE_LIMIT = 150;
 
 export default function useChatMessage() {
+    const { dispatch } = useContext(UserContext);
+    const { openModal } = useContext(ModalContext);
     const { arr: messageList, set: setMessageList } = useArray([]);
     const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
         useBuffer(BUFFER_LIMIT);
@@ -43,6 +50,17 @@ export default function useChatMessage() {
         }
 
         startThrottle();
+    };
+
+    const receiveNewMessage = msg => {
+        pushBuffer(msg);
+        const { status, errorSpec } = msg;
+        if (status === false && errorSpec.code === 4002) {
+            dispatch({ type: 'SIGN_OUT' });
+            openModal(<LoginErrorAlertModalContent errCode={errorSpec.code} />);
+        } else {
+            throttleNewMessage(msg);
+        }
     };
 
     const getMessageIdxToRemove = unsentMessageList => {
@@ -77,7 +95,7 @@ export default function useChatMessage() {
     };
 
     useEffect(() => {
-        socket.chat.onMessage(throttleNewMessage);
+        socket.chat.onMessage(receiveNewMessage);
         return () => {
             socket.chat.clearChatEvents();
         };
