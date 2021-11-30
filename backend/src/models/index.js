@@ -3,7 +3,7 @@ import sequelizeConfig from '@config/config.js';
 import { insertDummy } from './initDummy.js';
 import initModels from './initModels.js';
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV.trim() || 'development';
 const config = sequelizeConfig[env];
 
 let sequelize = new Sequelize({

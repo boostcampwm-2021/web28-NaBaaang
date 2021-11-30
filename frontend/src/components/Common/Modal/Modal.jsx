@@ -33,11 +33,7 @@ export default function Modal() {
                     </CloseButtonBox>
 
                     <Box flex={0.5}>
-                        <Typography
-                            variant="h3"
-                            align="center"
-                            color={({ theme }) => theme.color.primary}
-                        >
+                        <Typography variant="h3" align="center" color="primary">
                             Nabaaang
                         </Typography>
                     </Box>
