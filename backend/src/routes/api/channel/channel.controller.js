@@ -71,7 +71,7 @@ const updateChannel = async (req, res, next) => {
         );
         if (!isValidParams) return;
 
-        updatedChannel = await channelService.update({
+        const updatedChannel = await channelService.update({
             id,
             title,
             category,
@@ -79,6 +79,7 @@ const updateChannel = async (req, res, next) => {
         });
         res.status(STATUS.OK).json(updatedChannel);
     } catch (err) {
+        console.log(err);
         if (err instanceof ConnectionRefusedError) {
             next(
                 new ServerError(
