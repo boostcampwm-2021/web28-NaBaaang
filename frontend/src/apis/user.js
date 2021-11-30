@@ -1,22 +1,13 @@
 import fetchAction from '@/constants/fetchAction';
+import { getFetchDataV2 } from './fetchUtill';
 
-async function getFetchData(url, option) {
-    try {
-        const res = await fetch(url, option);
-        const json = await res.json();
-        return json;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-
-async function fetchUpdateNickname(data) {
+async function fetchUpdateNickname(payload) {
     const { url, option } = fetchAction({
         type: 'FETCH_UPDATE_NICKNAME',
-        payload: data,
+        payload,
     });
-    const result = await getFetchData(url, option);
-    return result;
+    const { status, data } = await getFetchDataV2(url, option);
+    return { status, data };
 }
 
 export { fetchUpdateNickname };
