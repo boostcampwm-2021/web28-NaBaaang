@@ -13,45 +13,29 @@ const getOrCreate = async ({ id, name, picture }) => {
             imageUrl: picture,
         },
     };
-    try {
-        const result = await User.findOrCreate(options);
+    const result = await User.findOrCreate(options);
 
-        return result;
-    } catch (error) {
-        console.error(error);
-    }
+    return result;
 };
 
 const updateRefreshToken = async (id, refreshToken) => {
-    try {
-        const updatedUser = await User.update(
-            { refresh_token: refreshToken },
-            { where: { id } },
-        );
+    const updatedUser = await User.update(
+        { refresh_token: refreshToken },
+        { where: { id } },
+    );
 
-        return updatedUser;
-    } catch (error) {
-        console.error(error);
-    }
+    return updatedUser;
 };
 
 const getRefreshToken = async id => {
-    try {
-        const user = await User.findOne({ where: { id } });
+    const user = await User.findOne({ where: { id } });
 
-        return user.refresh_token;
-    } catch (error) {
-        console.error(error);
-    }
+    return user.refresh_token;
 };
 
 const updateNickname = async ({ id, nickname }) => {
-    try {
-        const updatedUser = await User.update({ nickname }, { where: { id } });
-        return updatedUser;
-    } catch (error) {
-        console.log(error);
-    }
+    const updatedUser = await User.update({ nickname }, { where: { id } });
+    return updatedUser;
 };
 
 export default {

@@ -1,13 +1,40 @@
 import channelService from './channel.service.js';
-import STATUS from '@/lib/util/statusCode.js';
 import authService from '@/routes/api/auth/auth.service.js';
-import requestHandler from '@/lib/util/requestHandler.js';
+
+import STATUS from '@/lib/constant/statusCode.js';
 import ROLE from './constant/role.js';
 import CHANNEL_STATE from './constant/state.js';
+import {
+    CLIENT_ERROR_CODE,
+    SERVER_ERROR_CODE,
+} from '@/lib/error/constant/ErrorCode';
 
-const createChannel = async (req, res) => {
+import requestHandler from '@/lib/util/requestHandler.js';
+import errorHandler from '@/lib/util/errorHandler.js';
+
+import ServerError from '@/lib/error/ServerError.js';
+import ClientError from '@/lib/error/ClientError.js';
+
+import db from '@/models/index.js';
+
+const { ConnectionRefusedError } = db.Sequelize;
+const { SEQUELIZE_CONNECTION_REFURED_ERROR } = SERVER_ERROR_CODE;
+
+const createChannel = async (req, res, next) => {
+    // streamerId 로 변경
+    const { userId: streamerId, title, category, description } = req.body;
+
+    const isValidParams = errorHandler.validateParameters(
+        {
+            streamerId,
+            title,
+            category,
+            description,
+        },
+        next,
+    );
+    if (!isValidParams) return;
     try {
-        const { userId: streamerId, title, category, description } = req.body;
         const channelId = await channelService.create({
             streamerId,
             title,
@@ -15,31 +42,53 @@ const createChannel = async (req, res) => {
             description,
         });
         res.status(STATUS.CREATED).json(channelId);
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
 const updateChannel = async (req, res, next) => {
     try {
         const { id } = req.params;
-        // parameter undefined일 경우 에러 처리
         const { title, category, description } = req.body;
-        const updatedChannel = await channelService.update({
+        const isValidParams = errorHandler.validateParameters(
+            {
+                id,
+                title,
+                category,
+                description,
+            },
+            next,
+        );
+        if (!isValidParams) return;
+
+        updatedChannel = await channelService.update({
             id,
             title,
             category,
             description,
         });
         res.status(STATUS.OK).json(updatedChannel);
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -66,29 +115,50 @@ const setUserRole = async (req, res, next) => {
 
         requestHandler.setRole(req, ROLE.VIEWER);
         next();
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
-const getChannel = async (req, res) => {
-    try {
-        const { id, role } = req.params;
+const getChannel = async (req, res, next) => {
+    const { id } = req.params;
+    if (id === undefined) {
+        next(
+            new ClientError(
+                CLIENT_ERROR_CODE.INVALID_PARAMERTES,
+                undefinedParams,
+            ),
+        );
+        return;
+    }
 
+    try {
         let data = await channelService.getChannelById(id);
         if (!data || !Object.keys(data).length) {
             res.status(STATUS.NO_CONTENT).json();
         } else {
             res.status(STATUS.OK).json(data);
         }
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -101,11 +171,17 @@ const getLiveChannels = async (req, res) => {
         } else {
             res.status(STATUS.OK).json(data);
         }
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -115,34 +191,54 @@ const openChannel = async (req, res) => {
         await channelService.changeChannelState(id, CHANNEL_STATE.LIVE);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
+
 const standByChannel = async (req, res) => {
     try {
         const { id } = req.params;
         await channelService.changeChannelState(id, CHANNEL_STATE.READY);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
+
 const closeChannel = async (req, res) => {
     try {
         const { id } = req.params;
         await channelService.changeChannelState(id, CHANNEL_STATE.CLOSE);
         res.status(STATUS.OK).json({ message: 'success' });
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -157,10 +253,16 @@ const watchChannel = async (req, res) => {
         const data = await channelService.watchChannel(req);
         res.status(STATUS.ACCEPT).json(data);
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -177,12 +279,19 @@ const getAuthenticatedChannel = async (req, res) => {
             res.status(STATUS.OK).json({ ...data.dataValues, role });
         }
     } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
+
 export default {
     createChannel,
     updateChannel,

@@ -1,19 +1,42 @@
 import userService from './user.service.js';
 import channelService from '@/routes/api/channel/channel.service.js';
-import STATUS from '@/lib/util/statusCode.js';
 
-const updateNickname = async (req, res) => {
+import STATUS from '@/lib/constant/statusCode.js';
+
+import { SERVER_ERROR_CODE } from '@/lib/error/constant/ErrorCode.js';
+
+import db from '@/models/index.js';
+import errorHandler from '@/lib/util/errorHandler.js';
+
+const { ConnectionRefusedError } = db.Sequelize;
+const { SEQUELIZE_CONNECTION_REFURED_ERROR } = SERVER_ERROR_CODE;
+
+const updateNickname = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { nickname } = req.body;
+        const isValidParams = errorHandler.validateParameters(
+            {
+                id,
+                nickname,
+            },
+            next,
+        );
+        if (!isValidParams) return;
+
         const updatedUser = await userService.update({ id, nickname });
         if (updatedUser) res.status(STATUS.OK).json(updatedUser);
-        else throw new Error('NICKNAME IS NOT CHANGED');
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
@@ -27,11 +50,17 @@ const getChannelOwnedByUser = async (req, res) => {
         } else {
             res.status(STATUS.OK).json(data);
         }
-    } catch (error) {
-        res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            error: 'Internal Server Error',
-            message: error.message,
-        });
+    } catch (err) {
+        if (err instanceof ConnectionRefusedError) {
+            next(
+                new ServerError(
+                    SEQUELIZE_CONNECTION_REFURED_ERROR,
+                    err.message,
+                ),
+            );
+        } else {
+            next(err);
+        }
     }
 };
 
