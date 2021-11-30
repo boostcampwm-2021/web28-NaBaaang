@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "babel-node --experimental-modules ./src/bin/www.js",
+        "start": "SET NODE_ENV=development && babel-node --experimental-modules ./src/bin/www.js",
         "api-docs": "swagger-cli bundle ./swagger/root/root.yaml --outfile ./swagger/build/bundle.yaml --type yaml",
         "init-sequelize-models": "./node_modules/.bin/sequelize-auto --config './config/sequelize-auto-config.json'",
         "test": "jest"
