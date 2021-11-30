@@ -3,9 +3,7 @@ import { useEffect } from 'react';
 import { go } from '@/util/fp';
 import socket from '@/socket';
 
-import useBuffer from '@/hooks/useBuffer';
-import useArray from '@/hooks/useArray';
-import useThrottle from '@/hooks/useThrottle';
+import { useBuffer, useArray, useThrottle } from '@/hooks';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
@@ -28,11 +26,21 @@ export default function useChatMessage() {
         flushBuffer();
     };
 
-    const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
+    const { startThrottle, stopThrottle } = useThrottle(
+        updateMessage,
+        THROTTLE_LIMIT,
+    );
 
     const throttleNewMessage = msg => {
         pushBuffer(msg);
-        onThrottle();
+
+        if (isBufferFull()) {
+            updateMessage();
+            stopThrottle();
+            return;
+        }
+
+        startThrottle();
     };
 
     const getMessageIdxToRemove = unsentMessageList => {
