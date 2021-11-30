@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ModalContext } from '@/store/ModalStore';
 import { Box, Typography } from '@/components/Common';
 import useCounter from '@/hooks/useCounter';
+import useDidMount from '@/hooks/useDidMount';
+import useWillUnmount from '@/hooks/useWillUnmount';
 
 export default function ChannelEnd() {
     const { closeModal } = useContext(ModalContext);
@@ -14,13 +16,13 @@ export default function ChannelEnd() {
         onStop: closeModal,
     });
 
-    useEffect(() => {
+    useDidMount(() => {
         startCounter();
-        return () => {
-            stopCounter();
-            navigate('/');
-        };
-    }, []);
+    });
+    useWillUnmount(() => {
+        stopCounter();
+        navigate('/');
+    });
 
     return (
         <Box flexDirection="column">
