@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { ModalContext } from '@/store/ModalStore';
 import { Box, Typography } from '@/components/Common';
-import useCounter from '@/hooks/useCounter';
-import useDidMount from '@/hooks/useDidMount';
-import useWillUnmount from '@/hooks/useWillUnmount';
+import { useCounter, useDidMount, useWillUnmount } from '@/hooks';
 
 export default function ChannelEnd() {
     const { closeModal } = useContext(ModalContext);
