@@ -4,12 +4,13 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "nodemon server.js"
+        "start": "SET NODE_ENV=development && nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "axios": "^0.24.0",
+        "dotenv": "^10.0.0",
         "nodemon": "^2.0.15",
         "socket.io": "^4.3.2"
     },

@@ -2,7 +2,7 @@ import axios from "axios";
 import STATUS from "../constants/statusCode.js";
 import EVENT from "../constants/socketEvents.js";
 
-const API_SERVER = "http://localhost:4000";
+const API_SERVER = process.env.API_SERVER;
 
 const chat = (io, socket) => {
     const sendChatMessage = async (message) => {
