@@ -1,11 +1,12 @@
 import React from 'react';
 
 import socket from '@/socket';
-import useChatMessage from '@/hooks/useChatMessage';
 
 import Box from '@/components/Common/Box';
 import ChatMessageList from './ChatMessageList';
 import ChatForm from './ChatForm';
+
+import useChatMessage from './hooks/useChatMessage';
 
 export default function Chat({ role, isDonation = true }) {
     const {

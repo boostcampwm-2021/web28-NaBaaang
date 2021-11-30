@@ -1,5 +1,6 @@
 export { default as useArray } from './useArray';
 export { default as useAuth } from './useAuth';
+export { default as useBuffer } from './useBuffer';
 export { default as useCounter } from './useCounter';
 export { default as useDidMount } from './useDidMount';
 export { default as useFetch } from './useFetch';
