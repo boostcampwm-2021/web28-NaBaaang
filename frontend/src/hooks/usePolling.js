@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import HLS from 'hls.js/dist/hls';
 import STATUS from '@/constants/statusCode';
 
@@ -6,8 +6,15 @@ export default function usePolling(url, option, videoRef, delay) {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const customPollingRef = useRef(null);
+    const hlsPollingRef = useRef(null);
+
     useEffect(() => {
         fetchPolling();
+        return () => {
+            if (customPollingRef.current) stopCustomHLSPolling();
+            if (hlsPollingRef.current) stopHLSPolling();
+        };
     }, []);
 
     const fetchPolling = async prevEtag => {
@@ -15,7 +22,7 @@ export default function usePolling(url, option, videoRef, delay) {
             const response = await fetch(url, option);
 
             if (notExistHLSFile(response.status)) {
-                waitCustomHLSPolling();
+                startCustomHLSPolling();
                 return;
             }
 
@@ -23,7 +30,7 @@ export default function usePolling(url, option, videoRef, delay) {
                 const currEtag = response.headers.get('etag');
 
                 if (fileNotChanged(prevEtag, currEtag)) {
-                    waitCustomHLSPolling(currEtag);
+                    startCustomHLSPolling(currEtag);
                     return;
                 }
 
@@ -37,16 +44,21 @@ export default function usePolling(url, option, videoRef, delay) {
         }
     };
 
-    const waitCustomHLSPolling = (etag = null) => {
-        setTimeout(() => {
+    const startCustomHLSPolling = (etag = null) => {
+        customPollingRef.current = setTimeout(() => {
             fetchPolling(etag);
         }, delay);
         setLoading(true);
     };
 
+    const stopCustomHLSPolling = () => {
+        clearTimeout(customPollingRef.current);
+    };
+
     const startHLSPolling = () => {
         if (HLS.isSupported()) {
             const hls = new HLS();
+            hlsPollingRef.current = hls;
 
             hls.attachMedia(videoRef.current);
             registerHLSEvents(hls);
@@ -63,12 +75,16 @@ export default function usePolling(url, option, videoRef, delay) {
                 videoRef.current.play();
             });
             hls.on(HLS.Events.ERROR, async () => {
-                hls.destroy();
+                stopHLSPolling();
 
                 const response = await fetch(url, option);
                 fetchPolling(response.headers.get('etag'));
             });
         });
+    };
+
+    const stopHLSPolling = () => {
+        hlsPollingRef.current.destroy();
     };
 
     return { error, loading };
