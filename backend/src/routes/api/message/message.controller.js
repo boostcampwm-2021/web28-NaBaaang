@@ -9,19 +9,19 @@ const { ConnectionRefusedError } = db.Sequelize;
 const { SEQUELIZE_CONNECTION_REFURED_ERROR } = SERVER_ERROR_CODE;
 
 const createMessage = async (req, res, next) => {
-    const { id: channelId } = req.params;
-    const { senderId, content } = req.body;
-    const isValidParams = errorHandler.validateParameters(
-        {
-            channelId,
-            senderId,
-            content,
-        },
-        next,
-    );
-    if (!isValidParams) return;
-
     try {
+        const { id: channelId } = req.params;
+        const { senderId, content } = req.body;
+        const isValidParams = errorHandler.validateParameters(
+            {
+                channelId,
+                senderId,
+                content,
+            },
+            next,
+        );
+        if (!isValidParams) return;
+
         const messageId = await messageService.create({
             content,
             channelId,
