@@ -39,7 +39,6 @@ export default function Nickname({ onSubmit, dispatch }) {
                         errorSpec: { code },
                     } = data;
                     dispatch({ type: 'SIGN_OUT' });
-                    closeModal();
                     openModal(<LoginErrorAlertModalContent errCode={code} />);
                 }
             }

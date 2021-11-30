@@ -16,7 +16,7 @@ import {
 
 export default function useSignOutMenu() {
     const { userInfo, dispatch } = useContext(UserContext);
-    const { openModal, closeModal } = useContext(ModalContext);
+    const { openModal } = useContext(ModalContext);
     const { user } = userInfo;
 
     const navigate = useNavigate();
@@ -31,7 +31,6 @@ export default function useSignOutMenu() {
                     errorSpec: { code },
                 } = data;
                 dispatch({ type: 'SIGN_OUT' });
-                closeModal();
                 openModal(<LoginErrorAlertModalContent errCode={code} />);
             }
         } catch (err) {
