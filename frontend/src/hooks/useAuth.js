@@ -20,18 +20,20 @@ export default function useAuth() {
                 removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 return;
             }
-            const { accessToken, decoded, error } =
+
+            const { accessToken, refreshToken, decoded, error } =
                 await fetchAuthTokenValidation();
 
             if (error) {
                 setAuthLoading(false);
-                removeItemFromLocalStorage(AUTH_TOKEN_LIST);
-                const { isSignIn } = userInfo;
-                if (isSignIn) dispatch({ type: 'SIGN_OUT' });
+                dispatch({ type: 'SIGN_OUT' });
                 return;
             }
-            window.localStorage.setItem('accessToken', accessToken);
-            dispatch({ type: 'SIGN_IN_SUCCESS', payload: { user: decoded } });
+
+            dispatch({
+                type: 'SIGN_IN_SUCCESS',
+                payload: { user: decoded, accessToken, refreshToken },
+            });
             setAuthLoading(false);
         } catch (err) {
             throw new Error(err);

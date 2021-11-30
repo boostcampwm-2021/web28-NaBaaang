@@ -18,6 +18,11 @@ const getOrCreate = async ({ id, name, picture }) => {
     return result;
 };
 
+const findById = async id => {
+    const user = await User.findOne({ where: { id } });
+    return user;
+};
+
 const updateRefreshToken = async (id, refreshToken) => {
     const updatedUser = await User.update(
         { refresh_token: refreshToken },
@@ -34,12 +39,13 @@ const getRefreshToken = async id => {
 };
 
 const updateNickname = async ({ id, nickname }) => {
-    const updatedUser = await User.update({ nickname }, { where: { id } });
-    return updatedUser;
+    const result = await User.update({ nickname }, { where: { id } });
+    return result;
 };
 
 export default {
     getOrCreate,
+    findById,
     updateRefreshToken,
     getRefreshToken,
     updateNickname,

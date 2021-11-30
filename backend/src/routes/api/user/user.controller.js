@@ -24,8 +24,10 @@ const updateNickname = async (req, res, next) => {
         );
         if (!isValidParams) return;
 
-        const updatedUser = await userService.update({ id, nickname });
-        if (updatedUser) res.status(STATUS.OK).json(updatedUser);
+        const { updatedUser, accessToken, refreshToken } =
+            await userService.update({ id, nickname });
+
+        res.status(STATUS.OK).json({ updatedUser, accessToken, refreshToken });
     } catch (err) {
         if (err instanceof ConnectionRefusedError) {
             next(

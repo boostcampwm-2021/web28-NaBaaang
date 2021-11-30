@@ -1,17 +1,21 @@
-import { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { go } from '@/util/fp';
 import socket from '@/socket';
 
-import useBuffer from '@/hooks/useBuffer';
-import useArray from '@/hooks/useArray';
-import useThrottle from '@/hooks/useThrottle';
+import { LoginErrorAlertModalContent } from '@/components/ModalContent';
+import { UserContext } from '@/store/UserStore';
+import { ModalContext } from '@/store/ModalStore';
+
+import { useBuffer, useArray, useThrottle } from '@/hooks';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
 const MESSAGE_LIMIT = 150;
 
 export default function useChatMessage() {
+    const { dispatch } = useContext(UserContext);
+    const { openModal } = useContext(ModalContext);
     const { arr: messageList, set: setMessageList } = useArray([]);
     const { isBufferFull, flushBuffer, getBufferList, pushBuffer } =
         useBuffer(BUFFER_LIMIT);
@@ -28,11 +32,39 @@ export default function useChatMessage() {
         flushBuffer();
     };
 
-    const onThrottle = useThrottle(updateMessage, THROTTLE_LIMIT, isBufferFull);
+    const { startThrottle, stopThrottle } = useThrottle(
+        updateMessage,
+        THROTTLE_LIMIT,
+    );
 
     const throttleNewMessage = msg => {
         pushBuffer(msg);
-        onThrottle();
+
+        if (isBufferFull()) {
+            updateMessage();
+            stopThrottle();
+            return;
+        }
+
+        startThrottle();
+    };
+
+    const receiveNewMessage = msg => {
+        const { status, errorSpec } = msg;
+        if (status === false && errorSpec.code === 4002) {
+            dispatch({ type: 'SIGN_OUT' });
+            openModal(<LoginErrorAlertModalContent errCode={errorSpec.code} />);
+        } else {
+            pushBuffer(msg);
+
+            if (isBufferFull()) {
+                updateMessage();
+                stopThrottle();
+                return;
+            }
+
+            startThrottle();
+        }
     };
 
     const getMessageIdxToRemove = unsentMessageList => {
@@ -67,7 +99,7 @@ export default function useChatMessage() {
     };
 
     useEffect(() => {
-        socket.chat.onMessage(throttleNewMessage);
+        socket.chat.onMessage(receiveNewMessage);
         return () => {
             socket.chat.clearChatEvents();
         };

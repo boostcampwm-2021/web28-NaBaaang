@@ -8,12 +8,12 @@ const chat = (io, socket) => {
     const sendChatMessage = async (message) => {
         const { chatId } = socket;
         const { userId: senderId, content } = message;
-        const storeStatus = await saveChatMessage(chatId, senderId, content);
-        console.log(message, storeStatus);
-        if (storeStatus) {
+        const { status, data } = await saveChatMessage(chatId, senderId, content);
+        if (status === STATUS.CREATED) {
             socket.to(socket.channelId).emit(EVENT.SEND_CHAT, { ...message, status: true });
         } else {
-            socket.emit(EVENT.SEND_CHAT, { ...message, status: false });
+            const { errorSpec } = data;
+            socket.emit(EVENT.SEND_CHAT, { ...message, status: false, errorSpec });
         }
     };
 
@@ -23,11 +23,9 @@ const chat = (io, socket) => {
                 senderId,
                 content: message,
             });
-            if (response.status === STATUS.CREATED) return true;
-            else return false;
+            return response;
         } catch (error) {
-            console.log(error);
-            return false;
+            return error.response;
         }
     };
 
