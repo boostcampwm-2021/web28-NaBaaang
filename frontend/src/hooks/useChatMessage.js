@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useContext, useEffect } from 'react';
 
 import { go } from '@/util/fp';
