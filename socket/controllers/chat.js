@@ -10,7 +10,7 @@ const chat = (io, socket) => {
         const { userId: senderId, content } = message;
         const { status, data } = await saveChatMessage(chatId, senderId, content);
         if (status === STATUS.CREATED) {
-            socket.to(socket.channelId).emit(EVENT.SEND_CHAT, { ...message, status: false });
+            socket.to(socket.channelId).emit(EVENT.SEND_CHAT, { ...message, status: true });
         } else {
             const { errorSpec } = data;
             socket.emit(EVENT.SEND_CHAT, { ...message, status: false, errorSpec });
