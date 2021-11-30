@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default () => {
+export default function useModal() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalContent, setModalContent] = useState(false);
     const [redirectUrl, setRedirectUrl] = useState(null);
@@ -39,4 +39,4 @@ export default () => {
         closeModal,
         openModal,
     };
-};
+}
