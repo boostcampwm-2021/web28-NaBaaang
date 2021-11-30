@@ -3,13 +3,11 @@ import React, { useContext, useEffect } from 'react';
 import { go } from '@/util/fp';
 import socket from '@/socket';
 
+import { LoginErrorAlertModalContent } from '@/components/ModalContent';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
 
-import { LoginErrorAlertModalContent } from '@/components/ModalContent';
-import useBuffer from './useBuffer';
-import useArray from './useArray';
-import useThrottle from './useThrottle';
+import { useBuffer, useArray, useThrottle } from '@/hooks';
 
 const THROTTLE_LIMIT = 50;
 const BUFFER_LIMIT = 50;
@@ -52,13 +50,20 @@ export default function useChatMessage() {
     };
 
     const receiveNewMessage = msg => {
-        pushBuffer(msg);
         const { status, errorSpec } = msg;
         if (status === false && errorSpec.code === 4002) {
             dispatch({ type: 'SIGN_OUT' });
             openModal(<LoginErrorAlertModalContent errCode={errorSpec.code} />);
         } else {
-            throttleNewMessage(msg);
+            pushBuffer(msg);
+
+            if (isBufferFull()) {
+                updateMessage();
+                stopThrottle();
+                return;
+            }
+
+            startThrottle();
         }
     };
 
