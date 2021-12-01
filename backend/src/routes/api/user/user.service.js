@@ -33,7 +33,6 @@ const update = async userInfo => {
         await transaction.commit();
         return { updatedUser, accessToken, refreshToken };
     } catch (err) {
-        console.log(err);
         await transaction.rollback();
         if (err instanceof ClientError) {
             throw err;

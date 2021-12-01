@@ -9,7 +9,6 @@ export default function SideBarStreamerList() {
     const listRef = useRef();
 
     useEffect(() => {
-        // 현재는 임시 데이터를 사용, 후에 api 호출해서 갱신해주면 됨.
         const newStreamerList = [
             { id: 1, imageSrc: tempImage },
             { id: 2, imageSrc: tempImage },
@@ -19,15 +18,6 @@ export default function SideBarStreamerList() {
         ];
         setStreamerList([...newStreamerList]);
     }, []);
-
-    const avatarClickHandler = ({ target }) => {
-        const { dataset } = target;
-        const { streamerId } = dataset;
-
-        console.log(target, dataset, streamerId);
-
-        // streamerId로 라우팅, streamer가 방송 중이 아니라면 에러 처리 해줘야함.
-    };
 
     const avatarListItems = streamerList.map(({ id, imageSrc }) => (
         <SideBarStreamer key={id} id={id} imageSrc={imageSrc} />
@@ -39,7 +29,6 @@ export default function SideBarStreamerList() {
             justifyConent="flex-start"
             alignItems="center"
             ref={listRef}
-            onClick={avatarClickHandler}
         >
             {avatarListItems}
         </Box>

@@ -11,7 +11,6 @@ const callAPI = async ({ url, option }) => {
             headers,
         };
     } catch (error) {
-        console.log(error);
         // TODO: Santry logger 달기
         throw new Error(error);
     }

@@ -19,6 +19,7 @@ let sequelize = new Sequelize({
 const connectionTest = async () => {
     try {
         await sequelize.authenticate();
+        // TODO: logger로 변경
         console.log('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);

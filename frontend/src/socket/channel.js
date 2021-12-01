@@ -32,9 +32,6 @@ const channel = socket => {
         socket.off(EVENT_TYPE.TERMINATE_CHANNEL);
     };
 
-    socket.on(EVENT_TYPE.JOIN_CHANNEL, msg => console.log(msg));
-    socket.on(EVENT_TYPE.LEAVE_CHANNEL, msg => console.log(msg));
-
     return {
         joinChannel,
         leaveChannel,

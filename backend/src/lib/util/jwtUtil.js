@@ -39,7 +39,6 @@ const refreshVerify = async (token, userId) => {
                 jwt.verify(token, JWT_SECRET);
                 return true;
             } catch (err) {
-                console.log(err);
                 return false;
             }
         } else {
