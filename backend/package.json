@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "export NODE_ENV=development&& babel-node --experimental-modules ./src/bin/www.js",
+        "start": "cross-env NODE_ENV=development babel-node --experimental-modules ./src/bin/www.js",
         "api-docs": "swagger-cli bundle ./swagger/root/root.yaml --outfile ./swagger/build/bundle.yaml --type yaml",
         "init-sequelize-models": "./node_modules/.bin/sequelize-auto --config './config/sequelize-auto-config.json'",
         "test": "jest"
@@ -31,6 +31,7 @@
         "@babel/preset-env": "^7.16.0",
         "@types/yamljs": "^0.2.31",
         "babel-plugin-module-resolver": "^4.1.0",
+        "cross-env": "^7.0.3",
         "eslint": "^7.2.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-prettier": "^8.3.0",
