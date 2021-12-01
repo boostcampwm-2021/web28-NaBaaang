@@ -3,19 +3,17 @@ import fetchAction from '@/constants/fetchAction';
 import STATUS from '@/constants/statusCode';
 
 export default function useFetch({ type, payload }) {
-    const { url, option } = fetchAction({ type, payload });
 
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const fetchData = async () => {
-        setLoading(true);
         try {
-            const response = await fetch(url, option);
-            if (response.status !== STATUS.NO_CONTENT) {
-                const json = await response.json();
-                setData(json);
+            setLoading(true);
+            const { data, status } = await fetchAction({ type, payload });
+            if (status !== STATUS.NO_CONTENT) {
+                setData(data);
             }
             setLoading(false);
         } catch (err) {

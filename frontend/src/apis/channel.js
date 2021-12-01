@@ -1,57 +1,6 @@
 import fetchAction from '@/constants/fetchAction';
 import { getFetchData } from '@/util/fetchUtil';
 
-async function fetchCreateChannel(formData) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_CREATE_CHANNEL',
-            payload: formData,
-        });
-
-        const { status, data } = await getFetchData(url, option);
-        return { status, data };
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-async function fetchUpdateChannel(formData) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_UPDATE_CHANNEL',
-            payload: formData,
-        });
-        const { data } = await getFetchData(url, option);
-        return data;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-
-async function fetchOpenChannel(id) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_OPEN_CHANNEL',
-            payload: id,
-        });
-        const { data } = await getFetchData(url, option);
-        return data;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-async function fetchCloseChannel(id) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_CLOSE_CHANNEL',
-            payload: id,
-        });
-        const { data } = await getFetchData(url, option);
-        return data;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-
 async function fetchChannelOwnedByUser(id) {
     try {
         const { url, option } = await fetchAction({
@@ -59,15 +8,13 @@ async function fetchChannelOwnedByUser(id) {
             payload: id,
         });
         const { status, data } = await getFetchData(url, option);
-        return { status, data };
+        return {
+            status,
+            data,
+        };
     } catch (err) {
         throw new Error(err);
     }
 }
-export {
-    fetchCreateChannel,
-    fetchUpdateChannel,
-    fetchOpenChannel,
-    fetchCloseChannel,
-    fetchChannelOwnedByUser,
-};
+
+export { fetchChannelOwnedByUser };

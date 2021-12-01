@@ -79,7 +79,6 @@ const updateChannel = async (req, res, next) => {
         });
         res.status(STATUS.OK).json(updatedChannel);
     } catch (err) {
-        console.log(err);
         if (err instanceof ConnectionRefusedError) {
             next(
                 new ServerError(

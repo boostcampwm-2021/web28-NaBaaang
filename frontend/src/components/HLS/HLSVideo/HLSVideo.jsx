@@ -3,19 +3,14 @@ import styled from 'styled-components';
 import HLS from 'hls.js/dist/hls';
 
 import { sizeMixin } from '@/styles/mixins';
-import fetchAction from '@/constants/fetchAction';
 
 import Box from '@/components/Common/Box';
 import HLSVideoOverlay from '@/components/HLS/HLSVideoOverlay';
-import usePolling from '@/hooks/usePolling';
+import useHLSPolling from '@/components/HLS/hooks/useHLSPolling';
 
 export default function HLSVideo({ streamKey }) {
     const videoRef = useRef();
-    const { url, option } = fetchAction({
-        type: 'FETCH_READY_MEDIA',
-        payload: streamKey,
-    });
-    const { loading } = usePolling(url, option, videoRef, 3000);
+    const { loading } = useHLSPolling(streamKey, videoRef, 3000);
 
     return HLS.isSupported() ? (
         <Box width="100%" height="100%">

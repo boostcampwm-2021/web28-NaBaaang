@@ -1,10 +1,13 @@
-import STATUS from '@/constants/statusCode';
-
 async function getFetchData(url, option) {
     const res = await fetch(url, option);
-    const { status } = res;
-    const data = status === STATUS.NO_CONTENT ? {} : await res.json();
-    return { status, data };
+    const { status, headers } = res;
+    let data;
+    try {
+        data = await res.json();
+    } catch (err) {
+        data = {};
+    }
+    return { status, data, headers };
 }
 
 export { getFetchData };
