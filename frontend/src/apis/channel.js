@@ -1,5 +1,5 @@
 import fetchAction from '@/constants/fetchAction';
-import { getFetchData, getFetchDataV2 } from './fetchUtill';
+import { getFetchData } from '@/util/fetchUtil';
 
 async function fetchCreateChannel(formData) {
     try {
@@ -8,7 +8,7 @@ async function fetchCreateChannel(formData) {
             payload: formData,
         });
 
-        const { status, data } = await getFetchDataV2(url, option);
+        const { status, data } = await getFetchData(url, option);
         return { status, data };
     } catch (err) {
         throw new Error(err);
@@ -20,7 +20,7 @@ async function fetchUpdateChannel(formData) {
             type: 'FETCH_UPDATE_CHANNEL',
             payload: formData,
         });
-        const data = await getFetchData(url, option);
+        const { data } = await getFetchData(url, option);
         return data;
     } catch (err) {
         throw new Error(err);
@@ -33,7 +33,8 @@ async function fetchOpenChannel(id) {
             type: 'FETCH_OPEN_CHANNEL',
             payload: id,
         });
-        return await getFetchData(url, option);
+        const { data } = await getFetchData(url, option);
+        return data;
     } catch (err) {
         throw new Error(err);
     }
@@ -44,7 +45,8 @@ async function fetchPauseChannel(id) {
             type: 'FETCH_PAUSE_CHANNEL',
             payload: id,
         });
-        return await getFetchData(url, option);
+        const { data } = await getFetchData(url, option);
+        return data;
     } catch (err) {
         throw new Error(err);
     }
@@ -55,7 +57,8 @@ async function fetchCloseChannel(id) {
             type: 'FETCH_CLOSE_CHANNEL',
             payload: id,
         });
-        return await getFetchData(url, option);
+        const { data } = await getFetchData(url, option);
+        return data;
     } catch (err) {
         throw new Error(err);
     }
@@ -66,7 +69,8 @@ async function fetchAuthChannel(id) {
             type: 'FETCH_CHANNEL_AUTHENTICATE',
             payload: id,
         });
-        return await getFetchData(url, option);
+        const { data } = await getFetchData(url, option);
+        return data;
     } catch (err) {
         throw new Error(err);
     }
@@ -78,7 +82,7 @@ async function fetchChannelOwnedByUser(id) {
             type: 'FETCH_CHANNEL_BY_USER',
             payload: id,
         });
-        const { status, data } = await getFetchDataV2(url, option);
+        const { status, data } = await getFetchData(url, option);
         return { status, data };
     } catch (err) {
         throw new Error(err);
