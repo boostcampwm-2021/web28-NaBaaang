@@ -12,6 +12,7 @@ const socketLoader = (httpServer, io, port) => {
         });
     });
 
+    // TODO: logger로 변경
     httpServer.listen(port, () => console.log(`Socket.io started on PORT: ${port}`));
 };
 

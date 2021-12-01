@@ -3,11 +3,10 @@ import styled from 'styled-components';
 
 import { useParams, Navigate } from 'react-router-dom';
 
-import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import fetchAction from '@/apis/fetchAction';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
-import { ROLE } from '@/constants/role';
 
 import { PageStatus, Box, Divider } from '@/components/Common';
 import DashBoardInfo from '@/components/DashBoard/DashBoardInfo';
@@ -15,7 +14,7 @@ import DashBoardVideo from '@/components/DashBoard/DashBoardVideo';
 import DashBoardTab from '@/components/DashBoard/DashBoardTab';
 import Chat from '@/components/Chat';
 
-export default function DashBoard() {
+export default function DashBoard({ role }) {
     const params = useParams();
     const { channelId } = params;
     const [isStreamLive, setIsStreamLive] = useState(false);
@@ -25,8 +24,6 @@ export default function DashBoard() {
     });
 
     const { userCnt } = useSocket(data);
-
-    const role = ROLE.ALL;
 
     useEffect(() => {
         if (data && isStreamLive !== data.isLive) {
@@ -38,11 +35,14 @@ export default function DashBoard() {
         return <PageStatus loading={loading} error={error} data={data} />;
 
     const { id, streamKey } = data;
-    if (data.role !== 'ROLE_OWNER') return <Navigate to="/" />;
+    if (data.role !== role) return <Navigate to="/" />;
 
     const handleStartLive = async () => {
         try {
-            await fetchOpenChannel(id);
+            await fetchAction({
+                type: 'FETCH_OPEN_CHANNEL',
+                payload: id,
+            });
             setIsStreamLive(true);
         } catch (err) {
             throw new Error(err);
@@ -51,7 +51,10 @@ export default function DashBoard() {
 
     const handleEndLive = async () => {
         try {
-            await fetchCloseChannel(id);
+            await fetchAction({
+                type: 'FETCH_CLOSE_CHANNEL',
+                payload: id,
+            });
             socket.channel.endChannel();
         } catch (err) {
             throw new Error(err);

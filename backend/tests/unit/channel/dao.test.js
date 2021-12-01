@@ -1,5 +1,5 @@
-import channelDao from '../../../routes/api/channel/channel.dao';
-import db from '../../../models';
+import channelDao from '@/routes/api/channel/channel.dao';
+import db from '@/models';
 describe('Channel DAO Test', () => {
     beforeAll(async () => {
         await db.init();
@@ -16,6 +16,7 @@ describe('Channel DAO Test', () => {
             streamer: null,
             streamKey: '7481d507-f19d-40cd-8014-aa8f9791a41d',
             isLive: false,
+            isDelete: false,
         };
 
         // when

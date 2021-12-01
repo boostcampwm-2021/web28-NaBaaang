@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
-import { fetchAuthTokenValidation } from '@/apis/auth';
-import {
-    isTokenExist,
-    setItemToLocalStorage,
-    removeItemFromLocalStorage,
-} from '@/util';
+import { useReducer, useState, useEffect } from 'react';
 
+import userAuthReducer from '@/reducer/userAuthReducer';
+import { isTokenExist, removeItemFromLocalStorage } from '@/util';
+import fetchAction from '@/apis/fetchAction';
 import { AUTH_TOKEN_LIST } from '@/constants/auth';
+import STATUS from '@/constants/statusCode';
 
 export default function useAuth() {
-    const [userInfo, setUserInfo] = useState({ isSignIn: false });
+    const [userInfo, dispatch] = useReducer(userAuthReducer, {
+        isSignIn: false,
+    });
+
     const [authLoading, setAuthLoading] = useState(true);
 
     const isAuthTokenValidate = async () => {
@@ -19,42 +20,42 @@ export default function useAuth() {
                 removeItemFromLocalStorage(AUTH_TOKEN_LIST);
                 return;
             }
-            const { accessToken, decoded, error } =
-                await fetchAuthTokenValidation();
 
-            if (error) {
+            const { data, status } = await fetchAction({
+                type: 'FETCH_AUTH_TOKEN_VALIDATION',
+            });
+
+            if (status === STATUS.UNAUTHORIZED) {
                 setAuthLoading(false);
-                removeItemFromLocalStorage(AUTH_TOKEN_LIST);
-                const { isSignIn } = userInfo;
-                if (isSignIn) setUserInfo({ isSignIn: false });
+                dispatch({
+                    type: 'SIGN_OUT',
+                });
                 return;
             }
-            window.localStorage.setItem('accessToken', accessToken);
-            setUserInfo({ isSignIn: true, user: decoded });
+
+            const { accessToken, refreshToken, decoded } = data;
+
+            dispatch({
+                type: 'SIGN_IN_SUCCESS',
+                payload: {
+                    user: decoded,
+                    accessToken,
+                    refreshToken,
+                },
+            });
             setAuthLoading(false);
         } catch (err) {
             throw new Error(err);
         }
     };
 
-    const authSignIn = ({ type, payload }) => {
-        if (type === 'success') {
-            const { user, accessToken, refreshToken, isSignIn } = payload;
-            setItemToLocalStorage({ accessToken, refreshToken });
-            setUserInfo({ isSignIn, user });
-        } else {
-            setUserInfo({ isSignIn: false });
-        }
-    };
-
-    const authSignOut = () => {
-        removeItemFromLocalStorage(AUTH_TOKEN_LIST);
-        setUserInfo({ isSignIn: false });
-    };
-
     useEffect(() => {
         isAuthTokenValidate();
     }, []);
 
-    return { userInfo, setUserInfo, authLoading, authSignIn, authSignOut };
+    return {
+        userInfo,
+        authLoading,
+        dispatch,
+    };
 }

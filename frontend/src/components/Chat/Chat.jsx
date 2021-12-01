@@ -1,13 +1,14 @@
 import React from 'react';
 
 import socket from '@/socket';
-import useChatMessage from '@/hooks/useChatMessage';
-
 import Box from '@/components/Common/Box';
-import Form from './Form';
-import MessageList from './MessageList';
 
-export default function Chat({isDonation = true}) {
+import ChatMessageList from './ChatMessageList';
+import ChatForm from './ChatForm';
+
+import useChatMessage from './hooks/useChatMessage';
+
+export default function Chat({ role, isDonation = true }) {
     const {
         messageList,
         filterUnsentMessage,
@@ -31,14 +32,18 @@ export default function Chat({isDonation = true}) {
             height="100%"
         >
             <Box width="100%" flex={5} backgroundColor="white" marginBottom={1}>
-                <MessageList
+                <ChatMessageList
                     messageList={messageList}
                     filterUnsentMessage={filterUnsentMessage}
                     deleteMessage={deleteMessage}
                 />
             </Box>
             <Box width="100%" flex={1}>
-                <Form handleSubmit={handleSubmit} isDonation={isDonation} />
+                <ChatForm
+                    role={role}
+                    handleSubmit={handleSubmit}
+                    isDonation={isDonation}
+                />
             </Box>
         </Box>
     );

@@ -1,10 +1,12 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { PAGE_ROLE } from '@/constants/role';
+
 import { Loading } from '@/components/Common';
+import GoogleAuthCallback from '@/components/OauthCallback/GoogleAuthCallback';
 import PublicRoute from './components/Route/PublicRoute';
 import PrivateRoute from './components/Route/PrivateRoute';
-import GoogleAuthCallback from '@/auth/GoogleAuthCallback';
 
 const Main = lazy(() => import('./pages/Main'));
 const ChannelManager = lazy(() => import('./pages/ChannelManager'));
@@ -15,14 +17,29 @@ export default function Router() {
     return (
         <Suspense fallback={<Loading />}>
             <Routes>
-                <Route path="/" element={<Main />}>
+                <Route
+                    path="/"
+                    element={
+                        <PublicRoute component={Main} role={PAGE_ROLE.MAIN} />
+                    }
+                >
                     <Route
                         path=""
-                        element={<PublicRoute component={LiveCollection} />}
+                        element={
+                            <PublicRoute
+                                component={LiveCollection}
+                                role={PAGE_ROLE.LIVE_COLLECTION}
+                            />
+                        }
                     />
                     <Route
                         path="channel/:channelId"
-                        element={<PublicRoute component={Channel} />}
+                        element={
+                            <PublicRoute
+                                component={Channel}
+                                role={PAGE_ROLE.CHANNEL}
+                            />
+                        }
                     />
                 </Route>
                 <Route
@@ -32,11 +49,7 @@ export default function Router() {
 
                 <Route
                     path="/stream-manager/:channelId"
-                    element={
-                        <PrivateRoute>
-                            <ChannelManager />
-                        </PrivateRoute>
-                    }
+                    element={<PrivateRoute component={ChannelManager} />}
                 />
             </Routes>
         </Suspense>

@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon ./bin/www.js",
+        "start": "cross-env NODE_ENV=development babel-node --experimental-modules ./src/bin/www.js",
         "api-docs": "swagger-cli bundle ./swagger/root/root.yaml --outfile ./swagger/build/bundle.yaml --type yaml",
         "init-sequelize-models": "./node_modules/.bin/sequelize-auto --config './config/sequelize-auto-config.json'",
         "test": "jest"
@@ -16,6 +16,7 @@
         "express": "~4.16.1",
         "http-errors": "~1.6.3",
         "jsonwebtoken": "^8.5.1",
+        "module-alias": "^2.2.2",
         "morgan": "~1.9.1",
         "mysql2": "^2.3.0",
         "sequelize": "^6.7.0",
@@ -30,6 +31,7 @@
         "@babel/preset-env": "^7.16.0",
         "@types/yamljs": "^0.2.31",
         "babel-plugin-module-resolver": "^4.1.0",
+        "cross-env": "^7.0.3",
         "eslint": "^7.2.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-prettier": "^8.3.0",
@@ -37,6 +39,5 @@
         "jest": "^27.3.1",
         "nodemon": "^2.0.13",
         "prettier": "2.4.1"
-    },
-    "type": "module"
+    }
 }

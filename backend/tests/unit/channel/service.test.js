@@ -1,5 +1,5 @@
-import channelService from '../../../routes/api/channel/channel.service';
-import channelDao from '../../../routes/api/channel/channel.dao';
+import channelService from '@/routes/api/channel/channel.service';
+import channelDao from '@/routes/api/channel/channel.dao';
 
 describe('Channel Service Test', () => {
     test('방송 생성', async () => {

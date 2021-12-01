@@ -1,19 +1,21 @@
 {
-  "name": "socket",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "axios": "^0.24.0",
-    "nodemon": "^2.0.15",
-    "package.json": "^2.0.1",
-    "socket.io": "^4.3.2"
-  },
-  "type": "module"
+    "name": "socket",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "cross-env NODE_ENV=development nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.24.0",
+        "dotenv": "^10.0.0",
+        "nodemon": "^2.0.15",
+        "socket.io": "^4.3.2"
+    },
+    "type": "module",
+    "devDependencies": {
+        "cross-env": "^7.0.3"
+    }
 }

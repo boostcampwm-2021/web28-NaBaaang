@@ -5,13 +5,13 @@ import styled from 'styled-components';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 
-import Video from '@/components/Video';
+import HLSVideo from '@/components/HLS/HLSVideo';
 import Chat from '@/components/Chat';
 import Box from '@/components/Common/Box';
 import ChannelDetail from './ChannelDetail';
 import PageStatus from '../Common/PageStatus';
 
-export default function Channel() {
+export default function Channel({ role }) {
     const params = useParams();
     const { channelId } = params;
     const { data, error, loading } = useFetch({
@@ -28,7 +28,7 @@ export default function Channel() {
         <Box flex={1} width="100%" height="100%" alignItems="flex-start">
             <Box flexDirection="column" height="100%" flex={3}>
                 <Box width="100%" flex={5}>
-                    <Video streamKey={data.streamKey} />
+                    <HLSVideo streamKey={data.streamKey} />
                 </Box>
 
                 <Box
@@ -36,14 +36,13 @@ export default function Channel() {
                     flex={1}
                     alignItems="unset"
                     justifyContent="unset"
-                   
                 >
-                   <ChannelDetail channelInfo={data} userCnt={userCnt} />
+                    <ChannelDetail channelInfo={data} userCnt={userCnt} />
                 </Box>
             </Box>
 
             <ChatMessageBox height="100%" flex={1}>
-                <Chat />
+                <Chat role={role} />
             </ChatMessageBox>
         </Box>
     );

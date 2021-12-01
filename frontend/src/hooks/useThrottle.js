@@ -1,17 +1,18 @@
 import { useRef } from 'react';
 
-export default function useThrottle(cb, limit, cond = false) {
+export default function useThrottle(cb, limit) {
     const timeRef = useRef(0);
     const blockRef = useRef(false);
 
     const isBlock = () => {
         return blockRef.current === true;
     };
+
     const setBlockRef = state => {
         blockRef.current = state;
     };
 
-    return () => {
+    const startThrottle = () => {
         if (!isBlock()) {
             setBlockRef(true);
             timeRef.current = setTimeout(() => {
@@ -19,11 +20,12 @@ export default function useThrottle(cb, limit, cond = false) {
                 cb();
             }, limit);
         }
-
-        if (cond && cond()) {
-            setBlockRef(false);
-            clearTimeout(timeRef.current);
-            cb();
-        }
     };
+
+    const stopThrottle = () => {
+        setBlockRef(false);
+        clearTimeout(timeRef.current);
+    };
+
+    return { startThrottle, stopThrottle };
 }

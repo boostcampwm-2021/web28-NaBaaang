@@ -1,13 +1,16 @@
 import React, { useContext } from 'react';
 
+import fetchAction from '@/apis/fetchAction';
+
 import { ModalContext } from '@/store/ModalStore';
 
 import { Box } from '@/components/Common';
-import ChannelModal from '@/components/Header/ChannelModal';
-import { fetchUpdateChannel } from '@/apis/channel';
+import {
+    OBSModalContent,
+    MediaInfoModalContent,
+    ChannelModalContent,
+} from '@/components/ModalContent';
 import DashBoardCard from '../DashBoardCard';
-import MediaInfoModal from '../MediaInfoModal';
-import OBSModal from '../OBSModal';
 
 export default function DashBoardInfo({ info, fetchData, userCnt }) {
     const { id, title, description, category, streamKey } = info;
@@ -16,7 +19,10 @@ export default function DashBoardInfo({ info, fetchData, userCnt }) {
 
     const handleOnUpdateChannel = async formData => {
         try {
-            await fetchUpdateChannel(formData);
+            await fetchAction({
+                type: 'FETCH_UPDATE_CHANNEL',
+                payload: formData,
+            });
             fetchData();
         } catch (err) {
             throw new Error(err);
@@ -24,16 +30,16 @@ export default function DashBoardInfo({ info, fetchData, userCnt }) {
     };
 
     const openMedialModal = () => {
-        openModal(<MediaInfoModal streamKey={streamKey} />);
+        openModal(<MediaInfoModalContent streamKey={streamKey} />);
     };
 
     const openOBSModal = () => {
-        openModal(<OBSModal />);
+        openModal(<OBSModalContent />);
     };
 
     const openChannelFormModal = () => {
         openModal(
-            <ChannelModal
+            <ChannelModalContent
                 initFormData={{ id, title, description, category }}
                 subHandleOnSubmit={handleOnUpdateChannel}
                 successText="방송 수정"

@@ -4,9 +4,10 @@
         [
             "module-resolver",
             {
-                "root": ["."],
                 "alias": {
-                    "@": "."
+                    "@": "./src",
+                    "@swagger": "./swaggger",
+                    "@config": "./config"
                 }
             }
         ]
