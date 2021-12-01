@@ -4,7 +4,6 @@ export default class ErrorSpec {
     #name;
     #description;
     constructor({ status, code, name, description }) {
-        console.log(status,code, name, description);
         this.#status = status;
         this.#code = code;
         this.#name = name;

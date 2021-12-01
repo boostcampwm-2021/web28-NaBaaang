@@ -1,10 +1,15 @@
 import React, { useContext } from 'react';
 
+import fetchAction from '@/apis/fetchAction';
+
 import { ModalContext } from '@/store/ModalStore';
 
 import { Box } from '@/components/Common';
-import { fetchUpdateChannel } from '@/apis/channel';
-import { OBSModalContent, MediaInfoModalContent, ChannelModalContent } from '@/components/ModalContent';
+import {
+    OBSModalContent,
+    MediaInfoModalContent,
+    ChannelModalContent,
+} from '@/components/ModalContent';
 import DashBoardCard from '../DashBoardCard';
 
 export default function DashBoardInfo({ info, fetchData, userCnt }) {
@@ -14,7 +19,10 @@ export default function DashBoardInfo({ info, fetchData, userCnt }) {
 
     const handleOnUpdateChannel = async formData => {
         try {
-            await fetchUpdateChannel(formData);
+            await fetchAction({
+                type: 'FETCH_UPDATE_CHANNEL',
+                payload: formData,
+            });
             fetchData();
         } catch (err) {
             throw new Error(err);

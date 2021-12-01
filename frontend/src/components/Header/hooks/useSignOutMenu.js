@@ -3,10 +3,9 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import STATUS from '@/constants/statusCode';
+import fetchAction from '@/apis/fetchAction';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
-import { fetchCreateChannel, fetchChannelOwnedByUser } from '@/apis/channel';
-import { fetchUpdateNickname } from '@/apis/user';
 import {
     NicknameModalContent,
     ChannelDetailModalContent,
@@ -23,14 +22,20 @@ export default function useSignOutMenu() {
 
     const createChannel = async formData => {
         try {
-            const { status, data } = await fetchCreateChannel(formData);
+            const { status, data } = await fetchAction({
+                type: 'FETCH_CREATE_CHANNEL',
+                payload: formData,
+            });
+
             if (status === STATUS.CREATED) {
                 navigate(`/stream-manager/${data}`);
             } else {
                 const {
                     errorSpec: { code },
                 } = data;
-                dispatch({ type: 'SIGN_OUT' });
+                dispatch({
+                    type: 'SIGN_OUT',
+                });
                 openModal(<LoginErrorAlertModalContent errCode={code} />);
             }
         } catch (err) {
@@ -39,7 +44,10 @@ export default function useSignOutMenu() {
     };
 
     const openChannelModal = async () => {
-        const { data, status } = await fetchChannelOwnedByUser(user.id);
+        const { data, status } = await fetchAction({
+            type: 'FETCH_CHANNEL_BY_USER',
+            payload: user.id,
+        });
 
         if (status === STATUS.NO_CONTENT) {
             openModal(
@@ -55,11 +63,17 @@ export default function useSignOutMenu() {
 
     const changeNickname = async nickname => {
         try {
-            const { status, data } = await fetchUpdateNickname({
-                nickname,
-                id: userInfo.user.id,
+            const { status, data } = await fetchAction({
+                type: 'FETCH_UPDATE_NICKNAME',
+                payload: {
+                    nickname,
+                    id: userInfo.user.id,
+                },
             });
-            return { status, data };
+            return {
+                status,
+                data,
+            };
         } catch (err) {
             throw new Error(err);
         }
@@ -75,7 +89,9 @@ export default function useSignOutMenu() {
     };
 
     const signOutHandler = () => {
-        dispatch({ type: 'SIGN_OUT' });
+        dispatch({
+            type: 'SIGN_OUT',
+        });
         navigate(window.location.pathname);
     };
 

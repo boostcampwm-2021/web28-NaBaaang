@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
+
 import HLS from 'hls.js/dist/hls';
 import STATUS from '@/constants/statusCode';
+import fetchAction from '@/apis/fetchAction';
+import { MEDIA_URL } from '@/constants/url';
 
-export default function usePolling(url, option, videoRef, delay) {
+export default function useHLSPolling(streamKey, videoRef, delay) {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const customPollingRef = useRef(null);
     const hlsPollingRef = useRef(null);
+    const url = `${MEDIA_URL}/${streamKey}.m3u8`;
 
     useEffect(() => {
         fetchPolling();
@@ -19,15 +23,18 @@ export default function usePolling(url, option, videoRef, delay) {
 
     const fetchPolling = async prevEtag => {
         try {
-            const response = await fetch(url, option);
+            const { status, headers } = await fetchAction({
+                type: 'FETCH_READY_MEDIA',
+                payload: streamKey,
+            });
 
-            if (notExistHLSFile(response.status)) {
+            if (notExistHLSFile(status)) {
                 startCustomHLSPolling();
                 return;
             }
 
-            if (existHLSFile(response.status)) {
-                const currEtag = response.headers.get('etag');
+            if (existHLSFile(status)) {
+                const currEtag = headers.get('etag');
 
                 if (fileNotChanged(prevEtag, currEtag)) {
                     startCustomHLSPolling(currEtag);
@@ -37,8 +44,6 @@ export default function usePolling(url, option, videoRef, delay) {
                 startHLSPolling();
                 return;
             }
-
-            // unhandled error
         } catch (err) {
             setError(true);
         }
@@ -77,8 +82,11 @@ export default function usePolling(url, option, videoRef, delay) {
             hls.on(HLS.Events.ERROR, async () => {
                 stopHLSPolling();
 
-                const response = await fetch(url, option);
-                fetchPolling(response.headers.get('etag'));
+                const { headers } = await fetchAction({
+                    type: 'FETCH_READY_MEDIA',
+                    payload: streamKey,
+                });
+                fetchPolling(headers.get('etag'));
             });
         });
     };
@@ -87,7 +95,10 @@ export default function usePolling(url, option, videoRef, delay) {
         hlsPollingRef.current.destroy();
     };
 
-    return { error, loading };
+    return {
+        error,
+        loading,
+    };
 }
 
 const notExistHLSFile = responseStatus => {

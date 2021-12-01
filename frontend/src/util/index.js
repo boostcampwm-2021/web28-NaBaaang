@@ -1,5 +1,3 @@
-import { v1 } from 'uuid';
-
 const replaceBlankAndNewLine = s => s.replace(/[\n|\s]/g, '');
 
 const isTokenExist = keyList => {
@@ -23,17 +21,6 @@ const isString = str =>
 
 const transMarginProp = v => (!isString(v) ? `${v}rem` : v);
 
-const makeChatMessage = ({ type, user, content }) => {
-    const { id: userId, nickname } = user;
-    return {
-        id: v1(),
-        type,
-        userId,
-        nickname,
-        content,
-    };
-};
-
 export {
     replaceBlankAndNewLine,
     isTokenExist,
@@ -42,5 +29,4 @@ export {
     isFunction,
     isString,
     transMarginProp,
-    makeChatMessage,
 };

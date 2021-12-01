@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "SET NODE_ENV=development && nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
+        "start": "export NODE_ENV=development && nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
     },
     "author": "",
     "license": "ISC",

@@ -94,7 +94,6 @@ const loginGoogle = async code => {
         await userDAO.updateRefreshToken(user.id, refreshToken);
         return { user, isCreated, accessToken, refreshToken };
     } catch (err) {
-        console.log(err);
         throw err;
     }
 };

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useParams, Navigate } from 'react-router-dom';
 
-import { fetchOpenChannel, fetchCloseChannel } from '@/apis/channel';
+import fetchAction from '@/apis/fetchAction';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';
@@ -39,7 +39,10 @@ export default function DashBoard({ role }) {
 
     const handleStartLive = async () => {
         try {
-            await fetchOpenChannel(id);
+            await fetchAction({
+                type: 'FETCH_OPEN_CHANNEL',
+                payload: id,
+            });
             setIsStreamLive(true);
         } catch (err) {
             throw new Error(err);
@@ -48,7 +51,10 @@ export default function DashBoard({ role }) {
 
     const handleEndLive = async () => {
         try {
-            await fetchCloseChannel(id);
+            await fetchAction({
+                type: 'FETCH_CLOSE_CHANNEL',
+                payload: id,
+            });
             socket.channel.endChannel();
         } catch (err) {
             throw new Error(err);
