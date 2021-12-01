@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
-import { fetchSiginInGoogle } from '@/apis/auth';
+import fetchAction from '@/apis/fetchAction';
+
 import { UserContext } from '@/store/UserStore';
 import { Loading } from '@/components/Common';
 
@@ -17,8 +18,11 @@ export default function GoogleAuthCallback() {
 
     const handleSignIn = async () => {
         try {
-            const res = await fetchSiginInGoogle(code);
-            const { user, accessToken, refreshToken } = res;
+            const { data } = await fetchAction({
+                type: 'FETCH_SIGN_IN_GOOGLE',
+                payload: { code },
+            });
+            const { user, accessToken, refreshToken } = data;
             dispatch({
                 type: 'SIGN_IN_SUCCESS',
                 payload: { user, accessToken, refreshToken },

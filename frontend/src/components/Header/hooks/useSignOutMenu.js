@@ -3,10 +3,9 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import STATUS from '@/constants/statusCode';
-import fetchAction from '@/constants/fetchAction';
+import fetchAction from '@/apis/fetchAction';
 import { UserContext } from '@/store/UserStore';
 import { ModalContext } from '@/store/ModalStore';
-import { fetchChannelOwnedByUser } from '@/apis/channel';
 import {
     NicknameModalContent,
     ChannelDetailModalContent,
@@ -45,7 +44,10 @@ export default function useSignOutMenu() {
     };
 
     const openChannelModal = async () => {
-        const { data, status } = await fetchChannelOwnedByUser(user.id);
+        const { data, status } = await fetchAction({
+            type: 'FETCH_CHANNEL_BY_USER',
+            payload: user.id,
+        });
 
         if (status === STATUS.NO_CONTENT) {
             openModal(

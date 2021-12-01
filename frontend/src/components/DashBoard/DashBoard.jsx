@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useParams, Navigate } from 'react-router-dom';
 
-import fetchAction from '@/constants/fetchAction';
+import fetchAction from '@/apis/fetchAction';
 import useFetch from '@/hooks/useFetch';
 import useSocket from '@/hooks/useSocket';
 import socket from '@/socket';

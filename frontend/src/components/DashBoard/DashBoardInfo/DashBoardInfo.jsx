@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import fetchAction from '@/constants/fetchAction';
+import fetchAction from '@/apis/fetchAction';
 
 import { ModalContext } from '@/store/ModalStore';
 

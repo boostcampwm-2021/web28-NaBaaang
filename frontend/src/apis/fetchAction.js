@@ -1,6 +1,6 @@
 import { API_URL, MEDIA_URL } from '@/constants/url';
 import { getFetchData } from '@/util/fetchUtil';
-import { RequestBuilder } from './fetchOptionTemplate';
+import { RequestBuilder } from '../constants/fetchOptionTemplate';
 
 const callAPI = async ({ url, option }) => {
     try {
@@ -11,6 +11,7 @@ const callAPI = async ({ url, option }) => {
             headers,
         };
     } catch (error) {
+        console.log(error);
         // TODO: Santry logger 달기
         throw new Error(error);
     }
@@ -57,11 +58,13 @@ const actionTypeInfo = {
         const response = await callAPI(request);
         return response;
     },
-    FETCH_CHANNEL_BY_USER(payload) {
-        return new RequestBuilder()
+    async FETCH_CHANNEL_BY_USER(payload) {
+        const request = new RequestBuilder()
             .url(`${API_URL}/api/users/${payload}/channels`)
             .method('GET')
             .build();
+        const response = await callAPI(request);
+        return response;
     },
     async FETCH_GET_LIVE_CHANNELS() {
         const request = new RequestBuilder()
@@ -104,19 +107,23 @@ const actionTypeInfo = {
         const response = await callAPI(request);
         return response;
     },
-    FETCH_SIGN_IN_GOOGLE(payload) {
-        return new RequestBuilder()
+    async FETCH_SIGN_IN_GOOGLE(payload) {
+        const request = new RequestBuilder()
             .url(`${API_URL}/api/auth/login`)
             .method('POST')
             .body(payload)
             .build();
+        const response = await callAPI(request);
+        return response;
     },
-    FETCH_AUTH_TOKEN_VALIDATION() {
-        return new RequestBuilder()
+    async FETCH_AUTH_TOKEN_VALIDATION() {
+        const request = new RequestBuilder()
             .url(`${API_URL}/api/auth/token/validation`)
             .method('GET')
             .authToken()
             .build();
+        const response = await callAPI(request);
+        return response;
     },
 };
 

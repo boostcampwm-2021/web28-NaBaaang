@@ -1,10 +1,10 @@
 import { useReducer, useState, useEffect } from 'react';
-import { fetchAuthTokenValidation } from '@/apis/auth';
-import { isTokenExist, removeItemFromLocalStorage } from '@/util';
 
 import userAuthReducer from '@/reducer/userAuthReducer';
-
+import { isTokenExist, removeItemFromLocalStorage } from '@/util';
+import fetchAction from '@/apis/fetchAction';
 import { AUTH_TOKEN_LIST } from '@/constants/auth';
+import STATUS from '@/constants/statusCode';
 
 export default function useAuth() {
     const [userInfo, dispatch] = useReducer(userAuthReducer, {
@@ -21,18 +21,27 @@ export default function useAuth() {
                 return;
             }
 
-            const { accessToken, refreshToken, decoded, error } =
-                await fetchAuthTokenValidation();
+            const { data, status } = await fetchAction({
+                type: 'FETCH_AUTH_TOKEN_VALIDATION',
+            });
 
-            if (error) {
+            if (status === STATUS.UNAUTHORIZED) {
                 setAuthLoading(false);
-                dispatch({ type: 'SIGN_OUT' });
+                dispatch({
+                    type: 'SIGN_OUT',
+                });
                 return;
             }
 
+            const { accessToken, refreshToken, decoded } = data;
+
             dispatch({
                 type: 'SIGN_IN_SUCCESS',
-                payload: { user: decoded, accessToken, refreshToken },
+                payload: {
+                    user: decoded,
+                    accessToken,
+                    refreshToken,
+                },
             });
             setAuthLoading(false);
         } catch (err) {
@@ -44,5 +53,9 @@ export default function useAuth() {
         isAuthTokenValidate();
     }, []);
 
-    return { userInfo, authLoading, dispatch };
+    return {
+        userInfo,
+        authLoading,
+        dispatch,
+    };
 }

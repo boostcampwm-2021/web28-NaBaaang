@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import HLS from 'hls.js/dist/hls';
 import STATUS from '@/constants/statusCode';
-import fetchAction from '@/constants/fetchAction';
+import fetchAction from '@/apis/fetchAction';
 import { MEDIA_URL } from '@/constants/url';
 
 export default function useHLSPolling(streamKey, videoRef, delay) {

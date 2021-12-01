@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import fetchAction from '@/constants/fetchAction';
+import fetchAction from '@/apis/fetchAction';
 import STATUS from '@/constants/statusCode';
 
 export default function useFetch({ type, payload }) {
