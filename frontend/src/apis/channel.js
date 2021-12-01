@@ -39,34 +39,10 @@ async function fetchOpenChannel(id) {
         throw new Error(err);
     }
 }
-async function fetchPauseChannel(id) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_PAUSE_CHANNEL',
-            payload: id,
-        });
-        const { data } = await getFetchData(url, option);
-        return data;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
 async function fetchCloseChannel(id) {
     try {
         const { url, option } = fetchAction({
             type: 'FETCH_CLOSE_CHANNEL',
-            payload: id,
-        });
-        const { data } = await getFetchData(url, option);
-        return data;
-    } catch (err) {
-        throw new Error(err);
-    }
-}
-async function fetchAuthChannel(id) {
-    try {
-        const { url, option } = fetchAction({
-            type: 'FETCH_CHANNEL_AUTHENTICATE',
             payload: id,
         });
         const { data } = await getFetchData(url, option);
@@ -92,8 +68,6 @@ export {
     fetchCreateChannel,
     fetchUpdateChannel,
     fetchOpenChannel,
-    fetchPauseChannel,
     fetchCloseChannel,
-    fetchAuthChannel,
     fetchChannelOwnedByUser,
 };

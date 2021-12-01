@@ -14,16 +14,6 @@ const MEDIA_URL =
 
 const MEDIA_UPLOAD_URL = process.env.REACT_APP_MEDIA_UPLOAD_HOST;
 
-const GOOGLE_AUTH_REDIRECT_URL = replaceBlankAndNewLine(`
-    https://accounts.google.com/o/oauth2/v2/auth?
-    scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&s_type=offline&
-    response_type=code&
-    state=state_parameter_passthrough_value&
-    http://localhost:3000/auth/google/callback&
-    redirect_uri=${GOOGLE_REDIRECT_URI}&
-    client_id=${GOOGLE_CLIENT_ID}
-`);
-
 const GOOGLE_AUTH_RESOURCE_SERVER_URL = replaceBlankAndNewLine(`
     https://accounts.google.com/o/oauth2/v2/auth?
     scope=profile&
@@ -39,6 +29,5 @@ export {
     SOCKET_URL,
     MEDIA_URL,
     MEDIA_UPLOAD_URL,
-    GOOGLE_AUTH_REDIRECT_URL,
     GOOGLE_AUTH_RESOURCE_SERVER_URL,
 };

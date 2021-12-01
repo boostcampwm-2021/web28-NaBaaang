@@ -1,7 +1,6 @@
 import {
     API_URL,
     MEDIA_URL,
-    GOOGLE_AUTH_REDIRECT_URL
 } from '@/constants/url';
 import {
     RequestBuilder
@@ -35,21 +34,6 @@ const actionTypeInfo = {
             .build();
     },
 
-    FETCH_WATCH_CHANNEL(payload) {
-        return new RequestBuilder()
-            .url(`${API_URL}/api/channels/${payload}/watch`)
-            .method('POST')
-            .authToken()
-            .body({})
-            .build();
-    },
-    FETCH_CHANNEL_AUTHENTICATE(payload) {
-        return new RequestBuilder()
-            .url(`${API_URL}/api/channels/${payload}/authenticate`)
-            .method('GET')
-            .authToken()
-            .build();
-    },
     FETCH_GET_CHANNEL(payload) {
         return new RequestBuilder()
             .url(`${API_URL}/api/channels/${payload}`)
@@ -74,12 +58,6 @@ const actionTypeInfo = {
             .method('PATCH')
             .build();
     },
-    FETCH_PAUSE_CHANNEL(payload) {
-        return new RequestBuilder()
-            .url(`${API_URL}/api/channels/${payload}/pause`)
-            .method('PATCH')
-            .build();
-    },
     FETCH_CLOSE_CHANNEL(payload) {
         return new RequestBuilder()
             .url(`${API_URL}/api/channels/${payload}/close`)
@@ -92,10 +70,11 @@ const actionTypeInfo = {
             .method('HEAD')
             .build();
     },
-    FETCH_GET_GOOGLE_CODE() {
+    FETCH_CHANNEL_AUTHENTICATE(payload) {
         return new RequestBuilder()
-            .url(GOOGLE_AUTH_REDIRECT_URL)
+            .url(`${API_URL}/api/channels/${payload}/authenticate`)
             .method('GET')
+            .authToken()
             .build();
     },
     FETCH_SIGN_IN_GOOGLE(payload) {
