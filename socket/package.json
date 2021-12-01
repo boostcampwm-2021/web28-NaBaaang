@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "start": "export NODE_ENV=development && nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
+        "start": "cross-env NODE_ENV=development nodemon -r dotenv/config server.js dotenv_config_path=config/.env"
     },
     "author": "",
     "license": "ISC",
@@ -14,5 +14,8 @@
         "nodemon": "^2.0.15",
         "socket.io": "^4.3.2"
     },
-    "type": "module"
+    "type": "module",
+    "devDependencies": {
+        "cross-env": "^7.0.3"
+    }
 }
