@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 export default function Main() {
     return (
         <MainBox flexDirection="column" width="100%" height="100%">
-            <HeaderBox flex={1} width="100%" padding={0.5}>
+            <HeaderBox flex={1} width="100%">
                 <Header />
             </HeaderBox>
 

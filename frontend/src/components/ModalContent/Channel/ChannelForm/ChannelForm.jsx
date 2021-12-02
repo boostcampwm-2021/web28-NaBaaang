@@ -37,7 +37,7 @@ export default function ChannelForm({
     return (
         <Form onSubmit={handleSubmit}>
             <Box width="100%" height="100%" flexDirection="column">
-                <Box width="100%" flex={1}>
+                <Box width="100%" flex={1} marginBottom={1}>
                     <TextField
                         labelText="제목"
                         name="title"
@@ -56,6 +56,7 @@ export default function ChannelForm({
                     width="80%"
                     flexDirection="row"
                     justifyContent="space-around"
+                    marginBottom={1}
                 >
                     <Typography variant="span">카테고리</Typography>
                     <SelectionBox
@@ -72,7 +73,7 @@ export default function ChannelForm({
                         </ErrorText>
                     )}
                 </Box>
-                <Box width="100%" flex={1}>
+                <Box width="100%" flex={1}  marginBottom={1}>
                     <TextField
                         labelText="설명"
                         name="description"
@@ -100,6 +101,6 @@ const Form = styled.form`
 `;
 const ErrorText = styled.div`
     position: absolute;
-    top: 70%;
+    top: 80%;
     color: ${({ theme }) => theme.color.red};
 `;

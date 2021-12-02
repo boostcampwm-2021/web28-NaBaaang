@@ -5,7 +5,7 @@ import { BUTTON_COLOR_TYPE } from '@/constants/css';
 
 import { isFunction } from '@/util';
 
-import { Box } from '@/components/Common';
+import { Box, Typography } from '@/components/Common';
 
 export default function Chip({ onDelete = null, text, color, size = 'small' }) {
     const [isShow, setIsShow] = useState(true);
@@ -26,7 +26,7 @@ export default function Chip({ onDelete = null, text, color, size = 'small' }) {
             color={color}
             size={size}
         >
-            {text}
+            <Typography variant="span" weight="light" color="white">{text}</Typography>
             {isFunction(onDelete) && <Icon src={DeleteIcon} />}
         </StyledChip>
     );
