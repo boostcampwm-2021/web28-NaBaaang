@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import { BUTTON_SIZE_TYPE, BUTTON_COLOR_TYPE } from '@/constants/css';
 import { transMarginProp } from '@/util';
 
+import {Typography} from '@/components/Common';
+
 export default function Button({ onClick, text, ...styleProps }) {
     return (
         <StyledButton onClick={onClick} {...styleProps}>
-            {text}
+            <Typography variant="span" weight="light" color="white">{text}</Typography>
         </StyledButton>
     );
 }
