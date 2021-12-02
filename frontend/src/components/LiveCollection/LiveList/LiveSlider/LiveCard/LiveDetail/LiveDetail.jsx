@@ -9,7 +9,7 @@ export default function LiveDetail({ details }) {
     return (
         <Box justifyContent="flex-start">
             <Box marginRight={1}>
-                <Avatar size="small" src={imageUrl} />
+                <Avatar size="small" src={imageUrl} alt="" />
             </Box>
             <Box flexDirection="column" alignItems="flex-start">
                 <Typography varaint="h5">{nickname}</Typography>

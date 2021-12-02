@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { flexMixin, sizeMixin } from '@/styles/mixins';
 
+import thumbnailImage from '@/assets/images/channel-thumbnail.jpg';
 import LiveThumbnail from './LiveThumbnail';
 import LiveDetail from './LiveDetail';
 
@@ -13,7 +14,7 @@ function LiveCard({ content }) {
         <Link to={`/channel/${id}`}>
             <CardLayout>
                 <LiveThumbnail
-                    thumbnail="https://static-cdn.jtvnw.net/previews-ttv/live_user_qldhkwy-440x248.jpg"
+                    thumbnail={thumbnailImage}
                     viewer={1000}
                 />
                 <LiveDetail details={content} />
