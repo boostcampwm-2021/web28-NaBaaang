@@ -63,10 +63,10 @@ const generatorTag = variant => styled(variant)`
     ${({ variant = 'p' }) => FONT_SIZE_TYPE[variant]};
     ${({ weight = 'medium' }) => FONT_WEIGHT_TYPE[weight]};
 
-    color: ${({ color = 'black' }) => theme.color[color]};
+    color: ${({ color = 'black' }) => theme.color[color]} !important;;
     text-align: ${({ align = 'center' }) => align};
     background-color: ${({ backgroundColor = 'transparent' }) =>
-        backgroundColor};
+        backgroundColor} !important;;
     margin-top: ${({ marginTop = 0 }) => `${marginTop}rem`};
     margin-left: ${({ marginLeft = 0 }) => `${marginLeft}rem`};
     margin-bottom: ${({ marginBottom = 0 }) => `${marginBottom}rem`};

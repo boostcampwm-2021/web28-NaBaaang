@@ -8,7 +8,7 @@ import {Typography} from '@/components/Common';
 export default function Button({ onClick, text, ...styleProps }) {
     return (
         <StyledButton onClick={onClick} {...styleProps}>
-            <Typography variant="span" weight="light" color="white">{text}</Typography>
+            <Typography variant="span" weight="medium">{text}</Typography>
         </StyledButton>
     );
 }
