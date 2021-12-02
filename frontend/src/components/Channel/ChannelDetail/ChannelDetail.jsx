@@ -13,7 +13,7 @@ export default function ChannelDetails({ channelInfo, userCnt }) {
     return (
         <StyledBox>
             <Box marginRight={1}>
-                <Avatar src={imageUrl} size="medium" />
+                <Avatar src={imageUrl} size="medium" alt="streamer-thumbnail" />
             </Box>
 
             <Box alignItems="flex-start" flexDirection="column">
