@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { colorMixin, hoverMixin } from '@/styles/mixins';
+import { hoverMixin } from '@/styles/mixins';
 
 const BORDER_RADIUS_TYPE = {
     squre: css`
@@ -45,13 +45,22 @@ const BUTTON_SIZE_TYPE = {
 
 const BUTTON_COLOR_TYPE = {
     error: css`
-        ${({ theme: { color } }) => colorMixin(color.white, color.red)}
+        background-color : ${({theme : {color}}) => color.red};
+        & span{ 
+            color : ${({theme : {color}}) => color.white} !important;
+        }
     `,
     success: css`
-        ${({ theme: { color } }) => colorMixin(color.white, color.primary)}
+        background-color : ${({theme : {color}}) => color.primary};
+        & span{ 
+            color : ${({theme : {color}}) => color.white} !important;
+        }
     `,
     light: css`
-        ${({ theme: { color } }) => colorMixin(color.black, color.gray3)}
+        background-color : ${({theme : {color}}) => color.gray3};
+        & span{ 
+            color : ${({theme : {color}}) => color.black} !important;
+        }
     `,
 };
 
