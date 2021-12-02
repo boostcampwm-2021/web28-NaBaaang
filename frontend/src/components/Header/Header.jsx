@@ -32,7 +32,7 @@ const HeaderWrap = styled.header`
     ${flexMixin('row', 'space-between', 'center')}
     background-color: ${({ theme }) => theme.color.white};
     padding: 0 1em;
-    box-sizing: border-box;
+    min-height: 60px;
 `;
 
 const Logo = styled.img`
