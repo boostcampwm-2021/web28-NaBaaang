@@ -20,13 +20,13 @@ export default function Modal() {
     return (
         <Portal elementId="modal-root">
             <ModalBox width="100%" height="100%">
-                <Overlay onClick={() => closeModal(modalContent)} />
+                <Overlay onClick={() => closeModal()} />
                 <ModalCard alignItems="stretch" flexDirection="column">
                     <CloseButtonBox>
                         <IconButton
                             color="error"
                             type="square"
-                            onClick={() => closeModal(modalContent)}
+                            onClick={() => closeModal()}
                         >
                             <CloseIcon />
                         </IconButton>
