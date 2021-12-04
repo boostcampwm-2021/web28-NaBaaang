@@ -3,10 +3,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 config:
-    target: "https://nabaang.kro.kr/"
+    target: "http://localhost:5000"
     phases:
         - duration: 10
-          arrivalRate: 100
+          arrivalRate: 30
     variables:
         greeting: ["hello", "goedemorgen", "guten tag", "bonjour", "hola"]
 
@@ -18,20 +18,20 @@ scenarios:
           - emit:
                 channel: "join"
                 data:
-                    "chatId": "6"
-                    "channelId": "5"
+                    "chatId": "1"
+                    "channelId": "1"
                     "auth": "viewer"
           - think: 5
 
     - name: "A mostly quiet user"
-      weight: 80
+      weight: 60
       engine: "socketio"
       flow:
           - emit:
                 channel: "join"
                 data:
-                    "chatId": "6"
-                    "channelId": "5"
+                    "chatId": "1"
+                    "channelId": "1"
                     "auth": "viewer"
           - think: 5
           - emit:
@@ -39,20 +39,20 @@ scenarios:
                 data:
                     "id": "{{$randomString()}}"
                     "type": "NORMAL"
-                    "userId": 3
+                    "userId": 1
                     "nickname": "quiet-{{ $randomString() }}"
                     "content": "{{ greeting }}"
           - think: 15
 
     - name: "A chatty user"
-      weight: 10
+      weight: 30
       engine: "socketio"
       flow:
           - emit:
                 channel: "join"
                 data:
-                    "chatId": "6"
-                    "channelId": "5"
+                    "chatId": "1"
+                    "channelId": "1"
                     "auth": "viewer"
           - think: 5
           - loop:
@@ -61,7 +61,7 @@ scenarios:
                       data:
                           "id": "{{$randomString()}}"
                           "type": "NORMAL"
-                          "userId": 3
+                          "userId": 1
                           "nickname": "chatty-{{ $randomString() }}"
                           "content": "{{ greeting }}"
                 - think: 1
