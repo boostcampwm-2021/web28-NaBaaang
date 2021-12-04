@@ -6,7 +6,7 @@ config:
     target: "http://localhost:5000"
     phases:
         - duration: 10
-          arrivalRate: 30
+          arrivalRate: 50
     variables:
         greeting: ["hello", "goedemorgen", "guten tag", "bonjour", "hola"]
 

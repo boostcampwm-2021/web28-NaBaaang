@@ -13,11 +13,10 @@ export default function Chat({ role, isDonation = true }) {
         messageList,
         filterUnsentMessage,
         deleteMessage,
-        throttleNewMessage,
     } = useChatMessage();
 
     const handleSubmit = message => {
-        throttleNewMessage({ ...message, status: true });
+        // throttleNewMessage({ ...message, status: true });
         socket.chat.sendMessage(message);
         return () => {
             socket.chat.clearChatEvents();
