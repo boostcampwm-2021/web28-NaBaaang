@@ -35,12 +35,14 @@ export default function ChatMessageList({
             filtered.map(message => (
                 <ChatMessage
                     key={message.id}
-                    id={message.id}
-                    type={message.type}
-                    nickname={message.nickname}
-                    content={message.content}
-                    status={message.status}
+                    message={message}
                     onDelete={deleteMessage}
+                    // id={message.id}
+                    // senderId={message.userId}
+                    // type={message.type}
+                    // nickname={message.nickname}
+                    // content={message.content}
+                    // status={message.status}
                 />
             ))
         );

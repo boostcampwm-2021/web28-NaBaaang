@@ -19,7 +19,7 @@ export default function Channel({ role }) {
         payload: channelId,
     });
 
-    const { userCnt } = useSocket(data);
+    useSocket(data);
 
     if (loading || error || !data)
         return <PageStatus loading={loading} error={error} data={data} />;
@@ -37,7 +37,8 @@ export default function Channel({ role }) {
                     alignItems="unset"
                     justifyContent="unset"
                 >
-                    <ChannelDetail channelInfo={data} userCnt={userCnt} />
+                    {/* <ChannelDetail channelInfo={data} userCnt={userCnt} /> */}
+                    <ChannelDetail channelInfo={data} />
                 </Box>
             </Box>
 

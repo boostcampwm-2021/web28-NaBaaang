@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as DeleteIcon } from '@/assets/images/x.svg';
+import { UserContext } from '@/store/UserStore';
 
 import { MESSAGE_TYPE } from '@/constants/messageType';
 import { Box, Typography, IconButton } from '@/components/Common';
 
-export default function Message({
-    id,
-    type,
-    nickname,
-    content,
-    status,
-    onDelete,
-}) {
+export default function Message({ message, onDelete }) {
+    const { userInfo } = useContext(UserContext);
+    const {
+        user: { id: receiverId },
+    } = userInfo;
+    const { id, type, nickname, content, userId, status } = message;
+
     const deleteButton = !status && (
         <IconButton color="delete" onClick={onDelete(id)}>
             <DeleteIcon />
         </IconButton>
     );
+
+    const isMyMessage = () => {
+        return userId === receiverId ? '#81d4fa' : '#EEEEEE';
+    };
+
     return MESSAGE_TYPE[type] === MESSAGE_TYPE.NORMAL ? (
         <MessageBox flexDirection="column" width="90%" alignItems="flex-start">
             <Typography color="primary" align="left" variant="span">
@@ -31,7 +36,8 @@ export default function Message({
                 alignItems="flex-end"
             >
                 {deleteButton}
-                <Bubble>
+
+                <Bubble backgroundColor={isMyMessage()}>
                     <Typography color="black3" align="left">
                         {content}
                     </Typography>
@@ -76,7 +82,7 @@ const Bubble = styled.div`
     margin-top: 0.5em;
     padding: 0.5em;
     border-radius: 15px;
-    background-color: ${({ theme }) => theme.color.offwhite};
+    background-color: ${({ backgroundColor }) => backgroundColor};
 `;
 
 const StyledDonation = styled(Box)`

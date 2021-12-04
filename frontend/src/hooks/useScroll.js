@@ -1,18 +1,19 @@
-import {useRef} from 'react';
+import { useRef } from 'react';
 
-const SCROLL_DIFF_BOUNDARY = 2;
+// const SCROLL_DIFF_BOUNDARY = 2;
 
 export default function useScroll() {
-    const scrollRef = useRef()
+    const scrollRef = useRef();
 
     const isScrollBottom = () => {
-        const { scrollHeight, scrollTop, clientHeight } = scrollRef.current;
-        const scrollDiff = scrollHeight - scrollTop;
+        // const { scrollHeight, scrollTop, clientHeight } = scrollRef.current;
+        // const scrollDiff = scrollHeight - scrollTop;
+        // return  (
+        //     scrollDiff >= clientHeight - SCROLL_DIFF_BOUNDARY &&
+        //     scrollDiff <= clientHeight + SCROLL_DIFF_BOUNDARY
+        // );
 
-        return (
-            scrollDiff >= clientHeight - SCROLL_DIFF_BOUNDARY &&
-            scrollDiff <= clientHeight + SCROLL_DIFF_BOUNDARY
-        );
+        return true;
     };
 
     const moveScrollToBottom = () => {
